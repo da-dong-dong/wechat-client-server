@@ -1,5 +1,44 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页
+	"pages": [ // pages数组中第一项表示应用启动页
+		// 首页
+		{
+			"path": "pages/tabBar/home/home",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+
+		// 分类
+		{
+			"path": "pages/tabBar/classify/classify",
+			"style": {
+				"navigationBarTitleText": "分类"
+			}
+		},
+
+		// 购物车
+		{
+			"path": "pages/tabBar/shoppingCart/shoppingCart",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+
+		// 订单
+		{
+			"path": "pages/tabBar/order/order",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+
+		// 我的
+		{
+			"path": "pages/tabBar/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
 		{
 			"path": "pages/order/index",
 			"style": {
@@ -37,7 +76,41 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"usingComponents":{
-			"i-message": "/wxcomponents/message/index"
+			"i-message": "/wxcomponents/message/index",
+			"i-icon": "/wxcomponents/icon/index"
 		}
+	},
+	"tabBar": {
+		"color": "#333333",
+		"selectedColor": "#34B9C0",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/tabBar/home/home",
+				"iconPath": "static/tabBar/home.png",
+				"selectedIconPath": "static/tabBar/homeSl.png",
+				"text": "首页"
+			},{
+				"pagePath": "pages/tabBar/classify/classify",
+				"iconPath": "static/tabBar/classify.png",
+				"selectedIconPath": "static/tabBar/classifySl.png",
+				"text": "分类"
+			}, {
+				"pagePath": "pages/tabBar/shoppingCart/shoppingCart",
+				"iconPath": "static/tabBar/shoppingCart.png",
+				"selectedIconPath": "static/tabBar/shoppingCartSl.png",
+				"text": "购物车"
+			}, {
+				"pagePath": "pages/tabBar/order/order",
+				"iconPath": "static/tabBar/order.png",
+				"selectedIconPath": "static/tabBar/orderSl.png",
+				"text": "订单"
+			},{
+				"pagePath": "pages/tabBar/my/my",
+				"iconPath": "static/tabBar/my.png",
+				"selectedIconPath": "static/tabBar/mySl.png",
+				"text": "订单"
+			}
+		]
 	}
 }
