@@ -1,5 +1,24 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
+		// 我的
+		{
+			"path": "pages/tabBar/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/login/wecatLogin",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/login/wecatCheck",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
 		// 首页
 		{
 			"path": "pages/tabBar/home/home",
@@ -32,13 +51,7 @@
 			}
 		},
 
-		// 我的
-		{
-			"path": "pages/tabBar/my/my",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		},
+		
 		{
 			"path": "pages/order/index",
 			"style": {
@@ -112,5 +125,10 @@
 				"text": "订单"
 			}
 		]
+	},
+	"permission": {
+		"scope.userInfo": {
+			"desc": "获取用户信息..."
+		}
 	}
 }

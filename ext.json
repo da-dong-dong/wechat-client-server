@@ -1,0 +1,20 @@
+{
+    "extEnable": true,
+    "extAppid": "wxb0276f88c88697b9",
+    "directCommit": false,
+    "ext": {
+      "name": "wechat",
+      "appId": "wxf84f228e76e1d984",
+      "attr": {
+        "host": "http://swx.go.lyfz.net",
+        "appName":"模板演示",
+        "users": [
+            "user_1",
+            "user_2"
+        ]
+      }
+    },
+    "extPages": {
+      "pages/index/index": {}
+    }
+  }

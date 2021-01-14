@@ -5,3 +5,8 @@ import { get, post, put, remove, postObj, } from './methos.js'
 export const getTicket = (params) => {
 	return postObj(baseUrl.getTicket, params)
 }
+
+//获取微信登录凭证
+export const getLongin = (params) => {
+	return postObj(baseUrl.getLongin, params)
+}

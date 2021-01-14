@@ -1,7 +1,57 @@
 /******************************** 我的 ***************************************/
 <template>
     <view>
-        我的
+        <!-- 用户信息 -->
+        <view class="user_box flex paddingRL40">
+            <view>
+                <text class="fontWight fontSize36">大东东</text>
+                <view>1306825494</view>
+            </view>
+            <image class="login_logo" src="/static/image/login.png"></image>
+        </view>
+
+        <!-- 用户设置 -->
+        <view class="user_seting marginT10">
+            <view class="user_seting_li flex paddingRL20">
+                <view class="flex">
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <text class="paddingL20">个人资料</text>
+                </view>
+                <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
+            </view>
+
+            <view class="user_seting_li flex paddingRL20">
+                <view class="flex">
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <text class="paddingL20">修改密码</text>
+                </view>
+                <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
+            </view>
+
+            <view class="user_seting_li flex paddingRL20">
+                <view class="flex">
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <text class="paddingL20">服务协议</text>
+                </view>
+                <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
+            </view>
+
+            <view class="user_seting_li flex paddingRL20">
+                <view class="flex">
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <text class="paddingL20">意见反馈</text>
+                </view>
+                <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
+            </view>
+
+            <view class="user_seting_li flex paddingRL20">
+                <view class="flex">
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <text class="paddingL20">退出登陆</text>
+                </view>
+                <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
+            </view>
+        </view>
     </view>
 </template>
 
@@ -12,5 +62,51 @@
 </script>
 
 <style lang="scss" scoped>
+.flex{
+    display: flex;
+}
+.paddingRL40{
+    padding: 0 40rpx;
+}
+.paddingRL20{
+    padding: 0 20rpx;
+}
+.paddingL20{
+    padding-left: 20rpx;
+}
+.marginT10{
+    margin-top: 10rpx;
+}
+.fontSize36{
+    font-size: 36rpx;
+}
+.fontWight{
+    font-weight: bold;
+}
 
+// 用户设置
+.user_seting{
+    border: 1px solid #D8D8D8;
+    border-bottom:none;
+    .user_seting_li{
+        height: 100rpx;
+        line-height: 100rpx;
+        border-bottom: 1px solid #D8D8D8;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+// 用户信息
+.user_box{
+    height: 300rpx;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D8D8D8;
+    font-size: 30rpx;
+    .login_logo{
+        width: 128rpx;
+        height: 128rpx;
+    }
+}
 </style>
