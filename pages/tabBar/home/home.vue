@@ -2,9 +2,7 @@
 <template>
     <view>
         我是首页
-        <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">getPhoneNumber</button>
-        <button @click="checkLogin">测试登陆</button>
-
+       
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>

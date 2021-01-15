@@ -12,7 +12,7 @@
 
         <!-- 用户设置 -->
         <view class="user_seting marginT10">
-            <view class="user_seting_li flex paddingRL20">
+            <view class="user_seting_li flex paddingRL20" @click="onClickUserInfo">
                 <view class="flex">
                     <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
                     <text class="paddingL20">个人资料</text>
@@ -20,7 +20,7 @@
                 <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
             </view>
 
-            <view class="user_seting_li flex paddingRL20">
+            <view class="user_seting_li flex paddingRL20" @click="onClickPassword">
                 <view class="flex">
                     <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
                     <text class="paddingL20">修改密码</text>
@@ -30,7 +30,7 @@
 
             <view class="user_seting_li flex paddingRL20">
                 <view class="flex">
-                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8" @click="onClickService" />
                     <text class="paddingL20">服务协议</text>
                 </view>
                 <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
@@ -44,9 +44,9 @@
                 <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
             </view>
 
-            <view class="user_seting_li flex paddingRL20">
+            <view class="user_seting_li flex paddingRL20" @click="onClickOut">
                 <view class="flex">
-                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8" />
                     <text class="paddingL20">退出登陆</text>
                 </view>
                 <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
@@ -57,32 +57,47 @@
 
 <script>
     export default {
-        
+        methods:{
+            // 修改个人资料
+            onClickUserInfo(){
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/my/component/userInfo' 
+                })
+            },
+
+            // 修改密码
+            onClickPassword(){
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/my/component/changePassword' 
+                })
+            },
+
+            // 服务协议
+            onClickPassword(){
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/my/component/serviceAgreement' 
+                })
+            },
+
+            // 退出登陆
+            onClickOut(){
+                console.log('退出')
+                uni.removeStorage({
+                    key: 'code',
+                    success: (result) => {
+                        uni.redirectTo({ 
+                            url: '/pages/login/wecatLogin' 
+                        })
+                    },
+                    fail: (error) => {}
+                })
+                
+            }
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-.flex{
-    display: flex;
-}
-.paddingRL40{
-    padding: 0 40rpx;
-}
-.paddingRL20{
-    padding: 0 20rpx;
-}
-.paddingL20{
-    padding-left: 20rpx;
-}
-.marginT10{
-    margin-top: 10rpx;
-}
-.fontSize36{
-    font-size: 36rpx;
-}
-.fontWight{
-    font-weight: bold;
-}
 
 // 用户设置
 .user_seting{

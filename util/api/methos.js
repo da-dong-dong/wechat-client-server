@@ -4,7 +4,7 @@
 
 **********/
 const { $Message } = require('@/wxcomponents/base/index');
-import app from '@/store/module/app.js'
+import user from '@/store/module/user.js'
 const request = (url, options) => {
 	uni.showLoading({
 	    title: '加载中',
@@ -17,10 +17,7 @@ const request = (url, options) => {
 			method:options.method,
 			data:options.data,
 			header: {
-				'content-type': options.isObj ? 'application/json': 'application/x-www-form-urlencoded',
-				'ticket': app.state.ticket ,
-				'ccId': app.state.ccId,
-				'CurrentShopId' : app.state.shopId,
+				'Authorization': user.state.code
 			},
 			success :(res)=>{
 				uni.hideLoading();
@@ -38,7 +35,7 @@ const request = (url, options) => {
 							// cancaelRes = true
 							setTimeout(()=>{
 								uni.reLaunch({
-									url:'/pages/login/login'
+									url:'/pages/login/wecatLogin'
 								})
 							},1000)
 							break;
@@ -58,7 +55,7 @@ const request = (url, options) => {
 				});
 				//缓存
 				uni.reLaunch({
-					url:'/pages/login/login'
+					url:'/pages/login/wecatLogin'
 				})
 				reject(err)
 			},

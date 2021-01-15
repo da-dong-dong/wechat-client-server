@@ -5,6 +5,9 @@
         <button @click="onClickLogin">登陆</button>
         <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取手机号码</button>
         <button open-type="getUserInfo" @getUserInfo="getUserInfo">获取用户信息</button>
+
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
@@ -35,7 +38,7 @@ var tiem = null
                     success:(res) => {
                         let param = {
                             jsCode: res.code,
-                            appId:  accountInfo.miniProgram.appId
+                            authorizerAppid:  accountInfo.miniProgram.appId
                         }
                         console.log(accountInfo.miniProgram.appId)
                         getLongin(param).then(res=>{
@@ -43,6 +46,8 @@ var tiem = null
                             // 存储 
                             this.act_code(code)
                             let codeJons = JSON.parse(base64.decode(code.split('.')[1])).exp+'000';
+                            console.log(code)
+                            console.log(codeJons)
                             // 存储本地
                             uni.setStorage({
                                 key: 'code',
@@ -50,10 +55,18 @@ var tiem = null
                             })
                             // 开启计时器
                             tiem = setInterval(() => {
-                                console.log(parseInt((new Date().getTime()-codeJons)/1000/60))
-                                // if(parseInt((new Date().getTime()-res.data)/1000/60)== 29){
-                                //     clearInterval(tiem)
-                                // }
+                                console.log(parseInt((codeJons-new Date().getTime())/1000/60))
+                                if(parseInt((codeJons - new Date().getTime())/1000/60)== 5){
+                                    clearInterval(tiem)
+                                    uni.removeStorage({
+                                        key: 'code',
+                                        success: (result) => {
+                                            this.checkTimeCode()
+                                        },
+                                        fail: (error) => {}
+                                    })
+                                    
+                                }
                             }, 1000);
                         })
                     }
@@ -62,16 +75,17 @@ var tiem = null
             // 检查code
             checkTimeCode(){
                 let _this = this
+                clearInterval(tiem)
                 uni.getStorage({
 					key: 'code',
 					success: (res)=> {
                         let data = res.data
                         console.log(data)
                         let codeJons = JSON.parse(base64.decode(data.split('.')[1])).exp+'000';
-                        let times = parseInt((new Date().getTime()-codeJons)/1000/60)
+                        let times = parseInt((codeJons-new Date().getTime())/1000/60)
                         // 判断120分钟
                         console.log(times)
-                        if(times>=115){
+                        if(times <= 5){
                             console.log('请求');
                             this.codeLogin()
                         }else{
@@ -80,11 +94,19 @@ var tiem = null
                             // uni.redirectTo({
                             //     url:'/pages/login/wecatCheck'
                             // })
-                          tiem = setInterval(() => {
-                                console.log(parseInt((new Date().getTime()-codeJons)/1000/60))
-                                // if(parseInt((new Date().getTime()-res.data)/1000/60)== 29){
-                                //     clearInterval(tiem)
-                                // }
+                           tiem = setInterval(() => {
+                                console.log(parseInt((codeJons-new Date().getTime())/1000/60))
+                                if(parseInt((codeJons - new Date().getTime())/1000/60) == 5){
+                                    clearInterval(tiem)
+                                    uni.removeStorage({
+                                        key: 'code',
+                                        success: (result) => {
+                                            this.checkTimeCode()
+                                        },
+                                        fail: (error) => {}
+                                    })
+                                    
+                                }
                             }, 1000);
                         }
 					},
@@ -95,7 +117,10 @@ var tiem = null
             },
             // 登陆获取授权信息
             onClickLogin(){
-                console.log('授权')
+                console.log('授权');
+                uni.switchTab({
+                    url:'/pages/tabBar/my/my'
+                })
             },
             // 获取用户信息
             getUserInfo(val){
