@@ -73,7 +73,7 @@
             },
 
             // 服务协议
-            onClickPassword(){
+            onClickService(){
                 uni.navigateTo({ 
                     url: '/pages/tabBar/my/component/serviceAgreement' 
                 })

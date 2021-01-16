@@ -4,8 +4,8 @@
         code值{{get_code}}
         <button @click="onClickLogin">登陆</button>
         <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取手机号码</button>
-        <button open-type="getUserInfo" @getUserInfo="getUserInfo">获取用户信息</button>
-
+        <!-- <button @getUserInfo="getUserInfo" open-type="getUserInfo"  type="primary">获取用户信息</button> -->
+        <button @getuserinfo="getUserInfo" open-type="getUserInfo" type="primary">授权</button>
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -47,7 +47,7 @@ var tiem = null
                             this.act_code(code)
                             let codeJons = JSON.parse(base64.decode(code.split('.')[1])).exp+'000';
                             console.log(code)
-                            console.log(codeJons)
+                            console.log(JSON.parse(base64.decode(code.split('.')[1])))
                             // 存储本地
                             uni.setStorage({
                                 key: 'code',
@@ -124,7 +124,26 @@ var tiem = null
             },
             // 获取用户信息
             getUserInfo(val){
-                console.log(val)
+                console.log(val,'aaa')
+                uni.getUserInfo({
+                            provider: 'weixin',  
+                            withCredentials:true,  
+							success: res => {
+								console.log(res);
+							}
+                        });
+                // uni.login({
+                //     provider: 'weixin',
+                //     success:(res) => {
+                //         uni.getUserInfo({
+                //             provider: 'weixin',  
+                //             withCredentials:true,  
+				// 			success: res => {
+				// 				console.log(res);
+				// 			}
+                //         });
+                //     }
+                // });
             },
             // 获取手机号码
             getPhoneNumber(val){

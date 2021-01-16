@@ -1,18 +1,49 @@
 .flex{
     display: flex;
 }
+.fixed{
+    position: fixed;
+}
+
+// 内边距
+.padding5{
+    padding: 5rpx;
+}
+.padding10{
+    padding: 10rpx;
+}
+.paddingT10{
+    padding-top: 10rpx;
+}
+.paddingTB20{
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+}
 .paddingRL40{
-    padding: 0 40rpx;
+    padding-right: 40rpx;
+    padding-left: 40rpx;
 }
 .paddingRL20{
-    padding: 0 20rpx;
+    padding-right: 20rpx;
+    padding-left: 20rpx;
 }
 .paddingL20{
     padding-left: 20rpx;
 }
+
+// 外边距
 .marginT10{
     margin-top: 10rpx;
 }
+.marginB10{
+    margin-bottom: 10rpx;
+}
+.marginRL10{
+    margin-right: 10rpx;
+    margin-left: 10rpx;
+}
+
+// 文字
 .fontSize36{
     font-size: 36rpx;
 }
@@ -21,4 +52,14 @@
 }
 .textL{
     text-align: left;
+}
+.textC{
+    text-align: center;
+}
+.img{
+    width: 100%;
+    height: 100%;
+}
+.colorRed{
+    color:#C60C0C
 }
