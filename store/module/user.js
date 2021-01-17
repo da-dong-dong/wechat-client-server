@@ -3,7 +3,7 @@ export default{
 	state:{
 		// code
 		code:null,
-		
+		avatarUrl:null, // 用户头像
 	},
 	getters:{
 		get_code:state => state.code,

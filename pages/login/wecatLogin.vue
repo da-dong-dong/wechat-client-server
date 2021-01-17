@@ -1,11 +1,9 @@
 /******************************** 微信登陆 ***************************************/
 <template>
     <view>
-        code值{{get_code}}
-        <button @click="onClickLogin">登陆</button>
-        <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取手机号码</button>
-        <!-- <button @getUserInfo="getUserInfo" open-type="getUserInfo"  type="primary">获取用户信息</button> -->
-        <button @getuserinfo="getUserInfo" open-type="getUserInfo" type="primary">授权</button>
+        <button class="marginB10" @click="onClickLogin" type="primary">登陆</button>
+        <button v-if="numBerShow" class="marginB10" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" type="primary">授权手机号码</button>
+        <button v-if="infoShow" class="marginB10" open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">授权用户信息</button>
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -13,17 +11,24 @@
 
 <script>
 import { mapActions,mapGetters } from 'vuex'
-import { getLongin } from '@/util/api/user.js'
+import { getCode, getAuthorState, setPhoneNoInfo, setUserInfo } from '@/util/api/user.js'
 // 获取当前小程序信息
 const accountInfo = uni.getAccountInfoSync(); 
 const base64 = require('@/util/lib/base64.js').Base64;
+const { $Message } = require('@/wxcomponents/base/index');
 var tiem = null
     export default {
         computed:{
 			...mapGetters('user',[
 				'get_code'
 			]),
-		},
+        },
+        data(){
+            return{
+                numBerShow: false, // 授权电话
+                infoShow: false, // 授权用户信息
+            }
+        },
         onLoad(options) {
             this.checkTimeCode()
         },
@@ -41,7 +46,7 @@ var tiem = null
                             authorizerAppid:  accountInfo.miniProgram.appId
                         }
                         console.log(accountInfo.miniProgram.appId)
-                        getLongin(param).then(res=>{
+                        getCode(param).then(res=>{
                             let code = res.data.data
                             // 存储 
                             this.act_code(code)
@@ -56,7 +61,7 @@ var tiem = null
                             // 开启计时器
                             tiem = setInterval(() => {
                                 console.log(parseInt((codeJons-new Date().getTime())/1000/60))
-                                if(parseInt((codeJons - new Date().getTime())/1000/60)== 5){
+                                if(parseInt((codeJons - new Date().getTime())/1000/60) <= 5){
                                     clearInterval(tiem)
                                     uni.removeStorage({
                                         key: 'code',
@@ -96,7 +101,7 @@ var tiem = null
                             // })
                            tiem = setInterval(() => {
                                 console.log(parseInt((codeJons-new Date().getTime())/1000/60))
-                                if(parseInt((codeJons - new Date().getTime())/1000/60) == 5){
+                                if(parseInt((codeJons - new Date().getTime())/1000/60) <= 5){
                                     clearInterval(tiem)
                                     uni.removeStorage({
                                         key: 'code',
@@ -115,39 +120,74 @@ var tiem = null
 					}
 				})
             },
+
             // 登陆获取授权信息
             onClickLogin(){
-                console.log('授权');
-                uni.switchTab({
-                    url:'/pages/tabBar/my/my'
-                })
+                // 判断是否拿到code
+                if(this.get_code){
+                    getAuthorState().then(res=>{
+                        let {isPhoneInfoAuthorization,isUserInfoAuthorization} = res.data.data
+                        if(isPhoneInfoAuthorization && isUserInfoAuthorization){
+                            uni.switchTab({
+                                url:'/pages/tabBar/my/my'
+                            })
+                        }else{
+                            $Message({
+                                content:'请授权',
+                                type: 'error'
+                            });
+                        }
+                        this.numBerShow = !isPhoneInfoAuthorization
+                        this.infoShow = !isUserInfoAuthorization
+                    })
+                    
+                }else{
+                    this.checkTimeCode()
+                }
+                
             },
+
             // 获取用户信息
             getUserInfo(val){
-                console.log(val,'aaa')
-                uni.getUserInfo({
-                            provider: 'weixin',  
-                            withCredentials:true,  
-							success: res => {
-								console.log(res);
-							}
-                        });
-                // uni.login({
-                //     provider: 'weixin',
-                //     success:(res) => {
-                //         uni.getUserInfo({
-                //             provider: 'weixin',  
-                //             withCredentials:true,  
-				// 			success: res => {
-				// 				console.log(res);
-				// 			}
-                //         });
-                //     }
-                // });
+                let param = val.detail
+                if(param.encryptedData){
+                    param.errMsg = null
+                    param.userInfo = null
+                    setUserInfo(param).then(res=>{
+                        this.infoShow = false
+                        if(!this.numBerShow && !this.infoShow){
+                            uni.switchTab({
+                                url:'/pages/tabBar/my/my'
+                            })
+                        }
+                    })
+                }else{
+                    $Message({
+                        content:'取消授权',
+                        type: 'error'
+                    });
+                }
             },
+
             // 获取手机号码
             getPhoneNumber(val){
-                console.log(val)
+                let param = val.detail
+                if(param.encryptedData){
+                    param.errMsg = null
+                    setPhoneNoInfo(param).then(res=>{
+                        this.numBerShow = false
+                        if(!this.numBerShow && !this.infoShow){
+                            uni.switchTab({
+                                url:'/pages/tabBar/my/my'
+                            })
+                        }
+                    })
+                }else{
+                    $Message({
+                        content:'取消授权',
+                        type: 'error'
+                    });
+                }
             }
         }
     }

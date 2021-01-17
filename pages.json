@@ -1,11 +1,11 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		// {
-		// 	"path": "pages/tabBar/classify/components/details",
-		// 	"style": {
-		// 		"navigationBarTitleText": "套系详情"
-		// 	}
-		// },
+		{
+			"path": "pages/tabBar/classify/components/details",
+			"style": {
+				"navigationBarTitleText": "套系详情"
+			}
+		},
 		{
 			"path": "pages/login/wecatLogin",
 			"style": {
@@ -58,12 +58,12 @@
 				"navigationBarTitleText": "分类"
 			}
 		},
-		{
-			"path": "pages/tabBar/classify/components/details",
-			"style": {
-				"navigationBarTitleText": "套系详情"
-			}
-		},
+		// {
+		// 	"path": "pages/tabBar/classify/components/details",
+		// 	"style": {
+		// 		"navigationBarTitleText": "套系详情"
+		// 	}
+		// },
 
 		//******************************** 购物车 ********************************
 		{

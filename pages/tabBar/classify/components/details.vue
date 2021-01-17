@@ -31,14 +31,33 @@
         <!-- 图片展示 -->
         <view class="imgShow marginT10 marginRL10">
             <!-- tab切换 -->
-            <view class="imgTab flex fontSize36 textC">
-                <view class="imgTab_li">产品展示</view>
-               <view class="imgTab_li">产品展示</view>
+            <view class="imgTab flex fontSize36 textC marginB30">
+                <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">{{item}}</view>
             </view>
 
             <!-- 展示 -->
-            <view class="showTab">
-                
+            <view v-if="Index == 0?true:false" class="showTab padding10">
+                <image class="img marginB10 " v-for="(item,index) in imgs" :key="index"  :src="item"></image>
+            </view>
+
+            <view v-else>
+                <text>文案</text>
+                <text>文案</text>
+                <text>文案</text>
+                <text>文案</text>
+            </view>
+        </view>
+
+        <!-- 购物车定位 -->
+        <view class="buyCar fixed flex paddingRL40">
+            <view class="car">
+                <i-icon class="icon" type="publishgoods_fill" size="30" color="#666666"  />
+                <view>购物车</view>
+                <text class="num colorRed">1</text>
+            </view>
+            <view class="but flex">
+                <view class="but_cl padding20">加入购物车</view>
+                <view class="but_cl padding20">立刻预约</view>
             </view>
         </view>
    </view>
@@ -59,11 +78,53 @@ import banner from '@/components/banner.vue'
         },
         onLoad(options) {
             console.log(options.id)
+        },
+        methods:{
+            onClickTab(idx){
+                this.Index = idx
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+.buyCar{
+    width: 100%;
+    height: 110rpx;
+    background:#fff;
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    .car{
+        font-size: 28rpx;
+        position: relative;
+        .num{
+            position: absolute;
+            top: 0;
+            right: 10rpx;
+        }
+    }
+    .but{
+        width: 400rpx;
+        justify-content: space-between;
+        align-items: center;
+        .but_cl{
+            border-radius: 20rpx;
+            &:nth-child(1){
+                color: #34B9C0;
+                border: 1px solid #34B9C0;
+                box-sizing: border-box;
+            }
+            &:nth-child(2){
+                background: #34B9C0;
+                color: #fff;
+            }
+        }
+    }
+}
+
 .content{
     border: 1px solid #9BA3B7;
     font-size: 32rpx;
@@ -83,10 +144,13 @@ import banner from '@/components/banner.vue'
     .imgTab{
         .imgTab_li{
             width: 50%;
-            .active{
-                color: #34B9C2;
-            }
         }
+        .active{
+            color: #34B9C2;
+        }
+    }
+    .showTab{
+        box-sizing: content-box;
     }
 }
 </style>
