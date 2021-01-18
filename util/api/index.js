@@ -11,6 +11,8 @@ let baseUrl = {
     getAuthorState: `${base}/api/template/ma/authorization_state`, // 获取用户授权状态
     setPhoneNoInfo: `${base}/api/template/ma/set_phone_no_info`, // 设置小程序用户手机信息
     setUserInfo: `${base}/api/template/ma/set_user_info`, // 设置小程序用户信息
+
+    getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }
 
 export default baseUrl

@@ -22,6 +22,10 @@
     padding-top: 20rpx;
     padding-bottom: 20rpx;
 }
+.paddingTB10{
+    padding-top: 10rpx;
+    padding-bottom: 10rpx;
+}
 .paddingRL40{
     padding-right: 40rpx;
     padding-left: 40rpx;
@@ -41,6 +45,9 @@
 .marginT10{
     margin-top: 10rpx;
 }
+.marginT20{
+    margin-top: 20rpx;
+}
 .marginB10{
     margin-bottom: 10rpx;
 }
@@ -51,10 +58,16 @@
     margin-right: 10rpx;
     margin-left: 10rpx;
 }
+.marginL80{
+    margin-left: 80rpx;
+}
 
 // 文字
 .fontSize36{
     font-size: 36rpx;
+}
+.fontSize26{
+    font-size: 26rpx;
 }
 .fontWight{
     font-weight: bold;
