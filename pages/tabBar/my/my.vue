@@ -28,9 +28,9 @@
                 <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
             </view>
 
-            <view class="user_seting_li flex paddingRL20">
+            <view class="user_seting_li flex paddingRL20" @click="onClickService">
                 <view class="flex">
-                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8" @click="onClickService" />
+                    <i-icon class="icon" type="setup" size="30" color="#D8D8D8"  />
                     <text class="paddingL20">服务协议</text>
                 </view>
                 <i-icon class="icon" type="enter" size="30" color="#D8D8D8"  />
@@ -61,21 +61,21 @@
             // 修改个人资料
             onClickUserInfo(){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/my/component/userInfo' 
+                    url: '/pages/tabBar/my/components/userInfo' 
                 })
             },
 
             // 修改密码
             onClickPassword(){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/my/component/changePassword' 
+                    url: '/pages/tabBar/my/components/changePassword' 
                 })
             },
 
             // 服务协议
             onClickService(){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/my/component/serviceAgreement' 
+                    url: '/pages/tabBar/my/components/serviceAgreement' 
                 })
             },
 

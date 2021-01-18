@@ -49,25 +49,17 @@
         </view>
 
         <!-- 购物车定位 -->
-        <view class="buyCar fixed flex paddingRL40">
-            <view class="car">
-                <i-icon class="icon" type="publishgoods_fill" size="30" color="#666666"  />
-                <view>购物车</view>
-                <text class="num colorRed">1</text>
-            </view>
-            <view class="but flex">
-                <view class="but_cl padding20">加入购物车</view>
-                <view class="but_cl padding20">立刻预约</view>
-            </view>
-        </view>
+        <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
    </view>
 </template>
 
 <script>
 import banner from '@/components/banner.vue'
+import buyCar from '@/components/buyCar.vue'
     export default {
         components:{
-            banner
+            banner,
+            buyCar
         },
         data(){
             return{
@@ -80,50 +72,33 @@ import banner from '@/components/banner.vue'
             console.log(options.id)
         },
         methods:{
+            // 切换tab
             onClickTab(idx){
                 this.Index = idx
+            },
+
+            // 进入购物车
+            goCar(){
+                uni.switchTab({
+                    url:'/pages/tabBar/shoppingCart/shoppingCart'
+                })
+            },
+
+            // 添加到购物车
+            addCar(){
+
+            },
+
+            // 立刻预约
+            onQuick(){
+
             }
+
         }
     }
 </script>
 
 <style lang="scss" scoped>
-.buyCar{
-    width: 100%;
-    height: 110rpx;
-    background:#fff;
-    bottom: 0;
-    left: 0;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
-    .car{
-        font-size: 28rpx;
-        position: relative;
-        .num{
-            position: absolute;
-            top: 0;
-            right: 10rpx;
-        }
-    }
-    .but{
-        width: 400rpx;
-        justify-content: space-between;
-        align-items: center;
-        .but_cl{
-            border-radius: 20rpx;
-            &:nth-child(1){
-                color: #34B9C0;
-                border: 1px solid #34B9C0;
-                box-sizing: border-box;
-            }
-            &:nth-child(2){
-                background: #34B9C0;
-                color: #fff;
-            }
-        }
-    }
-}
 
 .content{
     border: 1px solid #9BA3B7;

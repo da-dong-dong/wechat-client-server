@@ -1,9 +1,9 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
 		{
-			"path": "pages/tabBar/classify/components/details",
+			"path": "pages/tabBar/shoppingCart/shoppingCart",
 			"style": {
-				"navigationBarTitleText": "套系详情"
+				"navigationBarTitleText": "购物车"
 			}
 		},
 		{
@@ -20,19 +20,19 @@
 			}
 		},
 		{
-			"path": "pages/tabBar/my/component/userInfo",
+			"path": "pages/tabBar/my/components/userInfo",
 			"style": {
 				"navigationBarTitleText": "个人资料"
 			}
 		},
 		{
-			"path": "pages/tabBar/my/component/changePassword",
+			"path": "pages/tabBar/my/components/changePassword",
 			"style": {
 				"navigationBarTitleText": "修改密码"
 			}
 		},
 		{
-			"path": "pages/tabBar/my/component/serviceAgreement",
+			"path": "pages/tabBar/my/components/serviceAgreement",
 			"style": {
 				"navigationBarTitleText": "服务协议"
 			}
@@ -58,18 +58,24 @@
 				"navigationBarTitleText": "分类"
 			}
 		},
-		// {
-		// 	"path": "pages/tabBar/classify/components/details",
-		// 	"style": {
-		// 		"navigationBarTitleText": "套系详情"
-		// 	}
-		// },
+		{
+			"path": "pages/tabBar/classify/components/details",
+			"style": {
+				"navigationBarTitleText": "套系详情"
+			}
+		},
 
 		//******************************** 购物车 ********************************
+		// {
+		// 	"path": "pages/tabBar/shoppingCart/shoppingCart",
+		// 	"style": {
+		// 		"navigationBarTitleText": "购物车"
+		// 	}
+		// },
 		{
-			"path": "pages/tabBar/shoppingCart/shoppingCart",
+			"path": "pages/tabBar/shoppingCart/components/changeRegion",
 			"style": {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "选择城市"
 			}
 		},
 

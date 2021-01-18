@@ -62,7 +62,11 @@
             "urlCheck" : true
         },
         "usingComponents" : true,
-        "permission" : {}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "定位"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
