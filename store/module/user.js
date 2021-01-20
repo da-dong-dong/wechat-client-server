@@ -3,14 +3,18 @@ export default{
 	state:{
 		// code
 		code:null,
-		avatarUrl:null, // 用户头像
+		shopId:null, // 门店
 	},
 	getters:{
 		get_code:state => state.code,
+		get_shopId:state => state.shopId,
 	},
 	mutations:{
 		mut_code(state,data){
 			state.code = data
+		},
+		mut_shopId(state,data){
+			state.shopId = data
 		},
 	},
   actions: {

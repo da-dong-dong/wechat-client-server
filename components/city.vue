@@ -5,32 +5,19 @@
             <text>当前定位城市：</text>
             <text> {{cityVal}} </text>
             <view class="cityLi flex paddingTB20">
-                <text v-for="(item) in cityLi" :key="item">{{item}}</text>
+                <text v-for="(item) in cityLi" :key="item" @click="onClickVla(item)">{{item}}</text>
             </view>
         </view>
 
-        <view class="cityDate paddingTB10 marginRL10 ">
+        <view class="cityDate paddingTB10 marginRL10 " v-for="(item,index) in showShopIdList[0].shopInfoVos" :key="index" @click="onClickShop(item)">
             <view class="dateLi marginRL10 padding10">
                 <view >
-                    惠州水口店
+                    {{item.shopName}}
                     <i-icon class="icon paddingL20 paddingL10" type="coordinates" size="24" color="#87898A"  />
-                    <text class="fontSize26">1.3公里</text>
+                    
                 </view>
                 <view class="paddingTB20">
-                    地址：广东省惠州市惠城区水口
-                </view>
-            </view>
-            <view class="dateBorder "></view>
-        </view>
-       <view class="cityDate paddingTB10 marginRL10 ">
-            <view class="dateLi marginRL10 padding10">
-                <view >
-                    惠州水口店
-                    <i-icon class="icon paddingL20 paddingL10" type="coordinates" size="24" color="#87898A"  />
-                    <text class="fontSize26">1.3公里</text>
-                </view>
-                <view class="paddingTB20">
-                    地址：广东省惠州市惠城区水口
+                    地址：{{`${item.province}${item.city}${item.area}${item.address}`}}
                 </view>
             </view>
             <view class="dateBorder "></view>
@@ -39,16 +26,29 @@
 </template>
 
 <script>
- 
+ import { mapMutations } from 'vuex'
     export default {
-       props:['cityVal'],
+       props:['cityVal','showShopIdList'],
         data(){
             return{
                 cityLi: ['北京','上海','广州','深圳','惠州']
             }
         },
         methods:{
+            ...mapMutations('user',[
+				'mut_shopId'
+            ]),
+            
+            // 门店id
+            onClickShop(item){
+                this.mut_shopId(item)
+                uni.navigateBack()
+            },
 
+            // 点击过滤
+            onClickVla(val){
+                this.$emit('onSearch',val)
+            }
         }
     }
 </script>

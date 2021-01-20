@@ -1,17 +1,6 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		{
-			"path": "pages/tabBar/shoppingCart/components/changeRegion",
-			"style": {
-				"navigationBarTitleText": "选择城市"
-			}
-		},
-		{
-			"path": "pages/tabBar/shoppingCart/shoppingCart",
-			"style": {
-				"navigationBarTitleText": "购物车"
-			}
-		},
+		
 		{
 			"path": "pages/login/wecatLogin",
 			"style": {
@@ -72,18 +61,18 @@
 		},
 
 		//******************************** 购物车 ********************************
-		// {
-		// 	"path": "pages/tabBar/shoppingCart/shoppingCart",
-		// 	"style": {
-		// 		"navigationBarTitleText": "购物车"
-		// 	}
-		// },
-		// {
-		// 	"path": "pages/tabBar/shoppingCart/components/changeRegion",
-		// 	"style": {
-		// 		"navigationBarTitleText": "选择城市"
-		// 	}
-		// },
+		{
+			"path": "pages/tabBar/shoppingCart/shoppingCart",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+			"path": "pages/tabBar/shoppingCart/components/changeRegion",
+			"style": {
+				"navigationBarTitleText": "选择城市"
+			}
+		},
 
 		// //******************************** 订单 ********************************
 		{

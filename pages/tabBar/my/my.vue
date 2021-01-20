@@ -85,6 +85,7 @@
                 uni.removeStorage({
                     key: 'code',
                     success: (result) => {
+                        clearInterval(getApp().globalData.time)
                         uni.redirectTo({ 
                             url: '/pages/login/wecatLogin' 
                         })

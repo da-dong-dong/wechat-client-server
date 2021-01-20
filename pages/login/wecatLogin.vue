@@ -113,6 +113,7 @@ var tiem = null
                                     
                                 }
                             }, 1000);
+                            this.onClickLogin()
                         }
 					},
 					fail: (err)=>{

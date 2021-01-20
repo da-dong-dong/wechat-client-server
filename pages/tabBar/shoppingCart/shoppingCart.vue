@@ -11,7 +11,7 @@
                 <view class="carTop flex padding20">
                     <text>已选门店</text>
                     <view>
-                        <text>惠州水口店</text>
+                        <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
                         <text class="colorL paddingL20" @click="onChangeShopId">切换</text>
                     </view>
                 </view>
@@ -54,10 +54,16 @@
 </template>
 
 <script>
+import { mapActions,mapGetters } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
     export default {
         components:{
             buyCar
+        },
+        computed:{
+			...mapGetters('user',[
+				'get_shopId'
+            ]),
         },
         data(){
             return{
@@ -65,6 +71,7 @@ import buyCar from '@/components/buyCar.vue'
             }
         },
         methods:{
+             
             // 切换门店
             onChangeShopId(){
                 uni.navigateTo({ 

@@ -1,5 +1,8 @@
 <script>
 	export default {
+		globalData: {  
+            tiem: null  
+        }, 
 		onLaunch: function() {
 			console.log('App Launch')
 		},
