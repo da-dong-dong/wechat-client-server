@@ -73,6 +73,12 @@
 				"navigationBarTitleText": "选择城市"
 			}
 		},
+		{
+			"path": "pages/tabBar/shoppingCart/components/changeTime",
+			"style": {
+				"navigationBarTitleText": "预约时间"
+			}
+		},
 
 		// //******************************** 订单 ********************************
 		{

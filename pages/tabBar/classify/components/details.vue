@@ -49,29 +49,36 @@
         </view>
 
         <!-- 购物车定位 -->
-        <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
+        <buyCar type="details" :num="get_carList.length" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
    </view>
 </template>
 
 <script>
 import banner from '@/components/banner.vue'
 import buyCar from '@/components/buyCar.vue'
+ import { mapMutations, mapGetters } from 'vuex'
     export default {
         components:{
             banner,
             buyCar
         },
+        
         data(){
             return{
                 Tab:['产品展示','服务说明'],
                 Index:0, // tab 索引
+                Id:0,
                 imgs:['https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.hnol.net%2Fc%2F2015-09%2F13%2F00%2F201509130021357341-2381913.jpg&refer=http%3A%2F%2Fimage.hnol.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613293081&t=c85ce60267bf1fbde8f1ceea384cbbe0','https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20200323%2F2be76653f64243cba41121f37c9d3a7b.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613293081&t=e7256a161ec94190054909ca3fee1f29','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.nosdn.127.net%2FSoxuWTMB9XeJi9v0ZFU2SMf%3Dv%3D5z2fhhDYDUAU5fJiCFC1533199826960compressflag.jpg&refer=http%3A%2F%2Fdingyue.nosdn.127.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613293081&t=591b0f9e12fdc8a0e762cb36cf8e7945']
             }
         },
         onLoad(options) {
-            console.log(options.id)
+            this.Id = options.id
         },
         methods:{
+            ...mapMutations('carList',[
+				'mut_carList'
+            ]),
+
             // 切换tab
             onClickTab(idx){
                 this.Index = idx
@@ -86,7 +93,16 @@ import buyCar from '@/components/buyCar.vue'
 
             // 添加到购物车
             addCar(){
-
+                let datas={
+                        id:this.Id,
+                        name:'889宝宝照',
+                        price:8889,
+                        imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
+                        times:'',
+                        filesTime:'',
+                        filesPrice:''
+                    }
+                this.mut_carList(datas)
             },
 
             // 立刻预约

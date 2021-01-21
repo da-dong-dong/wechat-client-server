@@ -7,11 +7,11 @@
             <view class="car" v-if="type == 'details'" @click="goCar">
                 <i-icon class="icon" type="publishgoods_fill" size="30" color="#666666"  />
                 <view>购物车</view>
-                <text class="num colorRed">1</text>
+                <text class="num colorRed">{{get_carList.length}}</text>
             </view>
 
             <view class="but flex" v-if="type == 'details'">
-                <view class="but_cl padding20">加入购物车</view>
+                <view class="but_cl padding20" @click="addCar">加入购物车</view>
                 <view class="but_cl padding20" @click="onQuick">立刻预约</view>
             </view>
             
@@ -31,12 +31,23 @@
 </template>
 
 <script>
+ import { mapGetters } from 'vuex'
     export default {
         props:['type'],
+        computed:{
+            ...mapGetters('carList',[
+				'get_carList'
+            ]),
+        },
         methods:{
             // 进入购物车
             goCar(){
                 this.$emit('goCar')
+            }, 
+
+            // 添加到购物车
+            addCar(){
+                this.$emit('addCar')
             }, 
 
             // 付款页面

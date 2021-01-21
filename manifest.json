@@ -84,19 +84,10 @@
         "sdkConfigs" : {
             "maps" : {}
         },
-        "devServer": {  
-            "port": 8000,  
-            "disableHostCheck": true,  
-            "proxy": {  
-                "/map": {  
-                    "target": "https://restapi.amap.com",  
-                    "changeOrigin": true,  
-                    "ws": true,  
-                    "pathRewrite": {  
-                        "^/map": ""  
-                    }  
-                }  
-            }  
-        }  
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        }
     }
 }
