@@ -130,7 +130,7 @@ var tiem = null
                         let {isPhoneInfoAuthorization,isUserInfoAuthorization} = res.data.data
                         if(isPhoneInfoAuthorization && isUserInfoAuthorization){
                             uni.switchTab({
-                                url:'/pages/tabBar/my/my'
+                                url:'/pages/tabBar/home/home'
                             })
                         }else{
                             $Message({
@@ -158,7 +158,7 @@ var tiem = null
                         this.infoShow = false
                         if(!this.numBerShow && !this.infoShow){
                             uni.switchTab({
-                                url:'/pages/tabBar/my/my'
+                                url:'/pages/tabBar/home/home'
                             })
                         }
                     })
@@ -179,7 +179,7 @@ var tiem = null
                         this.numBerShow = false
                         if(!this.numBerShow && !this.infoShow){
                             uni.switchTab({
-                                url:'/pages/tabBar/my/my'
+                                url:'/pages/tabBar/home/home'
                             })
                         }
                     })
