@@ -4,55 +4,59 @@
         <view class="carBox paddingRL20">
             <view class="carTop flex padding20">
                 <text>共{{get_carList.length}}个套系</text>
-                <text>清空</text>
+                <text @click="onCarListDelAll">清空</text>
             </view>
             <!-- 内容 -->
             <view class="showList" v-if="get_carList.length">
-                111
-            </view>
-            <view class="showList" v-else>
-                222
-            </view>
-            <view class="carLi padding20" v-for="(item,index) in get_carList" :key="index">
-                <view class="carTop flex padding20">
-                    <text>已选门店</text>
-                    <view>
-                        <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
-                        <text class="colorL paddingL20" @click="onChangeShopId">切换</text>
+                <view class="carLi marginB10 padding20" v-for="(item,index) in get_carList" :key="index">
+                    <view class="carTop flex padding20">
+                        <text>已选门店</text>
+                        <view>
+                            <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
+                            <text class="colorL paddingL20" @click="onChangeShopId">切换</text>
+                        </view>
                     </view>
-                </view>
-                <view class="carData flex marginB30">
-                    <image class="img" :src="item.imgs"></image>
-                    <view class="carData_text">
-                        <view class="flex">
-                            <text>{{item.name}}</text>
-                            <text class="fontWight">￥{{item.price}}</text>
-                        </view>
-                        <view class="paddingTB20" v-if="item.times">
-                            <view>预约时间</view>
-                            <text>{{item.times}} {{item.filesTime}}</text>
-                        </view>
-                        <view class="flex">
-                            <text class="colorRed">删除</text>
-                            <view class="flex" @click="onChangeTime">
-                                <text>修改预约时间</text>
-                                <i-icon class="icon" type="setup" size="24" color="#D8D8D8"  />
+                    <view class="carData flex marginB30">
+                        <image class="img" :src="item.imgs"></image>
+                        <view class="carData_text">
+                            <view class="flex">
+                                <text>{{item.name}}</text>
+                                <text class="fontWight">￥{{item.price}}</text>
+                            </view>
+                            <view class="paddingTB20" >
+                                <view v-if="item.times">
+                                    <view>预约时间</view> 
+                                    <text>{{item.times}} {{item.filesTime}}</text>
+                                </view>
+                            </view>
+                            <view class="flex">
+                                <text class="colorRed" @click="onCarListDel(index)">删除</text>
+                                <view class="flex" @click="onChangeTime(index)">
+                                    <text>修改预约时间</text>
+                                    <i-icon class="icon" type="setup" size="24" color="#D8D8D8"  />
+                                </view>
                             </view>
                         </view>
                     </view>
-                </view>
-                
-                <!-- 档期 -->
-                <view class="carData flex marginB30" v-if="item.filesPrice">
-                    <image class="img" :src="item.imgs"></image>
-                    <view class="carData_text">
-                        <view class="flex">
-                            <text>档期费</text>
-                            <text class="fontWight">￥{{item.filesPrice}}</text>
+                    
+                    <!-- 档期 -->
+                    <view class="carData flex marginB30" v-if="item.filesPrice">
+                        <image class="img" :src="item.imgs"></image>
+                        <view class="carData_text">
+                            <view class="flex">
+                                <text>档期费</text>
+                                <text class="fontWight">￥{{item.filesPrice}}</text>
+                            </view>
                         </view>
                     </view>
+                </view>    
+            </view>
+            <view class="showList carLi" v-else>
+                <view class="noList flex">
+                    购物车空空如也
                 </view>
             </view>
+           
         </view>
         <!-- 购物车定位 -->
         <buyCar type="car" @onQuick="onQuick"/>
@@ -60,7 +64,7 @@
 </template>
 
 <script>
-import { mapActions,mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
     export default {
         components:{
@@ -82,7 +86,10 @@ import buyCar from '@/components/buyCar.vue'
             }
         },
         methods:{
-             
+            ...mapMutations('carList',[
+                'mut_carListDel',
+                'mut_carListDelAll'
+            ]),
             // 切换门店
             onChangeShopId(){
                 uni.navigateTo({ 
@@ -91,16 +98,34 @@ import buyCar from '@/components/buyCar.vue'
             },
 
             // 修改预约时间
-            onChangeTime(){
+            onChangeTime(index){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/shoppingCart/components/changeTime' 
+                    url: '/pages/tabBar/shoppingCart/components/changeTime?index=' +  index
                 })
+            },
+
+            // 清空
+            onCarListDelAll(){
+                this.mut_carListDelAll()
+            },
+
+            // 清空单个
+            onCarListDel(index){
+                this.mut_carListDel(index)
             }
+
         }
     }
 </script>
 
 <style lang="scss" scoped>
+.noList{
+    justify-content: center;
+    align-items: center;
+    height: 300rpx;
+    color: #8BABD1;
+    font-size: 36rpx;
+}
 .carBox{
     box-sizing: content-box;
     .carTop{
@@ -125,6 +150,7 @@ import buyCar from '@/components/buyCar.vue'
                width: 350rpx;
                .paddingTB20{
                    font-size: 28rpx;
+                   height: 120rpx;
                }
                .flex{
                    justify-content: space-between;

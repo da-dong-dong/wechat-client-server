@@ -18,7 +18,7 @@
             <!-- 购物车 -->
             <view class="car" v-if="type == 'car'" >
                 <text>合计：</text>
-                <text class="colorRed">￥8889</text>
+                <text class="colorRed">￥{{showPrice}}</text>
             </view>
 
             <view class="but flex" v-if="type == 'car'" style="justify-content: flex-end">
@@ -38,6 +38,13 @@
             ...mapGetters('carList',[
 				'get_carList'
             ]),
+
+            // 展示购物车价格
+            showPrice(){
+                let num = 0;
+                this.get_carList.map(item=>num+=item.price)
+                return num
+            } 
         },
         methods:{
             // 进入购物车

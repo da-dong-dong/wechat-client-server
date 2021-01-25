@@ -30,7 +30,7 @@ var tiem = null
             }
         },
         onLoad(options) {
-            this.checkTimeCode()
+            //this.checkTimeCode()
         },
         methods:{
             ...mapActions('user',[

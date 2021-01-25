@@ -1,6 +1,11 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		
+		// {
+		// 	"path": "pages/tabBar/shoppingCart/components/buyOrder",
+		// 	"style": {
+		// 		"navigationBarTitleText": "确认订单"
+		// 	}
+		// },
 		{
 			"path": "pages/login/wecatLogin",
 			"style": {
@@ -79,6 +84,12 @@
 				"navigationBarTitleText": "预约时间"
 			}
 		},
+		// {
+		// 	"path": "pages/tabBar/shoppingCart/components/buyOrder",
+		// 	"style": {
+		// 		"navigationBarTitleText": "确认订单"
+		// 	}
+		// },
 
 		// //******************************** 订单 ********************************
 		{

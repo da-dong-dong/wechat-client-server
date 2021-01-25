@@ -49,7 +49,7 @@
         </view>
 
         <!-- 购物车定位 -->
-        <buyCar type="details" :num="get_carList.length" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
+        <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
    </view>
 </template>
 
@@ -76,7 +76,7 @@ import buyCar from '@/components/buyCar.vue'
         },
         methods:{
             ...mapMutations('carList',[
-				'mut_carList'
+				'mut_carListAdd'
             ]),
 
             // 切换tab
@@ -102,7 +102,7 @@ import buyCar from '@/components/buyCar.vue'
                         filesTime:'',
                         filesPrice:''
                     }
-                this.mut_carList(datas)
+                this.mut_carListAdd(datas)
             },
 
             // 立刻预约
