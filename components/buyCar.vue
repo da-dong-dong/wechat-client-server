@@ -25,6 +25,23 @@
                 <view class="but_cl padding20" @click="onQuick">下一步</view>
             </view>
 
+            <!-- 支付页 -->
+            <view class="car" v-if="type == 'buyCar'" >
+                <text>合计：</text>
+                <text class="colorRed">￥{{showPrice}}</text>
+            </view>
+
+            <view class="but flex" v-if="type == 'buyCar'" >
+                <view class="padding20 flex"  >
+                    <text class="colorL" @click="onClickServe">服务协议</text>
+                    <checkbox-group @change="onChange">
+                        <checkbox class="paddingL10" value='1'  />
+                    </checkbox-group>
+                </view>
+                <view v-if="check" class="but_cl padding20" @click="onQuick">立刻支付</view>
+                <view v-else class="but_cl padding20" style="color:#999">立刻支付</view>
+            </view>
+
             
         </view>
     </view>
@@ -32,8 +49,15 @@
 
 <script>
  import { mapGetters } from 'vuex'
+
     export default {
         props:['type'],
+        data(){
+            return{
+               check:false
+                
+            }
+        },
         computed:{
             ...mapGetters('carList',[
 				'get_carList'
@@ -59,8 +83,21 @@
 
             // 付款页面
             onQuick(){
-                console.log('付款页面')
-            }
+                this.$emit('onQuick')
+            },
+
+            // 协议
+            onChange(e){
+                this.check = !this.check
+            },
+
+            // 跳转服务协议
+            onClickServe(){
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/my/components/serviceAgreement?index=' +  '1'
+                })
+            },
+
         }
     }
 </script>
@@ -89,7 +126,7 @@
         }
     }
     .but{
-        width: 400rpx;
+        width: 420rpx;
         justify-content: space-between;
         align-items: center;
         .but_cl{

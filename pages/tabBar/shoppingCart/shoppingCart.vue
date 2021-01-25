@@ -60,12 +60,15 @@
         </view>
         <!-- 购物车定位 -->
         <buyCar type="car" @onQuick="onQuick"/>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
+const { $Message } = require('@/wxcomponents/base/index');
     export default {
         components:{
             buyCar
@@ -81,7 +84,7 @@ import buyCar from '@/components/buyCar.vue'
         },
         data(){
             return{
-               
+               check:''
                 
             }
         },
@@ -112,6 +115,20 @@ import buyCar from '@/components/buyCar.vue'
             // 清空单个
             onCarListDel(index){
                 this.mut_carListDel(index)
+            },
+
+            // 跳支付页
+            onQuick(){
+                if(!this.get_carList.length){
+                    $Message({
+                        content:'请选择商品',
+                        type: 'error'
+                    });
+                    return
+                }
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/shoppingCart/components/buyOrder'
+                })
             }
 
         }
@@ -137,7 +154,7 @@ import buyCar from '@/components/buyCar.vue'
     .carLi{
         min-height: 300rpx;
         box-sizing: content-box;
-        border: 1rpx solid black;
+        border: 1rpx solid #D1D1D1;
        .carData{
            justify-content: space-between;
            font-size: 30rpx;

@@ -84,12 +84,12 @@
 				"navigationBarTitleText": "预约时间"
 			}
 		},
-		// {
-		// 	"path": "pages/tabBar/shoppingCart/components/buyOrder",
-		// 	"style": {
-		// 		"navigationBarTitleText": "确认订单"
-		// 	}
-		// },
+		{
+			"path": "pages/tabBar/shoppingCart/components/buyOrder",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			}
+		},
 
 		// //******************************** 订单 ********************************
 		{

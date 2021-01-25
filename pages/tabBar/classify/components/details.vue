@@ -107,7 +107,10 @@ import buyCar from '@/components/buyCar.vue'
 
             // 立刻预约
             onQuick(){
-
+                this.addCar()
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/shoppingCart/components/buyOrder'
+                })
             }
 
         }
