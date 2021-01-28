@@ -18,6 +18,9 @@
 .paddingT10{
     padding-top: 10rpx;
 }
+.paddingT40{
+    padding-top: 40rpx;
+}
 .paddingTB20{
     padding-top: 20rpx;
     padding-bottom: 20rpx;
@@ -29,6 +32,10 @@
 .paddingRL40{
     padding-right: 40rpx;
     padding-left: 40rpx;
+}
+.paddingRL30{
+    padding-right: 30rpx;
+    padding-left: 30rpx;
 }
 .paddingRL20{
     padding-right: 20rpx;
@@ -69,6 +76,12 @@
 .fontSize36{
     font-size: 36rpx;
 }
+.fontSize34{
+    font-size: 34rpx;
+}
+.fontSize28{
+    font-size: 28rpx;
+}
 .fontSize26{
     font-size: 26rpx;
 }
@@ -88,9 +101,23 @@
     width: 100%;
 }
 .colorRed{
-    color:#C60C0C
+    color:#FF4852
 }
 .colorL{
-    color: #34BBC8;
+    color: #FF4852;
 }
-
+.color999{
+    color: #999999;
+}
+// 按钮
+.saveBtn{
+    width: 320rpx;
+    height: 96rpx;
+    background: linear-gradient(180deg, #FF6D75 0%, #FF4852 100%);
+    box-shadow: 0px 6rpx 14rpx rgba(255, 109, 117, 0.52);
+    text-align: center;
+    line-height: 96rpx;
+    color: #fff;
+    border-radius: 48rpx;
+    margin: 100rpx auto;
+}

@@ -116,6 +116,7 @@
 .box{
     width: 100%;
     height: 100%;
+    padding-bottom: 40rpx;
     background: #F5F8FD;
 }
 .order_box{

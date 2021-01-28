@@ -1,16 +1,22 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
 		
+		// {
+		// 	"path": "pages/order/detail/downPhoto",
+		// 	"style": {
+		// 		"navigationBarTitleText": "下载照片"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/order/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "订单详情"
+		// 	}
+		// },
 		{
-			"path": "pages/order/detail/downPhoto",
+			"path": "pages/tabBar/my/my",
 			"style": {
-				"navigationBarTitleText": "下载照片"
-			}
-		},
-		{
-			"path": "pages/order/index",
-			"style": {
-				"navigationBarTitleText": "订单详情"
+				"navigationBarTitleText": "我的"
 			}
 		},
 		
@@ -21,12 +27,7 @@
 			}
 		},
 		//******************************** 我的 ********************************
-		{
-			"path": "pages/tabBar/my/my",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		},
+		
 		{
 			"path": "pages/tabBar/my/components/userInfo",
 			"style": {
@@ -108,12 +109,12 @@
 		},
 
 		
-		// {
-		// 	"path": "pages/order/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "订单详情"
-		// 	}
-		// },
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
 		{
 			"path": "pages/order/detail/signature",
 			"style": {
@@ -126,12 +127,12 @@
 				"navigationBarTitleText": "宾客数据"
 			}
 		},
-		// {
-		// 	"path": "pages/order/detail/downPhoto",
-		// 	"style": {
-		// 		"navigationBarTitleText": "下载照片"
-		// 	}
-		// },
+		{
+			"path": "pages/order/detail/downPhoto",
+			"style": {
+				"navigationBarTitleText": "下载照片"
+			}
+		},
 		{
 			"path": "pages/user/index",
 			"style": {

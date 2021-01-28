@@ -55,15 +55,19 @@ import orederNoClose from './tab/order-no-close.vue';
             },
             // 封装获取高度
             getHtight(indx){
-                let info = uni.createSelectorQuery().in(this).select(`.swiper_${indx}`).boundingClientRect()
-                info.exec(res => {
-                    this.scrollHeight = res[0].height
-                })
+                setTimeout(() => {
+                    let info = uni.createSelectorQuery().in(this).select(`.swiper_${indx}`).boundingClientRect()
+                    info.exec(res => {
+                        this.scrollHeight = res[0].height
+                    })
+                }, 500);
             }
         },
-        updated(){
-           this.getHtight(this.TabCur)
-        },
+        watch:{
+            TabCur(newVal){
+                this.getHtight(newVal)
+            }
+        }
         
     }
 </script>

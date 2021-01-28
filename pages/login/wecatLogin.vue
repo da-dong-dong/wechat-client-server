@@ -34,6 +34,7 @@ var tiem = null
         onLoad(options) {
             //this.checkTimeCode()
             console.log(extConfig)
+            
         },
         methods:{
             ...mapActions('user',[
