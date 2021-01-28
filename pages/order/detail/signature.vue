@@ -1,3 +1,4 @@
+/******************************** 签名画布 ***************************************/
 <template>
     <view>
         <catsignature @save="save" :visible='true' v-if="flag"/>
