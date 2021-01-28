@@ -1,4 +1,4 @@
-/******************************** 未预约 ***************************************/
+/******************************** 未到店 ***************************************/
 <template>
     <view>
       <view class="paddingRL20">
@@ -13,7 +13,7 @@
                                 <text class="fontWight colorRed">待付款</text>
                             </view>
                             <view v-else>
-                                <text class="fontWight paddingRL10 colorRed">未预约</text>
+                                <text class="fontWight paddingRL10 colorRed">进行中</text>
                             </view>
                         </view>
                         <view class="carData flex marginB30 bottb paddingB20">
@@ -104,9 +104,9 @@
                         name:'889宝宝照',
                         price:8889,
                         imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                        times:'',
-                        filesTime:'',
-                        filesPrice:'',
+                        times:'2020-10-18',
+                        filesTime:'16:00',
+                        filesPrice:'123',
                         noOrder:false
                     }
                 ]

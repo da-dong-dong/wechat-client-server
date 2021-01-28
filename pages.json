@@ -1,6 +1,13 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
 		
+		
+		{
+			"path": "pages/tabBar/shoppingCart/components/buyOrder",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			}
+		},
 		// {
 		// 	"path": "pages/order/detail/downPhoto",
 		// 	"style": {
@@ -13,12 +20,6 @@
 		// 		"navigationBarTitleText": "订单详情"
 		// 	}
 		// },
-		{
-			"path": "pages/tabBar/my/my",
-			"style": {
-				"navigationBarTitleText": "我的"
-			}
-		},
 		
 		{
 			"path": "pages/login/wecatLogin",
@@ -27,7 +28,12 @@
 			}
 		},
 		//******************************** 我的 ********************************
-		
+		{
+			"path": "pages/tabBar/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
 		{
 			"path": "pages/tabBar/my/components/userInfo",
 			"style": {
@@ -93,12 +99,12 @@
 				"navigationBarTitleText": "预约时间"
 			}
 		},
-		{
-			"path": "pages/tabBar/shoppingCart/components/buyOrder",
-			"style": {
-				"navigationBarTitleText": "确认订单"
-			}
-		},
+		// {
+		// 	"path": "pages/tabBar/shoppingCart/components/buyOrder",
+		// 	"style": {
+		// 		"navigationBarTitleText": "确认订单"
+		// 	}
+		// },
 
 		// //******************************** 订单 ********************************
 		{
