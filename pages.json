@@ -1,11 +1,19 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		// {
-		// 	"path": "pages/tabBar/shoppingCart/components/buyOrder",
-		// 	"style": {
-		// 		"navigationBarTitleText": "确认订单"
-		// 	}
-		// },
+		
+		{
+			"path": "pages/order/detail/downPhoto",
+			"style": {
+				"navigationBarTitleText": "下载照片"
+			}
+		},
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		
 		{
 			"path": "pages/login/wecatLogin",
 			"style": {
@@ -100,18 +108,30 @@
 		},
 
 		
-		{
-			"path": "pages/order/index",
-			"style": {
-				"navigationBarTitleText": "订单详情"
-			}
-		},
+		// {
+		// 	"path": "pages/order/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "订单详情"
+		// 	}
+		// },
 		{
 			"path": "pages/order/detail/signature",
 			"style": {
 				"navigationBarTitleText": "电子签名"
 			}
 		},
+		{
+			"path": "pages/order/detail/seeGuest",
+			"style": {
+				"navigationBarTitleText": "宾客数据"
+			}
+		},
+		// {
+		// 	"path": "pages/order/detail/downPhoto",
+		// 	"style": {
+		// 		"navigationBarTitleText": "下载照片"
+		// 	}
+		// },
 		{
 			"path": "pages/user/index",
 			"style": {

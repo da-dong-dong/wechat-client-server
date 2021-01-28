@@ -1,6 +1,6 @@
 /******************************** 评价 ***************************************/
 <template>
-    <view>
+    <view class="order_box">
         <noView />
     </view>
 </template>
@@ -13,5 +13,9 @@ import noView from '@/components/404.vue';
 </script>
 
 <style lang="scss" scoped>
-
+.order_box{
+    width: 100%;
+    height: 100%;
+    background: #F5F8FD;
+}
 </style>

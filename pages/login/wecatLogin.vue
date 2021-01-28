@@ -14,6 +14,8 @@ import { mapActions,mapGetters } from 'vuex'
 import { getCode, getAuthorState, setPhoneNoInfo, setUserInfo } from '@/util/api/user.js'
 // 获取当前小程序信息
 const accountInfo = uni.getAccountInfoSync(); 
+// 获取ext
+const extConfig = uni.getExtConfigSync ? uni.getExtConfigSync() : {}
 const base64 = require('@/util/lib/base64.js').Base64;
 const { $Message } = require('@/wxcomponents/base/index');
 var tiem = null
@@ -31,6 +33,7 @@ var tiem = null
         },
         onLoad(options) {
             //this.checkTimeCode()
+            console.log(extConfig)
         },
         methods:{
             ...mapActions('user',[

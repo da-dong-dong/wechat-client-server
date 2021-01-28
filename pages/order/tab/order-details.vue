@@ -1,78 +1,81 @@
 /******************************** 详情 ***************************************/
 <template>
-    <view>
-        <view class="order_box">
-            <view class="order_top">
-                <view class="order_heade">
-                     <image class="order_heade_img" src="/static/image/oreder_user.png"></image>
-                     <text>吴彦祖</text>
-                </view>
-                <view class="order_info">
-                    <view class="order_info_flx">
-                        <view>
-                            订单门店：<text>郑州金夫人婚纱摄影</text>
-                        </view>
+    <view >
+        <view class="box">
+            <view class="order_box">
+                <view class="order_top">
+                    <view class="order_heade">
+                        <image class="order_heade_img" src="/static/image/oreder_user.png"></image>
+                        <text>吴彦祖</text>
                     </view>
-                    <view class="order_info_flx">
-                        <view>
-                            套系名称：<text>5999天长地久婚纱照</text>
+                    <view class="order_info">
+                        <view class="order_info_flx">
+                            <view>
+                                订单门店：<text>郑州金夫人婚纱摄影</text>
+                            </view>
                         </view>
-                    </view>
-                    <view class="order_info_flx">
-                        <view>
-                            套系价格：<text>5999<text class="red">（已付:1999 欠款:4000）</text></text>
+                        <view class="order_info_flx">
+                            <view>
+                                套系名称：<text>5999天长地久婚纱照</text>
+                            </view>
                         </view>
-                    </view>
-                    <view class="order_info_flx">
-                        <view>
-                            拍摄日期：<text>待安排</text>
+                        <view class="order_info_flx">
+                            <view>
+                                套系价格：<text>5999<text class="red">（已付:1999 欠款:4000）</text></text>
+                            </view>
                         </view>
-                    </view>
-                    <view class="order_info_flx">
-                        <view>
-                            订单日期：<text>2020年10月1日</text>
+                        <view class="order_info_flx">
+                            <view>
+                                拍摄日期：<text>待安排</text>
+                            </view>
                         </view>
-                    </view>
-                   
-                </view>
-            </view>
-            <!-- 约单 -->
-            <view class="order_show">
-                <view class="oreder_img">
-                    <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                    <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                </view>
-                <view class="order_show_top">
-                    <view>订单预约单</view>
-                    <view class="text_right" @click="onclickSigna(1)">
-                        <text>去签字</text> 
-                        <text> > </text> 
+                        <view class="order_info_flx">
+                            <view>
+                                订单日期：<text>2020年10月1日</text>
+                            </view>
+                        </view>
+                    
                     </view>
                 </view>
-                <view class="order_show_list">
-                    <view>接收时间：2020.11.11 20:0</view>
-                    <view>接收时间：2020.11.11 20:0</view>
+                <!-- 约单 -->
+                <view class="order_show">
+                    <view class="oreder_img">
+                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
+                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
+                    </view>
+                    <view class="order_show_top">
+                        <view>订单预约单</view>
+                        <view class="text_right" @click="onclickSigna(1)">
+                            <text>去签字</text> 
+                            <text> > </text> 
+                        </view>
+                    </view>
+                    <view class="order_show_list">
+                        <view>接收时间：2020.11.11 20:0</view>
+                        <view>接收时间：2020.11.11 20:0</view>
+                    </view>
                 </view>
-            </view>
 
-            <view class="order_show">
-                <view class="oreder_img">
-                    <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                    <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                </view>
-                <view class="order_show_top">
-                    <view>订单预约单</view>
-                    <view class="text_right" @click="onclickSigna(2)" > 
-                        <text class="red">已拒签</text> 
-                        <text> > </text> 
+                <view class="order_show">
+                    <view class="oreder_img">
+                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
+                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
                     </view>
-                </view>
-                <view class="order_show_list">
-                    <view>接收时间：2020.11.11 20:0</view>
-                    <view>接收时间：2020.11.11 20:0</view>
+                    <view class="order_show_top">
+                        <view>订单预约单</view>
+                        <view class="text_right" @click="onclickSigna(2)" > 
+                            <text class="red">已拒签</text> 
+                            <text> > </text> 
+                        </view>
+                    </view>
+                    <view class="order_show_list">
+                        <view>接收时间：2020.11.11 20:0</view>
+                        <view>接收时间：2020.11.11 20:0</view>
+                    </view>
                 </view>
             </view>
         </view>
+       
     </view>
 </template>
 
@@ -110,10 +113,16 @@
         height: 58rpx;
     }
 }
+.box{
+    width: 100%;
+    height: 100%;
+    background: #F5F8FD;
+}
 .order_box{
     margin: 40rpx 30rpx;
     box-sizing: content-box;
     width: 690rpx;
+    
     .order_top{
         min-height: 394rpx;
         background: #FFFFFF;

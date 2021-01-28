@@ -66,9 +66,9 @@
             // 展示购物车价格
             showPrice(){
                 let num = 0;
-                this.get_carList.map(item=>num+=item.price)
+                this.get_carList.map(item=>num+=item.price+Number(item.filesPrice))
                 return num
-            } 
+            }
         },
         methods:{
             // 进入购物车

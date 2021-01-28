@@ -13,7 +13,7 @@
         <text :class="item.icon"></text>
         <span class="border_post">
             {{item.name}}
-            <view class="border_box">
+            <view class="border_box" v-if="showBorder">
                 <view class="border"></view>
                 <view class="border"></view>
             </view>
@@ -64,7 +64,13 @@ export default {
             default() {
                 return 'text-blue';
             }
-        }
+        },
+        showBorder: {
+            type: Boolean,
+            default() {
+                return true;
+            }
+        },
     },
     methods: {
         tabSelect(index, e) {

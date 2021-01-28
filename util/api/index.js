@@ -13,7 +13,10 @@ let baseUrl = {
     setUserInfo: `${base}/api/template/ma/set_user_info`, // 设置小程序用户信息
     
     getCityShop: `${base}/api/template/ma/get_city_shop`, // 获取门店信息
-
+	
+	getListAssemblyCategory: `${base}/api/template/ma/list_assembly_category`, // 获取套系类别列表
+	getPageAssemblyDetail: `${base}/api/template/ma/page_assembly_detail_map`, // 获取套系分页
+	getAssemblyDetail: `${base}/api/template/ma/get_assembly_detail`, // 获取套系详情
 
     getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }

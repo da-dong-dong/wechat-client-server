@@ -1,0 +1,71 @@
+.carLi{
+    min-height: 300rpx;
+    box-sizing: content-box;
+    border: 1rpx solid #D1D1D1;
+     .carTop{
+        justify-content: space-between;
+        align-items: center;
+        color: #333;
+        font-size: 28rpx;
+    }
+    .carData{
+        justify-content: space-between;
+        font-size: 30rpx;
+        height: 300rpx;
+        .img{
+            width: 240rpx;
+            height: auto;
+        }
+       
+        .carData_text{
+            width: 350rpx;
+            .paddingTB20{
+                font-size: 28rpx;
+                height: 120rpx;
+            }
+            .flex{
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+    .bottb{
+        border-bottom: 1rpx solid #D1D1D1;
+    }
+}
+.noList{
+    justify-content: center;
+    align-items: center;
+    height: 300rpx;
+    color: #8BABD1;
+    font-size: 36rpx;
+}
+.textContBox{
+    font-size: 30rpx;
+    justify-content: space-between;
+    .textCont{
+        width: auto;
+    }
+}
+.textCont{
+    width: 100%;
+    justify-content: flex-end
+}
+.noOrder{
+    justify-content: space-between;
+    align-items: center;
+    font-size: 34rpx;
+    .noOrder_btn{
+        font-size: 28rpx;
+        padding: 10rpx 20rpx;
+        border-radius: 20rpx;
+        box-sizing: border-box;
+        &:nth-child(1){
+            border: 1rpx solid #D1D1D1;
+        }
+        &:nth-child(2){
+           background-color: #34B9C0;
+           color: #fff;
+        }
+    }
+}

@@ -69,6 +69,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                     success: (data) => {  
                         let {city} = data[0].regeocodeData.addressComponent
                         this.cityVal = city
+                        console.log(data)
                     }  
                 }); 
             },
