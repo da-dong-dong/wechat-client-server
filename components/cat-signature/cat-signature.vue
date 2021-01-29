@@ -207,15 +207,15 @@
 					width: 228rpx;
 					height: 82rpx;
 					border-radius: 4rpx;
-					border: 2rpx solid #5893FF;
-					color: #5893FF;
+					border: 2rpx solid #FF4852;
+					color: #FF4852;
 					transform-origin: 50rpx;
     				transform: rotate(90deg);
 				}
 				.btn2{
 					width: 228rpx;
 					height: 82rpx;
-					background: #5893FF;
+					background: #FF4852;
 					border-radius: 4rpx;
 					color: #FFFFFF;
 					transform-origin: 50rpx;

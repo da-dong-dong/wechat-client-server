@@ -72,42 +72,54 @@
         <!-- 已选套系 -->
         <view class="paddingRL20" v-if="get_carList.length">
             <view class="carBuyList"  v-for="(item,index) in get_carList" :key="index">
-                <view class="carLi marginB10 padding20">
-                    <view class="carData flex marginB30">
+                <view class="carLi marginB20 padding20">
+                    <view class="carData flex marginB20">
                         <image class="img" :src="item.imgs"></image>
                         <view class="carData_text">
                             <view class="flex">
                                 <text>{{item.name}}</text>
-                                <text class="fontWight">￥{{item.price}}</text>
                             </view>
-                            <view class="paddingTB20" >
-                                <view v-if="item.times">
-                                    <view>预约时间</view> 
-                                    <text>{{item.times}} {{item.filesTime}}</text>
-                                </view>
+                            <view class="textNub flex">
+                                <text>X1</text>
+                                <text class="fontWight colorRed">￥{{item.price}}</text>
                             </view>
                         </view>
+                    </view>
+
+                    <!-- 档期费 -->
+                    <view class="flex priceAdd fontSize30">
+                        <text>档期附加费</text>
+                        <text>￥200</text>
                     </view>
                     
                 </view>
                 
                 <!-- 预约时间 -->
-                <view class="marginT10 carTimeBox">
+                <view class="marginT10 carTimeBox marginB20">
                     <view class="carTime  flex">
-                        <text class="paddingRL40 fontSize36">预约时间</text>
-                        <text class="paddingL20">{{item.times}} {{item.filesTime}}</text>
+                        <text class="paddingRL40">预约时间</text>
+                        <view class="flex">
+                            <text class="">{{item.times}} {{item.filesTime}}</text>
+                            <i-icon class="icon paddingRL30" type="enter" size="20" color="#707070"  />
+                        </view>
                     </view>
                     <view class="carTime flex">
-                        <text class="paddingRL40 fontSize36">预约门店</text>
-                        <text class="paddingL20">{{get_shopId?get_shopId.shopName:''}}</text>
+                        <text class="paddingRL40">预约门店</text>
+                        <view class="flex">
+                            <text class="">{{get_shopId?get_shopId.shopName:'请选择'}}</text>
+                            <i-icon class="icon paddingRL30" type="enter" size="20" color="#707070"  />
+                        </view>
                     </view>
                 </view>    
             </view>
         </view>
 
          <!-- 顾客须知 -->
-        <view class="textDet paddingRL20 paddingT10 marginB10">
-            <view>顾客须知：</view>
+        <view class="textDet paddingRL20 paddingT10 marginB10 colorDDD">
+            <view>
+                <i-icon class="icon" type="warning_fill" size="18" color="#FCB901"  />
+                 顾客须知：
+            </view>
             <text>预约成功后拍摄前48小时可免费修改两次,不足48小时需收20%改期费</text>
         </view>
 
@@ -212,25 +224,27 @@ import buyCar from '@/components/buyCar.vue'
     }
 }
 .textDet{
-    font-size: 28rpx;
+    font-size: 18rpx;
 }
 .carLi{
-        min-height: 300rpx;
+        min-height: 234rpx;
         box-sizing: content-box;
-        border: 1rpx solid #D1D1D1;
+        background: #FFFFFF;
+        border-radius: 20rpx;
        .carData{
            justify-content: space-between;
            font-size: 30rpx;
-           height: 300rpx;
+           height: 200rpx;
+           border-bottom:1px solid #D1D1D1;   
            .img{
                width: 160rpx;
                height: 160rpx;
+               border-radius: 20rpx;
            }
            .carData_text{
                width: 450rpx;
-               .paddingTB20{
-                   font-size: 28rpx;
-                   height: 120rpx;
+               .textNub{
+                   margin-top: 80rpx;
                }
                .flex{
                    justify-content: space-between;
@@ -238,12 +252,23 @@ import buyCar from '@/components/buyCar.vue'
                }
            }
        }
+       // 档期
+       .priceAdd{
+           justify-content: space-between;
+       }
     }
 .carTimeBox{
-    border: 1rpx solid #D1D1D1;
+    background: #FFFFFF;
+    border-radius: 20rpx;
+    font-size: 28rpx;
+    color: #333333;
     .carTime{
         align-items: center;
+        justify-content: space-between;
         height: 90rpx;
+        .flex{
+            align-items: center;
+        }
         &:nth-child(1){
             border-bottom: 1rpx solid #D1D1D1;
         }

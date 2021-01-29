@@ -139,9 +139,9 @@
         width: 88rpx;
         height: 40rpx;
         line-height: 40rpx;
-        background: #5893FF;
+        background: #FF4852;
         border-radius: 16rpx;
-        box-shadow: 0 4rpx 14rpx #5893FF;
+        box-shadow: 0 4rpx 14rpx #FF4852;
         text-align: center;
         color: #fff;
         margin-left: 20rpx;
@@ -184,7 +184,7 @@
             position: absolute;
             width: 2rpx;
             height: 58rpx;
-            background: #5893FF;
+            background: #FF4852;
             top: 30rpx;
             left: 22rpx;
         }
@@ -229,7 +229,7 @@
             font-size: 28rpx;
             font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
-            color: #5893FF;
+            color: #FF4852;
             text-align: center;
             line-height: 64rpx;
             display: inline-block;

@@ -137,7 +137,7 @@
         font-size: 28rpx;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: #5893FF;
+        color: #FF4852;
         border-bottom: 1px solid #DCDCDC;
         .order_heade_img{
             width: 32rpx;
@@ -199,7 +199,7 @@
         font-size: 24rpx;
         text{
             &:nth-child(1){
-                color: #5893FF;
+                color: #FF4852;
                 margin-right: 10rpx;
             }
             &:nth-child(2){

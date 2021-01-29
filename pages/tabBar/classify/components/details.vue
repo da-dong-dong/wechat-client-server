@@ -1,37 +1,41 @@
 /******************************** 套系详情 ***************************************/
 <template>
-   <view>
+   <view class="boxDitel">
         <!-- 轮播 -->
         <banner :imgs="imgs"/>
 
         <!-- 内容文字 -->
-        <view class="content marginT10 padding10 marginRL10">
-            <view>
-                套系名称：<text>8899宝宝照</text>
+        <view class="content marginB30 padding10 marginRL10">
+            <view class="flex content_top">
+                <text>8899宝宝照</text>
+                <text class="colorRed">￥8899</text>
             </view>
-            <view class="paddingTB20">
-                套系价格：<text class="colorRed">￥8899</text>
-            </view>
-            <view>
-                服务内容：
-            </view>
-            <view class="context_li  flex">
-                <view class="flex paddingRL20 paddingT10">
-                    <text>8寸水晶册</text><text>X 1</text>
+            <view class="content_text flex">
+                <view class="content_text_l">
+                    服务内容
                 </view>
-                <view class="flex paddingRL20 paddingT10">
-                    <text>8寸水晶册</text><text>X 1</text>
-                </view>
-                <view class="flex paddingRL20 paddingT10">
-                    <text>8寸水晶册</text><text>X 1</text>
+                <view class="context_li  flex">
+                    <view class="flex paddingRL20 paddingT10">
+                       <i-icon class="icon " type="right" size="20" color="#FF4852"  />
+                       <text>8寸水晶册</text><text>X 1</text>
+                    </view>
+                    <view class="flex paddingRL20 paddingT10">
+                        <i-icon class="icon " type="right" size="20" color="#FF4852"  />
+                        <text>8寸水晶册</text><text>X 1</text>
+                    </view>
+                    <view class="flex paddingRL20 paddingT10">
+                        <i-icon class="icon " type="right" size="20" color="#FF4852"  />
+                        <text>8寸水晶册</text><text>X 1</text>
+                    </view>
                 </view>
             </view>
+            
         </view>
 
         <!-- 图片展示 -->
         <view class="imgShow marginT10 marginRL10">
             <!-- tab切换 -->
-            <view class="imgTab flex fontSize36 textC marginB30">
+            <view class="imgTab flex fontSize24 textC marginB30">
                 <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">{{item}}</view>
             </view>
 
@@ -118,29 +122,57 @@ import buyCar from '@/components/buyCar.vue'
 </script>
 
 <style lang="scss" scoped>
-
+.boxDitel{
+    background: #F9F9F9;
+}
 .content{
-    border: 1px solid #9BA3B7;
-    font-size: 32rpx;
+    background: rgba(255,255,255,0.8);
+    border-radius: 20rpx;
+    font-size: 30rpx;
     box-sizing: content-box;
+    .content_top{
+        padding: 40rpx 25rpx;
+        justify-content: space-between;
+        border-bottom: 1px solid #DDDDDD;
+        font-weight: bold;
+    }
+    .content_text{
+        justify-content: space-around;
+        align-items: center;
+        font-size: 24rpx;
+        color:#999999;
+        .content_text_l{
+            width: 80rpx;
+            line-height: 40rpx;
+            font-size: 30rpx;
+            margin-left: 40rpx;
+        }
+    }
     .context_li{
         flex-wrap: wrap;
-        font-size: 28rpx;
+        width: 550rpx;
         .flex{
-            width: 300rpx;
+            width: 230rpx;
+            height: 80rpx;
+            align-items: center;
             justify-content: space-between;
+            .icon{
+                padding-right: 20rpx;
+            }
         }
     }
 }
 .imgShow{
-    border: 1px solid #9BA3B7;
-    box-sizing: content-box;
+    background: #fff;
+    border-radius: 20rpx;
     .imgTab{
+        padding-top: 30rpx;
         .imgTab_li{
             width: 50%;
         }
         .active{
-            color: #34B9C2;
+            color: #FF4852;
+            font-weight: bold;
         }
     }
     .showTab{

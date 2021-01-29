@@ -123,7 +123,7 @@ swiper {
         width: 50rpx;
         height: 100%;
         border-radius: 20rpx;
-        background: #5893FF;
+        background: #FF4852;
         &:nth-child(1){
             margin-right: 10rpx;
         }
@@ -160,7 +160,7 @@ swiper {
     background-color: #ffffff;
 }
 .bg-blue{
-    background-color: #5893FF;
+    background-color: #FF4852;
 }
 .text-orange{
   color: #f37b1d
