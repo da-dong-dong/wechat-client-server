@@ -1,7 +1,12 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		
-		
+		//******************************** 登陆 ********************************
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登陆"
+			}
+		},
 		
 		// {
 		// 	"path": "pages/order/detail/downPhoto",
@@ -22,13 +27,6 @@
 			"path": "pages/tabBar/my/my",
 			"style": {
 				"navigationBarTitleText": "我的"
-			}
-		},
-		//******************************** 登陆 ********************************
-		{
-			"path": "pages/login/wecatLogin",
-			"style": {
-				"navigationBarTitleText": "登陆"
 			}
 		},
 		{
@@ -140,12 +138,6 @@
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的订单"
-			}
-		},
-		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationBarTitleText": "绑定手机号"
 			}
 		},
 		{

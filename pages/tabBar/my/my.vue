@@ -99,7 +99,7 @@
                     success: (result) => {
                         clearInterval(getApp().globalData.time)
                         uni.redirectTo({ 
-                            url: '/pages/login/wecatLogin' 
+                            url: '/pages/login/index' 
                         })
                     },
                     fail: (error) => {}

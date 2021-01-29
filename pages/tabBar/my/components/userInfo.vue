@@ -42,7 +42,9 @@
                 <view class="flex">
                     <text class="paddingL20 color999">地址</text>
                 </view>
-                <input class="width" type="text" placeholder="请输入地址" v-model="userInfo.address"/>
+                <pick-regions :defaultRegion="defaultRegionCode" @getRegion="handleGetRegion" class="width" >
+                    <text >{{regionName?regionName:'地址'}}</text>
+                </pick-regions>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
         </view>
@@ -53,7 +55,15 @@
 </template>
 
 <script>
+import pickRegions from '@/components/pick-regions/pick-regions.vue'
     export default {
+        components:{ pickRegions },
+        computed:{
+            regionName(){
+                // 转为字符串
+                return this.region.map(item=>item.name).join(' ')
+            }
+        },
         data(){
             return{
                 userInfo:{
@@ -66,7 +76,9 @@
                 },
                 sexArr:['男','女'],
                 index:0,
-                
+                region:[],
+                defaultRegion:['广东省','广州市','番禺区'],
+                defaultRegionCode:'440113'
             }
         },
         methods:{
@@ -79,6 +91,12 @@
             // 时间
             bindDateChange (e, item) {
 				item.time = new Date(e.target.value).getTime()
+            },
+
+             // 获取选择的地区
+            handleGetRegion(region){
+                this.region = region
+                console.log(region)
             },
             
             // 保存

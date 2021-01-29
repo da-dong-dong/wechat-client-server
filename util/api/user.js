@@ -11,11 +11,6 @@ export const getCode = (params) => {
 	return postObj(baseUrl.getCode, params)
 }
 
-// 获取用户授权状态
-export const getAuthorState = (params) => {
-	return get(baseUrl.getAuthorState, params)
-}
-
 // 设置小程序用户手机信息
 export const setPhoneNoInfo = (params) => {
 	return postObj(baseUrl.setPhoneNoInfo, params)

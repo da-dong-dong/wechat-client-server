@@ -1,4 +1,5 @@
 <script>
+import { mapGetters, mapActions } from 'vuex'
 	export default {
 		globalData: {  
             tiem: null  
@@ -6,8 +7,39 @@
 		onLaunch: function() {
 			console.log('App Launch')
 		},
-		onShow: function() {
-			console.log('App Show')
+		mounted(){
+			console.log('AppMounted')
+			this.getStorageCode()
+		},
+		methods: {
+			...mapActions('user',[
+				'act_code'
+			]),
+
+			// 本地缓存获取code
+			getStorageCode(){
+				uni.getStorage({
+					key: 'code',
+					success: res => {
+						this.setCode(res.data)
+						uni.switchTab({
+                            url:'/pages/tabBar/home/home'
+                        })
+					},
+					fail: function(err) {
+						uni.redirectTo({
+							url:'/pages/login/index'
+						})
+					}
+				})
+			},
+
+			// 存储store
+			setCode(code){
+				this.act_code(code)
+			}
+
+
 		},
 		onHide: function() {
 			console.log('App Hide')
