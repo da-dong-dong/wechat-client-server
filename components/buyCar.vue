@@ -11,8 +11,8 @@
             </view>
 
             <view class="but flex" v-if="type == 'details'">
-                <view class="but_cl padding20" @click="addCar">加入购物车</view>
-                <view class="but_cl padding20" @click="onQuick">立刻预约</view>
+                <view class="but_cl marginRL10" @click="addCar">加入购物车</view>
+                <view class="but_cl " @click="onQuick">立刻预约</view>
             </view>
             
             <!-- 购物车 -->
@@ -22,7 +22,7 @@
             </view>
 
             <view class="but flex" v-if="type == 'car'" style="justify-content: flex-end">
-                <view class="but_cl padding20" @click="onQuick">下一步</view>
+                <view class="but_cl " @click="onQuick">下一步</view>
             </view>
 
             <!-- 支付页 -->
@@ -32,14 +32,14 @@
             </view>
 
             <view class="but flex" v-if="type == 'buyCar'" >
-                <view class="padding20 flex"  >
+                <!-- <view class="padding20 flex"  >
                     <text class="colorL" @click="onClickServe">服务协议</text>
                     <checkbox-group @change="onChange">
                         <checkbox class="paddingL10" value='1'  />
                     </checkbox-group>
-                </view>
-                <view v-if="check" class="but_cl padding20" @click="onQuick">立刻支付</view>
-                <view v-else class="but_cl padding20" style="color:#999">立刻支付</view>
+                </view> -->
+                <view v-if="check" class="but_cl " @click="onQuick">立刻支付</view>
+                <view v-else class="but_cl " >立刻支付</view>
             </view>
 
             
@@ -126,20 +126,19 @@
         }
     }
     .but{
-        width: 420rpx;
-        justify-content: space-between;
+        width: 320rpx;
+        justify-content: flex-end;
         align-items: center;
         .but_cl{
-            border-radius: 20rpx;
-            &:nth-child(1){
-                color: #34B9C0;
-                border: 1px solid #34B9C0;
-                box-sizing: border-box;
-            }
-            &:nth-child(2){
-                background: #34B9C0;
-                color: #fff;
-            }
+            width: 160rpx;
+            height: 64rpx;
+            line-height: 64rpx;
+            text-align: center;
+            color: #fff;
+            font-size: 28rpx;
+            border-radius: 40rpx;
+            background: linear-gradient(270deg, #FF4852 0%, #FF6D75 100%);
+            box-sizing: border-box;
         }
     }
 }

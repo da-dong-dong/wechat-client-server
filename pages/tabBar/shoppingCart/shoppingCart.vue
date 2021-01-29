@@ -7,45 +7,26 @@
                 <text @click="onCarListDelAll">清空</text>
             </view>
             <!-- 内容 -->
+            <view class="carTop flex padding20">
+                <text>已选门店</text>
+                <view>
+                    <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
+                    <text class="colorL paddingL20" @click="onChangeShopId">切换</text>
+                </view>
+            </view>
             <view class="showList" v-if="get_carList.length">
-                <view class="carLi marginB10 padding20" v-for="(item,index) in get_carList" :key="index">
-                    <view class="carTop flex padding20">
-                        <text>已选门店</text>
-                        <view>
-                            <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
-                            <text class="colorL paddingL20" @click="onChangeShopId">切换</text>
-                        </view>
-                    </view>
+                <view class="carLi marginB20 padding20" v-for="(item,index) in get_carList" :key="index">
+                    
                     <view class="carData flex marginB30">
                         <image class="img" :src="item.imgs"></image>
                         <view class="carData_text">
                             <view class="flex">
-                                <text>{{item.name}}</text>
-                                <text class="fontWight">￥{{item.price}}</text>
+                                <text class="color333">{{item.name}}</text>
+                                <text class="fontWight colorRed">￥{{item.price}}</text>
                             </view>
-                            <view class="paddingTB20" >
-                                <view v-if="item.times">
-                                    <view>预约时间</view> 
-                                    <text>{{item.times}} {{item.filesTime}}</text>
-                                </view>
-                            </view>
-                            <view class="flex">
+                            <view class="color999 flex">
+                                <text>X 1</text>
                                 <text class="colorRed" @click="onCarListDel(index)">删除</text>
-                                <view class="flex" @click="onChangeTime(index)">
-                                    <text>修改预约时间</text>
-                                    <i-icon class="icon" type="setup" size="24" color="#D8D8D8"  />
-                                </view>
-                            </view>
-                        </view>
-                    </view>
-                    
-                    <!-- 档期 -->
-                    <view class="carData flex marginB30" v-if="item.filesPrice">
-                        <image class="img" :src="item.imgs"></image>
-                        <view class="carData_text">
-                            <view class="flex">
-                                <text>档期费</text>
-                                <text class="fontWight">￥{{item.filesPrice}}</text>
                             </view>
                         </view>
                     </view>
@@ -139,12 +120,14 @@ const { $Message } = require('@/wxcomponents/base/index');
 .noList{
     justify-content: center;
     align-items: center;
-    height: 300rpx;
+    height: 234rpx;
     color: #8BABD1;
     font-size: 36rpx;
 }
 .carBox{
     box-sizing: content-box;
+    background: #F9F9F9;
+    min-height: 100vh;
     .carTop{
         justify-content: space-between;
         align-items: center;
@@ -152,22 +135,21 @@ const { $Message } = require('@/wxcomponents/base/index');
         font-size: 28rpx;
     }
     .carLi{
-        min-height: 300rpx;
         box-sizing: content-box;
-        border: 1rpx solid #D1D1D1;
+        background: #fff;
+        border-radius: 20rpx;
        .carData{
            justify-content: space-between;
            font-size: 30rpx;
-           height: 300rpx;
            .img{
-               width: 240rpx;
-               height: auto;
+               width: 160rpx;
+               height: 160rpx;
            }
            .carData_text{
-               width: 350rpx;
-               .paddingTB20{
+               width: 450rpx;
+               .color999{
                    font-size: 28rpx;
-                   height: 120rpx;
+                   margin-top: 80rpx;
                }
                .flex{
                    justify-content: space-between;

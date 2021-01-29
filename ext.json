@@ -3,16 +3,7 @@
     "extAppid": "wxf84f228e76e1d984",
     "directCommit": false,
     "ext": {
-      "name": "wechat",
-      "appId": "wxb0276f88c88697b9",
-      "attr": {
-        "host": "http://swx.go.lyfz.net",
-        "appName":"模板演示",
-        "users": [
-            "user_1",
-            "user_2"
-        ]
-      },
+      "appName":"模板演示",
       "request": ["https://restapi.amap.com"]
     },
     "extPages": {

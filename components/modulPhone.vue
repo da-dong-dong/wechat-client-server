@@ -53,7 +53,7 @@
 			.text_blue{
 				font-size: 40rpx;
 				font-weight: bold;
-				color: #5893FF;
+				color: #FF4852;
 				text-align: center;
 				padding-bottom: 60rpx;
 			}

@@ -114,6 +114,8 @@ swiper {
     line-height: 90upx;
     margin: 0 10upx;
     padding: 0 20upx;
+    font-size: 30rpx;
+    color: #333333;
 }
 
 .wuc-tab-item.cur {
@@ -121,7 +123,7 @@ swiper {
         width: 50rpx;
         height: 100%;
         border-radius: 20rpx;
-        background: #5893FF;
+        background: #FF4852;
         &:nth-child(1){
             margin-right: 10rpx;
         }
@@ -149,7 +151,7 @@ swiper {
     flex: 1;
 }
 .text-blue{
-  color:#5893FF;
+  color:#FF4852;
 }
 .text-white{
   color:#ffffff;
@@ -158,7 +160,7 @@ swiper {
     background-color: #ffffff;
 }
 .bg-blue{
-    background-color: #5893FF;
+    background-color: #FF4852;
 }
 .text-orange{
   color: #f37b1d

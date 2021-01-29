@@ -15,6 +15,9 @@
 .padding20{
     padding: 20rpx;
 }
+.padding30{
+    padding: 30rpx;
+}
 .paddingT10{
     padding-top: 10rpx;
 }
@@ -36,6 +39,10 @@
 .paddingRL30{
     padding-right: 30rpx;
     padding-left: 30rpx;
+}
+.paddingRL10{
+    padding-right: 10rpx;
+    padding-left: 10rpx;
 }
 .paddingRL20{
     padding-right: 20rpx;
@@ -61,12 +68,18 @@
 .marginB10{
     margin-bottom: 10rpx;
 }
+.marginB20{
+    margin-bottom: 20rpx;
+}
 .marginB30{
     margin-bottom: 30rpx;
 }
 .marginRL10{
     margin-right: 10rpx;
     margin-left: 10rpx;
+}
+.marginR30{
+    margin-right: 30rpx;
 }
 .marginL80{
     margin-left: 80rpx;
@@ -78,6 +91,12 @@
 }
 .fontSize34{
     font-size: 34rpx;
+}
+.fontSize32{
+    font-size: 32rpx;
+}
+.fontSize30{
+    font-size: 30rpx;
 }
 .fontSize28{
     font-size: 28rpx;
@@ -109,6 +128,15 @@
 .color999{
     color: #999999;
 }
+.color000{
+    color: #000000;
+}
+.color333{
+    color: #333333;
+}
+.colorDDD{
+    color: #DDDDDD;
+}
 // 按钮
 .saveBtn{
     width: 320rpx;
@@ -121,3 +149,5 @@
     border-radius: 48rpx;
     margin: 100rpx auto;
 }
+
+

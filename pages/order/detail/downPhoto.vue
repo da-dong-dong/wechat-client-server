@@ -6,7 +6,7 @@
                 <view class="imgList">
                     <view class="chebos" v-for="(item,index) in imgs" :key="index">
                         <image class="img"  :src="item"></image>
-                        <checkbox :value="index" class="checks" color="#5893FF"/>
+                        <checkbox :value="index" class="checks" color="#FF4852"/>
                     </view>
                 </view>
              </checkbox-group>

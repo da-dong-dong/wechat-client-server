@@ -83,8 +83,8 @@
         .listBtn{
             width: 170rpx;
             height: 52rpx;
-            background: #5893FF;
-            box-shadow: 0px 4rpx 16rpx 0rpx #BAD3FF;
+            background: #FF4852;
+            box-shadow: 0px 4rpx 16rpx 0rpx #FF6068;
             border-radius: 4rpx;
             line-height: 52rpx;
             text-align: center;
@@ -99,7 +99,7 @@
                 color: #999999;
                 text{
                     &:nth-child(1){
-                        color: #5893FF;
+                        color: #FF4852;
                         margin-right: 30rpx;
                     }
                 }
