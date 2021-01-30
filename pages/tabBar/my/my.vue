@@ -4,22 +4,26 @@
         <!-- 用户信息 -->
         <view class="user_box paddingT40  paddingRL30">
             <view class="flex">
-                <image class="login_logo" src="/static/image/login.png"></image>
-                <view class="text_box">
-                    <text class="fontWight fontSize34">大东东</text>
-                    <text>1306825494</text>
+                <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
+                    <image class="login_logo" :src="get_headimgUrl"></image>
+                </button>
+                <view class="text_box paddingRL30">
+                    <text class="fontWight fontSize34">{{get_nickName}}</text>
+                    <text>{{get_phone}}</text>
                 </view>
             </view>
         </view>
 
         <!-- 用户设置 -->
         <view class="user_seting marginT10">
-            <view class="user_seting_li flex paddingRL20" @click="onClickUserInfo">
-                <view class="flex">
-                    <image class="img" src="/static/image/my/1.png"></image>
-                    <text class="paddingL20">个人资料</text>
-                </view>
-                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
+            <view class="user_seting_li flex paddingRL20" >
+                <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
+                    <view class="flex ">
+                        <image class="img" src="/static/image/my/1.png"></image>
+                        <text class="paddingL20">个人资料</text>
+                    </view>
+                    <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
+                </button>
             </view>
 
             <view class="user_seting_li flex paddingRL20" @click="onClickPassword">
@@ -54,11 +58,23 @@
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
         </view>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+const { $Message } = require('@/wxcomponents/base/index');
+import { setUserInfo,getUserInfo } from '@/util/api/user.js'
     export default {
+        computed:{
+			...mapGetters('user',[
+                'get_phone',
+                'get_nickName',
+                'get_headimgUrl'
+			]),
+        },
         onLoad(options) {
             uni.setNavigationBarColor({
                 frontColor: '#ffffff',
@@ -68,8 +84,45 @@
                     timingFunc: 'easeIn'
                 }
             })
+
+            
+        },
+        mounted(){
+            // 获取用户
+            this.getUserInfoAPI()
         },
         methods:{
+            ...mapActions('user',[
+				'act_nickName'
+            ]),
+            
+            // 获取用户信息AIP
+            getUserInfoAPI(){
+                getUserInfo().then(res=>{
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                })
+            },
+            // 获取用户信息
+            getUserInfo(val){
+                let param = val.detail
+                if(param.encryptedData){
+                    if(this.get_nickName){
+                        this.onClickUserInfo()
+                    }else{
+                        setUserInfo(param).then(res=>{
+                            this.getUserInfoAPI()
+                            this.onClickUserInfo()
+                        })
+                    }
+                }else{
+                    $Message({
+                        content:'取消授权',
+                        type: 'error'
+                    });
+                }
+            },
+
             // 修改个人资料
             onClickUserInfo(){
                 uni.navigateTo({ 
@@ -114,6 +167,16 @@
 .boxs{
     height: 100vh;
     background: #F9F9F9;
+    button{
+        height: 100%;
+        margin: 10rpx 0 0 0 ;
+        padding: 0;
+        border-radius:0;
+        background: transparent;
+        &:after {
+            border: none;
+        }
+    }
 }
 
 // 用户设置
@@ -132,10 +195,19 @@
         align-items: center;
         justify-content: space-between;
         color: #000000;
+        button{
+           width: 100%;
+           color: #333;
+           display: flex;
+           .flex{
+               width: 100%;
+           }
+        }
         .flex{
             align-items: center;
             font-size: 28rpx;
             font-weight: bold;
+            
         }
         .img{
             width: 56rpx;
@@ -154,6 +226,7 @@
     .flex{
         height: 126rpx;
         align-items: center;
+        
     }
     .text_box{
         width: 200rpx;
@@ -170,6 +243,7 @@
     .login_logo{
         width: 126rpx;
         height: 126rpx;
+        border-radius: 50%;
     }
 }
 </style>

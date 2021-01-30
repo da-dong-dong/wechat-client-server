@@ -6,16 +6,16 @@
                 <view class="flex">
                     <text class="paddingL20 color999">姓名</text>
                 </view>
-                <input class="width" type="text" placeholder="请输入姓名" v-model="userInfo.name"/>
+                <input class="width" type="text" placeholder="请输入姓名" v-model="userInfo.nickName"/>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
-           <picker @change="change" :value="index" :range="sexArr">
+           <picker @change="change" :value="Index" :range="sexArr">
                 <view class="user_seting_li flex paddingRL20" >
                     <view class="flex">
                         <text class="paddingL20 color999">性别</text>
                     </view>
-                    <text class="width">{{userInfo.sex}}</text>
+                    <text class="width">{{sexArr[userInfo.sex-1]}}</text>
                     <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
                 </view>
             </picker>
@@ -24,16 +24,16 @@
                 <view class="flex">
                     <text class="paddingL20 color999">手机号码</text>
                 </view>
-                <input class="width" type="text" placeholder="请输入手机号码" v-model="userInfo.tal"/>
+                <input class="width" type="text" placeholder="请输入手机号码" v-model="userInfo.phone"/>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
-            <picker mode="date" :value="userInfo.time" @change="bindDateChange($event, userInfo)">
+            <picker mode="date" :value="userInfo.birthday" @change="bindDateChange($event, userInfo)">
                 <view class="user_seting_li flex paddingRL20" >
                     <view class="flex">
                         <text class="paddingL20 color999">生日</text>
                     </view>
-                    <text class="width">{{userInfo.time ? userInfo.time : '生日' | times}}</text>
+                    <text class="width">{{userInfo.birthday ? userInfo.birthday : '可选' | times}}</text>
                     <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
                 </view>
             </picker>
@@ -42,8 +42,8 @@
                 <view class="flex">
                     <text class="paddingL20 color999">地址</text>
                 </view>
-                <pick-regions :defaultRegion="defaultRegionCode" @getRegion="handleGetRegion" class="width" >
-                    <text >{{regionName?regionName:'地址'}}</text>
+                <pick-regions :defaultRegion="region"  @getRegion="handleGetRegion" class="width" >
+                    <text >{{region?region.join(' '):'可选'}}</text>
                 </pick-regions>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
@@ -51,57 +51,96 @@
 
         <!-- 保存 -->
         <view class="saveBtn" @click="onClickSave">保存</view>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import pickRegions from '@/components/pick-regions/pick-regions.vue'
+import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
     export default {
         components:{ pickRegions },
         computed:{
+            ...mapGetters('user',[
+                'get_nickName',
+                'get_phone',
+                'get_sex',
+                'get_birthday',
+                'get_province',
+                'get_city',
+                'get_area',
+			]),
             regionName(){
                 // 转为字符串
-                return this.region.map(item=>item.name).join(' ')
+                return this.region.join(' ')
             }
         },
         data(){
             return{
                 userInfo:{
-                    name:'大东东',
-                    sex:'男',
-                    tal:'13068254894',
-                    address:'惠城区水口',
-                    time:''
-
+                    nickName:'大东东',
+                    sex:1,
+                    phone:'13068254894',
+                    birthday:''
                 },
+                Index:0,
                 sexArr:['男','女'],
-                index:0,
-                region:[],
-                defaultRegion:['广东省','广州市','番禺区'],
-                defaultRegionCode:'440113'
+                region:[]
             }
         },
+        onLoad(){
+            // 初始化数据
+
+            this.userInfo.nickName = this.get_nickName
+            this.userInfo.phone = this.get_phone
+            this.userInfo.sex = this.get_sex
+            this.userInfo.birthday =  new Date(this.get_birthday)
+            this.userInfo.province = this.get_province
+            this.userInfo.city = this.get_city
+            this.userInfo.area = this.get_area
+            this.region[0] = this.get_province
+            this.region[1] = this.get_city
+            this.region[2] = this.get_area
+                
+        },
         methods:{
+            ...mapActions('user',[
+				'act_nickName'
+            ]),
+
             // 性别
             change(e){
-                this.index = Number(e.detail.value)
-				this.userInfo.sex = this.sexArr[this.index]
+                this.Index = Number(e.detail.value)
+                this.userInfo.sex = this.Index==0?1:2
             },
             
             // 时间
             bindDateChange (e, item) {
-				item.time = new Date(e.target.value).getTime()
+				this.userInfo.birthday = new Date(e.target.value)
             },
 
              // 获取选择的地区
             handleGetRegion(region){
-                this.region = region
-                console.log(region)
+                this.region = region.map(item=>item.name)
+                this.userInfo.province = this.region[0]
+                this.userInfo.city = this.region[1]
+                this.userInfo.area = this.region[2]
             },
             
             // 保存
             onClickSave(){
-                uni.navigateBack()
+                console.log(this.userInfo)
+                updateUserInfo(this.userInfo).then(res=>{
+                    let code = res.data.code
+                    if(code == 200){
+                        let {headimgUrl,nickName,phone,sex,birthday,province,city,area} = this.userInfo
+                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                        uni.navigateBack()
+                    }
+                })
+               
             }
         }
     }
