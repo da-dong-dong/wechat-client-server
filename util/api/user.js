@@ -30,3 +30,23 @@ export const setUserInfo = (params) => {
 export const updateUserInfo = (params) => {
 	return put(baseUrl.updateUserInfo, params)
 }
+
+// 发送修改密码验证码
+export const sendVerificationCode = (params) => {
+	return postObj(baseUrl.sendVerificationCode, params)
+}
+
+// 修改密码
+export const updatePassword = (params) => {
+	return put(baseUrl.updatePassword, params)
+}
+
+// 获取套系服务说明
+export const getAssemblyDescription = (params) => {
+	return get(baseUrl.getAssemblyDescription, params)
+}
+
+// 修改密码
+export const getReservationDescription = (params) => {
+	return get(baseUrl.getReservationDescription, params)
+}

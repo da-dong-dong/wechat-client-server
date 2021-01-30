@@ -1,7 +1,8 @@
 export default{
 	namespaced: true,
 	state:{
-		
+		appId:null, // appId
+		enterpriseId:null, // 企业id
 		code:null, // code
 		shopId:null, // 门店
 		phone:null, //手机号
@@ -14,6 +15,8 @@ export default{
 		area:null, // 区
 	},
 	getters:{
+		get_appId:state => state.appId,
+		get_enterpriseId:state => state.enterpriseId,
 		get_code:state => state.code,
 		get_shopId:state => state.shopId,
 		get_phone:state => state.phone,
@@ -44,6 +47,12 @@ export default{
 			state.province = data.province
 			state.city = data.city
 			state.area = data.area
+		},
+
+		// 设置app 和企业id
+		mut_APPId(state,data){
+			state.appId = data.appId
+			state.enterpriseId = data.enterpriseId
 		},
 	},
   actions: {

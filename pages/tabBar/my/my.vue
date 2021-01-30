@@ -34,10 +34,18 @@
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
-            <view class="user_seting_li flex paddingRL20" @click="onClickService">
+            <view class="user_seting_li flex paddingRL20" @click="onClickService('setUp')">
                 <view class="flex">
                     <image class="img" src="/static/image/my/3.png"></image>
-                    <text class="paddingL20">服务协议</text>
+                    <text class="paddingL20">套系服务</text>
+                </view>
+                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
+            </view>
+
+            <view class="user_seting_li flex paddingRL20" @click="onClickService('mack')">
+                <view class="flex">
+                    <image class="img" src="/static/image/my/3.png"></image>
+                    <text class="paddingL20">预约服务</text>
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
@@ -138,9 +146,9 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
             },
 
             // 服务协议
-            onClickService(){
+            onClickService(type){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/my/components/serviceAgreement' 
+                    url: `/pages/tabBar/my/components/serviceAgreement?type=${type}`
                 })
             },
 

@@ -4,7 +4,8 @@
     "directCommit": false,
     "ext": {
       "appName":"模板演示",
-      "request": ["https://restapi.amap.com"]
+      "request": ["https://restapi.amap.com"],
+      "enterpriseId":"00000000737f5b5a01737fbfce600000"
     },
     "extPages": {
       "pages/index/index": {}

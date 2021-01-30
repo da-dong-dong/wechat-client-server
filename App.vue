@@ -1,5 +1,9 @@
 <script>
-import { mapGetters, mapActions } from 'vuex'
+// 获取当前小程序信息
+const accountInfo = uni.getAccountInfoSync(); 
+// 获取ext
+const extConfig = uni.getExtConfigSync ? uni.getExtConfigSync() : {}
+import { mapMutations, mapActions } from 'vuex'
 	export default {
 		globalData: {  
             tiem: null  
@@ -10,10 +14,16 @@ import { mapGetters, mapActions } from 'vuex'
 		mounted(){
 			console.log('AppMounted')
 			this.getStorageCode()
+			
+			// 存储appid
+			this.setAppIdEX()
 		},
 		methods: {
 			...mapActions('user',[
 				'act_code'
+			]),
+			...mapMutations('user',[
+				'mut_APPId'
 			]),
 
 			// 本地缓存获取code
@@ -37,6 +47,15 @@ import { mapGetters, mapActions } from 'vuex'
 			// 存储store
 			setCode(code){
 				this.act_code(code)
+			},
+
+			// 存储appIp和企业id
+			setAppIdEX(){
+				let param = {
+					appId:accountInfo.miniProgram.appId,
+					enterpriseId:extConfig.enterpriseId
+				}
+				this.mut_APPId(param)
 			}
 
 

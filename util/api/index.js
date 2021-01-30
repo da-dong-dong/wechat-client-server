@@ -6,12 +6,16 @@ let base = test ? 'http://192.168.5.15:8000' : 'http://swx.go.lyfz.net'
 
 let baseUrl = {
     getTicket: `${base_other}/sso/v1/ticket/login`, // 登录
-
+	// 我的
     getCode: `${base}/api/template/ma/js_code2_session`, // 获取微信登录凭证
 	getUserInfo: `${base}/api/template/ma/auth/get_user_info`, // 获取用户信息
     setPhoneNoInfo: `${base}/api/template/ma/auth/set_phone_no_info`, // 设置小程序用户手机信息
     setUserInfo: `${base}/api/template/ma/auth/set_user_info`, // 设置小程序用户信息
 	updateUserInfo: `${base}/api/template/ma/auth/update_user_info`, // 修改个人信息
+	sendVerificationCode: `${base}/api/template/ma/auth/send_verification_code`, // 发送修改密码验证码
+	updatePassword: `${base}/api/template/ma/auth/update_password`, // 修改密码
+	getAssemblyDescription: `${base}/api/template/ma/get_assembly_description`, // 获取套系服务说明
+	getReservationDescription: `${base}/api/template/ma/get_reservation_description`, // 获取预约服务说明
     
     getCityShop: `${base}/api/template/ma/get_city_shop`, // 获取门店信息
 	
