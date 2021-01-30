@@ -14,7 +14,11 @@
                 <view class="flex">
                     <text class="paddingL20 color999">验证码</text>
                 </view>
-                <input class="width" type="text" placeholder="请输入验证码" v-model="userInfo.code"/>
+                <view class="flexs">
+                    <input class="width" type="text" placeholder="请输入验证码" v-model="userInfo.code"/>
+                    <text>发送验证码</text>
+                </view>
+                
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
             
@@ -89,6 +93,13 @@
         justify-content: space-between;
         .flex{
             width: 230rpx;
+        }
+        .flexs{
+            display: flex;
+            align-items: center;
+            .width{
+                width: 192rpx;
+            }
         }
         .width{
             width: 330rpx;
