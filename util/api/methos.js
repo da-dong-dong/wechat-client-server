@@ -35,7 +35,7 @@ const request = (url, options) => {
 							// cancaelRes = true
 							setTimeout(()=>{
 								uni.reLaunch({
-									url:'/pages/login/wecatLogin'
+									url:'/pages/login/index'
 								})
 							},1000)
 							break;
@@ -55,7 +55,7 @@ const request = (url, options) => {
 				});
 				//缓存
 				uni.reLaunch({
-					url:'/pages/login/wecatLogin'
+					url:'/pages/login/index'
 				})
 				reject(err)
 			},

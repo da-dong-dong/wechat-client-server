@@ -1,5 +1,6 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
+		
 		//******************************** 登陆 ********************************
 		{
 			"path": "pages/login/index",
@@ -8,12 +9,7 @@
 			}
 		},
 		
-		// {
-		// 	"path": "pages/order/detail/downPhoto",
-		// 	"style": {
-		// 		"navigationBarTitleText": "下载照片"
-		// 	}
-		// },
+		
 		// {
 		// 	"path": "pages/order/index",
 		// 	"style": {

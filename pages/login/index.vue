@@ -41,11 +41,14 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
         onLoad(options) {
             // 获取模板名称
             this.appName = extConfig.appName
+            
+            this.login()
         },
         data(){
             return{
                 appName:'', // 模板名称
                 phoneCode:null, // 加密电话
+                jsCode:null,
             }
         },
         methods:{
@@ -57,8 +60,7 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                this.phoneCode = val.detail
                console.log(this.phoneCode)
                 if(this.phoneCode.encryptedData){
-                    this.login()
-                    
+                    this.getCode(this.jsCode)
                 }else{
                     $Message({
                         content:'取消授权',
@@ -77,8 +79,7 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                             jsCode: res.code,
                             authorizerAppid:  accountInfo.miniProgram.appId
                         }
-                        // 获取登陆信息
-                        this.getCode(param)
+                        this.jsCode = param
                     }
                 });
             },
@@ -94,6 +95,7 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                         key: 'code',
                         data: code
                     })
+                    console.log(code)
                     this.setPhoneNoInfo(this.phoneCode)
                 })
             },

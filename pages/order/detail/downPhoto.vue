@@ -2,14 +2,23 @@
 <template>
     <view>
         <view class="downPhoto">
-             <checkbox-group>
+             <checkbox-group  @change="onChangeList">
                 <view class="imgList">
-                    <view class="chebos" v-for="(item,index) in imgs" :key="index">
-                        <image class="img"  :src="item"></image>
-                        <checkbox :value="index" class="checks" color="#FF4852"/>
+                    <view class="chebos" v-for="(item,index) in photoList" :key="index">
+                        <image class="img"  :src="item.imgs"></image>
+                        <checkbox :checked="item.checked" :value="index" class="checks" color="#FF4852"/>
                     </view>
                 </view>
              </checkbox-group>
+        </view>
+        <!-- 底部 -->
+        <view class="foots flex paddingRL40 fontSize28">
+            <view class="flex">
+                <checkbox-group @change="onChangeAll">
+                    <checkbox class="paddingL10" value='1' :checked="allFlag.checked"  />
+                </checkbox-group>全选
+            </view>
+            <view class="btn">下载（{{num}}）</view>
         </view>
     </view>
 </template>
@@ -21,15 +30,113 @@
         },
         data(){
             return{
-                imgs:['https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_match%2F0%2F11283463979%2F0.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614343070&t=34e42d49f8e18b362530c40065400d4d','https://pic3.zhimg.com/80/v2-b5e65c9b4d34fe2dc097cdeed2022086_720w.jpg','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201608%2F20%2F20160820165627_QMNnA.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614343362&t=a5b9a4e2c52970c6ad7b18d6f2f76df3','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1222017046,1654915567&fm=26&gp=0.jpg','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_match%2F0%2F11283463979%2F0.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614343070&t=34e42d49f8e18b362530c40065400d4d','https://pic3.zhimg.com/80/v2-b5e65c9b4d34fe2dc097cdeed2022086_720w.jpg','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201608%2F20%2F20160820165627_QMNnA.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614343362&t=a5b9a4e2c52970c6ad7b18d6f2f76df3','https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1222017046,1654915567&fm=26&gp=0.jpg']
+                num:0,
+                photoList:[
+                    {   checked:false,
+                        imgs:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c',
+                    },
+                     {  checked:false,
+                        imgs:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c',
+                    },
+                     {  checked:false,
+                        imgs:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c',
+                    },
+                     {  checked:false,
+                        imgs:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c',
+                    },
+                     {  checked:false,
+                        imgs:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw960h1280%2F20180303%2F06cb-fwnpcnt4630086.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614342958&t=83729dc55178b3a20b7bdd01ceeec87c',
+                    },
+                ],
+                allFlag: {
+                    value: 'cb',
+                    checked: false
+                },
+            }
+        },
+        methods:{
+            // 全选
+            onChangeAll(e){
+                if (e.detail.value.length == 0) {
+                    this.photoList.map(item => this.$set(item, 'checked', false))
+                    this.$set(this.allFlag, 'checked', false)
+                } else {
+                    this.photoList.map(item => this.$set(item, 'checked', true))
+                    this.$set(this.allFlag, 'checked', true)
+                }
+            },
+
+            // 选择列表
+            onChangeList(e){
+                let items = this.photoList,
+                    values = e.detail.value;
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i]
+                    if(values.includes(i.toString())){
+                        item.checked = true
+                    }else{
+                        item.checked = false
+                    }
+                }
+                   
+                // //  商品是否全部勾选，判断全选与否状态
+                // let offCarArr = []
+                // // this.photoList.forEach(item => item.whether == true? offCarArr.push(item): '')
+                // let allChecks = offCarArr.every(item => item.checked == true)     
+                // console.log(allChecks)
+                // allChecks ? this.$set(this.allFlag, 'checked', true) :this.$set(this.allFlag, 'checked', false)
+            }
+        },
+        watch:{
+            photoList:{
+                handler:function(val,oldval){
+                    let num = 0
+                    val.map(item=>{
+                        console.log(item)
+                        if(item.checked){
+                            num +=1
+                        }
+                    })
+                    this.num = num
+
+                    val.length == num ? this.$set(this.allFlag, 'checked', true) :this.$set(this.allFlag, 'checked', false)
+                   
+                },
+                deep:true//对象内部的属性监听，也叫深度监听 
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+// 底部
+.foots{
+    width: 100%;
+    height: 92rpx;
+    background: #fff;
+    box-shadow: 0px -8rpx 14rpx 0rpx rgba(131, 131, 131, 0.5);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    .flex{
+        align-items: center;
+    }
+    .btn{
+        width: 160rpx;
+        height: 60rpx;
+        background: linear-gradient(180deg, #FF6D75 0%, #FF4852 100%);
+        border-radius: 30rpx;
+        text-align: center;
+        line-height: 60rpx;
+        color: #fff;
+    }
+}
 .downPhoto{
     padding:18rpx 30rpx;
+    margin-bottom: 92rpx;
     .imgList{
          display: grid;
     grid-template-columns: repeat(auto-fill, 33.33%);

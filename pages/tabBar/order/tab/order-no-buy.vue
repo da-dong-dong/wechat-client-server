@@ -9,7 +9,7 @@
                             <text>订单号：{{item.id}}</text>
                             <view v-if="item.noOrder">
                                 <i-icon class="icon" type="time" size="20" color="#FF4852"  />
-                                <text class="fontWight paddingRL10 colorRed">20:19</text>
+                                <out-time class="fontWight paddingRL10 colorRed" :endtime="item.endTime" />
                                 <text class="fontWight colorRed">待付款</text>
                             </view>
                             <view v-else>
@@ -84,7 +84,9 @@
 </template>
 
 <script> 
+import outTime from '../components/outTime';
     export default {
+        components: { outTime},
         computed:{
 
             // 展示购物车价格
@@ -107,7 +109,19 @@
                         times:'2020-10-18',
                         filesTime:'16:00',
                         filesPrice:'123',
-                        noOrder:true
+                        noOrder:true,
+                        endTime:'1612575880000'
+                    },
+                     {
+                        id:201001001,
+                        name:'889宝宝照',
+                        price:8889,
+                        imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
+                        times:'2020-10-18',
+                        filesTime:'16:00',
+                        filesPrice:'123',
+                        noOrder:true,
+                        endTime:'1612489480000'
                     }
                 ]
             }

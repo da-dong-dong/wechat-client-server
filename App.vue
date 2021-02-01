@@ -13,10 +13,10 @@ import { mapMutations, mapActions } from 'vuex'
 		},
 		mounted(){
 			console.log('AppMounted')
-			this.getStorageCode()
+			//this.getStorageCode()
 			
 			// 存储appid
-			this.setAppIdEX()
+			//this.setAppIdEX()
 		},
 		methods: {
 			...mapActions('user',[
