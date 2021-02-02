@@ -5,12 +5,13 @@
         <changeTimes :dateDetail="dateDetail" @getDate="getDate" @enDate="enDate"/>
         <!-- 档期选择 -->
         <view class="timeBox paddingRL40 ">
-            <view class="fontWight paddingB20">热门档期需另付档期费用</view>
+            <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view>
             <view class="timeList flex"> 
-                <view class="list" v-for="(item,index) in momeyTime" :key="index" @click="onChangeCarList(item)">
+                <view class="saveBtn" @click="onChangeCarList">确定</view>
+                <!-- <view class="list" v-for="(item,index) in momeyTime" :key="index" @click="onChangeCarList(item)">
                     <view class="listTime">{{item.filesTime}}</view>
                     <view class="fontSize24 marginT10">{{item.filesPrice?'此档期需另外付':''}}{{item.filesPrice}}</view>
-                </view>
+                </view> -->
             </view>
         </view>
         <!-- 弹窗 -->
@@ -70,11 +71,12 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 id: null, // 当前id
                 endTime:null, // 结束时间
                 startTime:null, // 开始时间
+                filesPrice:0, // 档期费
             }
         },
         methods:{
             ...mapMutations('carList',[
-				'mut_carListUpData'
+				'mut_quickListUpData'
             ]),
 
             // 获取时间
@@ -129,20 +131,22 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                     dateStr: this.pickerDate
                 }
                 typographyCost(param).then(res=>{
+                    this.filesPrice = res.data.data
                     console.log(res)
                 })
             },
 
             // 更新购物车
-            onChangeCarList(val){
+            onChangeCarList(){
                 let data = {
                     id:this.id,
                     index:this.Index,
                     times:this.times,
-                    ...val
+                    filesPrice:this.filesPrice,
+                    filesTime:''
                 }
                 console.log(data)
-                this.mut_carListUpData(data)
+                this.mut_quickListUpData(data)
                 uni.navigateBack()
             }
         }

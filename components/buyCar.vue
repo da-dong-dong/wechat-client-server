@@ -28,7 +28,7 @@
             <!-- 支付页 -->
             <view class="car" v-if="type == 'buyCar'" >
                 <text>合计：</text>
-                <text class="colorRed">￥{{showPrice}}</text>
+                <text class="colorRed">￥{{showPriceQuick}}</text>
             </view>
 
             <view class="but flex" v-if="type == 'buyCar'" >
@@ -38,8 +38,7 @@
                         <checkbox class="paddingL10" value='1'  />
                     </checkbox-group>
                 </view> -->
-                <view v-if="check" class="but_cl " @click="onQuick">立刻支付</view>
-                <view v-else class="but_cl " >立刻支付</view>
+                <view  class="but_cl " @click="onQuick">立刻支付</view>
             </view>
 
             
@@ -60,13 +59,21 @@
         },
         computed:{
             ...mapGetters('carList',[
-				'get_carList'
+                'get_carList',
+                'get_quickList'
             ]),
 
             // 展示购物车价格
             showPrice(){
                 let num = 0;
                 this.get_carList.map(item=>num+=item.price+Number(item.filesPrice))
+                return num
+            },
+
+            // 展示立刻价格
+            showPriceQuick(){
+                let num = 0;
+                this.get_quickList.map(item=>num+=item.price+Number(item.filesPrice))
                 return num
             }
         },
@@ -84,11 +91,6 @@
             // 付款页面
             onQuick(){
                 this.$emit('onQuick')
-            },
-
-            // 协议
-            onChange(e){
-                this.check = !this.check
             },
 
             // 跳转服务协议

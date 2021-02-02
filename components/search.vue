@@ -29,6 +29,7 @@
     position: relative;
     justify-content: center;
     align-items: center;
+    background: #fff;
     .icon{
         position: absolute;
         top: 15rpx;

@@ -3,9 +3,16 @@
 const accountInfo = uni.getAccountInfoSync(); 
 // 获取ext
 const extConfig = uni.getExtConfigSync ? uni.getExtConfigSync() : {}
-import { mapMutations, mapActions } from 'vuex'
+import {mapGetters, mapMutations, mapActions } from 'vuex'
 	export default {
-		
+		computed: {
+			...mapGetters('map',[
+				'get_city',
+				'get_shopIdList',
+				'get_barmdId'
+			]),
+			
+		},
 		globalData: {  
             tiem: null  
         }, 
@@ -18,21 +25,27 @@ import { mapMutations, mapActions } from 'vuex'
 			this.getStorageCode()
 			// 存储appid
 			this.setAppIdEX()
-			// 获取当前位置
-			this.act_city()
 			// 品牌分类
 			this.act_barmd(extConfig.enterpriseId)
+			// 所有门店
+			this.act_shopIdList({extConfig:extConfig.enterpriseId})
+			// 获取当前位置
+			this.act_city()
+			// 判断是否存有品牌id
+			this.getBarmdId()
 		},
 		methods: {
 			...mapActions('user',[
 				'act_code'
 			]),
 			...mapMutations('user',[
-				'mut_APPId'
+				'mut_APPId',
+				'mut_shopId'
 			]),
 			...mapActions('map',[
 				'act_city',
 				'act_barmd',
+				'act_shopIdList'
 			]),
 
 			// 本地缓存获取code
@@ -41,15 +54,15 @@ import { mapMutations, mapActions } from 'vuex'
 					key: 'code',
 					success: res => {
 						this.setCode(res.data)
-						uni.switchTab({
-                            url:'/pages/tabBar/home/home'
-                        })
+						// uni.switchTab({
+                        //     url:'/pages/tabBar/home/home'
+                        // })
 					},
 					fail: function(err) {
-						uni.redirectTo({
-							// url:'/pages/login/index'
-							url:'/pages/tabBar/home/home'
-						})
+						// uni.redirectTo({
+						// 	// url:'/pages/login/index'
+						// 	url:'/pages/tabBar/home/home'
+						// })
 					}
 				})
 			},
@@ -68,9 +81,32 @@ import { mapMutations, mapActions } from 'vuex'
 				this.mut_APPId(param)
 			},
 
+			// 判断是否存有品牌id
+			getBarmdId(){
+				if(this.get_barmdId){
+					uni.switchTab({
+                        url:'/pages/tabBar/home/home'
+                    })
+				}
+			}
+
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+
+		// 监听是否选择位置 设置最近门店
+		watch:{
+			get_city(val){
+				let arr = []
+				this.get_shopIdList.map(item=>{
+					if(item.city == val){
+						arr.push(item)
+					}
+				})
+				console.log(arr)
+				this.mut_shopId(arr[0]) 
+			}
 		}
 	}
 </script>

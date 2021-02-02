@@ -72,7 +72,8 @@ const { $Message } = require('@/wxcomponents/base/index');
         methods:{
             ...mapMutations('carList',[
                 'mut_carListDel',
-                'mut_carListDelAll'
+                'mut_carListDelAll',
+                'mut_quickListAdd'
             ]),
             // 切换门店
             onChangeShopId(){
@@ -100,13 +101,29 @@ const { $Message } = require('@/wxcomponents/base/index');
 
             // 跳支付页
             onQuick(){
-                if(!this.get_carList.length){
+                let carList = this.get_carList;
+                
+                if(!carList.length){
                     $Message({
                         content:'请选择商品',
                         type: 'error'
                     });
                     return
                 }
+                // 判断是否存在不同订单
+                for (let i = 0; i < carList.length - 1; i++) {
+                    for (let j = i + 1; j < carList.length; j++) {
+                        console.log(carList[i].orderType)
+                        if (carList[i].orderType !== carList[j].orderType) {
+                            $Message({
+                                content:'请选择相同类型订单',
+                                type: 'error'
+                            });
+                            return false
+                        }
+                    }
+                }
+                this.mut_quickListAdd(carList)
                 uni.navigateTo({ 
                     url: '/pages/tabBar/shoppingCart/components/buyOrder'
                 })

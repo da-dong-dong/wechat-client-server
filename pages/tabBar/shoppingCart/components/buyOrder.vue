@@ -34,7 +34,7 @@
                         </view>
                     </view>
                     <!-- 宝宝 -->
-                    <view v-if="get_carList[0].orderType == 'BABY'">
+                    <view v-if="get_quickList[0].orderType == 'BABY'">
                         <view class="userbox flex paddingRL20" >
                             <view class="border flex paddingTB20">
                                 <view class="flex">
@@ -72,8 +72,8 @@
         </view>
 
         <!-- 已选套系 -->
-        <view class="paddingRL20" v-if="get_carList.length">
-            <view class="carBuyList"  v-for="(item,index) in get_carList" :key="index">
+        <view class="paddingRL20" v-if="get_quickList.length">
+            <view class="carBuyList"  v-for="(item,index) in get_quickList" :key="index">
                 <view class="carLi marginB20 padding20">
                     <view class="carData flex marginB20">
                         <image class="img" :src="item.imgs"></image>
@@ -89,9 +89,9 @@
                     </view>
 
                     <!-- 档期费 -->
-                    <view class="flex priceAdd fontSize30">
+                    <view class="flex priceAdd fontSize30" v-if="item.filesPrice">
                         <text>档期附加费</text>
-                        <text>￥200</text>
+                        <text>￥{{item.filesPrice}}</text>
                     </view>
                     
                 </view>
@@ -106,10 +106,10 @@
                             <i-icon class="icon paddingRL30" type="enter" size="20" color="#707070"  />
                         </view>
                     </view>
-                    <view class="carTime flex">
+                    <view class="carTime flex" @click="onChangeShopId(item.id,index)">
                         <text class="paddingRL40">预约门店</text>
                         <view class="flex">
-                            <text class="">{{get_shopId?get_shopId.shopName:'请选择'}}</text>
+                            <text class="">{{item.shopName?item.shopName:'请选择'}}</text>
                             <i-icon class="icon paddingRL30" type="enter" size="20" color="#707070"  />
                         </view>
                     </view>
@@ -126,14 +126,24 @@
             <text>预约成功后拍摄前48小时可免费修改两次,不足48小时需收20%改期费</text>
         </view>
 
+        <!-- 服务协议 -->
+        <view class="serve flex colorRed paddingRL10 fontSize28">
+            <checkbox-group @change="onChangeAll">
+                <checkbox class="paddingL10" value='1'  />
+            </checkbox-group>
+            <text @click="onClickServe">服务协议</text>
+        </view>
          <!-- 购物车定位 -->
         <buyCar type="buyCar" @onQuick="onQuick"/>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
+const { $Message } = require('@/wxcomponents/base/index');
     export default {
         components:{
             buyCar
@@ -144,7 +154,7 @@ import buyCar from '@/components/buyCar.vue'
             ]),
 
             ...mapGetters('carList',[
-				'get_carList'
+				'get_quickList'
             ]),
         },
         data(){
@@ -160,7 +170,8 @@ import buyCar from '@/components/buyCar.vue'
                 },
                 sexArr:['男','女'],
                 index:0,
-                indexBab:0
+                indexBab:0,
+                check: false, // 协议
             }
         },
          methods:{
@@ -187,15 +198,41 @@ import buyCar from '@/components/buyCar.vue'
                     url: `/pages/tabBar/shoppingCart/components/changeTime?id=${id}&index=${index}`
                 })
             },
+
+            // 选择门店
+            onChangeShopId(id,index){
+                uni.navigateTo({ 
+                    url: `/pages/tabBar/shoppingCart/components/changeRegion?id=${id}&index=${index}&quick=${true}`
+                })
+            },
             
             // 保存
             onClickSave(){
                 uni.navigateBack()
             },
 
+            // 协议
+            onChangeAll(e){
+                this.check = !this.check
+            },
+
+            // 跳转服务协议
+            onClickServe(){
+                uni.navigateTo({ 
+                    url: `/pages/tabBar/my/components/serviceAgreement?type=mack`
+                })
+            },
+
             // 支付页
             onQuick(){
-                console.log('支付页')
+                if(!this.check){
+                    $Message({
+                        content:'请勾选协议',
+                        type: 'error'
+                    });
+                    return
+                }
+                console.log('支付页',this.get_quickList)
             }
         }
     }

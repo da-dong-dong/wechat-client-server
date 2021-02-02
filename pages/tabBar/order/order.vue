@@ -6,7 +6,7 @@
             <!-- <view v-for="(item,index) in tabList" :key="index">
                  <orederAll :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList"/>
             </view> -->
-            <swiper class="swiper_group" :style="{height:scrollHeight*2+'rpx'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
+            <swiper class="swiper_group" :style="{height:scrollHeight+'px'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
                 <swiper-item  v-for="(item,index) in tabList" :key="index">
                     <orederAll class="swiper_4" v-if="item.path == 'all'"/>
                     <orederNoBuy class="swiper_1" v-if="item.path == 'noBuy'"/>

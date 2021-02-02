@@ -1,28 +1,46 @@
 export default{
 	namespaced: true,
 	state:{
-		carList: [], // 购物车商品
+        carList: [], // 购物车商品
+        quickList: [], // 立刻下单
 	},
 	getters:{
-		get_carList:state => state.carList,
+        get_carList:state => state.carList,
+        get_quickList:state => state.quickList,
 	},
 	mutations:{
         // 新增
 		mut_carListAdd(state,data){
 			state.carList.push(data) 
         },
+        // 新增立刻下单
+		mut_quickListAdd(state,data){
+            state.quickList = data
+        },
+
         
-        // 更新
-        mut_carListUpData(state,data){
+        // 更新立刻下单时间
+        mut_quickListUpData(state,data){
             let {id,index,times,filesTime,filesPrice} = data
-            state.carList.map((item,idx)=>{
+            state.quickList.map((item,idx)=>{
                 if(item.id = id && idx == index){
                     item.times = times
                     item.filesTime = filesTime
                     item.filesPrice = filesPrice
                 }
             })
-            
+        },
+
+        // 更新立刻下单门店
+        mut_quickListUpDataShopId(state,data){
+            let {id,index,shopId,shopName,shopNo} = data
+            state.quickList.map((item,idx)=>{
+                if(item.id = id && idx == index){
+                    item.shopId = shopId
+                    item.shopName = shopName
+                    item.shopNo = shopNo
+                }
+            })
         },
 
         // 删除单个

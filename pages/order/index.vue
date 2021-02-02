@@ -25,7 +25,7 @@ import orederProgress from './tab/order-progress.vue';
         data() {
             return {
                 scrollHeight:null, // 高度
-                TabCur: 3,
+                TabCur: 1,
                 tabList: [
                     { name: '详情',path: "details" }, 
                     { name: '进度',path: "progress" },

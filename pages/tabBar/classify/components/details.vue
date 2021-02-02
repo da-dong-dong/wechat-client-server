@@ -59,7 +59,8 @@ import { getAssemblyDescription } from '@/util/api/user.js'
         computed:{
 			...mapGetters('user',[
                 'get_appId',
-                'get_enterpriseId'
+                'get_enterpriseId',
+                'get_shopId'
 			]),
         },
         components:{
@@ -85,7 +86,8 @@ import { getAssemblyDescription } from '@/util/api/user.js'
         },
         methods:{
             ...mapMutations('carList',[
-				'mut_carListAdd'
+                'mut_carListAdd',
+                'mut_quickListAdd'
             ]),
 
             // 获取线上套系详情
@@ -175,23 +177,31 @@ import { getAssemblyDescription } from '@/util/api/user.js'
             },
 
             // 添加到购物车
-            addCar(){
+            addCar(flag){
                 let datas={
                         id:this.Id,
                         name:this.listDetai.name,
                         price:this.listDetai.assemblyPrice,
-                        imgs:this.listDetai.detailPhotoList[0],
+                        imgs:this.listDetai.detailPhotoList?this.listDetai.detailPhotoList[0]:'',
                         times:'',
                         filesTime:'',
                         filesPrice:'',
-                        orderType:this.listDetai.orderType
+                        orderType:this.listDetai.orderType,
+                        shopId: this.get_shopId.shopId,
+                        shopName: this.get_shopId.shopName,
+                        shopNo: this.get_shopId.shopNo
                     }
-                this.mut_carListAdd(datas)
+                // 判断是否立刻下单
+                if(flag){
+                    this.mut_quickListAdd([datas])
+                }else{
+                    this.mut_carListAdd(datas)
+                }
             },
 
             // 立刻预约
             onQuick(){
-                this.addCar()
+                this.addCar('quick')
                 uni.navigateTo({ 
                     url: '/pages/tabBar/shoppingCart/components/buyOrder'
                 })
@@ -231,11 +241,14 @@ import { getAssemblyDescription } from '@/util/api/user.js'
     .context_li{
         flex-wrap: wrap;
         width: 550rpx;
+        .paddingRL20{
+                padding-left: 100rpx;
+            }
         .flex{
             width: 550rpx;
             height: 80rpx;
             align-items: center;
-            justify-content: center;
+            
             .icon{
                 padding-right: 20rpx;
             }
