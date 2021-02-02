@@ -1,28 +1,43 @@
 /******************************** 分类 ***************************************/
 <template>
     <view>
-      <view class="classify flex">
-            <!-- 左侧 -->
-            <view class="left_box textC">
-                <view class="fixed">
-                    <view class="paddingTB20" :class="Index==index?'active':''" v-for="(item,index) in list" :key="item.name" @click="onClickTab(index)">
-                        {{item.name}}
+        <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData">
+            <view class="classify flex">
+                <!-- 左侧 -->
+                <view class="left_box textC">
+                    <view class="fixed">
+                        <view class="paddingTB20 fontSize26" :class="Index==index?'active':''" v-for="(item,index) in leftList" :key="item.name" @click="onClickTab(index,item.id)">
+                            {{item.name}}
+                        </view>
+                    </view>
+                </view>
+                <!-- 右侧 -->
+                <view class="right_box flex paddingT10">
+                    <view class="right_li textC padding5 marginRL10 "  v-for="(item) in rightList" :key="item.id" @click="onClickDetails(item.id)">
+                        <image class="img" :src="item.coverPhoto"></image>
+                        <view class="fontSize24 fontWight color000">{{item.assemblyName}}</view>
                     </view>
                 </view>
             </view>
-            <!-- 右侧 -->
-            <view class="right_box flex paddingT10">
-                <view class="right_li textC padding5 marginRL10 "  v-for="(item,index) in list[Index].data" :key="item.name" @click="onClickDetails(index)">
-                    <image class="img" :src="item.url"></image>
-                    <view>{{item.str}}</view>
-                </view>
-            </view>
-      </view>
+       </s-pull-scroll>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+const { $Message } = require('@/wxcomponents/base/index');
+import { getListAssemblyOnlineCategory, getPageAssemblyOnline, getAssemblyOnlineDetail } from '@/util/api/goods.js'
+	import sPullScroll from '@/components/s-pull-scroll';
     export default {
+        components:{sPullScroll},
+        computed:{
+			...mapGetters('user',[
+                'get_appId',
+                'get_enterpriseId'
+			]),
+        },
         data(){
             return{
                 list:[{
@@ -142,13 +157,69 @@
                         str:'666孕妈'
                     }]
                 }],
-                Index:0,// 索引
+                shopId:14,
+				total:0, // 总数量
+                Index:0, // 索引
+                leftList:null,
+                rightList:[],
+                page:0,
+                id:0,
             }
         },
+        onLoad(){
+			this.refresh();
+		},
+        mounted(){
+            this.getListAssemblyOnlineCategory()
+        },
         methods:{
+            // 获取套系类别列表
+            getListAssemblyOnlineCategory(){
+                let param ={
+                    shopId:this.shopId,
+                    enterpriseId:this.get_enterpriseId
+                }
+                getListAssemblyOnlineCategory(param).then(res=>{
+                    this.leftList = res.data.data
+                    this.id = this.leftList[0].id
+
+                    this.getPageAssemblyOnline()
+                })
+            },
+
+            // 获取套系分页
+            getPageAssemblyOnline(){
+                let param ={
+                    shopId:this.shopId,
+                    enterpriseId:this.get_enterpriseId,
+                    assemblyOnlineCategoryId:this.id,
+                    limit:10,
+                    page:this.page
+                }
+                getPageAssemblyOnline(param).then(res=>{
+                    if(!res.data.data){
+                        // $Message({
+                        //     content:'暂无数据',
+                        //     type: 'error'
+                        // });
+                        this.rightList = []
+
+                        return 
+                    }
+                    this.total = res.data.data.total
+					const curList = res.data.data.records
+					curList.forEach((i)=>{
+						this.rightList.push(i)
+					})
+                })
+            },
+
             // 更新索引
-            onClickTab(idx){
+            onClickTab(idx,id){
                 this.Index = idx
+                this.id = id
+                this.rightList = [];
+                this.getPageAssemblyOnline()
             },
 
             // 跳转详情
@@ -156,7 +227,30 @@
                 uni.navigateTo({ 
                     url: '/pages/tabBar/classify/components/details?id=' + idx  
                 })
-            }
+            },
+
+
+            // 组件
+			refresh () {
+				this.$nextTick(() => {
+					this.$refs.pullScroll.refresh();
+				});
+			},
+			loadData (pullScroll) {
+				if (pullScroll.page == 1) {
+					this.rightList = [];
+				}
+				if(!this.showNoMore){
+					this.page = pullScroll.page
+				}
+				if(this.rightList.length < this.total){
+					this.getPageAssemblyOnline()
+					this.showNoMore = false
+				}else{
+					this.showNoMore = true
+				}
+				pullScroll.success();
+			},
         }
     }
 </script>
@@ -172,14 +266,17 @@
     .left_box{
         width: 200rpx;
         position: flex;
+        z-index: 1000;
         .fixed{
             width: 200rpx;
-            border-right: 1px solid black;
+            background: #F9F9F9;
             height: 100vh;
-            font-size: 32rpx;
+            color: #7D7E80;
         }
         .active{
-            color: #57AD91;
+            color: #FF4852;
+            background: #fff;
+            border-left: 1px solid #FF4852;
         }
     }
 
@@ -189,13 +286,13 @@
         height: 100%;
         flex-wrap: wrap;
         .right_li{
-            width: 240rpx;
-            height: 200rpx;
-            border: 1px solid #9BA3B7;
-            box-shadow: 0px 0px 3px #9BA3B7;
+            width: 236rpx;
+            height: 276rpx;
             margin-bottom: 20rpx;
             .img{
-                height: 140rpx;
+                width: 236rpx;
+                height: 236rpx;
+                border-radius: 20rpx;
             }
         }
     }

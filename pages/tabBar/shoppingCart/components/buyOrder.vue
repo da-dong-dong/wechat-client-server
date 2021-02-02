@@ -34,37 +34,39 @@
                         </view>
                     </view>
                     <!-- 宝宝 -->
-                    <view class="userbox flex paddingRL20" >
-                        <view class="border flex paddingTB20">
-                            <view class="flex">
-                                <text class="paddingRL20">宝宝姓名</text>
-                                <input class="width" type="text" placeholder="请输入手机号" v-model="userInfo.baNane"/>
+                    <view v-if="get_carList[0].orderType == 'BABY'">
+                        <view class="userbox flex paddingRL20" >
+                            <view class="border flex paddingTB20">
+                                <view class="flex">
+                                    <text class="paddingRL20">宝宝姓名</text>
+                                    <input class="width" type="text" placeholder="请输入手机号" v-model="userInfo.baNane"/>
+                                </view>
+                                <i-icon class="icon" type="" size="20" color="#707070"  />
                             </view>
-                            <i-icon class="icon" type="" size="20" color="#707070"  />
                         </view>
+                        <picker @change="changeBab" :value="indexBab" :range="sexArr">
+                            <view class="userbox flex paddingRL20" >
+                                <view class="border flex paddingTB20">
+                                    <view class="flex">
+                                        <text class="paddingRL20">宝宝性别</text>
+                                        <text class="width">{{userInfo.sexBab ? userInfo.sexBab : "性别"}}</text>
+                                    </view>
+                                    <i-icon class="icon" type="enter" size="20" color="#707070"  />
+                                </view>
+                            </view>
+                        </picker>
+                        <picker mode="date" :value="userInfo.time" @change="bindDateChange($event, userInfo)">
+                            <view class="userbox flex paddingRL20" >
+                                <view class="border flex paddingTB20">
+                                    <view class="flex">
+                                        <text class="paddingRL20">宝宝生日</text>
+                                        <text class="width">{{userInfo.time ? userInfo.time : '生日' | times}}</text>
+                                    </view>
+                                    <i-icon class="icon" type="enter" size="20" color="#707070"  />
+                                </view>
+                            </view>
+                        </picker>
                     </view>
-                    <picker @change="changeBab" :value="indexBab" :range="sexArr">
-                        <view class="userbox flex paddingRL20" >
-                            <view class="border flex paddingTB20">
-                                <view class="flex">
-                                    <text class="paddingRL20">宝宝性别</text>
-                                    <text class="width">{{userInfo.sexBab}}</text>
-                                </view>
-                                <i-icon class="icon" type="enter" size="20" color="#707070"  />
-                            </view>
-                        </view>
-                    </picker>
-                    <picker mode="date" :value="userInfo.time" @change="bindDateChange($event, userInfo)">
-                        <view class="userbox flex paddingRL20" >
-                            <view class="border flex paddingTB20">
-                                <view class="flex">
-                                    <text class="paddingRL20">宝宝生日</text>
-                                    <text class="width">{{userInfo.time ? userInfo.time : '生日' | times}}</text>
-                                </view>
-                                <i-icon class="icon" type="enter" size="20" color="#707070"  />
-                            </view>
-                        </view>
-                    </picker>
                 </view>
             </view>
         </view>
@@ -96,10 +98,11 @@
                 
                 <!-- 预约时间 -->
                 <view class="marginT10 carTimeBox marginB20">
-                    <view class="carTime  flex">
+                    <view class="carTime  flex" @click="onChangeTime(item.id,index)">
                         <text class="paddingRL40">预约时间</text>
                         <view class="flex">
-                            <text class="">{{item.times}} {{item.filesTime}}</text>
+                            <text class="" v-if="item.times">{{item.times}} {{item.filesTime}}</text>
+                            <text class="" v-else>请选择</text>
                             <i-icon class="icon paddingRL30" type="enter" size="20" color="#707070"  />
                         </view>
                     </view>
@@ -150,9 +153,9 @@ import buyCar from '@/components/buyCar.vue'
                     name:'大东东',
                     sex:'男',
                     tal:'13068254894',
-                    baNane:'宝宝',
-                    time:'',
-                    sexBab:'男',
+                    baNane:null,
+                    time:null,
+                    sexBab:null,
 
                 },
                 sexArr:['男','女'],
@@ -176,6 +179,13 @@ import buyCar from '@/components/buyCar.vue'
             // 时间
             bindDateChange (e, item) {
 				item.time = new Date(e.target.value).getTime()
+            },
+
+            // 修改预约时间
+            onChangeTime(id,index){
+                uni.navigateTo({ 
+                    url: `/pages/tabBar/shoppingCart/components/changeTime?id=${id}&index=${index}`
+                })
             },
             
             // 保存

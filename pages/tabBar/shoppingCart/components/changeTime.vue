@@ -13,12 +13,15 @@
                 </view>
             </view>
         </view>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 
 <script>
 import changeTimes from '@/components/time.vue'
 import { mapMutations, mapGetters } from 'vuex'
+import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
     export default {
         components:{
             changeTimes
@@ -29,22 +32,13 @@ import { mapMutations, mapGetters } from 'vuex'
             ]),
         },
         onLoad(options) {
+            this.id = options.id
             this.Index = options.index
         },
         data(){
             return{
-                dateDetail:[
-                    {"operationTime":1609430400000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1609516800000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1609603200000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1609689600000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1609776000000,"isVacation":true,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1609862400000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1609948800000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1610035200000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1610121600000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1610208000000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},
-                    {"operationTime":1610294400000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610380800000,"isVacation":true,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610467200000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610553600000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610640000000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610726400000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610812800000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610899200000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1610985600000,"isVacation":true,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611072000000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611158400000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611244800000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611331200000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611417600000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611504000000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611590400000,"isVacation":true,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611676800000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611763200000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611849600000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1611936000000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]},{"operationTime":1612022400000,"isVacation":false,"defaultTypographyNum":10,"notInTypographyNum":0,"inTypographyNum":0,"addTypographyNum":0,"subTypographyNum":0,"reservationGroupVos":[{"operationType":"DEFAULT","groupTypeCategoryId":176,"isOnline":false,"reservationGroupTypeVos":[{"controlType":"ALL","timeFrames":[{"timeFrameStr":"08:00~20:00","startTime":"08:00","endTime":"20:00","timeFrameType":"BETWEEN","typographyCount":10,"useTypographyNum":0}]}]}]}],
+                shopId:14,
+                dateDetail:[],
                 momeyTime:[
                     {
                         filesTime:'08：00',
@@ -72,7 +66,10 @@ import { mapMutations, mapGetters } from 'vuex'
                     },
                 ],
                 times: '',
-                Index: 0,
+                Index: 0, // 索引
+                id: null, // 当前id
+                endTime:null, // 结束时间
+                startTime:null, // 开始时间
             }
         },
         methods:{
@@ -83,17 +80,68 @@ import { mapMutations, mapGetters } from 'vuex'
             // 获取时间
             getDate(e){
                 this.times = e
+                this.pickerDate = e
+                this.getCalendar()
+                this.reservationPhotoDate()
+                this.typographyCost()
             },
             enDate(e){
+            },
+
+            // 获取日历信息
+            getCalendar(){
+                let arr = this.pickerDate.split('-')
+				// 当前年份
+				let nowYear = Number(arr[0])
+				// 当前月份
+				let nowMonth = Number(arr[1])
+				// 获得当月多少天
+				let dayNums = new Date(nowYear, nowMonth, 0).getDate();
+				// 开始时间
+				let startTime = Date.parse(new Date(`${nowYear}-${this.completeDate(nowMonth)}-01`))
+				this.startTime = Number(startTime) - 28800000 //减去8小时时间戳
+				// 结束时间
+				let endTime = Date.parse(new Date(`${nowYear}-${this.completeDate(nowMonth)}-${dayNums}`))
+				this.endTime = Number(endTime) - 28800000 //减去8小时时间戳
+            },	
+
+            // 日月补0
+			completeDate(value) {
+				return value < 10 ? "0" + value:value;
+			},
+
+            // 获取预约拍照档期
+            reservationPhotoDate(){
+                let param ={
+                    reservationShopId:this.shopId,
+                    endTime:this.endTime,
+                    startTime:this.startTime,
+                }
+                reservationPhotoDate(param).then(res=>{
+                    this.dateDetail = res.data.data
+                })
+            },
+
+            // 查询档期费用
+            typographyCost(){
+                let param ={
+                    reservationShopId:this.shopId,
+                    dateStr: this.pickerDate
+                }
+                typographyCost(param).then(res=>{
+                    console.log(res)
+                })
             },
 
             // 更新购物车
             onChangeCarList(val){
                 let data = {
+                    id:this.id,
                     index:this.Index,
                     times:this.times,
                     ...val
                 }
+                console.log(data)
                 this.mut_carListUpData(data)
                 uni.navigateBack()
             }

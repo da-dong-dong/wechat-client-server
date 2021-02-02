@@ -1,5 +1,5 @@
 // true 开发环境， false 生产环境
-let test = false
+let test = true
 
 let base_other = test ? 'https://api.27yn.cn': 'https://api.lyfz.net'
 let base = test ? 'http://192.168.5.15:8000' : 'http://swx.go.lyfz.net'
@@ -16,12 +16,19 @@ let baseUrl = {
 	updatePassword: `${base}/api/template/ma/auth/update_password`, // 修改密码
 	getAssemblyDescription: `${base}/api/template/ma/get_assembly_description`, // 获取套系服务说明
 	getReservationDescription: `${base}/api/template/ma/get_reservation_description`, // 获取预约服务说明
-    
-    getCityShop: `${base}/api/template/ma/get_city_shop`, // 获取门店信息
 	
-	getListAssemblyCategory: `${base}/api/template/ma/list_assembly_category`, // 获取套系类别列表
-	getPageAssemblyDetail: `${base}/api/template/ma/page_assembly_detail_map`, // 获取套系分页
-	getAssemblyDetail: `${base}/api/template/ma/get_assembly_detail`, // 获取套系详情
+	// 定位
+	getCityShop: `${base}/api/template/ma/get_city_shop`, // 获取门店信息
+	listBrand: `${base}/api/template/ma/list_brand`, // 获取品牌分类
+	
+	// 分类
+	getListAssemblyOnlineCategory: `${base}/api/template/ma/list_assembly_online_category`, // 获取套系类别列表
+	getPageAssemblyOnline: `${base}/api/template/ma/page_assembly_online`, // 获取套系分页
+	getAssemblyOnlineDetail: `${base}/api/template/ma/get_assembly_online_detail`, // 获取套系详情
+	
+	// 购物车
+	reservationPhotoDate: `${base}/api/template/ma/auth/reservation_photo_date`, // 获取预约拍照档期
+	typographyCost: `${base}/api/template/ma/auth/typography_cost`, // 查询档期费用
 
     getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }

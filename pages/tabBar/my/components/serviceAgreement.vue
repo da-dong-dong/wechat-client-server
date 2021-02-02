@@ -1,7 +1,7 @@
 /******************************** 服务协议 ***************************************/
 <template>
     <view>
-        <view>{{testData}}</view>
+        <view class="paddingRL40" v-html="testData"></view>
         <!-- 按钮 -->
         <view  class="saveBtn" @click="onBck"> 确定 </view>
          <!-- 弹窗 -->

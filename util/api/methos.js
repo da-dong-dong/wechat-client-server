@@ -17,7 +17,7 @@ const request = (url, options) => {
 			method:options.method,
 			data:options.data,
 			header: {
-				'Authorization': user.state.code
+				'Authorization': user.state.code?user.state.code:''
 			},
 			success :(res)=>{
 				uni.hideLoading();

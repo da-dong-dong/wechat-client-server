@@ -2,30 +2,22 @@
 <template>
    <view class="boxDitel">
         <!-- 轮播 -->
-        <banner :imgs="imgs"/>
+        <banner :imgs="listDetai.topCarouseList"/>
 
         <!-- 内容文字 -->
         <view class="content marginB30 padding10 marginRL10">
             <view class="flex content_top">
-                <text>8899宝宝照</text>
-                <text class="colorRed">￥8899</text>
+                <text>{{listDetai.name}}</text>
+                <text class="colorRed">￥{{listDetai.assemblyPrice}}</text>
             </view>
             <view class="content_text flex">
                 <view class="content_text_l">
                     服务内容
                 </view>
                 <view class="context_li  flex">
-                    <view class="flex paddingRL20 paddingT10">
-                       <i-icon class="icon " type="right" size="20" color="#FF4852"  />
-                       <text>8寸水晶册</text><text>X 1</text>
-                    </view>
-                    <view class="flex paddingRL20 paddingT10">
-                        <i-icon class="icon " type="right" size="20" color="#FF4852"  />
-                        <text>8寸水晶册</text><text>X 1</text>
-                    </view>
-                    <view class="flex paddingRL20 paddingT10">
-                        <i-icon class="icon " type="right" size="20" color="#FF4852"  />
-                        <text>8寸水晶册</text><text>X 1</text>
+                    <view class="flex paddingRL20 paddingT10" v-for="(item,index) in serverList" :key="index" >
+                       <i-icon class="icon " type="success" size="20" color="#FF4852"  />
+                       <text>{{item.name}}</text><text>{{item.count? 'X '+ item.count:''}}</text>
                     </view>
                 </view>
             </view>
@@ -41,27 +33,35 @@
 
             <!-- 展示 -->
             <view v-if="Index == 0?true:false" class="showTab padding10">
-                <image class="img marginB10 " v-for="(item,index) in imgs" :key="index"  :src="item"></image>
+                <image class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
             </view>
 
             <view v-else>
-                <text>文案</text>
-                <text>文案</text>
-                <text>文案</text>
-                <text>文案</text>
+                <view class="paddingRL40" v-html="testData"></view>
             </view>
         </view>
 
         <!-- 购物车定位 -->
         <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
+
+         <!-- 弹窗 -->
+        <i-message id="message" />
    </view>
 </template>
 
 <script>
 import banner from '@/components/banner.vue'
 import buyCar from '@/components/buyCar.vue'
+import { getAssemblyOnlineDetail } from '@/util/api/goods.js'
+import { getAssemblyDescription } from '@/util/api/user.js'
  import { mapMutations, mapGetters } from 'vuex'
     export default {
+        computed:{
+			...mapGetters('user',[
+                'get_appId',
+                'get_enterpriseId'
+			]),
+        },
         components:{
             banner,
             buyCar
@@ -70,18 +70,97 @@ import buyCar from '@/components/buyCar.vue'
         data(){
             return{
                 Tab:['产品展示','服务说明'],
+                listDetai:{}, // 详情数据
+                testData:'', // 套系服务说明
+                serverList:null, // 服务内容
                 Index:0, // tab 索引
                 Id:0,
-                imgs:['https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.hnol.net%2Fc%2F2015-09%2F13%2F00%2F201509130021357341-2381913.jpg&refer=http%3A%2F%2Fimage.hnol.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613293081&t=c85ce60267bf1fbde8f1ceea384cbbe0','https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20200323%2F2be76653f64243cba41121f37c9d3a7b.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613293081&t=e7256a161ec94190054909ca3fee1f29','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fdingyue.nosdn.127.net%2FSoxuWTMB9XeJi9v0ZFU2SMf%3Dv%3D5z2fhhDYDUAU5fJiCFC1533199826960compressflag.jpg&refer=http%3A%2F%2Fdingyue.nosdn.127.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613293081&t=591b0f9e12fdc8a0e762cb36cf8e7945']
-            }
+               }
         },
         onLoad(options) {
-            this.Id = options.id
+            this.Id = options.id;
+            this.getAssemblyOnlineDetail()
+
+            this.getAssemblyDescription()
         },
         methods:{
             ...mapMutations('carList',[
 				'mut_carListAdd'
             ]),
+
+            // 获取线上套系详情
+            getAssemblyOnlineDetail(){
+                let param = {
+                    enterpriseId:this.get_enterpriseId,
+                    id:this.Id
+                }
+                getAssemblyOnlineDetail(param).then(res=>{
+                    this.listDetai = res.data.data
+                    // 组装服务内容
+                    let json = {}
+                    this.listDetai.assemblyItemList.map(item=>{
+                        // 服装
+                        item.assemblyItemDressInfos.map(val=>{
+                            if(!json.assemblyItemDressInfos){
+                                json.assemblyItemDressInfos = []
+                            }
+                            json.assemblyItemDressInfos.push({
+                                name:val.name,
+                                count:val.count,
+                            })
+                        })
+                        // 商品
+                        item.assemblyItemGoods.map(val=>{
+                            if(!json.assemblyItemGoods){
+                                json.assemblyItemGoods = []
+                            }
+                            json.assemblyItemGoods.push({
+                                name:val.name,
+                                count:val.count,
+                            })
+                        })
+                        // 景点
+                        item.assemblyItemPlaces.map(val=>{
+                            if(!json.assemblyItemPlaces){
+                                json.assemblyItemPlaces = []
+                            }
+                            json.assemblyItemPlaces.push({
+                                name:val.name,
+                                count:val.count,
+                            })
+                        })
+                        // 服务
+                        item.assemblyItemServices.map(val=>{
+                            if(!json.assemblyItemServices){
+                                json.assemblyItemServices = []
+                            }
+                            json.assemblyItemServices.push({
+                                name:val.name,
+                                count:val.count,
+                            })
+                        })
+                    })
+                    
+                    let arr = []
+                    for (const key in json) {
+                        json[key].map(item=>{
+                            arr.push(item)
+                        })
+                    }
+                    this.serverList = arr
+                })
+            },
+
+            // 套系服务说明 
+            getAssemblyDescription(){
+                let param = {
+					appId:this.get_appId,
+					enterpriseId:this.get_enterpriseId
+				}
+                getAssemblyDescription(param).then(res=>{
+                    this.testData = res.data.data
+                })
+            },
 
             // 切换tab
             onClickTab(idx){
@@ -99,12 +178,13 @@ import buyCar from '@/components/buyCar.vue'
             addCar(){
                 let datas={
                         id:this.Id,
-                        name:'889宝宝照',
-                        price:8889,
-                        imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
+                        name:this.listDetai.name,
+                        price:this.listDetai.assemblyPrice,
+                        imgs:this.listDetai.detailPhotoList[0],
                         times:'',
                         filesTime:'',
-                        filesPrice:''
+                        filesPrice:'',
+                        orderType:this.listDetai.orderType
                     }
                 this.mut_carListAdd(datas)
             },
@@ -152,10 +232,10 @@ import buyCar from '@/components/buyCar.vue'
         flex-wrap: wrap;
         width: 550rpx;
         .flex{
-            width: 230rpx;
+            width: 550rpx;
             height: 80rpx;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             .icon{
                 padding-right: 20rpx;
             }

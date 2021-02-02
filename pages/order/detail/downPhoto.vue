@@ -78,18 +78,11 @@
                         item.checked = false
                     }
                 }
-                   
-                // //  商品是否全部勾选，判断全选与否状态
-                // let offCarArr = []
-                // // this.photoList.forEach(item => item.whether == true? offCarArr.push(item): '')
-                // let allChecks = offCarArr.every(item => item.checked == true)     
-                // console.log(allChecks)
-                // allChecks ? this.$set(this.allFlag, 'checked', true) :this.$set(this.allFlag, 'checked', false)
             }
         },
         watch:{
             photoList:{
-                handler:function(val,oldval){
+                handler:function(val){
                     let num = 0
                     val.map(item=>{
                         console.log(item)
@@ -102,7 +95,7 @@
                     val.length == num ? this.$set(this.allFlag, 'checked', true) :this.$set(this.allFlag, 'checked', false)
                    
                 },
-                deep:true//对象内部的属性监听，也叫深度监听 
+                deep:true
             }
         }
     }

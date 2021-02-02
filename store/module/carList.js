@@ -14,10 +14,15 @@ export default{
         
         // 更新
         mut_carListUpData(state,data){
-            let {index,times,filesTime,filesPrice} = data
-            state.carList[index].times = times
-            state.carList[index].filesTime = filesTime
-            state.carList[index].filesPrice = filesPrice
+            let {id,index,times,filesTime,filesPrice} = data
+            state.carList.map((item,idx)=>{
+                if(item.id = id && idx == index){
+                    item.times = times
+                    item.filesTime = filesTime
+                    item.filesPrice = filesPrice
+                }
+            })
+            
         },
 
         // 删除单个
@@ -31,6 +36,7 @@ export default{
         },
 	},
   actions: {
+        // 购物车
 		act_carList({ commit }, data) {
 			commit('mut_carListAdd', data)
 		},

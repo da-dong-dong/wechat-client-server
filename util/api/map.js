@@ -8,5 +8,10 @@ export const getH5Map = (params) => {
 
 // 获取门店信息
 export const getCityShop = (params) => {
-	return get(baseUrl.getCityShop, params)
+	return postObj(baseUrl.getCityShop, params)
+}
+
+// 获取品牌分类
+export const listBrand = (params) => {
+	return get(baseUrl.listBrand, params)
 }

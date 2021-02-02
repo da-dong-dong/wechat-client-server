@@ -5,6 +5,7 @@ const accountInfo = uni.getAccountInfoSync();
 const extConfig = uni.getExtConfigSync ? uni.getExtConfigSync() : {}
 import { mapMutations, mapActions } from 'vuex'
 	export default {
+		
 		globalData: {  
             tiem: null  
         }, 
@@ -13,10 +14,14 @@ import { mapMutations, mapActions } from 'vuex'
 		},
 		mounted(){
 			console.log('AppMounted')
-			//this.getStorageCode()
-			
+			// 获取本地缓存
+			this.getStorageCode()
 			// 存储appid
-			//this.setAppIdEX()
+			this.setAppIdEX()
+			// 获取当前位置
+			this.act_city()
+			// 品牌分类
+			this.act_barmd(extConfig.enterpriseId)
 		},
 		methods: {
 			...mapActions('user',[
@@ -24,6 +29,10 @@ import { mapMutations, mapActions } from 'vuex'
 			]),
 			...mapMutations('user',[
 				'mut_APPId'
+			]),
+			...mapActions('map',[
+				'act_city',
+				'act_barmd',
 			]),
 
 			// 本地缓存获取code
@@ -38,7 +47,8 @@ import { mapMutations, mapActions } from 'vuex'
 					},
 					fail: function(err) {
 						uni.redirectTo({
-							url:'/pages/login/index'
+							// url:'/pages/login/index'
+							url:'/pages/tabBar/home/home'
 						})
 					}
 				})
@@ -56,8 +66,7 @@ import { mapMutations, mapActions } from 'vuex'
 					enterpriseId:extConfig.enterpriseId
 				}
 				this.mut_APPId(param)
-			}
-
+			},
 
 		},
 		onHide: function() {

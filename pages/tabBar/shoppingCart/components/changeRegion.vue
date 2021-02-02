@@ -49,9 +49,9 @@ const { $Message } = require('@/wxcomponents/base/index');
             }
         },
         methods:{
-            ...mapActions('map',[
-				'act_shopIdList'
-			]),
+            // ...mapActions('map',[
+			// 	'act_shopIdList'
+			// ]),
             // 搜索
             onSearch(val){
                 console.log(val)
@@ -78,7 +78,7 @@ const { $Message } = require('@/wxcomponents/base/index');
             getCityShop(){
                 getCityShop().then(res=>{
                     this.shopIdList = res.data.data
-                    this.act_shopIdList(res.data.data)
+                    //this.act_shopIdList(res.data.data)
                 })
             },
 
