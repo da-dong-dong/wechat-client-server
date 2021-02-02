@@ -25,12 +25,12 @@ import orederProgress from './tab/order-progress.vue';
         data() {
             return {
                 scrollHeight:null, // 高度
-                TabCur: 1,
+                TabCur: 0,
                 tabList: [
                     { name: '详情',path: "details" }, 
                     { name: '进度',path: "progress" },
                     { name: '影集',path: "photo" },
-                    { name: '底片下载',path: "down" },
+                    // { name: '底片下载',path: "down" },
                     { name: '评价',path: "evaluate" }
                 ],
             }

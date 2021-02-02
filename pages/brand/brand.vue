@@ -61,9 +61,9 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
     line-height: 100rpx;
     box-sizing: border-box;
     padding-left: 50rpx;
-    border-left: 30rpx solid #EB493B;
+    border-left: 20rpx solid #EB493B;
     &:nth-child(odd){
-        border-left: 30rpx solid #F0A949;
+        border-left: 20rpx solid #F0A949;
     }
 }
 </style>

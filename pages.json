@@ -1,11 +1,5 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		{
-			"path": "pages/order/index",
-			"style": {
-				"navigationBarTitleText": "订单详情"
-			}
-		},
 		
 		{
 			"path": "pages/brand/brand",
@@ -111,12 +105,12 @@
 		},
 
 		
-		// {
-		// 	"path": "pages/order/index",
-		// 	"style": {
-		// 		"navigationBarTitleText": "订单详情"
-		// 	}
-		// },
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
 		{
 			"path": "pages/order/detail/signature",
 			"style": {
