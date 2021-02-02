@@ -4,73 +4,108 @@
         <view class="box">
             <view class="order_box">
                 <view class="order_top">
-                    <view class="order_heade">
-                        <image class="order_heade_img" src="/static/image/oreder_user.png"></image>
-                        <text>吴彦祖</text>
+                    <view class="order_heade padding30 fontSize28 color333">
+                        <view>
+                            金额：<text class="colorRed fontWight">¥899</text>
+                        </view>
+                        <view class="flex marginT20 ">
+                            <view>
+                                预约拍摄时间：<text class="colorRed fontWight">未预约</text>
+                            </view>
+                            <view>
+                                附加费用：<text class="colorRed fontWight">0</text>
+                            </view>
+                        </view>
                     </view>
-                    <view class="order_info">
-                        <view class="order_info_flx">
-                            <view>
-                                订单门店：<text>郑州金夫人婚纱摄影</text>
+                    <view class="order_info paddingRL30 color333">
+                        <view class="fontSize28 fontWight marginB30">客户信息</view>
+                        <view class="paddingRL30 fontSize24">
+                            <view class="order_info_list flex color999">
+                                <view>姓名</view>
+                                <view>性别</view>
+                                <view>手机</view>
+                            </view>
+                            <view class="order_info_list flex ">
+                                <view>张文苑<text class="color999">（爸爸）</text></view>
+                                <view>男</view>
+                                <view>13054359848</view>
+                            </view>
+                            <view class="order_info_list flex ">
+                                <view>张文苑<text class="color999">（妈妈）</text></view>
+                                <view>女</view>
+                                <view>13054359848</view>
                             </view>
                         </view>
-                        <view class="order_info_flx">
-                            <view>
-                                套系名称：<text>5999天长地久婚纱照</text>
-                            </view>
-                        </view>
-                        <view class="order_info_flx">
-                            <view>
-                                套系价格：<text>5999<text class="red">（已付:1999 欠款:4000）</text></text>
-                            </view>
-                        </view>
-                        <view class="order_info_flx">
-                            <view>
-                                拍摄日期：<text>待安排</text>
-                            </view>
-                        </view>
-                        <view class="order_info_flx">
-                            <view>
-                                订单日期：<text>2020年10月1日</text>
-                            </view>
-                        </view>
-                    
                     </view>
                 </view>
-                <!-- 约单 -->
-                <view class="order_show">
+                <!-- 宝宝信息 -->
+                <view class="order_show color333">
                     <view class="oreder_img">
                         <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
                         <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
                     </view>
-                    <view class="order_show_top">
-                        <view>订单预约单</view>
-                        <view class="text_right" @click="onclickSigna(1)">
-                            <text>去签字</text> 
-                            <text> > </text> 
-                        </view>
+                    <view class="order_show_top marginB30 fontWight">
+                        <view class="fontSize28">宝宝信息</view>
                     </view>
-                    <view class="order_show_list">
-                        <view>接收时间：2020.11.11 20:0</view>
-                        <view>接收时间：2020.11.11 20:0</view>
+                    <view class="paddingRL30 fontSize24">
+                        <view class="order_info_list flex color999">
+                            <view>姓名</view>
+                            <view>性别</view>
+                            <view>手机</view>
+                        </view>
+                        <view class="order_info_list flex ">
+                            <view>张文苑</view>
+                            <view>男</view>
+                            <view>13054359848</view>
+                        </view>
                     </view>
                 </view>
-
-                <view class="order_show">
-                    <view class="oreder_img">
-                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
+                <!-- 详情 -->
+                <view class="detail_show color333">
+                    <!-- 套系 -->
+                    <view class="marginB10 fontWight">
+                        <view class="fontSize28">套系信息</view>
                     </view>
-                    <view class="order_show_top">
-                        <view>订单预约单</view>
-                        <view class="text_right" @click="onclickSigna(2)" > 
-                            <text class="red">已拒签</text> 
-                            <text> > </text> 
-                        </view>
+                    <view class="textDetailBox fontSize24 color999 flex marginB30">
+                        <view class="textDetail">套系价格：¥899</view>
+                        <view class="textDetail">套系名称：899宝宝照</view>
                     </view>
-                    <view class="order_show_list">
-                        <view>接收时间：2020.11.11 20:0</view>
-                        <view>接收时间：2020.11.11 20:0</view>
+                    <!-- 产品详情 -->
+                     <view class="marginB10 fontWight">
+                        <view class="fontSize28">产品详情</view>
+                    </view>
+                    <view class="textDetailBox fontSize24 color999 flex marginB30">
+                        <view class="textDetail">入册：23张</view>
+                        <view class="textDetail">入底：23张</view>
+                        <view class="textDetail">拍摄次数：88</view>
+                        <view class="textDetail">服装套住：3套</view>
+                    </view>
+                    <!-- 产品内容 -->
+                     <view class="marginB10 fontWight">
+                        <view class="fontSize28">产品内容</view>
+                    </view>
+                    <view class="textDetailBox fontSize24 color999 flex marginB30">
+                        <view class="textDetail">8寸水晶册x1</view>
+                        <view class="textDetail">10寸水晶册x1</view>
+                        <view class="textDetail">36寸亚米奇x2</view>
+                        <view class="textDetail">风车摆台x1</view>
+                        <view class="textDetail">3寸钱包照x2</view>
+                    </view>
+                    <!-- 服务内容 -->
+                     <view class="marginB10 fontWight">
+                        <view class="fontSize28">服务内容</view>
+                    </view>
+                    <view class="textDetailBox fontSize24 color999  marginB30">
+                        <view class="textDetail">1对1服务</view>
+                        <view class="textDetail">总监拍摄90分钟</view>
+                    </view>
+                     <!-- 注意事项 -->
+                     <view class="marginB10 fontWight">
+                        <view class="fontSize28">注意事项</view>
+                    </view>
+                    <view class="textDetailBox fontSize24 color999  marginB30">
+                        <view class="textDetail">1.我是注意事项 我是注意事项</view>
+                        <view class="textDetail">2.我是注意事项 我是注意事项</view>
                     </view>
                 </view>
             </view>
@@ -130,44 +165,28 @@
         border-radius: 8rpx;
     }
     .order_heade{
-        padding-left: 36rpx;
-        height: 80rpx;
-        display: flex;
-        align-items: center;
-        font-size: 28rpx;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #FF4852;
-        border-bottom: 1px solid #DCDCDC;
-        .order_heade_img{
-            width: 32rpx;
-            height: 32rpx;
-            margin-right: 12rpx;
+        box-sizing: content-box;
+        border-bottom: 1px #999999 dashed;
+        .flex{
+            justify-content: space-between;
         }
     }
 }
 .order_info{
     position: relative;
     margin-top: 24rpx;
-    min-height: 328rpx;
+    min-height: 238rpx;
     background: #FFFFFF;
     border-radius: 16rpx; 
-    .order_info_flx{
-        padding-top: 24rpx;
-        padding:  24rpx 35rpx 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 28rpx;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #999999;
-        text{
-            color:#333333;
-            font-weight: bold;
-        }
-        .red{
-            color:#FF2402
+    
+}
+.order_info_list{
+    justify-content: space-between;
+    margin-bottom: 16rpx;
+    view{
+        flex:1;
+        &:nth-child(2){
+            margin-left: 40rpx;
         }
     }
 }
@@ -180,39 +199,30 @@
     position: relative;  
     padding: 26rpx 40rpx;
     box-sizing: border-box;
-    font-size: 24rpx;
+    
     font-family: PingFangSC-Medium, PingFang SC;
-    color: #999999;
-    .order_show_top{
-        display: flex;
-        justify-content: space-between;
-        font-size: 28rpx;
-        font-weight: bold;
-        color: #333333;
-        .text_right{
-            .red{
-                color: #FF2402;
-            }
-        }
-    }
-    .text_right{
-        font-size: 24rpx;
-        text{
-            &:nth-child(1){
-                color: #FF4852;
-                margin-right: 10rpx;
-            }
-            &:nth-child(2){
-                color: #979797;
-            }
-            
-        }
-        
-        
-    }
+    
+    
     .order_show_list{
         margin-top: 30rpx;
         line-height: 45rpx;
+    }
+}
+.detail_show{
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 16rpx;  
+    margin-top: 20rpx;
+    padding: 26rpx 40rpx;
+    box-sizing: border-box;
+    
+}
+.textDetailBox{
+    justify-content: space-between;
+    flex-wrap: wrap;
+    line-height: 50rpx;
+    .textDetail{
+        min-width: 300rpx;
     }
 }
 </style>

@@ -5,9 +5,10 @@
             <swiper-item  v-for="(item,index) in tabList" :key="index">
                 <orederDetails class="swiper_0" v-if="item.path == 'details'"/>
                 <orederProgress class="swiper_1" v-if="item.path == 'progress'"/>
-                <orederPhoto class="swiper_2" v-if="item.path == 'photo'"/>
+                <orederOnlineSign class="swiper_2" v-if="item.path == 'onlinesign'"/>
+                <!-- <orederPhoto class="swiper_2" v-if="item.path == 'photo'"/>
                 <orederPhotoDown class="swiper_3" v-if="item.path == 'down'"/>
-                <orederEvaluate class="swiper_4" v-if="item.path == 'evaluate'"/>
+                <orederEvaluate class="swiper_4" v-if="item.path == 'evaluate'"/> -->
             </swiper-item>
       </swiper>
     </view>
@@ -19,9 +20,10 @@ import orederDetails from './tab/order-details.vue';
 import orederEvaluate from './tab/order-evaluate.vue';
 import orederPhoto from './tab/order-photo.vue';
 import orederPhotoDown from './tab/order-photo-down.vue';
+import orederOnlineSign from './tab/order-online-sign.vue';
 import orederProgress from './tab/order-progress.vue';
     export default {
-        components: { WucTab, orederDetails,orederEvaluate,orederPhoto,orederPhotoDown,orederProgress},
+        components: { WucTab, orederDetails,orederEvaluate,orederPhoto,orederPhotoDown,orederProgress,orederOnlineSign},
         data() {
             return {
                 scrollHeight:null, // 高度
@@ -29,9 +31,9 @@ import orederProgress from './tab/order-progress.vue';
                 tabList: [
                     { name: '详情',path: "details" }, 
                     { name: '进度',path: "progress" },
-                    { name: '影集',path: "photo" },
-                    // { name: '底片下载',path: "down" },
-                    { name: '评价',path: "evaluate" }
+                    // { name: '影集',path: "photo" },
+                    { name: '网签',path: "onlinesign" },
+                    // { name: '评价',path: "evaluate" }
                 ],
             }
         },

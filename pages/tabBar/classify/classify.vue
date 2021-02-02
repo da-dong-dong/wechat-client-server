@@ -14,7 +14,7 @@
                 <!-- 右侧 -->
                 <view class="right_box flex paddingT10">
                     <view class="right_li textC padding5 marginRL10 "  v-for="(item) in rightList" :key="item.id" @click="onClickDetails(item.id)">
-                        <image class="img" :src="item.coverPhoto"></image>
+                        <image class="img" :src="`${item.coverPhoto}?resize,w_300`"></image>
                         <view class="fontSize24 fontWight color000">{{item.assemblyName}}</view>
                     </view>
                 </view>
