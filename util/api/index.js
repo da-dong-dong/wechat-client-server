@@ -5,6 +5,8 @@ let base_other = test ? 'https://api.27yn.cn': 'https://api.lyfz.net'
 let base = test ? 'http://192.168.5.15:8000' : 'http://swx.go.lyfz.net'
 
 let baseUrl = {
+	// 小程序首页
+	getHomeData: `${base}/api/template/ma/get_home_decoration`, // 获取首页排版数据
     getTicket: `${base_other}/sso/v1/ticket/login`, // 登录
 	// 我的
     getCode: `${base}/api/template/ma/js_code2_session`, // 获取微信登录凭证
