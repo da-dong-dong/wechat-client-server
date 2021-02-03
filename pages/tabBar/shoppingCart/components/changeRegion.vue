@@ -96,6 +96,11 @@ const { $Message } = require('@/wxcomponents/base/index');
                     uni.navigateBack()
                 }else{
                     this.mut_shopId(val)
+                    // 本地存储当前门店
+                    uni.setStorage({
+                        key: 'shopId',
+                        data: val
+                    })
                     uni.switchTab({
                         url:'/pages/tabBar/home/home'
                     })

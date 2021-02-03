@@ -6,13 +6,23 @@
         <!-- 档期选择 -->
         <view class="timeBox paddingRL40 ">
             <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view>
-            <view class="timeList flex"> 
-                <view class="saveBtn" @click="onChangeCarList">确定</view>
-                <!-- <view class="list" v-for="(item,index) in momeyTime" :key="index" @click="onChangeCarList(item)">
-                    <view class="listTime">{{item.filesTime}}</view>
-                    <view class="fontSize24 marginT10">{{item.filesPrice?'此档期需另外付':''}}{{item.filesPrice}}</view>
-                </view> -->
+
+            <view v-if="momeyTime">
+                <view v-for="(item,index) in momeyTime" :key="index">
+                    <view v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
+                        <view>{{item1.controlType |headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
+                        <view class="timeList flex">
+                            <view class="list" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
+                                <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
+                                    {{item2['timeFrameStr']}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
             </view>
+            
+            
         </view>
         <!-- 弹窗 -->
         <i-message id="message" />
@@ -24,48 +34,64 @@ import changeTimes from '@/components/time.vue'
 import { mapMutations, mapGetters } from 'vuex'
 import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
     export default {
+        filters:{
+            // 档期头部过滤
+            headerTime(val,id,typeHeader){
+                let text = ''
+                switch (val) {
+                    case "ALL":
+                        text = `任意订单[${typeHeader.filter(item=>item.id== id)[0].name}]` 
+                        break;
+                
+                    case "WEDDING_DRESS":
+                        text = '婚纱订单'
+                        break;
+                    case "BABY":
+                        text = '儿童订单'
+                        break;
+                    case "PREGNANT":
+                        text = '孕妇订单'
+                        break;
+                    case "PORTRAY":
+                        text = '写真订单'
+                        break;
+                    case "SERVICE":
+                        text = '服务订单'
+                        break;
+                    case "WEDDING":
+                        text = '婚庆订单'
+                        break;
+                
+                    default:
+                        break;
+                }
+
+                return text
+            }
+        },
         components:{
             changeTimes
         },
          computed:{
+            ...mapGetters('user',[
+                'get_shopId',
+            ]),
             ...mapGetters('carList',[
-				'get_carList'
+                'get_carList',
+                'get_typeHeader'
             ]),
         },
         onLoad(options) {
             this.id = options.id
             this.Index = options.index
+            this.orderType =options.orderType
+            this.shopId = this.get_shopId.shopId
         },
         data(){
             return{
-                shopId:14,
+                shopId:15,
                 dateDetail:[],
-                momeyTime:[
-                    {
-                        filesTime:'08：00',
-                        filesPrice:''
-                    },
-                    {
-                        filesTime:'09：00',
-                        filesPrice:''
-                    },
-                    {
-                        filesTime:'10：00',
-                        filesPrice:''
-                    },
-                    {
-                        filesTime:'14：00',
-                        filesPrice:'200'
-                    },
-                    {
-                        filesTime:'15：00',
-                        filesPrice:'200'
-                    },
-                    {
-                        filesTime:'16：00',
-                        filesPrice:'200'
-                    },
-                ],
+                momeyTime:null,
                 times: '',
                 Index: 0, // 索引
                 id: null, // 当前id
@@ -86,6 +112,7 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 this.getCalendar()
                 this.reservationPhotoDate()
                 this.typographyCost()
+                
             },
             enDate(e){
             },
@@ -118,9 +145,12 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                     reservationShopId:this.shopId,
                     endTime:this.endTime,
                     startTime:this.startTime,
+                    orderType :this.orderType
                 }
                 reservationPhotoDate(param).then(res=>{
                     this.dateDetail = res.data.data
+                    // 展示档期
+                    this.showTime()
                 })
             },
 
@@ -136,16 +166,29 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 })
             },
 
+           
+
+            // 展示档期
+            showTime(){
+                let checkTime = new Date(this.pickerDate).getTime()-28800000
+                let list = this.dateDetail.filter(item=>item.operationTime == checkTime)
+                this.momeyTime = list[0].reservationGroupVos
+                console.log(this.momeyTime)
+            },
+
             // 更新购物车
-            onChangeCarList(){
+            onChangeCarList(tiem,id){
+                console.log('来啦',tiem,id)
+               
                 let data = {
-                    id:this.id,
-                    index:this.Index,
-                    times:this.times,
-                    filesPrice:this.filesPrice,
-                    filesTime:''
+                    id:this.id, // id值
+                    index:this.Index, // 索引
+                    times:this.times, // 时间 yy-mm-dd
+                    filesPrice:this.filesPrice, // 全天费用
+                    filesTime:tiem.startTime, // 档期 ,传开始时间
+                    typographyTypeId: id // 模板ID
                 }
-                console.log(data)
+                console.log(data,'*******')
                 this.mut_quickListUpData(data)
                 uni.navigateBack()
             }
@@ -161,11 +204,11 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
         width: 220rpx;
         text-align: center;
         .listTime{
-            width: 110rpx;
+            width: 205rpx;
             display: inline-block;
             border: 1px solid #999;
-            padding:10rpx 20rpx;
             border-radius: 20rpx;
+            padding: 20rpx 0;
         }
         margin:30rpx 0;
     }

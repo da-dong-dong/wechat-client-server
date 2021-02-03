@@ -31,6 +31,9 @@ let baseUrl = {
 	// 购物车
 	reservationPhotoDate: `${base}/api/template/ma/auth/reservation_photo_date`, // 获取预约拍照档期
 	typographyCost: `${base}/api/template/ma/auth/typography_cost`, // 查询档期费用
+	listCategory: `${base}/api/template/ma/auth/list_category`, // 获取类别列表
+	order: `${base}/api/template/ma/auth/order`, // 下单
+	orders: `${base}/api/template/ma/test_pay`, // 下单ove
 
     getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }

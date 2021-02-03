@@ -25,13 +25,22 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
             ...mapMutations('map',[
 				'mut_barmdId'
             ]),
+            ...mapMutations('carList',[
+				'mut_carListDelAll'
+            ]),
+
             ...mapActions('map',[
 				'act_shopIdList'
 			]),
             
             // 设置品牌
             setBrand(id){
+                // 存储当前品牌
                 this.mut_barmdId(id);
+                
+                //  清空购物车
+                this.mut_carListDelAll()
+
                 // 获取门店
                 let param = {
                     extConfig: this.get_enterpriseId,

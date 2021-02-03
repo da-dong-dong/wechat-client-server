@@ -179,7 +179,7 @@ import { getAssemblyDescription } from '@/util/api/user.js'
             // 添加到购物车
             addCar(flag){
                 let datas={
-                        id:this.Id,
+                        id:this.listDetai.id,
                         name:this.listDetai.name,
                         price:this.listDetai.assemblyPrice,
                         imgs:this.listDetai.detailPhotoList?this.listDetai.detailPhotoList[0]:'',

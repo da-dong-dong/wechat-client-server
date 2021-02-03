@@ -57,7 +57,8 @@ export default{
 					commit('mut_city', city)
 				},
 				fail: (err) => {
-					console.log(data,'取消')
+					console.log(data,'取消授权')
+					commit('mut_city', '取消授权')
 					console.log(err)
 				}  
 			}); 

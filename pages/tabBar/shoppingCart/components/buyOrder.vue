@@ -9,7 +9,7 @@
                     <view class="userbox flex paddingRL20" >
                         <view class="flex">
                             <text class="paddingRL20">姓名</text>
-                            <input class="width" type="text" placeholder="请输入姓名" v-model="userInfo.name"/>
+                            <input class="width" type="text" placeholder="请输入姓名" v-model="onlineCustomerContactDtos.name"/>
                         </view>
                         <i-icon class="icon" type="" size="20" color="#707070"  />
                     </view>
@@ -18,7 +18,7 @@
                             <view class="border flex paddingTB20">
                                 <view class="flex">
                                     <text class="paddingRL20">性别</text>
-                                    <text class="width">{{userInfo.sex}}</text>
+                                    <text class="width">{{sexArr[userInfo.sex-1]}}</text>
                                 </view>
                                 <i-icon class="icon" type="enter" size="20" color="#707070"  />
                             </view>
@@ -28,7 +28,7 @@
                         <view class="border flex paddingTB20">
                             <view class="flex">
                                 <text class="paddingRL20">手机号码</text>
-                                <input class="width" type="text" placeholder="请输入手机号" v-model="userInfo.tal"/>
+                                <input class="width" type="text" placeholder="请输入手机号" v-model="userInfo.phone"/>
                             </view>
                             <i-icon class="icon" type="" size="20" color="#707070"  />
                         </view>
@@ -39,7 +39,7 @@
                             <view class="border flex paddingTB20">
                                 <view class="flex">
                                     <text class="paddingRL20">宝宝姓名</text>
-                                    <input class="width" type="text" placeholder="请输入手机号" v-model="userInfo.baNane"/>
+                                    <input class="width" type="text" placeholder="请输入姓名" v-model="onlineCustomerBabyDtos.name"/>
                                 </view>
                                 <i-icon class="icon" type="" size="20" color="#707070"  />
                             </view>
@@ -49,18 +49,18 @@
                                 <view class="border flex paddingTB20">
                                     <view class="flex">
                                         <text class="paddingRL20">宝宝性别</text>
-                                        <text class="width">{{userInfo.sexBab ? userInfo.sexBab : "性别"}}</text>
+                                        <text class="width">{{sexArr[indexBab]}}</text>
                                     </view>
                                     <i-icon class="icon" type="enter" size="20" color="#707070"  />
                                 </view>
                             </view>
                         </picker>
-                        <picker mode="date" :value="userInfo.time" @change="bindDateChange($event, userInfo)">
+                        <picker mode="date" :value="onlineCustomerBabyDtos.birthdayTime" @change="bindDateChange($event, onlineCustomerBabyDtos)">
                             <view class="userbox flex paddingRL20" >
                                 <view class="border flex paddingTB20">
                                     <view class="flex">
                                         <text class="paddingRL20">宝宝生日</text>
-                                        <text class="width">{{userInfo.time ? userInfo.time : '生日' | times}}</text>
+                                        <text class="width">{{onlineCustomerBabyDtos.birthdayTime ? onlineCustomerBabyDtos.birthdayTime : '生日' | times}}</text>
                                     </view>
                                     <i-icon class="icon" type="enter" size="20" color="#707070"  />
                                 </view>
@@ -141,32 +141,78 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
 const { $Message } = require('@/wxcomponents/base/index');
+import { getUserInfo } from '@/util/api/user.js'
+import { listCategory, order, orders } from '@/util/api/goods.js'
     export default {
         components:{
             buyCar
         },
         computed:{
 			...mapGetters('user',[
-				'get_shopId'
+                'get_shopId',
+                'get_phone',
+                'get_nickName',
+                'get_sex',
             ]),
 
             ...mapGetters('carList',[
 				'get_quickList'
             ]),
+            
+        },
+        mounted(){
+            // 获取用户 判断是否存在
+            if(!this.get_phone){
+                this.getUserInfoAPI()
+            }else{
+                // 初始数据
+                this.onlineCustomerContactDtos.name = this.get_phone
+                this.userInfo.sex = this.get_sex
+                this.onlineCustomerContactDtos.mobile = this.get_phone
+            }
+
+            // 档期类别
+            this.listCategory()
         },
         data(){
             return{
+                // 宝宝
+                onlineCustomerBabyDtos:{
+                    birthdayLunar: true, // 农历还是阴历
+                    birthdayTime: '', // 出生日期
+                    callName: "", // 宝宝称呼
+                    display: true, // 是否显示
+                    name: "", // 宝宝姓名
+                    sex: true, // 性别，false：女，true：男
+                    zodiac: ""
+                },
+                // 客户
+                onlineCustomerContactDtos:{
+                    address: "", // 地址
+                    birthdayLunar: true, // 是否农历
+                    birthdayTime: 0, // 出生日期
+                    callName: "", // 联系人称呼
+                    display: true, // 是否显示
+                    email: "", // 邮箱
+                    main: true, // 是否主联系人
+                    mobile: "", // 手机号码
+                    name: "", // 客户姓名
+                    qq: "", // QQ
+                    sex: true, // 	性别，false：女，true：男
+                    tel: "", // 固定电话
+                    wechat: "", //	微信
+                    workUnit: "", // 工作单位
+			    },
                 userInfo:{
                     name:'大东东',
                     sex:'男',
-                    tal:'13068254894',
+                    phone:'13068254894',
                     baNane:null,
                     time:null,
                     sexBab:null,
-
                 },
                 sexArr:['男','女'],
                 index:0,
@@ -175,27 +221,83 @@ const { $Message } = require('@/wxcomponents/base/index');
             }
         },
          methods:{
+             ...mapActions('user',[
+                'act_nickName',
+                'act_typeHeader'
+            ]),
+
+            ...mapActions('carList',[
+                'act_typeHeader'
+            ]),
+
+             // 获取类别
+            listCategory(){
+                listCategory({categoryType:'TYPOGRAPHY_GROUP'}).then(res=>{
+                    this.act_typeHeader(res.data.data) 
+                })
+            },
+            
+            // 获取用户信息AIP
+            getUserInfoAPI(){
+                getUserInfo().then(res=>{
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                    // 初始数据
+                    this.onlineCustomerContactDtos.name = nickName
+                    this.userInfo.sex = sex
+                    this.onlineCustomerContactDtos.mobile = phone
+                })
+            },
+            // 订单类型判断客户
+            // 过滤订单类型显示不同用户
+            orderUserInfo(val,sex){
+                console.log(val,sex)
+                let text = '';
+                switch (val) {
+                    case 'WEDDING_DRESS':
+                        text = sex==1?'新郎':'新娘'
+                        break;
+                    case 'PREGNANT':
+                        text = '孕妈'
+                        break;
+                    case 'BABY':
+                        text = sex==1?'爸爸':'妈妈'
+                        break;
+                    case 'PORTRAY':
+                        text = sex==1?'先生':'女士'
+                        break;
+                    case 'SERVICE':
+                        text = sex==1?'先生':'女士'
+                        break;
+                    case 'WEDDING':
+                        text = sex==1?'新郎':'新娘'
+                        break;
+                    default:
+                        break;
+                }
+                return text 
+            },
             // 性别
             change(e){
                 this.index = Number(e.detail.value)
-				this.userInfo.sex = this.sexArr[this.index]
+                this.userInfo.sex = this.index==0?1:2
             },
             
             // 宝宝性别
             changeBab(e){
                 this.indexBab = Number(e.detail.value)
-				this.userInfo.sexBab = this.sexArr[this.indexBab]
+				this.onlineCustomerBabyDtos.sex = this.indexBab==1?true:false
             },
 
-            // 时间
+            // 宝宝生日
             bindDateChange (e, item) {
-				item.time = new Date(e.target.value).getTime()
+				item.birthdayTime = new Date(e.target.value).getTime()
             },
 
             // 修改预约时间
             onChangeTime(id,index){
                 uni.navigateTo({ 
-                    url: `/pages/tabBar/shoppingCart/components/changeTime?id=${id}&index=${index}`
+                    url: `/pages/tabBar/shoppingCart/components/changeTime?id=${id}&index=${index}&orderType=${this.get_quickList[0].orderType}`
                 })
             },
 
@@ -232,7 +334,54 @@ const { $Message } = require('@/wxcomponents/base/index');
                     });
                     return
                 }
+                // 组装数据
+                let param = {
+                    // 	客户组
+                    customerGroupDto:{
+                        onlineCustomerBabyDtos:[],
+                        onlineCustomerContactDtos:[]
+                    },
+                    orderDtos:[], // 	订单商品信息
+                    orderShopId: this.get_shopId.shopId // 开单门店ID
+                }
+                // 宝宝昵称
+                this.onlineCustomerBabyDtos.callName = this.onlineCustomerBabyDtos.sex?'男宝':'女宝'
+                // 订单判断用户昵称
+                this.onlineCustomerContactDtos.callName = this.orderUserInfo(this.get_quickList[0].orderType,this.userInfo.sex)
+                param.customerGroupDto.onlineCustomerBabyDtos.push(this.onlineCustomerBabyDtos)
+                param.customerGroupDto.onlineCustomerContactDtos.push(this.onlineCustomerContactDtos)
+                // 组装 订单信息
+                
+                this.get_quickList.map(item=>{
+                    let json = {}
+                    json.reservationPhotoDto = {} //预约信息
+                    json.assemblyId = item.id // 套系ID
+                    json.reservationPhotoDto.reservationDate = new Date(item.times).getTime()-28800000  // 预约时间 时间戳
+                    json.reservationPhotoDto.reservationShopId = item.shopId //	预约门店ID
+                    json.reservationPhotoDto.reservationTime = item.filesTime // 预约门店ID
+                    json.reservationPhotoDto.typographyTypeId = item.typographyTypeId //模板ID
+                    param.orderDtos.push(json)
+                })
+                console.log(param)
                 console.log('支付页',this.get_quickList)
+                // 下单
+                // order(param).then(res=>{
+                //     console.log(res)
+                // })
+                // 下单测试
+                orders().then(res=>{
+                    let data = res.data.data
+                    console.log(data)
+                    uni.navigateToMiniProgram({
+                        appId: data.jumpAppId,
+                        path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
+                        extraData: data,
+                        success(res) {
+                            // 返回成功
+                            console.log(res)
+                        }
+                    })
+                })
             }
         }
     }

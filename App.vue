@@ -32,7 +32,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 			// 获取当前位置
 			this.act_city()
 			// 判断是否存有品牌id
-			this.getBarmdId()
+			//this.getBarmdId()
 		},
 		methods: {
 			...mapActions('user',[
@@ -81,12 +81,31 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 				this.mut_APPId(param)
 			},
 
-			// 判断是否存有品牌id
-			getBarmdId(){
+			// 判断是否存有当前门店
+			getBarmdId(val){
+				uni.getStorage({
+					key: 'shopId',
+					success: res => {
+						// 存储当前门店
+						this.mut_shopId(res.data)
+						uni.switchTab({
+							url:'/pages/tabBar/home/home'
+						})
+						console.log('选过的门店',res.data)
+					},
+					fail:()=> {
+						let arr = []
+						this.get_shopIdList.map(item=>{
+							if(item.city == val){
+								arr.push(item)
+							}
+						})
+						console.log('设置最近门店',arr)
+						this.mut_shopId(arr[0]) 
+					}
+				})
 				if(this.get_barmdId){
-					uni.switchTab({
-                        url:'/pages/tabBar/home/home'
-                    })
+					
 				}
 			}
 
@@ -98,14 +117,10 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 		// 监听是否选择位置 设置最近门店
 		watch:{
 			get_city(val){
-				let arr = []
-				this.get_shopIdList.map(item=>{
-					if(item.city == val){
-						arr.push(item)
-					}
-				})
-				console.log(arr)
-				this.mut_shopId(arr[0]) 
+				// 判断定位门店
+				console.log(val)
+				
+				this.getBarmdId()
 			}
 		}
 	}

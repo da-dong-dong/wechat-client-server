@@ -25,3 +25,20 @@ export const reservationPhotoDate = (params) => {
 export const typographyCost = (params) => {
 	return get(baseUrl.typographyCost, params)
 }
+
+// 获取类别列表
+export const listCategory = (params) => {
+	return get(baseUrl.listCategory, params)
+}
+
+// 下单
+export const order = (params) => {
+	return postObj(baseUrl.order, params)
+}
+
+// 下单ove
+export const orders = (params) => {
+	return get(baseUrl.orders, params)
+}
+
+
