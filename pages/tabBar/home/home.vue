@@ -3,35 +3,35 @@
     <view class="homeContent">
         <view v-for="(item, index) in homeList" :key="index">
         	<view class="searchContent" v-if="item.type === 'search'" :style="{ 'background-image': `url(${item.data.backImg})` }">
-				<view class="uni-input" @click="turnSearch">{{item.data.title}}</view>
+				<view class="uni-input" @click="turnSearch" :style="{ opacity: item.data.opacity/10 }">{{item.data.title}}</view>
         	</view>
-			<view class="shopContent" v-if="item.type === 'shop'">
-				<span class="flex_1">当前门店: 利亚方舟</span>
-				<i class="iconfont iconhtbArrowright02" @click="turnShop"></i>
+			<view class="shopContent" v-if="item.type === 'shop'" :style="{ 'background-image': `url(${item.data.backImg})`, color: item.data.color }" @click="turnShop">
+				<span class="flex_1">当前门店: {{get_shopId.shopName}}</span>
+				<i class="iconfont iconhtbArrowright02" ></i>
 			</view>
 			<view v-if="item.type === 'carousel'">
 				<swiper class="swiper" :autoplay="item.data.autoplay" indicator-dots :style="{ height: item.data.height * 2 + 'rpx'}">
 					<swiper-item v-for="(_, _i) in item.data.imgs" :key="_i">
-						<view class="swiper-item uni-bg-red" :style="{ height: item.data.height * 2 + 'rpx'}" @click="turnDetail(item.data.linkData)">
+						<view class="swiper-item uni-bg-red" :style="{ height: item.data.height * 2 + 'rpx'}" @click="turnDetail(_.linkData)">
 							<img :src="_.src" class="wh100"/>
 						</view>
 					</swiper-item>
 				</swiper>
 			</view>
 			<view v-if="item.type === 'oneImg'">
-				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;">
+				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.linkData)">
 			</view>
 			<view class="btnContent" v-if="item.type === 'moreBtn'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-image': `url(${item.data.backImg})` }">
-				<img class="imgOne" :src="_.src" alt="" v-for="(_, _index) in item.data.imgs" :key="_index">
+				<img class="imgOne" :src="_.src" alt="" v-for="(_, _index) in item.data.imgs" :key="_index" @click="turnDetail(_.linkData)">
 			</view>
 			
 			<view v-if="item.type === 'moreImg'" :style="{ 'background-image': `url(${item.data.backImg})` }">
-				<view class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }">
+				<view class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.linkData)">
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
 				<view class="flex rowFlex" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
-					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidth(_.imgs, sub.col, _i) }">
+					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidth(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
 			</view>
         </view>
@@ -45,6 +45,7 @@
 import { getHomeData } from '@/util/api/home.js'
 const { $Message } = require('@/wxcomponents/base/index');
 import { getLongin } from '@/util/api/user.js'
+import { mapGetters } from 'vuex'
 const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
@@ -53,39 +54,42 @@ const entriData = uni.getExtConfigSync()
 				homeList: []
 			}
 		},
+		computed: {
+			...mapGetters('user',[
+				'get_shopId'
+			])
+		},
         mounted(){
+			
         },
 		 onLoad() {
-            // 查看是否授权
-            console.log('sss')
-            wx.getUserInfo({
-                    success: function(res) {
-                    console.log(res.userInfo)
-                    }
-                })
-            wx.getSetting({
-            success (res){
-                if (res.authSetting['scope.userInfo']) {
-                // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-                wx.getUserInfo({
-                    success: function(res) {
-                    console.log(res.userInfo)
-                    }
-                })
-                }
-            }
-			})
+            
 			this.getHomeData()
         },
         methods:{
 			turnShop () {
-
+				uni.navigateTo({ url:'/pages/tabBar/shoppingCart/components/changeRegion' })
 			},
 			turnSearch () {
 
 			},
 			turnDetail (data) {
-				
+				switch (data.type) {
+					case 'link':
+						console.log(5555)
+						uni.navigateTo({ 
+							url: '/pages/tabBar/home/web_view?url=' + data.link 
+						})
+						break;
+					case 'detail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/components/details?id=' + data.detailId 
+						})
+						break;
+					case 'classify':
+						
+						break;
+				}
 			},
 			getHomeData () {
 				let params = {
@@ -177,7 +181,7 @@ const entriData = uni.getExtConfigSync()
 	font-size: 24rpx;
 }
 .searchContent{
-    padding: 10rpx 20rpx;
+    padding: 20rpx 20rpx;
     background-repeat: no-repeat;
     background-size: cover;
 	font-size: 24rpx;
@@ -205,8 +209,8 @@ const entriData = uni.getExtConfigSync()
 }
 .btnContent{
     display: flex;
-    padding: 10rpx 40rpx;
-    justify-content: space-around;
+    padding: 10rpx 20rpx;
+    justify-content: space-between;
     background-repeat: no-repeat;
     background-size: cover;
 	box-sizing: border-box;
@@ -214,34 +218,37 @@ const entriData = uni.getExtConfigSync()
       flex: 1;
 	  width: auto;
 	  height: auto;
-      max-width: 60px;
+      max-width: 106rpx;
     }
  }
  
 .moreimgContent{
-	 display: flex;
-	 padding: 5px 20px;
-	 padding-right: 5px;
-	 justify-content: space-around;
-	 background-repeat: no-repeat;
-	 background-size: cover;
-	 .flex_1{
-	    display: flex;
-	    align-items: center;
-	 }
-	 .iconFlex{
-	    display: flex;
-	    align-items: center;
-	 }
+	display: flex;
+	padding: 10rpx 20rpx;
+	justify-content: space-around;
+	background-repeat: no-repeat;
+	background-size: cover;
+	.flex_1{
+	display: flex;
+	align-items: center;
+	}
+	.iconFlex{
+	display: flex;
+	align-items: center;
+	}
 }
 .flex_1{
     flex: 1;
 }
 .rowFlex{
-	padding: 0px 15px;
+	padding: 0rpx 20rpx;
 	justify-content: space-between;
-	margin-bottom: 10px;
+	margin-bottom: 20rpx;
 	box-sizing: border-box;
+	padding-bottom: 20rpx;
+    &:last-child{
+      margin-bottom: 0px;
+    }
 }
 .flex{
 	display: flex;

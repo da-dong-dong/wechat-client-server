@@ -14,7 +14,13 @@
 				"navigationBarTitleText": "首页"
 			}
 		},
-
+		//******************************** 首页 ********************************
+		{
+			"path": "pages/tabBar/home/web_view",
+			"style": {
+				"navigationBarTitleText": "外部链接"
+			}
+		},
 		//******************************** 登陆 ********************************
 		{
 			"path": "pages/login/index",
