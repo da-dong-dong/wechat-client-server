@@ -1,12 +1,13 @@
 /******************************** 订单 ***************************************/
 <template>
     <view class="order_box" >
-        <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder"></wuc-tab>
-           
-            <!-- <view v-for="(item,index) in tabList" :key="index">
-                 <orederAll :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList"/>
-            </view> -->
-            <swiper class="swiper_group" :style="{height:scrollHeight+'px'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
+        <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData">
+            <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder"></wuc-tab>
+        
+            <view v-for="(item,index) in tabList" :key="index">
+                 <orederNoBuy :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList"/>
+            </view>
+            <!-- <swiper class="swiper_group" :style="{height:scrollHeight+'px'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
                 <swiper-item  v-for="(item,index) in tabList" :key="index">
                     <orederAll class="swiper_4" v-if="item.path == 'all'"/>
                     <orederNoBuy class="swiper_1" v-if="item.path == 'noBuy'"/>
@@ -14,8 +15,8 @@
                     <orederGoOn class="swiper_3" v-if="item.path == 'goOn'"/>
                     <orederNoGoin class="swiper_0" v-if="item.path == 'noGoIn'"/>
                 </swiper-item>
-            </swiper> 
-
+            </swiper>  -->
+        </s-pull-scroll>
       <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -28,8 +29,10 @@ import orederNoAppointment from './tab/order-no-appointment.vue';
 import orederGoOn from './tab/order-go-on.vue';
 import orederNoGoin from './tab/order-no-goins.vue';
 import orederNoBuy from './tab/order-no-buy.vue';
+import sPullScroll from '@/components/s-pull-scroll';
+import { orderList } from '@/util/api/order.js'
     export default {
-        components: { WucTab, orederAll,orederNoAppointment,orederGoOn,orederNoGoin,orederNoBuy},
+        components: { WucTab, orederAll,orederNoAppointment,orederGoOn,orederNoGoin,orederNoBuy,sPullScroll},
         data() {
             return {
                 TabCur: 0,
@@ -42,145 +45,123 @@ import orederNoBuy from './tab/order-no-buy.vue';
                      { name: '全部/关闭',path: "all" } 
                 ],
                 scrollHeight:null,
-                get_carList:null
+                get_carList:null,
+                rightList:[],
+                showNoMore:false,
+                page:1,
+                total:5, // 总数量
+                list:[], // 总数据
             }
         },
+        onLoad(){
+            this.refresh();
+		},
         mounted(){
-           this.getHtight(this.TabCur)
-           this.setData(this.TabCur)
+            // 获取
+            this.orderList()
+            
         },
         methods: {
             tabChange(index) {
                 this.TabCur = index;
                 this.setData(this.TabCur)
-                // 修改标题
-                // uni.setNavigationBarTitle({
-                //     title: option.typeName
-                // });
+                
             }, 
             swiperChange(val){
                 this.TabCur = val.detail.current
             },
 
-            // 封装获取高度
-            getHtight(indx){
-                setTimeout(() => {
-                    let info = uni.createSelectorQuery().in(this).select(`.swiper_${indx}`).boundingClientRect()
-                    info.exec(res => {
-                        console.log(res)
-                        this.scrollHeight = res[0].height
-                    })
-                }, 500);
+            // 获取所有订单数据
+            orderList(){
+                orderList().then(res=>{
+                    this.list = res.data.data;
+                    // 过滤字段
+                    this.setData(this.TabCur)
+                })
             },
-
             // 模拟数据
             setData(idx){
+                let setList = null
                 switch (idx) {
                     case 0:
-                        this.get_carList=[
-                                {
-                                    id:201001001,
-                                    name:'889宝宝照',
-                                    price:8889,
-                                    imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                    times:'2020-10-18',
-                                    filesTime:'16:00',
-                                    filesPrice:'123',
-                                    noOrder:false
-                                },
-                            ]
+                        // 进行中
+                        setList = this.list.filter(item=> (item.incomePrice == 0 && item.isOnline) || !item.reservationPhotoInfoVos || !item.isToShop)
+                        setList.map(item=>{
+                            if(!item.reservationPhotoInfoVos){
+                                item.state = '未预约'
+                            }
+                            if(!item.isToShop){
+                                item.state = '未到店'
+                            }
+                        })
+                        this.get_carList = setList
                         break;
                 
                      case 1:
-                        this.get_carList=[
-                            {
-                                id:201001001,
-                                name:'889宝宝照',
-                                price:8889,
-                                imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                times:'2020-10-18',
-                                filesTime:'16:00',
-                                filesPrice:'123',
-                                noOrder:true
-                            }
-                           
-                        ]
+                        // 未付款
+                        setList = this.list.filter(item=>item.incomePrice == 0 && item.isOnline)
+                        setList.map(item=>item.state = null)
+                        this.get_carList = setList
                         break;
 
                     case 2:
-                        this.get_carList=[
-                             {
-                                id:201001001,
-                                name:'889宝宝照',
-                                price:8889,
-                                imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                times:'',
-                                filesTime:'',
-                                filesPrice:'',
-                                noOrder:false
-                            }
-                        ]
+                        // 未预约
+                        setList = this.list.filter(item=>!item.reservationPhotoInfoVos)
+                        
+                        setList.map(item=>item.state = '未预约')
+                        this.get_carList = setList
+
                         break;
                     case 3:
-                        this.get_carList=[
-                            {
-                                id:201001001,
-                                name:'889宝宝照',
-                                price:8889,
-                                imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                times:'2020-10-18',
-                                filesTime:'16:00',
-                                filesPrice:'123',
-                                noOrder:false
-                            }
-                        ]
+                        // 未到店
+                        setList = this.list.filter(item=>!item.isToShop)
+                        
+                        setList.map(item=>item.state = '未到店')
+                        this.get_carList = setList
+                        
                         break;
 
                     case 4:
-                         this.get_carList=[
-                                {
-                                    id:201001001,
-                                    name:'889宝宝照',
-                                    price:8889,
-                                    imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                    times:'2020-10-18',
-                                    filesTime:'16:00',
-                                    filesPrice:'123',
-                                    noOrder:true
-                                },
-                                {
-                                    id:201001001,
-                                    name:'889宝宝照',
-                                    price:8889,
-                                    imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                    times:'2020-10-18',
-                                    filesTime:'16:00',
-                                    filesPrice:'123',
-                                    noOrder:false
-                                },
-                                {
-                                    id:201001001,
-                                    name:'889宝宝照',
-                                    price:8889,
-                                    imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                                    times:'',
-                                    filesTime:'',
-                                    filesPrice:'',
-                                    noOrder:false
-                                }
-                            ]
+                        // 全部
+                         setList= this.list.filter(item=>item)
+                         setList.map(item=>{
+                            if(!item.reservationPhotoInfoVos){
+                                item.state = '未预约'
+                            }
+                            if(!item.isToShop){
+                                item.state = '未到店'
+                            }
+                        })
+                        this.get_carList = setList
                         break;
                 
                 
                 }
-            }
+            },
+
+
+            // 组件
+			refresh () {
+				this.$nextTick(() => {
+					this.$refs.pullScroll.refresh();
+				});
+			},
+			loadData (pullScroll) {
+				if (pullScroll.page == 1) {
+					this.rightList = [];
+				}
+				if(!this.showNoMore){
+					this.page = pullScroll.page
+                }
+				if(this.rightList.length < this.total){
+                    //this.getPageAssemblyOnline()
+					this.showNoMore = false
+				}else{
+					this.showNoMore = true
+				}
+				pullScroll.success();
+			},
         },
-        watch:{
-            TabCur(newVal){
-                
-                this.getHtight(newVal)
-            }
-        }
         
     }
 </script>

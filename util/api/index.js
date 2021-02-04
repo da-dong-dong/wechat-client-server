@@ -38,6 +38,7 @@ let baseUrl = {
 	// 订单
 	orderDetails: `${base}/api/template/ma/auth/order_details`, // 订单详情
 	orderProcess: `${base}/api/template/ma/auth/order_process`, // 订单流程
+	orderList: `${base}/api/template/ma/auth/order_list`, // 获取订单列表
 
     getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }

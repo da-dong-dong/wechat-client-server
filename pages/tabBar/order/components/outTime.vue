@@ -9,8 +9,9 @@
     export default {
         data(){
             return {
-                TimeText: '123',
-                now: 0
+                TimeText: '',
+                now: 0,
+                tiems: null,
             };
         },
         props: ['endtime'],
@@ -24,7 +25,12 @@
         },
 
         mounted(){
-            setInterval(()=>{
+           this.tiems =  setInterval(()=>{
+                if(this.endtime - this.now<=0){
+                    clearTimeout(this.tiems)
+                    this.TimeText = 0
+                    return
+                }
                 this.now = new Date().getTime();
                 this.formate(this.endtime - this.now);
             }, 1000);

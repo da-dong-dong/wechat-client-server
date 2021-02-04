@@ -13,7 +13,10 @@
                         <view>{{item1.controlType |headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
                         <view class="timeList flex">
                             <view class="list" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
-                                <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
+                                <view v-if="item2.useTypographyNum < item2.typographyCount" class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
+                                    {{item2['timeFrameStr']}}
+                                </view>
+                                <view v-else class="listTime active">
                                     {{item2['timeFrameStr']}}
                                 </view>
                             </view>
@@ -203,14 +206,18 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
     .list{
         width: 220rpx;
         text-align: center;
-        .listTime{
-            width: 205rpx;
-            display: inline-block;
-            border: 1px solid #999;
-            border-radius: 20rpx;
-            padding: 20rpx 0;
-        }
+        
         margin:30rpx 0;
+        .active{
+            background: #999;
+        }
+    }
+    .listTime{
+        width: 205rpx;
+        display: inline-block;
+        border: 1px solid #999;
+        border-radius: 20rpx;
+        padding: 20rpx 0;
     }
 }
 </style>

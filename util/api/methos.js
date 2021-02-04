@@ -23,12 +23,13 @@ const request = (url, options) => {
 				uni.hideLoading();
 				
 				if(res.data.code !== 200){
-					$Message({
-						content: res.data.message || res.data.msg,
-						type: 'error',
-						// duration:
-					});
-					
+					if(res.data.code !== 407){
+						$Message({
+							content: res.data.message || res.data.msg,
+							type: 'error',
+							// duration:
+						});
+					}
 					let code = res.data.code
 					switch(code){
 						case 407: //登录超时

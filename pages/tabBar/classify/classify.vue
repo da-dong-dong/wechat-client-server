@@ -28,7 +28,7 @@
 <script>
 import { mapGetters } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
-import { getListAssemblyOnlineCategory, getPageAssemblyOnline, getAssemblyOnlineDetail } from '@/util/api/goods.js'
+import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api/goods.js'
 	import sPullScroll from '@/components/s-pull-scroll';
     export default {
         components:{sPullScroll},
@@ -158,11 +158,12 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline, getAssemblyOnline
                     }]
                 }],
                 shopId:14,
-				total:0, // 总数量
                 Index:0, // 索引
                 leftList:null,
                 rightList:[],
+                showNoMore:false,
                 page:1,
+                total:0, // 总数量
                 id:0,
             }
         },

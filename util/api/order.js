@@ -10,3 +10,8 @@ export const orderDetails = (params) => {
 export const orderProcess = (params) => {
 	return get(baseUrl.orderProcess, params)
 }
+
+// 获取订单列表
+export const orderList = (params) => {
+	return get(baseUrl.orderList, params)
+}
