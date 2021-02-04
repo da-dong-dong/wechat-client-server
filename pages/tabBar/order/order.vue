@@ -11,8 +11,8 @@
                     <orederAll class="swiper_4" v-if="item.path == 'all'"/>
                     <orederNoBuy class="swiper_1" v-if="item.path == 'noBuy'"/>
                     <orederNoAppointment class="swiper_2" v-if="item.path == 'noAppointment'"/>
-                    <orederGoOn class="swiper_3" v-if="item.path == 'noGoIn'"/>
-                    <orederNoGoin class="swiper_0" v-if="item.path == 'goOn'"/>
+                    <orederGoOn class="swiper_3" v-if="item.path == 'goOn'"/>
+                    <orederNoGoin class="swiper_0" v-if="item.path == 'noGoIn'"/>
                 </swiper-item>
             </swiper> 
 

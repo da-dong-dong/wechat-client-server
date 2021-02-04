@@ -5,7 +5,7 @@
             <view class="cityTop flex">
                 <view>
                     <text>当前定位城市：</text>
-                    <text> {{cityVal}} </text>
+                    <text> {{cityVal?cityVal:'正在定位...'}} </text>
                 </view>
                 <!-- 切换品牌 -->
                 <view class="color333" v-if="barmd" @click="onChageBarmd">切换品牌</view>

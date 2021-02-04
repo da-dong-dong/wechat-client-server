@@ -5,7 +5,8 @@
             选择当前品牌
         </view>
         <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)">
-            {{item.name}}
+            <view class="paddingT20">{{item.name}}</view>
+            <text class="fontSize20 color999">{{item.remarks?item.remarks:''}}</text>
         </view>
     </view>
 </template>
@@ -64,15 +65,17 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 }
 .brandList{
     width: 100%;
-    height: 100rpx;
+    height: 110rpx;
     background: #fff;
     border-radius: 20rpx;
-    line-height: 100rpx;
     box-sizing: border-box;
     padding-left: 50rpx;
     border-left: 20rpx solid #EB493B;
     &:nth-child(odd){
         border-left: 20rpx solid #F0A949;
+    }
+    text{
+       display: inline-block; 
     }
 }
 </style>

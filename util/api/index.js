@@ -34,6 +34,10 @@ let baseUrl = {
 	listCategory: `${base}/api/template/ma/auth/list_category`, // 获取类别列表
 	order: `${base}/api/template/ma/auth/order`, // 下单
 	orders: `${base}/api/template/ma/test_pay`, // 下单ove
+	
+	// 订单
+	orderDetails: `${base}/api/template/ma/auth/order_details`, // 订单详情
+	orderProcess: `${base}/api/template/ma/auth/order_process`, // 订单流程
 
     getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }

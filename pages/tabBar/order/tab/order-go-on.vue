@@ -116,7 +116,7 @@
             // 跳转蓝湖详情
             onClickDetails(){
                 uni.navigateTo({ 
-                    url: '/pages/order/index' 
+                    url: `/pages/order/index?id=${268}`
                 })
             }
         }

@@ -5,78 +5,196 @@
         <view class="progressTop">
             <image class="img" src="/static/image/progress.png"></image>
             <view class="progressText fontSize24">
-                <view class="color333 fontSize28">当前进度：<text class="fontSize36 colorRed fontWight">选片</text></view>
-                <view>客户：<text>选片</text></view>
-                <view>下单时间<text>2020-10-18 16:00</text></view>
+                <view class="width fontSize36">
+                    <picker @change="change" :value="index" :range="tabList">
+                        <view class="width flex">
+                            <view>{{tabList[index]}}</view>
+                            <i-icon class="icon" type="unfold" size="20" color="#D8D8D8"  />
+                        </view>
+                    </picker>
+                </view>
+                <view class="color333 fontSize28">当前进度：<text class="fontSize36 colorRed fontWight">{{arrs}}</text></view>
+                <view>客户：<text>{{arrs}}</text></view>
+                <view>下单时间：<text>{{list[0].orderTime | times}}</text></view>
             </view>
         </view>
         <!-- 进度 -->
-        <view class="progressList  paddingRL40 flex fontSize24 color999" v-for="(item,index) in progressList" :key="index">
-            <view class="time">{{item.tiem}}</view>
-            <view class="text">
-                <view class="fontSize36 fontWight " :class="item.active?'color333':''">{{item.name}}</view>
-                <view class="textList">
-                    <text v-for="(items) in item['textList']" :key="items">{{items}}</text>
+        <view>
+             <!-- 拍照 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].photoUpdateTime?list[0].photoUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].photoStatus == 'COMPLETE'?'color333':''">拍照</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].photoStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].photoStatus == 'COMPLETE'?'active':''"></view>
                 </view>
             </view>
-            <view class="success">
-                <i-icon class="icon" type="success" size="20" :color="item.active?'#FF4852':'#DDDDDD'"  />
-                <view class="successBorder" :class="item.active?'active':''"></view>
+            <!-- 初修 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].repairUpdateTime?list[0].repairUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].repairStatus == 'COMPLETE'?'color333':''">初修</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].repairStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].repairStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 选片 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].chooseUpdateTime?list[0].chooseUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].chooseStatus == 'COMPLETE'?'color333':''">选片</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].chooseStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].chooseStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 精修 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].refineUpdateTime?list[0].refineUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].refineStatus == 'COMPLETE'?'color333':''">精修</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].refineStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].refineStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 设计 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].designUpdateTime?list[0].designUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].designStatus == 'COMPLETE'?'color333':''">设计</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].designStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].designStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 看板 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].watchUpdateTime?list[0].watchUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].watchStatus == 'COMPLETE'?'color333':''">看板</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].watchStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].watchStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 发片 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].senderUpdateTime?list[0].senderUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].senderStatus == 'COMPLETE'?'color333':''">发片</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].senderStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].senderStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 回件 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].returnUpdateTime?list[0].returnUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].returnStatus == 'COMPLETE'?'color333':''">回件</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].returnStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].returnStatus == 'COMPLETE'?'active':''"></view>
+                </view>
+            </view>
+            <!-- 取件 -->
+            <view class="progressList  paddingRL40 flex fontSize24 color999">
+                <view class="time">{{list[0].pickupUpdateTime?list[0].pickupUpdateTime:''}}</view>
+                <view class="text">
+                    <view class="fontSize36 fontWight " :class="list[0].pickupStatus == 'COMPLETE'?'color333':''">取件</view>
+                </view>
+                <view class="success">
+                    <i-icon class="icon" type="success" size="20" :color="list[0].pickupStatus == 'COMPLETE'?'#FF4852':'#DDDDDD'"  />
+                    <view class="successBorder" :class="list[0].pickupStatus == 'COMPLETE'?'active':''"></view>
+                </view>
             </view>
         </view>
+       
     </view>
 </template>
 
 <script>
-import noView from '@/components/404.vue';
+import { orderProcess } from '@/util/api/order.js'
     export default {
-        components:{noView},
+        filters:{
+            // 过滤进度
+            progress(vla,indx){
+                console.log(vla,indx)
+                if(vla){
+                   indx = vla 
+                }
+                return ''
+            }
+        },
+        computed:{
+            // 过滤进度
+            // progress(vla,indx){
+            //     console.log(vla,indx)
+            // }
+        },
+        props:['orderId'],
         data(){
             return{
-                progressList:[{
-                    tiem: '2020.11.11 20:00',
-                    name: '拍照',
-                    textList: ['摄影师：文缘','摄影助理：文缘','化妆师：文缘','化妆助理：文缘'],
-                    active: true
-                },
-                {
-                    tiem: '2020.11.11 20:00',
-                    name: '初修',
-                    textList: ['初修师：文缘'],
-                    active: true
-                },
-                {
-                    tiem: '2020.11.11 20:00',
-                    name: '选片',
-                    textList: ['化妆助理：文缘'],
-                    active: true
-                },{
-                    tiem: '2020.11.11 20:00',
-                    name: '拍照',
-                    textList: ['化妆师：文缘','化妆助理：文缘'],
-                    active: true
-                },{
-                    tiem: '2020.11.11 20:00',
-                    name: '精修',
-                    textList: ['化妆助理：文缘'],
-                    active: false
-                },{
-                    tiem: '2020.11.11 20:00',
-                    name: '设计',
-                    textList: ['化妆师：文缘'],
-                    active: false
-                },{
-                    tiem: '2020.11.11 20:00',
-                    name: '看板',
-                    textList: ['摄影师：文缘'],
-                    active: false
-                },
-                {
-                    tiem: '2020.11.11 20:00',
-                    name: '发片',
-                    textList: ['摄影师：文缘'],
-                    active: false
-                }]
+                tabList:null, // 组装下拉框
+                index:0, // 索引
+                tabId:'', // id过滤
+                list:null, // 数据
+                listRest:null,// 接口数据
+                arrs:'拍照',
+            }
+        },
+        mounted(){
+            // 获取接口
+            this.orderProcess()
+        },
+        methods:{
+            // 获取订单详情
+            orderProcess(){
+                orderProcess({orderId:this.orderId}).then(res=>{
+                    let list = res.data.data
+                    let arr = []
+                    list.map(res=>{
+                        arr.push(res.itemNo)
+                    })
+                    // 下拉
+                    this.tabList = arr
+                    this.list = list
+                    this.listRest = list 
+                    this.progress()
+                })
+            },
+
+            // tab切换
+            change(e){
+                this.index = Number(e.detail.value)
+                this.tabId = this.tabList[this.index]
+                this.list =  this.listRest.filter(item=>item.itemNo == this.tabId)
+                this.progress()
+            },
+
+            // 过滤进度
+            progress(){
+                let val = this.list[0];
+                if(val.photoStatus == "COMPLETE") this.arrs = '拍照' 
+                if(val.repairStatus == "COMPLETE") this.arrs = '初修' 
+                if(val.chooseStatus == "COMPLETE") this.arrs = '选片' 
+                if(val.refineStatus == "COMPLETE") this.arrs = '精修' 
+                if(val.designStatus == "COMPLETE") this.arrs = '设计' 
+                if(val.watchStatus == "COMPLETE") this.arrs = '看版' 
+                if(val.senderStatus == "COMPLETE") this.arrs = '发片' 
+                if(val.returnStatus == "COMPLETE") this.arrs = '回件' 
+                if(val.pickupStatus == "COMPLETE") this.arrs = '取件' 
             }
         }
     }
@@ -101,7 +219,7 @@ import noView from '@/components/404.vue';
         z-index: 200;
         position: absolute;
         margin-left: 250rpx;
-        margin-top: 180rpx;
+        margin-top: 145rpx;
         line-height: 60rpx;
     }
 }

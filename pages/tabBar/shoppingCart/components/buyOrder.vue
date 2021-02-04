@@ -169,7 +169,7 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 this.getUserInfoAPI()
             }else{
                 // 初始数据
-                this.onlineCustomerContactDtos.name = this.get_phone
+                this.onlineCustomerContactDtos.name = this.get_nickName
                 this.userInfo.sex = this.get_sex
                 this.onlineCustomerContactDtos.mobile = this.get_phone
             }
@@ -349,6 +349,10 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 // 订单判断用户昵称
                 this.onlineCustomerContactDtos.callName = this.orderUserInfo(this.get_quickList[0].orderType,this.userInfo.sex)
                 param.customerGroupDto.onlineCustomerBabyDtos.push(this.onlineCustomerBabyDtos)
+                // 判断订单类型
+                if(this.get_quickList[0].orderType != 'BABY'){
+                    param.customerGroupDto.onlineCustomerBabyDtos = null
+                }
                 param.customerGroupDto.onlineCustomerContactDtos.push(this.onlineCustomerContactDtos)
                 // 组装 订单信息
                 
@@ -365,15 +369,12 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 console.log(param)
                 console.log('支付页',this.get_quickList)
                 // 下单
-                // order(param).then(res=>{
-                //     console.log(res)
-                // })
-                // 下单测试
-                orders().then(res=>{
+                order(param).then(res=>{
                     let data = res.data.data
                     console.log(data)
                     uni.navigateToMiniProgram({
                         appId: data.jumpAppId,
+                        envVersion: 'develop', // develop（开发版），trial（体验版），release（正式版）
                         path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
                         extraData: data,
                         success(res) {
@@ -382,6 +383,7 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                         }
                     })
                 })
+                
             }
         }
     }

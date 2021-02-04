@@ -162,27 +162,48 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline, getAssemblyOnline
                 Index:0, // 索引
                 leftList:null,
                 rightList:[],
-                page:0,
+                page:1,
                 id:0,
             }
         },
+        onShow() {
+            this.rightList = [];
+            uni.getStorage({
+                key: 'classId',
+                success: res => {
+                    this.getListAssemblyOnlineCategory(res.data)
+                    uni.removeStorageSync('classId');
+                },
+                fail:()=> {
+                    this.Index=0
+                    this.getListAssemblyOnlineCategory()
+                }
+            })
+        },
         onLoad(){
-			this.refresh();
+            this.refresh();
 		},
         mounted(){
-            this.getListAssemblyOnlineCategory()
+            //this.getListAssemblyOnlineCategory()
         },
         methods:{
             // 获取套系类别列表
-            getListAssemblyOnlineCategory(){
+            getListAssemblyOnlineCategory(id){
                 let param ={
                     shopId:this.shopId,
                     enterpriseId:this.get_enterpriseId
                 }
                 getListAssemblyOnlineCategory(param).then(res=>{
                     this.leftList = res.data.data
-                    this.id = this.leftList[0].id
-
+                    this.id = id ? id: this.leftList[0].id
+                    if(id){
+                        // 寻找索引
+                        this.leftList.map((item,index)=>{
+                            if(item.id == id){
+                                this.Index = index
+                            }
+                        })
+                    }
                     this.getPageAssemblyOnline()
                 })
             },
