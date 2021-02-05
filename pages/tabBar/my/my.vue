@@ -5,7 +5,8 @@
         <view class="user_box paddingT40  paddingRL30">
             <view class="flex">
                 <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
-                    <image class="login_logo" :src="get_headimgUrl"></image>
+                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
+                    <image v-else class="login_logo" src="/static/image/my/userImg.png"></image>
                 </button>
                 <view class="text_box paddingRL30">
                     <text class="fontWight fontSize34">{{get_nickName}}</text>

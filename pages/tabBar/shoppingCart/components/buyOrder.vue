@@ -6,31 +6,94 @@
             <view class="userInputBox ">
                 <view class="paddingTB20  paddingRL20 fontSize32 fontWight">  客户信息  </view>
                 <view class="paddingT10">
-                    <view class="userbox flex paddingRL20" >
-                        <view class="flex">
-                            <text class="paddingRL20">姓名</text>
-                            <input class="width" type="text" placeholder="请输入姓名" v-model="onlineCustomerContactDtos.name"/>
+                    <!-- 婚纱 -->
+                    <view v-if="get_quickList[0].orderType == 'WEDDING_DRESS'">
+                        <!-- 默认获取用户信息 -->
+                        <view class="userbox flex paddingRL20" >
+                            <view class="flex">
+                                <text class="paddingRL20">姓名</text>
+                                <input class="width" type="text" placeholder="请输入姓名" v-model="onlineCustomerContactDtos.name"/>
+                            </view>
+                            <i-icon class="icon" type="" size="20" color="#707070"  />
                         </view>
-                        <i-icon class="icon" type="" size="20" color="#707070"  />
-                    </view>
-                    <picker @change="change" :value="index" :range="sexArr">
+                        <picker @change="change" :value="index" :range="sexArr">
+                            <view class="userbox flex paddingRL20" >
+                                <view class="border flex paddingTB20">
+                                    <view class="flex">
+                                        <text class="paddingRL20">性别</text>
+                                        <text class="width">{{sexArr[userInfo.sex-1]}}</text>
+                                    </view>
+                                    <i-icon class="icon" type="enter" size="20" color="#707070"  />
+                                </view>
+                            </view>
+                        </picker>
+                        <view class="userbox flex paddingRL20" >
+                            <view class="border flex paddingTB20 bottm">
+                                <view class="flex">
+                                    <text class="paddingRL20">手机号码</text>
+                                    <input class="width" type="text" placeholder="请输入手机号" v-model="onlineCustomerContactDtos.mobile"/>
+                                </view>
+                                <i-icon class="icon" type="" size="20" color="#707070"  />
+                            </view>
+                        </view>
+                        <!-- 第二位 -->
+                        
+                        <view class="userbox flex paddingRL20" >
+                            <view class="flex ">
+                                <text class="paddingRL20">姓名</text>
+                                <input class="width" type="text" placeholder="请输入姓名" v-model="onlineCustomerContactDtos1.name"/>
+                            </view>
+                            <i-icon class="icon" type="" size="20" color="#707070"  />
+                        </view>
+                        <picker @change="change1" :value="index1" :range="sexArr">
+                            <view class="userbox flex paddingRL20" >
+                                <view class="border flex paddingTB20">
+                                    <view class="flex">
+                                        <text class="paddingRL20">性别</text>
+                                        <text class="width">{{sexArr[userInfo.sex1-1]}}</text>
+                                    </view>
+                                    <i-icon class="icon" type="enter" size="20" color="#707070"  />
+                                </view>
+                            </view>
+                        </picker>
                         <view class="userbox flex paddingRL20" >
                             <view class="border flex paddingTB20">
                                 <view class="flex">
-                                    <text class="paddingRL20">性别</text>
-                                    <text class="width">{{sexArr[userInfo.sex-1]}}</text>
+                                    <text class="paddingRL20">手机号码</text>
+                                    <input class="width" type="text" placeholder="请输入手机号" v-model="onlineCustomerContactDtos1.mobile"/>
                                 </view>
-                                <i-icon class="icon" type="enter" size="20" color="#707070"  />
+                                <i-icon class="icon" type="" size="20" color="#707070"  />
                             </view>
                         </view>
-                    </picker>
-                    <view class="userbox flex paddingRL20" >
-                        <view class="border flex paddingTB20">
+                    </view>
+                    <view v-else>
+                        
+                        <view class="userbox flex paddingRL20" >
                             <view class="flex">
-                                <text class="paddingRL20">手机号码</text>
-                                <input class="width" type="text" placeholder="请输入手机号" v-model="userInfo.phone"/>
+                                <text class="paddingRL20">姓名</text>
+                                <input class="width" type="text" placeholder="请输入姓名" v-model="onlineCustomerContactDtos.name"/>
                             </view>
                             <i-icon class="icon" type="" size="20" color="#707070"  />
+                        </view>
+                        <picker @change="change" :value="index" :range="sexArr">
+                            <view class="userbox flex paddingRL20" >
+                                <view class="border flex paddingTB20">
+                                    <view class="flex">
+                                        <text class="paddingRL20">性别</text>
+                                        <text class="width">{{sexArr[userInfo.sex-1]}}</text>
+                                    </view>
+                                    <i-icon class="icon" type="enter" size="20" color="#707070"  />
+                                </view>
+                            </view>
+                        </picker>
+                        <view class="userbox flex paddingRL20" >
+                            <view class="border flex paddingTB20">
+                                <view class="flex">
+                                    <text class="paddingRL20">手机号码</text>
+                                    <input class="width" type="text" placeholder="请输入手机号" v-model="onlineCustomerContactDtos.mobile"/>
+                                </view>
+                                <i-icon class="icon" type="" size="20" color="#707070"  />
+                            </view>
                         </view>
                     </view>
                     <!-- 宝宝 -->
@@ -165,12 +228,17 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
         },
         mounted(){
             // 获取用户 判断是否存在
-            if(!this.get_phone){
+            if(!this.get_phone || !this.get_nickName){
                 this.getUserInfoAPI()
             }else{
                 // 初始数据
                 this.onlineCustomerContactDtos.name = this.get_nickName
                 this.userInfo.sex = this.get_sex
+                if(this.get_sex == 1){
+                    this.userInfo.sex1 = 2
+                }else{
+                   this.userInfo.sex1 = 1 
+                }
                 this.onlineCustomerContactDtos.mobile = this.get_phone
             }
 
@@ -205,19 +273,33 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                     tel: "", // 固定电话
                     wechat: "", //	微信
                     workUnit: "", // 工作单位
+                },
+                onlineCustomerContactDtos1:{
+                    address: "", // 地址
+                    birthdayLunar: true, // 是否农历
+                    birthdayTime: 0, // 出生日期
+                    callName: "", // 联系人称呼
+                    display: true, // 是否显示
+                    email: "", // 邮箱
+                    main: false, // 是否主联系人
+                    mobile: "", // 手机号码
+                    name: "", // 客户姓名
+                    qq: "", // QQ
+                    sex: true, // 	性别，false：女，true：男
+                    tel: "", // 固定电话
+                    wechat: "", //	微信
+                    workUnit: "", // 工作单位
 			    },
                 userInfo:{
-                    name:'大东东',
                     sex:'男',
-                    phone:'13068254894',
-                    baNane:null,
-                    time:null,
-                    sexBab:null,
+                    sex1:'男'
                 },
                 sexArr:['男','女'],
                 index:0,
+                index1:0,
                 indexBab:0,
                 check: false, // 协议
+                flag:true, // 开关
             }
         },
          methods:{
@@ -245,6 +327,11 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                     // 初始数据
                     this.onlineCustomerContactDtos.name = nickName
                     this.userInfo.sex = sex
+                    if(sex == 1){
+                        this.userInfo.sex1 = 2
+                    }else{
+                        this.userInfo.sex1 = 1 
+                    }
                     this.onlineCustomerContactDtos.mobile = phone
                 })
             },
@@ -282,11 +369,16 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 this.index = Number(e.detail.value)
                 this.userInfo.sex = this.index==0?1:2
             },
+            // 性别1
+            change1(e){
+                this.index1 = Number(e.detail.value)
+                this.userInfo.sex1 = this.index1==0?1:2
+            },
             
             // 宝宝性别
             changeBab(e){
                 this.indexBab = Number(e.detail.value)
-				this.onlineCustomerBabyDtos.sex = this.indexBab==1?true:false
+				this.onlineCustomerBabyDtos.sex = this.indexBab==0?true:false
             },
 
             // 宝宝生日
@@ -327,13 +419,15 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
 
             // 支付页
             onQuick(){
-                if(!this.check){
-                    $Message({
-                        content:'请勾选协议',
-                        type: 'error'
-                    });
-                    return
-                }
+                if(!this.flag) return
+                this.flag = false
+                // if(!this.check){
+                //     $Message({
+                //         content:'请勾选协议',
+                //         type: 'error'
+                //     });
+                //     return
+                // }
                 // 组装数据
                 let param = {
                     // 	客户组
@@ -348,12 +442,21 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 this.onlineCustomerBabyDtos.callName = this.onlineCustomerBabyDtos.sex?'男宝':'女宝'
                 // 订单判断用户昵称
                 this.onlineCustomerContactDtos.callName = this.orderUserInfo(this.get_quickList[0].orderType,this.userInfo.sex)
+                // 判断用户性别
+                this.onlineCustomerContactDtos.sex = this.userInfo.sex==1?true:false
+                
                 param.customerGroupDto.onlineCustomerBabyDtos.push(this.onlineCustomerBabyDtos)
                 // 判断订单类型
                 if(this.get_quickList[0].orderType != 'BABY'){
                     param.customerGroupDto.onlineCustomerBabyDtos = null
                 }
                 param.customerGroupDto.onlineCustomerContactDtos.push(this.onlineCustomerContactDtos)
+                // 判断第二用户是否填手机号
+                if(this.onlineCustomerContactDtos1.mobile){
+                    this.onlineCustomerContactDtos1.sex = this.userInfo.sex1==1?true:false
+                    this.onlineCustomerContactDtos1.callName = this.orderUserInfo(this.get_quickList[0].orderType,this.userInfo.sex1)
+                    param.customerGroupDto.onlineCustomerContactDtos.push(this.onlineCustomerContactDtos1)
+                }
                 // 组装 订单信息
                 
                 this.get_quickList.map(item=>{
@@ -371,17 +474,20 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 // 下单
                 order(param).then(res=>{
                     let data = res.data.data
+                    if(res.data.code !== 200){
+                        this.flag = true
+                    }
                     console.log(data)
-                    uni.navigateToMiniProgram({
-                        appId: data.jumpAppId,
-                        envVersion: 'develop', // develop（开发版），trial（体验版），release（正式版）
-                        path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
-                        extraData: data,
-                        success(res) {
-                            // 返回成功
-                            console.log(res)
-                        }
-                    })
+                    // uni.navigateToMiniProgram({
+                    //     appId: data.jumpAppId,
+                    //     envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                    //     path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
+                    //     extraData: data,
+                    //     success(res) {
+                    //         // 返回成功
+                    //         console.log(res)
+                    //     }
+                    // })
                 })
                 
             }
@@ -472,5 +578,7 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
         }
     }
 }
-
+.bottm{
+    border-bottom:1px solid #D1D1D1;
+}
 </style>

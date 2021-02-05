@@ -25,5 +25,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+.swiper{
+    height: 240px;
+    .img{
+        
+        height: 240px;
+    }
+}
 </style>

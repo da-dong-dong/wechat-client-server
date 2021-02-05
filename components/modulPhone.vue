@@ -2,8 +2,8 @@
 <template>
 	<view class="bigBox">
 		<view class="box">
-			<view class="text">确认拨打电话</view>
-			<view class="text_blue">{{phone}}</view>
+			<view class="text">档期协议</view>
+			<view class="fontSize28 marginB20"><view class="paddingRL40" v-html="phone"></view></view>
 			<view class="but">
 				<view class="cancel" @click="cancel">取消</view>
 				<view class="ok" @click="ok">确定</view>

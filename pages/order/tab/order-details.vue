@@ -6,7 +6,7 @@
                 <view class="order_top">
                     <view class="order_heade padding30 fontSize28 color333">
                         <view>
-                            金额：<text class="colorRed fontWight">¥{{list.assemblyPrice}}</text>
+                            金额：<text class="colorRed fontWight">¥{{list.assemblyPrice?list.assemblyPrice:''}}</text>
                         </view>
                         <view class="flex marginT20 ">
                             <view>

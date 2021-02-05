@@ -29,13 +29,17 @@
         </view>
         <!-- 弹窗 -->
         <i-message id="message" />
+        <!-- 档期弹窗 -->
+        <modulPhone v-if="flag" :phone="testData" @cancel="cancel" @ok="ok"/>
     </view>
 </template>
 
 <script>
 import changeTimes from '@/components/time.vue'
+import modulPhone from '@/components/modulPhone.vue'
 import { mapMutations, mapGetters } from 'vuex'
 import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
+import { getReservationDescription } from '@/util/api/user.js'
     export default {
         filters:{
             // 档期头部过滤
@@ -73,11 +77,14 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
             }
         },
         components:{
-            changeTimes
+            changeTimes,
+            modulPhone
         },
          computed:{
             ...mapGetters('user',[
                 'get_shopId',
+                'get_appId',
+                'get_enterpriseId'
             ]),
             ...mapGetters('carList',[
                 'get_carList',
@@ -89,6 +96,8 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
             this.Index = options.index
             this.orderType =options.orderType
             this.shopId = this.get_shopId.shopId
+            // 档期协议
+            this.mack() 
         },
         data(){
             return{
@@ -96,11 +105,16 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 dateDetail:[],
                 momeyTime:null,
                 times: '',
+                flag:false, // 弹窗档期开关
+                testData:'', // 档期协议
                 Index: 0, // 索引
                 id: null, // 当前id
                 endTime:null, // 结束时间
                 startTime:null, // 开始时间
                 filesPrice:0, // 档期费
+                // 存储
+                dataItem:'',
+                dataId:''
             }
         },
         methods:{
@@ -179,21 +193,43 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 console.log(this.momeyTime)
             },
 
-            // 更新购物车
-            onChangeCarList(tiem,id){
-                console.log('来啦',tiem,id)
-               
+            // 预约服务
+            mack(){
+                let param = {
+					appId:this.get_appId,
+					enterpriseId:this.get_enterpriseId
+				}
+                getReservationDescription(param).then(res=>{
+                    this.testData = res.data.data
+                })
+            },
+
+            // 档期弹窗
+            ok(){
+                this.flag = false
                 let data = {
                     id:this.id, // id值
                     index:this.Index, // 索引
                     times:this.times, // 时间 yy-mm-dd
                     filesPrice:this.filesPrice, // 全天费用
-                    filesTime:tiem.startTime, // 档期 ,传开始时间
-                    typographyTypeId: id // 模板ID
+                    filesTime:this.dataItem.startTime, // 档期 ,传开始时间
+                    typographyTypeId: this.dataId // 模板ID
                 }
                 console.log(data,'*******')
                 this.mut_quickListUpData(data)
                 uni.navigateBack()
+            },
+            cancel(){
+                this.flag = false
+            },
+
+            // 更新购物车
+            onChangeCarList(tiem,id){
+                console.log('来啦',tiem,id)
+                this.flag = true
+                this.dataItem = tiem
+                this.dataId = id
+                
             }
         }
     }

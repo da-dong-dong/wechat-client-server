@@ -8,7 +8,7 @@
         <view class="content marginB30 padding10 marginRL10">
             <view class="flex content_top">
                 <text>{{listDetai.name}}</text>
-                <text class="colorRed">￥{{listDetai.assemblyPrice}}</text>
+                <text class="colorRed">￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}</text>
             </view>
             <view class="content_text flex">
                 <view class="content_text_l">
@@ -33,7 +33,7 @@
 
             <!-- 展示 -->
             <view v-if="Index == 0?true:false" class="showTab padding10">
-                <image class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
+                <image mode='widthFix' class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
             </view>
 
             <view v-else>
@@ -71,7 +71,7 @@ import { getAssemblyDescription } from '@/util/api/user.js'
         data(){
             return{
                 Tab:['产品展示','服务说明'],
-                listDetai:{}, // 详情数据
+                listDetai:[], // 详情数据
                 testData:'', // 套系服务说明
                 serverList:null, // 服务内容
                 Index:0, // tab 索引
@@ -270,6 +270,9 @@ import { getAssemblyDescription } from '@/util/api/user.js'
     }
     .showTab{
         box-sizing: content-box;
+        .marginB10{
+            margin-bottom: -8rpx;
+        }
     }
 }
 </style>
