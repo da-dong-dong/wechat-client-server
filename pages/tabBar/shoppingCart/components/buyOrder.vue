@@ -181,21 +181,21 @@
         </view>
 
          <!-- 顾客须知 -->
-        <view class="textDet paddingRL20 paddingT10 marginB10 colorDDD">
+        <!-- <view class="textDet paddingRL20 paddingT10 marginB10 colorDDD">
             <view>
                 <i-icon class="icon" type="warning_fill" size="18" color="#FCB901"  />
                  顾客须知：
             </view>
             <text>预约成功后拍摄前48小时可免费修改两次,不足48小时需收20%改期费</text>
-        </view>
+        </view> -->
 
         <!-- 服务协议 -->
-        <view class="serve flex colorRed paddingRL10 fontSize28">
+        <!-- <view class="serve flex colorRed paddingRL10 fontSize28">
             <checkbox-group @change="onChangeAll">
                 <checkbox class="paddingL10" value='1'  />
             </checkbox-group>
             <text @click="onClickServe">服务协议</text>
-        </view>
+        </view> -->
          <!-- 购物车定位 -->
         <buyCar type="buyCar" @onQuick="onQuick"/>
         <!-- 弹窗 -->
@@ -476,18 +476,27 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                     let data = res.data.data
                     if(res.data.code !== 200){
                         this.flag = true
+                    }else{
+                        uni.setStorage({
+							key: 'orderId',
+							data: data
+						})
+						uni.switchTab({
+                            url:'/pages/tabBar/order/order'
+                        })
                     }
                     console.log(data)
-                    uni.navigateToMiniProgram({
-                        appId: data.jumpAppId,
-                        envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
-                        path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
-                        extraData: data,
-                        success(res) {
-                            // 返回成功
-                            console.log(res)
-                        }
-                    })
+                    
+                    // uni.navigateToMiniProgram({
+                    //     appId: data.jumpAppId,
+                    //     envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                    //     path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
+                    //     extraData: data,
+                    //     success(res) {
+                    //         // 返回成功
+                    //         console.log(res)
+                    //     }
+                    // })
                 })
                 
             }

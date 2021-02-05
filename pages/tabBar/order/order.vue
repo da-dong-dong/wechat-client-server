@@ -64,8 +64,33 @@ import { mapGetters } from 'vuex'
 		},
         mounted(){
             // 获取
-            this.orderList()
+            //this.orderList()
             
+        },
+        onShow() {
+            this.list = [];
+            uni.getStorage({
+                key: 'orderId',
+                success: res => {
+                    this.TabCur = 1
+                    this.orderList()
+                    uni.removeStorageSync('orderId');
+                    uni.navigateToMiniProgram({
+                        appId: res.data.jumpAppId,
+                        envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                        path: `pages/pay/pay?outTradeNo=${res.data.outTradeNo}`,
+                        extraData: res.data,
+                        success(res) {
+                            // 返回成功
+                            console.log(res)
+                        }
+                    })
+                },
+                fail:()=> {
+                    this.TabCur=0
+                    this.orderList()
+                }
+            })
         },
         methods: {
             tabChange(index) {
@@ -99,7 +124,7 @@ import { mapGetters } from 'vuex'
                 switch (idx) {
                     case 0:
                         // 进行中
-                        setList = this.list.filter(item=> (item.incomePrice == 0 && item.isOnline) || !item.reservationPhotoInfoVos || !item.isToShop)
+                        setList = this.list.filter(item=> (item.sumPrice - item.incomePrice > 0) || !item.reservationPhotoInfoVos || !item.isToShop)
                         setList.map(item=>{
                             if(!item.reservationPhotoInfoVos){
                                 item.state = '未预约'
@@ -113,7 +138,7 @@ import { mapGetters } from 'vuex'
                 
                      case 1:
                         // 未付款
-                        setList = this.list.filter(item=>item.incomePrice == 0 && item.isOnline)
+                        setList = this.list.filter(item=>item.sumPrice - item.incomePrice > 0 )
                         setList.map(item=>item.state = null)
                         this.get_carList = setList
                         break;

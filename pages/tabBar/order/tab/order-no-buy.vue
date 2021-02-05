@@ -11,7 +11,7 @@
                                 
                                 <i-icon class="icon" type="time" size="20" color="#FF4852"  />
                                 <out-time class="fontWight paddingRL10 colorRed" :endtime="item.orderTime" />
-                                <text class="fontWight colorRed">待付款</text>
+                                
                             </view>
                             <view v-else>
                                 <text class="fontWight paddingRL10 colorRed">{{item.state}}</text>
@@ -70,7 +70,8 @@
 
                         <!-- 合计 -->
                         <view class=" flex marginB30 paddingB20 bottb">
-                            <view class="flex textCont">
+                            <view class="fontSize24 flex textCont" style="justify-content: space-between">
+                                <text>订单时间：{{item.orderTime | times}}</text>
                                 <text class="fontSize24 color333">合计：<text class="colorRed fontWight">￥{{item.sumPrice + item.schedulePrice}}</text></text>
                             </view>
                         </view>
@@ -78,12 +79,12 @@
                         <!-- 未支付 -->
                         <view class="noOrder flex " v-if="!item.state">
                             <view class="flex">
-                                <view class="noOrder_btn marginR30">取消订单</view>
-                                <view class="marginRL10 noOrder_btn">立刻支付</view>
+                                <view class="noOrder_btn noOrder_btn1 marginR30" v-if="item.isOnline">取消订单</view>
+                                <view class="marginRL10 noOrder_btn2 noOrder_btn" @click="onBuy(item.outTradeNo,item.jumpAppId)">立刻支付</view>
                             </view>
                         </view>
                         <view class="noOrder flex " v-if="item.state">
-                           <view class="noOrder_btn" @click="onClickDetails(item.id)">查看详情</view>
+                           <view class="noOrder_btn noOrder_btn1" @click="onClickDetails(item.id)">查看详情</view>
                         </view>
                     </view>
                     
@@ -154,6 +155,21 @@ import { mapGetters } from 'vuex'
             onClickDetails(id){
                 uni.navigateTo({ 
                     url: `/pages/order/index?id=${id}`
+                })
+            },
+
+            // 立刻支付
+            onBuy(outTradeNo,jumpAppId){
+                
+                uni.navigateToMiniProgram({
+                    appId: jumpAppId?jumpAppId:'wx62d6b9c1cd4ba50a',
+                    envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                    path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
+                    extraData: outTradeNo,
+                    success(res) {
+                        // 返回成功
+                        console.log(res)
+                    }
                 })
             }
         }
