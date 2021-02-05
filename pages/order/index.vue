@@ -3,9 +3,9 @@
         <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange"></wuc-tab>
         <swiper class="swiper_group"  :style="{height:scrollHeight+'px'}" :current="TabCur"   :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
             <swiper-item  v-for="(item,index) in tabList" :key="index">
-                <orederDetails :orderId="orderId" class="swiper_0" v-if="item.path == 'details'"/>
-                <orederProgress :orderId="orderId" class="swiper_1" v-if="item.path == 'progress'"/>
-                <orederOnlineSign :orderId="orderId" class="swiper_2" v-if="item.path == 'onlinesign'"/>
+                <orederDetails v-if="item.path == 'details'" :orderId="orderId" class="swiper_0" />
+                <orederProgress v-if="item.path == 'progress'" :orderId="orderId" class="swiper_1" />
+                <orederOnlineSign v-if="item.path == 'onlinesign'" :orderId="orderId" class="swiper_2" />
                 <!-- <orederPhoto class="swiper_2" v-if="item.path == 'photo'"/>
                 <orederPhotoDown class="swiper_3" v-if="item.path == 'down'"/>
                 <orederEvaluate class="swiper_4" v-if="item.path == 'evaluate'"/> -->

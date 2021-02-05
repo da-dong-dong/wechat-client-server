@@ -73,9 +73,11 @@
 </template>
 
 <script>
+// 获取当前小程序信息
+const accountInfo = uni.getAccountInfoSync(); 
 import { mapGetters, mapActions } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
-import { setUserInfo,getUserInfo } from '@/util/api/user.js'
+import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
     export default {
         computed:{
 			...mapGetters('user',[
@@ -96,34 +98,88 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
 
             
         },
+        data(){
+            return{
+                jsCode:null, //存储登陆code
+                userCode:'', // 用户信息
+            }
+        },
         mounted(){
             // 获取用户
             this.getUserInfoAPI()
+            this.login()
         },
         methods:{
             ...mapActions('user',[
-				'act_nickName'
+                'act_nickName',
+                'act_code'
             ]),
+
+            // 获取code值
+            login(){
+                uni.login({
+                    provider: 'weixin',
+                    success:(res) => {
+                        // 获取code值
+                        let param = {
+                            jsCode: res.code,
+                            authorizerAppid:  accountInfo.miniProgram.appId
+                        }
+                        this.jsCode = param
+                        console.log('获取了code值',this.jsCode)
+                    }
+                });
+            },
+
+            // 获取登陆信息
+            getCode(param){
+                getCode(param).then(res=>{
+                    let code = res.data.data
+                    // 存储 
+                    this.act_code(code)
+                    // 存储本地
+                    uni.setStorage({
+                        key: 'code',
+                        data: code
+                    })
+                    console.log(code)
+                    setUserInfo(this.userCode).then(res=>{
+                        this.getUserInfoAPI('1')
+                    })
+                })
+            },
             
             // 获取用户信息AIP
-            getUserInfoAPI(){
+            getUserInfoAPI(flag){
                 getUserInfo().then(res=>{
                     let {headimgUrl,nickName,phone,sex,birthday,province,city,area} = res.data.data
                     this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                    if(flag){
+                        this.onClickUserInfo()
+                    }
                 })
             },
             // 获取用户信息
             getUserInfo(val){
                 let param = val.detail
+                this.userCode = val.detail
+                
                 if(param.encryptedData){
-                    if(this.get_nickName){
-                        this.onClickUserInfo()
-                    }else{
-                        setUserInfo(param).then(res=>{
-                            this.getUserInfoAPI()
-                            this.onClickUserInfo()
-                        })
-                    }
+                    uni.checkSession({
+                        success:res=>{
+                            console.log('登陆还在')
+                            if(this.get_nickName){
+                                this.onClickUserInfo()
+                            }else{
+                                // 去验证登陆是否过期
+                                this.getCode(this.jsCode)
+                            }
+                        },
+                        fail:err=>{
+                            console.log('登陆失效')
+                            this.getCode(this.jsCode)
+                        }
+                    }) 
                 }else{
                     $Message({
                         content:'取消授权',
