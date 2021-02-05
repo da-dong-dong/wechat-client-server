@@ -18,7 +18,7 @@
                             </view>
                         </view>
                         <view class="carData flex marginB30 bottb paddingB20">
-                            <image class="img" :src="item.coverPoto"></image>
+                            <image class="img" :src="item.coverPhoto"></image>
                             <view class="carData_text">
                                 <view class="flex fontSize30">
                                     <text class="color000">{{item.assemblyName}}</text>
@@ -35,7 +35,7 @@
                             <view class="marginT10 marginB30 carTimeBox color333" v-for="(item1,index1) in item['reservationPhotoInfoVos']" :key="index1">
                                 <view class="carTime marginB20 flex">
                                     <text class="fontSize30">预约门店：</text>
-                                    <text class="paddingL20">{{item1.reservationShopId}}</text>
+                                    <text class="paddingL20">{{item1.reservationShopId | shopID(get_shopIdList)}}</text>
                                 </view>
                                 <view class="carTime marginB20 flex">
                                     <text class="fontSize30">预约时间：</text>
@@ -102,11 +102,22 @@
 
 <script> 
 import outTime from '../components/outTime';
+import { mapGetters } from 'vuex'
     export default {
         props:['get_carList'],
+        filters:{
+            // 测试
+            shopID(val,shopId){
+                let text = '';
+                text =  shopId.filter(item=>item.shopId == val)
+                return text[0].shopName
+            }
+        },
         components: { outTime},
         computed:{
-
+            ...mapGetters('map',[
+				'get_shopIdList'
+			]),
         },
          mounted(){
         },

@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import app from './module/app.js'
 import user from './module/user.js'
 import map from './module/map.js'
+import html from './module/html.js'
+
 import carList from './module/carList.js'
 Vue.use(Vuex)
 
@@ -18,6 +20,7 @@ export default  new Vuex.Store({
 		app,
 		user,
 		map,
+		html,
 		carList
 	}
 })

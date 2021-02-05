@@ -35,7 +35,8 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         computed:{
 			...mapGetters('user',[
                 'get_appId',
-                'get_enterpriseId'
+                'get_enterpriseId',
+                'get_shopId'
 			]),
         },
         data(){
@@ -169,6 +170,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         },
         onShow() {
             this.rightList = [];
+            this.shopId = this.get_shopId.shopId
             uni.getStorage({
                 key: 'classId',
                 success: res => {

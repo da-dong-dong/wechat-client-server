@@ -31,8 +31,14 @@ import orederNoGoin from './tab/order-no-goins.vue';
 import orederNoBuy from './tab/order-no-buy.vue';
 import sPullScroll from '@/components/s-pull-scroll';
 import { orderList } from '@/util/api/order.js'
+import { mapGetters } from 'vuex'
     export default {
         components: { WucTab, orederAll,orederNoAppointment,orederGoOn,orederNoGoin,orederNoBuy,sPullScroll},
+        computed:{
+            ...mapGetters('map',[
+				'get_shopIdList'
+			]),
+        },
         data() {
             return {
                 TabCur: 0,
@@ -76,6 +82,14 @@ import { orderList } from '@/util/api/order.js'
                 orderList().then(res=>{
                     this.list = res.data.data;
                     // 过滤字段
+                    console.log(this.get_shopIdList)
+                    // this.list.map(item=>{
+                    //     let id = null;
+                    //     console.log(item)
+                    //     id = this.get_shopIdList.filter(res=>res.shopId == item.reservationShopId)
+                    //     console.log(id,'id')
+                    //     item.reservationShopId = id[0].shopName
+                    // })
                     this.setData(this.TabCur)
                 })
             },

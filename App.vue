@@ -26,6 +26,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 			// 存储appid
 			this.setAppIdEX()
 			// 品牌分类
+			console.log(extConfig.enterpriseId)
 			this.act_barmd(extConfig.enterpriseId)
 			// 所有门店
 			this.act_shopIdList({extConfig:extConfig.enterpriseId})

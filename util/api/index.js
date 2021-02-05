@@ -1,13 +1,18 @@
 // true 开发环境， false 生产环境
 let test = true
 
-let base_other = test ? 'https://api.27yn.cn': 'https://api.lyfz.net'
-let base = test ? 'http://192.168.5.15:8000' : 'http://swx.go.lyfz.net'
+// let base_other = test ? 'https://api.27yn.cn': 'https://api.lyfz.net'
+// let base = test ? 'http://192.168.5.15:8000' : 'https://wxapi.lyfz.net'
+let base = test ? 'https://wxapi.lyfz.net' : 'https://erp-wxapi.27yn.cn'
 
 let baseUrl = {
 	// 小程序首页
 	getHomeData: `${base}/api/template/ma/get_home_decoration`, // 获取首页排版数据
-    getTicket: `${base_other}/sso/v1/ticket/login`, // 登录
+	// getTicket: `${base_other}/sso/v1/ticket/login`, // 登录
+	getOrderContract: `${base}/api/template/ma/auth/order_contract`, // 订单合同
+	updOrderContract: `${base}/api/template/ma/auth/update_order_contract`, // 更改合同
+	updOrderContractState: `${base}/api/template/ma/auth/update_order_contract_status`, // 更改合同状态
+	
 	// 我的
     getCode: `${base}/api/template/ma/js_code2_session`, // 获取微信登录凭证
 	getUserInfo: `${base}/api/template/ma/auth/get_user_info`, // 获取用户信息
@@ -40,7 +45,7 @@ let baseUrl = {
 	orderProcess: `${base}/api/template/ma/auth/order_process`, // 订单流程
 	orderList: `${base}/api/template/ma/auth/order_list`, // 获取订单列表
 
-    getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
+    //getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }
 
 export default baseUrl

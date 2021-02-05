@@ -26,7 +26,7 @@
 			</view>
 			
 			<view v-if="item.type === 'moreImg'" :style="{ 'background-image': `url(${item.data.backImg})` }">
-				<view class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.linkData)">
+				<view class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
@@ -71,23 +71,24 @@ const entriData = uni.getExtConfigSync()
 				uni.navigateTo({ url:'/pages/tabBar/shoppingCart/components/changeRegion' })
 			},
 			turnSearch () {
-
+				uni.navigateTo({ url:'/pages/tabBar/home/search' })
 			},
 			turnDetail (data) {
+				console.log(data);
 				switch (data.type) {
-					case 'link':
-						console.log(5555)
-						uni.navigateTo({ 
-							url: '/pages/tabBar/home/web_view?url=' + data.link 
-						})
-						break;
 					case 'detail':
 						uni.navigateTo({ 
 							url: '/pages/tabBar/classify/components/details?id=' + data.detailId 
 						})
 						break;
 					case 'classify':
-						
+						uni.setStorage({
+							key: 'classId',
+							data: data.classifyId
+						})
+						uni.switchTab({
+                            url:'/pages/tabBar/classify/classify'
+                        })
 						break;
 				}
 			},

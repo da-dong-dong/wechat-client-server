@@ -9,7 +9,7 @@
     export default {
         data(){
             return {
-                TimeText: '',
+                TimeText: '00:00',
                 now: 0,
                 tiems: null,
             };
@@ -26,12 +26,12 @@
 
         mounted(){
            this.tiems =  setInterval(()=>{
+                this.now = new Date().getTime();
                 if(this.endtime - this.now<=0){
+                    this.TimeText = '00:00'
                     clearTimeout(this.tiems)
-                    this.TimeText = 0
                     return
                 }
-                this.now = new Date().getTime();
                 this.formate(this.endtime - this.now);
             }, 1000);
         }

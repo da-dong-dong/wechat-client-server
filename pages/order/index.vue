@@ -5,7 +5,7 @@
             <swiper-item  v-for="(item,index) in tabList" :key="index">
                 <orederDetails :orderId="orderId" class="swiper_0" v-if="item.path == 'details'"/>
                 <orederProgress :orderId="orderId" class="swiper_1" v-if="item.path == 'progress'"/>
-                <orederOnlineSign class="swiper_2" v-if="item.path == 'onlinesign'"/>
+                <orederOnlineSign :orderId="orderId" class="swiper_2" v-if="item.path == 'onlinesign'"/>
                 <!-- <orederPhoto class="swiper_2" v-if="item.path == 'photo'"/>
                 <orederPhotoDown class="swiper_3" v-if="item.path == 'down'"/>
                 <orederEvaluate class="swiper_4" v-if="item.path == 'evaluate'"/> -->

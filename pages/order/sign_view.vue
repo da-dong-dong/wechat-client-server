@@ -3,7 +3,6 @@
 <template>
 	<view class="cat-signature" @touchmove.stop.prevent="moveHandle">
 		<view class="content">
-			<div class="a_return"> <span class="red" @tap="hideSign">返回</span></div>
 			<canvas class='firstCanvas' :canvas-id="canvasId" @touchmove='move' @touchstart='start($event)' @touchend='end'
 			 @touchcancel='cancel' @longtap='tap' disable-scroll='true' @error='error' />
 
@@ -16,6 +15,8 @@
 </template>
 
 <script>
+import { updOrderContract } from '@/util/api/home.js'
+import { mapActions, mapGetters } from 'vuex'
 	var content = null;
 	var touchs = [];
 	var canvasw = 0;
@@ -39,12 +40,16 @@
 				default: 'firstCanvas'
 			}
 		},
+        onLoad(option){
+            this.id = option.id
+		},
 		data(){
 			return{
 				show:false,
 				visibleSync: false,
 				signImage:'',
 				hasDh:false,
+				id: null
 			}
 		},
 		watch:{
@@ -54,7 +59,11 @@
 				this.getInfo()
 			}
 		},
-		
+		computed: {
+            ...mapGetters('html', [
+                'getHtmlStr'
+            ])
+        },
 		created(options) {
 			this.visibleSync = this.visible
 			this.getInfo()
@@ -63,6 +72,9 @@
 			}, 100)
 		},
 		methods:{
+            ...mapActions('html',[
+				'act_setHtml'
+			]),
 			hideSign () {
 				this.clear()
 				this.$emit('to-close')
@@ -154,6 +166,20 @@
 				this.hasDh = false;
 				this.$emit('clear')
 			},
+			onSave (path) {
+                let str = new RegExp('<div style="color: blue;" class="location">(.*?)</div>')
+                let htmlText = this.getHtmlStr
+                let img  = `<img src="${path}" style="position: absolute;top: -50px;left: -50px;width: 100px; height: 100px"/>`
+                htmlText = htmlText.replace(str, img)
+                let params = {
+                    htmlText: htmlText,
+                    id: this.id
+				}
+                updOrderContract(params).then(res => {
+					this.act_setHtml(htmlText)
+					uni.navigateBack({ delta: 2 })
+                })
+            },
 			save(){
 				var that = this;
 				if(!this.hasDh){
@@ -163,7 +189,7 @@
 				uni.showLoading({title:'生成中...',mask:true})
 				setTimeout(()=>{
 					uni.canvasToTempFilePath({
-						canvasId: this.canvasId,
+						canvasId: that.canvasId,
 						success: function(res) {
 							uni.request({
 						　　　　url: res.tempFilePath,
@@ -172,7 +198,7 @@
 						　　　　success: async res => {
 						　　　　　　 let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
 						　　　　　　 let toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
-									that.$emit('save', toBase64Url);
+									that.onSave(toBase64Url)
 					　　　　}
 					　　});
 						uni.hideLoading()

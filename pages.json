@@ -1,6 +1,6 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		
+		//******************************** 首页 ********************************
 		{
 			"path": "pages/brand/brand",
 			"style": {
@@ -21,6 +21,14 @@
 				"navigationBarTitleText": "外部链接"
 			}
 		},
+		
+		//******************************** 首页 ********************************
+		{
+			"path": "pages/order/sign_view",
+			"style": {
+				"navigationBarTitleText": "客户签名"
+			}
+		},
 		//******************************** 登陆 ********************************
 		{
 			"path": "pages/login/index",
@@ -28,7 +36,18 @@
 				"navigationBarTitleText": "登陆"
 			}
 		},
-		
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/tabBar/home/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
 		//******************************** 我的 ********************************
 		{
 			"path": "pages/tabBar/my/my",
@@ -109,14 +128,12 @@
 				"navigationBarTitleText": "订单"
 			}
 		},
-
-		
-		{
-			"path": "pages/order/index",
-			"style": {
-				"navigationBarTitleText": "订单详情"
-			}
-		},
+		// {
+		// 	"path": "pages/order/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "订单详情"
+		// 	}
+		// },
 		{
 			"path": "pages/order/detail/signature",
 			"style": {
