@@ -478,16 +478,16 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                         this.flag = true
                     }
                     console.log(data)
-                    // uni.navigateToMiniProgram({
-                    //     appId: data.jumpAppId,
-                    //     envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
-                    //     path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
-                    //     extraData: data,
-                    //     success(res) {
-                    //         // 返回成功
-                    //         console.log(res)
-                    //     }
-                    // })
+                    uni.navigateToMiniProgram({
+                        appId: data.jumpAppId,
+                        envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                        path: `pages/pay/pay?outTradeNo=${data.outTradeNo}`,
+                        extraData: data,
+                        success(res) {
+                            // 返回成功
+                            console.log(res)
+                        }
+                    })
                 })
                 
             }
