@@ -2,7 +2,7 @@
 <template>
     <view>
       <view class="paddingRL20">
-            <view class="showList" v-if="get_carList.length">
+            <view class="showList" v-if="get_carList">
                 <view class="carBuyList"  v-for="(item,index) in get_carList" :key="index">
                     <view class="carLi marginB10 padding30">
                         <view class="carTop flex paddingB20 marginB30">

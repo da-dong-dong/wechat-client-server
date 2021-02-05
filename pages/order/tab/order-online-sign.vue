@@ -78,6 +78,10 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
                 saveData: {}
             }
         },
+        mounted(){
+            // 获取接口
+            this.getOrderContract()
+        },
         computed: {
             ...mapGetters('map', [
                 'get_shopIdList'
@@ -132,12 +136,12 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
                 })
             }
         },
-        onShow () {
-            this.getOrderContract()
-        },
-        created () {
-            this.getOrderContract()
-        }
+        // onShow () {
+        //     this.getOrderContract()
+        // },
+        // created () {
+        //     this.getOrderContract()
+        // }
     }
 </script>
 

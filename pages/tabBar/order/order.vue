@@ -106,15 +106,7 @@ import { mapGetters } from 'vuex'
             orderList(){
                 orderList().then(res=>{
                     this.list = res.data.data;
-                    // 过滤字段
-                    console.log(this.get_shopIdList)
-                    // this.list.map(item=>{
-                    //     let id = null;
-                    //     console.log(item)
-                    //     id = this.get_shopIdList.filter(res=>res.shopId == item.reservationShopId)
-                    //     console.log(id,'id')
-                    //     item.reservationShopId = id[0].shopName
-                    // })
+                   
                     this.setData(this.TabCur)
                 })
             },

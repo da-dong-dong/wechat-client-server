@@ -20,7 +20,11 @@
                 let hour = parseInt(time/1000/3600);
                 let min = parseInt((time/1000 - hour * 3600)/60);
                 let sec = parseInt(time/1000 - hour * 3600 - min * 60)
-                this.TimeText =  hour + ':' + min + ':' + sec + '' + '待付款';
+                this.TimeText =  hour + ':' + this.numOLING(min) + ':' + this.numOLING(sec) + '' + '待付款';
+            },
+            // 加零
+            numOLING(val){
+                return val<10?'0'+val : val
             }
         },
 
