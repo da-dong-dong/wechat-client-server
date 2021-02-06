@@ -15,3 +15,8 @@ export const orderProcess = (params) => {
 export const orderList = (params) => {
 	return get(baseUrl.orderList, params)
 }
+
+// 关闭订单
+export const orderClose = (params) => {
+	return get(baseUrl.orderClose, params)
+}

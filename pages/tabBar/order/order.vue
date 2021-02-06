@@ -5,7 +5,7 @@
             <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder"></wuc-tab>
         
             <view v-for="(item,index) in tabList" :key="index">
-                 <orederNoBuy :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList"/>
+                 <orederNoBuy :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList" @onOrderClose="onOrderClose"/>
             </view>
             <!-- <swiper class="swiper_group" :style="{height:scrollHeight+'px'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
                 <swiper-item  v-for="(item,index) in tabList" :key="index">
@@ -30,7 +30,7 @@ import orederGoOn from './tab/order-go-on.vue';
 import orederNoGoin from './tab/order-no-goins.vue';
 import orederNoBuy from './tab/order-no-buy.vue';
 import sPullScroll from '@/components/s-pull-scroll';
-import { orderList } from '@/util/api/order.js'
+import { orderList, orderClose } from '@/util/api/order.js'
 import { mapGetters } from 'vuex'
     export default {
         components: { WucTab, orederAll,orederNoAppointment,orederGoOn,orederNoGoin,orederNoBuy,sPullScroll},
@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex'
                      { name: '全部/关闭',path: "all" } 
                 ],
                 scrollHeight:null,
-                get_carList:null,
+                get_carList:[],
                 rightList:[],
                 showNoMore:false,
                 page:1,
@@ -110,13 +110,23 @@ import { mapGetters } from 'vuex'
                     this.setData(this.TabCur)
                 })
             },
-            // 模拟数据
+            // 取消订单
+            onOrderClose(orderId){
+                // 取消订单接口
+                orderClose({orderId}).then(res=>{
+                    if(res.data.code == 200){
+                        this.orderList()
+                    }
+                })
+            },
+
+            // 设置数据
             setData(idx){
                 let setList = null
                 switch (idx) {
                     case 0:
                         // 进行中
-                        setList = this.list.filter(item=> (item.sumPrice - item.incomePrice > 0) || !item.reservationPhotoInfoVos || !item.isToShop)
+                        setList = this.list.filter(item=> (item.sumPrice - item.incomePrice > 0  && !item.isClose) || (!item.reservationPhotoInfoVos && !item.isClose) || (!item.isToShop && !item.isClose))
                         setList.map(item=>{
                             if(!item.reservationPhotoInfoVos){
                                 item.state = '未预约'
@@ -130,14 +140,14 @@ import { mapGetters } from 'vuex'
                 
                      case 1:
                         // 未付款
-                        setList = this.list.filter(item=>item.sumPrice - item.incomePrice > 0 )
+                        setList = this.list.filter(item=>item.sumPrice - item.incomePrice > 0 && !item.isClose )
                         setList.map(item=>item.state = null)
                         this.get_carList = setList
                         break;
 
                     case 2:
                         // 未预约
-                        setList = this.list.filter(item=>!item.reservationPhotoInfoVos)
+                        setList = this.list.filter(item=>!item.reservationPhotoInfoVos && !item.isClose)
                         
                         setList.map(item=>item.state = '未预约')
                         this.get_carList = setList
@@ -145,8 +155,7 @@ import { mapGetters } from 'vuex'
                         break;
                     case 3:
                         // 未到店
-                        setList = this.list.filter(item=>!item.isToShop)
-                        
+                        setList = this.list.filter(item=>!item.isToShop && !item.isClose)
                         setList.map(item=>item.state = '未到店')
                         this.get_carList = setList
                         
@@ -170,6 +179,7 @@ import { mapGetters } from 'vuex'
                 }
             },
 
+            
 
             // 组件
 			refresh () {

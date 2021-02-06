@@ -34,7 +34,7 @@
                     </view>
                 </view>
                 <!-- 宝宝信息 -->
-                <view class="order_show color333" v-if="list['onlineCustomerBabyVos']">
+                <view class="order_show color333" v-if="list['onlineCustomerBabyVos'] && list['type'] == 'BABY'">
                     <view class="oreder_img">
                         <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
                         <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>

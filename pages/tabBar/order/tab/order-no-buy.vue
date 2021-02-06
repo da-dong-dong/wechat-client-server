@@ -17,7 +17,8 @@
                                 <text class="fontWight paddingRL10 colorRed">{{item.state}}</text>
                             </view>
                         </view>
-                        <view class="carData flex marginB30 bottb paddingB20">
+                        <!-- 跳转详情 -->
+                        <view class="carData flex marginB30 bottb paddingB20" @click="onClickDetails(item.id)">
                             <image class="img" :src="item.coverPhoto"></image>
                             <view class="carData_text">
                                 <view class="flex fontSize30">
@@ -76,16 +77,23 @@
                             </view>
                         </view>
 
-                        <!-- 未支付 -->
-                        <view class="noOrder flex " v-if="!item.state">
-                            <view class="flex">
-                                <view class="noOrder_btn noOrder_btn1 marginR30" v-if="item.isOnline">取消订单</view>
-                                <view class="marginRL10 noOrder_btn2 noOrder_btn" @click="onBuy(item.outTradeNo,item.jumpAppId)">立刻支付</view>
+                        <!-- 已关闭 -->
+                        <view v-if="!item.isClose">
+                            <!-- 未支付 -->
+                            <view class="noOrder flex " v-if="!item.state">
+                                <view class="flex">
+                                    <view class="noOrder_btn noOrder_btn1 marginR30" @click="onOrderClose(item.id)" v-if="item.isOnline">取消订单</view>
+                                    <view class="marginRL10 noOrder_btn2 noOrder_btn" @click="onBuy(item.outTradeNo,item.jumpAppId)">立刻支付</view>
+                                </view>
+                            </view>
+                            <view class="noOrder flex " v-if="item.state">
+                                <view class="noOrder_btn noOrder_btn1" @click="onClickDetails(item.id)">查看详情</view>
                             </view>
                         </view>
-                        <view class="noOrder flex " v-if="item.state">
-                           <view class="noOrder_btn noOrder_btn1" @click="onClickDetails(item.id)">查看详情</view>
+                        <view class="noOrder flex" v-else>
+                            <view class="noOrder_btn noOrder_btn1" >已关闭</view>
                         </view>
+                        
                     </view>
                     
                     
@@ -124,30 +132,7 @@ import { mapGetters } from 'vuex'
         },
         data(){
             return{
-                // get_carList:[
-                //     {
-                //         id:201001001,
-                //         name:'889宝宝照',
-                //         price:8889,
-                //         imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                //         times:'2020-10-18',
-                //         filesTime:'16:00',
-                //         filesPrice:'123',
-                //         noOrder:true,
-                //         endTime:'1612575880000'
-                //     },
-                //      {
-                //         id:201001001,
-                //         name:'889宝宝照',
-                //         price:8889,
-                //         imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                //         times:'2020-10-18',
-                //         filesTime:'16:00',
-                //         filesPrice:'123',
-                //         noOrder:true,
-                //         endTime:'1612489480000'
-                //     }
-                // ]
+                
             }
         },
         methods:{
@@ -171,6 +156,12 @@ import { mapGetters } from 'vuex'
                         console.log(res)
                     }
                 })
+            },
+
+            // 取消订单
+            onOrderClose(orderId){
+                // 取消订单接口
+                this.$emit('onOrderClose',orderId)
             }
         }
        
