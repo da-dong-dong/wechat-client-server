@@ -9,11 +9,17 @@
                             金额：<text class="colorRed fontWight">¥{{list.assemblyPrice?list.assemblyPrice:''}}</text>
                         </view>
                         <view class="flex marginT20 ">
-                            <view>
-                                预约拍摄时间：<text class="colorRed fontWight">未预约</text>
+                            <view class="flex" style="width:300rpx; flex-wrap: wrap">
+                                预约拍摄时间：
+                                <view class=" flex colorRed fontWight flex"  style=" flex-wrap: wrap" v-if="list['reservationPhotoInfoVos'].length">
+                                    <text class="paddingRL10" v-for="(item,index) in list['reservationPhotoInfoVos']" :key="index">
+                                        {{item.reservationTime}}
+                                    </text>
+                                </view>
+                                <text v-else class="colorRed fontWight">未预约</text>
                             </view>
                             <view>
-                                附加费用：<text class="colorRed fontWight">0</text>
+                                附加费用：<text class="colorRed fontWight">{{list.schedulePrice?list.schedulePrice:0}}</text>
                             </view>
                         </view>
                     </view>
@@ -74,12 +80,12 @@
                         <view class="textDetail">入底：{{item.bottomCount}}张</view>
                         <view class="textDetail">拍摄次数：{{item.photoCount}}</view>
                     </view>
-                    <!-- 产品内容 -->
+                     <!-- 景点内容 -->
                      <view class="marginB10 fontWight">
-                        <view class="fontSize28">产品内容</view>
+                        <view class="fontSize28">景点内容</view>
                     </view>
-                    <view class="textDetailBox fontSize24 color999 flex marginB30">
-                        <view class="textDetail" v-for="(item1,index1) in item['onlineOrderItemVos']" :key="index1">{{item1.name}}x{{item1.countNum}}</view>
+                    <view class="textDetailBox fontSize24 color999  marginB30">
+                        <view class="textDetail" v-for="(item1,index1) in item['onlineOrderItemPlaces']" :key="index1">{{item1.name}}</view>
                     </view>
                     <!-- 服装内容 -->
                      <view class="marginB10 fontWight">
@@ -88,6 +94,13 @@
                     <view class="textDetailBox fontSize24 color999  marginB30">
                         <view class="textDetail" v-for="(item1,index1) in item['onlineOrderItemDressInfo']" :key="index1">{{item1.name}}x{{item1.count}}</view>
                     </view>
+                    <!-- 产品内容 -->
+                     <view class="marginB10 fontWight">
+                        <view class="fontSize28">产品内容</view>
+                    </view>
+                    <view class="textDetailBox fontSize24 color999 flex marginB30">
+                        <view class="textDetail" v-for="(item1,index1) in item['onlineOrderItemVos']" :key="index1">{{item1.name}}x{{item1.countNum}}</view>
+                    </view>
                     <!-- 服务内容 -->
                      <view class="marginB10 fontWight">
                         <view class="fontSize28">服务内容</view>
@@ -95,13 +108,7 @@
                     <view class="textDetailBox fontSize24 color999  marginB30">
                         <view class="textDetail" v-for="(item1,index1) in item['onlineOrderItemService']" :key="index1">{{item1.name}}x{{item1.count}}</view>
                     </view>
-                    <!-- 景点内容 -->
-                     <view class="marginB10 fontWight">
-                        <view class="fontSize28">景点内容</view>
-                    </view>
-                    <view class="textDetailBox fontSize24 color999  marginB30">
-                        <view class="textDetail" v-for="(item1,index1) in item['onlineOrderItemPlaces']" :key="index1">{{item1.name}}</view>
-                    </view>
+                   
                      <!-- 注意事项 -->
                      <view class="marginB10 fontWight">
                         <view class="fontSize28">注意事项</view>

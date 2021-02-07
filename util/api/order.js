@@ -16,6 +16,11 @@ export const orderList = (params) => {
 	return get(baseUrl.orderList, params)
 }
 
+// 订单支付
+export const orderPay = (params) => {
+	return postObj(baseUrl.orderPay, params)
+}
+
 // 关闭订单
 export const orderClose = (params) => {
 	return get(baseUrl.orderClose, params)

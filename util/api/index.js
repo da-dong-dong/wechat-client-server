@@ -42,6 +42,7 @@ let baseUrl = {
 	orderDetails: `${base}/api/template/ma/auth/order_details`, // 订单详情
 	orderProcess: `${base}/api/template/ma/auth/order_process`, // 订单流程
 	orderList: `${base}/api/template/ma/auth/order_list`, // 获取订单列表
+	orderPay: `${base}/api/template/ma/auth/order_pay`, // 订单支付
 	orderClose: `${base}/api/template/ma/auth/order_close`, // 关闭订单
 
 

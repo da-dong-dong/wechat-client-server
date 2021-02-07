@@ -17,7 +17,7 @@
             <view class="showList" v-if="get_carList.length">
                 <view class="carLi marginB20 padding20" v-for="(item,index) in get_carList" :key="index">
                     
-                    <view class="carData flex marginB30">
+                    <view class="carData flex marginB30" @click="onClickDetails(item.id)">
                         <image class="img" :src="item.imgs"></image>
                         <view class="carData_text">
                             <view class="flex">
@@ -26,7 +26,7 @@
                             </view>
                             <view class="color999 flex">
                                 <text>X 1</text>
-                                <text class="colorRed" @click="onCarListDel(index)">删除</text>
+                                <text class="colorRed" @click.stop="onCarListDel(index)">删除</text>
                             </view>
                         </view>
                     </view>
@@ -127,7 +127,14 @@ const { $Message } = require('@/wxcomponents/base/index');
                 uni.navigateTo({ 
                     url: '/pages/tabBar/shoppingCart/components/buyOrder'
                 })
-            }
+            },
+
+            // 跳转详情
+            onClickDetails(idx){
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/classify/components/details?id=' + idx  
+                })
+            },
 
         }
     }

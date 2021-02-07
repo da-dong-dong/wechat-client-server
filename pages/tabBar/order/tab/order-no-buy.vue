@@ -83,7 +83,7 @@
                             <view class="noOrder flex " v-if="!item.state">
                                 <view class="flex">
                                     <view class="noOrder_btn noOrder_btn1 marginR30" @click="onOrderClose(item.id)" v-if="item.isOnline">取消订单</view>
-                                    <view class="marginRL10 noOrder_btn2 noOrder_btn" @click="onBuy(item.outTradeNo,item.jumpAppId)">立刻支付</view>
+                                    <view class="marginRL10 noOrder_btn2 noOrder_btn" @click="onBuy(item.id)">立刻支付</view>
                                 </view>
                             </view>
                             <view class="noOrder flex " v-if="item.state">
@@ -144,18 +144,19 @@ import { mapGetters } from 'vuex'
             },
 
             // 立刻支付
-            onBuy(outTradeNo,jumpAppId){
-                
-                uni.navigateToMiniProgram({
-                    appId: jumpAppId?jumpAppId:'wx62d6b9c1cd4ba50a',
-                    envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
-                    path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
-                    extraData: outTradeNo,
-                    success(res) {
-                        // 返回成功
-                        console.log(res)
-                    }
-                })
+            onBuy(orderId){
+                // 取消订单接口
+                this.$emit('onBuy',orderId)
+                // uni.navigateToMiniProgram({
+                //     appId: jumpAppId?jumpAppId:'wx62d6b9c1cd4ba50a',
+                //     envVersion: 'trial', // develop（开发版），trial（体验版），release（正式版）
+                //     path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
+                //     extraData: outTradeNo,
+                //     success(res) {
+                //         // 返回成功
+                //         console.log(res)
+                //     }
+                // })
             },
 
             // 取消订单

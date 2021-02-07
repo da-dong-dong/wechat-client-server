@@ -10,18 +10,60 @@
                 <text>{{listDetai.name}}</text>
                 <text class="colorRed">￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}</text>
             </view>
-            <view class="content_text flex">
-                <view class="content_text_l">
-                    服务内容
-                </view>
-                <view class="context_li  flex">
-                    <view class="flex paddingRL20 paddingT10" v-for="(item,index) in serverList" :key="index" >
-                       <i-icon class="icon " type="success" size="20" color="#FF4852"  />
-                       <text>{{item.name}}</text><text>{{item.count? 'X '+ item.count:''}}</text>
+        </view>
+
+        <!-- 详细内容 -->
+        <view class="content_text paddingRL40 marginRL10">
+            <view class="context_li paddingB20" v-for="(item,index) in listDetai['assemblyItemList']" :key='index'>
+                <view class=" fontSize30 color000 fontWight paddingTB20">详情内容-{{item.name}}</view>
+                <!-- 景点 -->
+                <view class="paddingTB20" v-if="item['assemblyItemPlaces'].length">
+                    <view class="fontSize28 color000 fontWight marginB10">拍摄景点</view>
+                    <view class="flex fontSize28 color333" v-for="(item1,index1) in item['assemblyItemPlaces']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
                     </view>
                 </view>
+
+                <!-- 服装 -->
+                <view class="paddingTB20" v-if="item['assemblyItemDressInfos'].length">
+                    <view class="fontSize28 color000 fontWight marginB10">服装</view>
+                    <view class="flex fontSize28 color333 " v-for="(item1,index1) in item['assemblyItemDressInfos']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                        <text>{{`X ${item1.count}`}}</text>
+                    </view>
+                </view>
+                
+                <!-- 商品 -->
+                <view class="paddingTB20" v-if="item['assemblyItemGoods'].length">
+                    <view class="fontSize28 color000 fontWight marginB10">商品</view>
+                    <view class="flex fontSize28 color333" v-for="(item1,index1) in item['assemblyItemGoods']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                        <text>{{`P数： ${item1.countP}`}}</text>
+                        <text>{{`X ${item1.count}`}}</text>
+                    </view>
+                </view>
+
+                <!-- 服务 -->
+                <view class="paddingTB20" v-if="item['assemblyItemServices'].length">
+                    <view class="fontSize28 color000 fontWight marginB10">服务</view>
+                    <view class="flex fontSize28 color333" v-for="(item1,index1) in item['assemblyItemServices']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                    </view>
+                </view>
+                    
             </view>
-            
         </view>
 
         <!-- 图片展示 -->
@@ -98,58 +140,6 @@ import { getAssemblyDescription } from '@/util/api/user.js'
                 }
                 getAssemblyOnlineDetail(param).then(res=>{
                     this.listDetai = res.data.data
-                    // 组装服务内容
-                    let json = {}
-                    this.listDetai.assemblyItemList.map(item=>{
-                        // 服装
-                        item.assemblyItemDressInfos.map(val=>{
-                            if(!json.assemblyItemDressInfos){
-                                json.assemblyItemDressInfos = []
-                            }
-                            json.assemblyItemDressInfos.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                        // 商品
-                        item.assemblyItemGoods.map(val=>{
-                            if(!json.assemblyItemGoods){
-                                json.assemblyItemGoods = []
-                            }
-                            json.assemblyItemGoods.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                        // 景点
-                        item.assemblyItemPlaces.map(val=>{
-                            if(!json.assemblyItemPlaces){
-                                json.assemblyItemPlaces = []
-                            }
-                            json.assemblyItemPlaces.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                        // 服务
-                        item.assemblyItemServices.map(val=>{
-                            if(!json.assemblyItemServices){
-                                json.assemblyItemServices = []
-                            }
-                            json.assemblyItemServices.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                    })
-                    
-                    let arr = []
-                    for (const key in json) {
-                        json[key].map(item=>{
-                            arr.push(item)
-                        })
-                    }
-                    this.serverList = arr
                 })
             },
 
@@ -223,36 +213,18 @@ import { getAssemblyDescription } from '@/util/api/user.js'
     .content_top{
         padding: 40rpx 25rpx;
         justify-content: space-between;
-        border-bottom: 1px solid #DDDDDD;
         font-weight: bold;
     }
-    .content_text{
-        justify-content: space-around;
-        align-items: center;
-        font-size: 24rpx;
-        color:#999999;
-        .content_text_l{
-            width: 80rpx;
-            line-height: 40rpx;
-            font-size: 30rpx;
-            margin-left: 40rpx;
-        }
-    }
+}
+// 详细内容
+.content_text{
+    background: rgba(255,255,255,0.8);
+    border-radius: 20rpx;
     .context_li{
-        flex-wrap: wrap;
-        width: 550rpx;
-        .paddingRL20{
-                padding-left: 100rpx;
-            }
         .flex{
-            width: 550rpx;
-            height: 80rpx;
-            align-items: center;
-            
-            .icon{
-                padding-right: 20rpx;
-            }
+            justify-content: space-between;
         }
+        
     }
 }
 .imgShow{

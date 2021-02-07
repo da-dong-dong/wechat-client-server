@@ -5,7 +5,7 @@
             <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder"></wuc-tab>
         
             <view v-for="(item,index) in tabList" :key="index">
-                 <orederNoBuy :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList" @onOrderClose="onOrderClose"/>
+                 <orederNoBuy :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose"/>
             </view>
             <!-- <swiper class="swiper_group" :style="{height:scrollHeight+'px'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
                 <swiper-item  v-for="(item,index) in tabList" :key="index">
@@ -30,7 +30,7 @@ import orederGoOn from './tab/order-go-on.vue';
 import orederNoGoin from './tab/order-no-goins.vue';
 import orederNoBuy from './tab/order-no-buy.vue';
 import sPullScroll from '@/components/s-pull-scroll';
-import { orderList, orderClose } from '@/util/api/order.js'
+import { orderList, orderClose, orderPay } from '@/util/api/order.js'
 import { mapGetters } from 'vuex'
     export default {
         components: { WucTab, orederAll,orederNoAppointment,orederGoOn,orederNoGoin,orederNoBuy,sPullScroll},
@@ -75,16 +75,7 @@ import { mapGetters } from 'vuex'
                     this.TabCur = 1
                     this.orderList()
                     uni.removeStorageSync('orderId');
-                    uni.navigateToMiniProgram({
-                        appId: res.data.jumpAppId,
-                        envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
-                        path: `pages/pay/pay?outTradeNo=${res.data.outTradeNo}`,
-                        extraData: res.data,
-                        success(res) {
-                            // 返回成功
-                            console.log(res)
-                        }
-                    })
+                    this.navigateToMiniProgram(res.data.jumpAppId,res.data.outTradeNo)
                 },
                 fail:()=> {
                     this.TabCur=0
@@ -110,12 +101,35 @@ import { mapGetters } from 'vuex'
                     this.setData(this.TabCur)
                 })
             },
+
+            // 立刻支付
+            onBuy(orderId){
+                orderPay({orderId}).then(res=>{
+                    if(res.data.code == 200){
+                        this.navigateToMiniProgram(res.data.data.jumpAppId,res.data.data.outTradeNo)
+                    }
+                })
+            },
             // 取消订单
             onOrderClose(orderId){
                 // 取消订单接口
                 orderClose({orderId}).then(res=>{
                     if(res.data.code == 200){
                         this.orderList()
+                    }
+                })
+            },
+
+            // 跳转支付
+            navigateToMiniProgram(jumpAppId,outTradeNo){
+                uni.navigateToMiniProgram({
+                    appId: jumpAppId,
+                    envVersion: 'trial', // develop（开发版），trial（体验版），release（正式版）
+                    path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
+                    extraData: outTradeNo,
+                    success(res) {
+                        // 返回成功
+                        console.log(res)
                     }
                 })
             },

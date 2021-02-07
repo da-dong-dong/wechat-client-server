@@ -11,12 +11,14 @@
                 <view v-for="(item,index) in momeyTime" :key="index">
                     <view v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
                         <view>{{item1.controlType |headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
-                        <view class="timeList flex">
-                            <view class="list" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
-                                <view v-if="item2.useTypographyNum < item2.typographyCount" class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
+                        <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
+                            <view class="list" v-for="(index3) in item2['useTypographyNum']" :key="index3">
+                                <view class="listTime active">
                                     {{item2['timeFrameStr']}}
                                 </view>
-                                <view v-else class="listTime active">
+                            </view>
+                            <view class="list" v-for="(index3) in item2['typographyCount'] - item2['useTypographyNum']" :key="index3">
+                                <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
                                     {{item2['timeFrameStr']}}
                                 </view>
                             </view>
