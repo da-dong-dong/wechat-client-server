@@ -22,7 +22,10 @@
                             </view>
                             <view class="textNub flex">
                                 <text>X1</text>
-                                <text class="fontWight colorRed">￥{{item.price}}</text>
+                                <text class="fontWight colorRed">
+                                    ￥{{item.price}}
+                                    <text v-if="item.enableDeposit">(定金：{{item.assemblyDeposit}})</text>
+                                </text>
                             </view>
                         </view>
                     </view>

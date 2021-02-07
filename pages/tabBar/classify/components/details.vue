@@ -8,7 +8,10 @@
         <view class="content marginB30 padding10 marginRL10">
             <view class="flex content_top">
                 <text>{{listDetai.name}}</text>
-                <text class="colorRed">￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}</text>
+                <text class="colorRed">
+                    ￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}
+                    <text class="color333" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text>
+                </text>
             </view>
         </view>
 
@@ -179,7 +182,9 @@ import { getAssemblyDescription } from '@/util/api/user.js'
                         orderType:this.listDetai.orderType,
                         shopId: this.get_shopId.shopId,
                         shopName: this.get_shopId.shopName,
-                        shopNo: this.get_shopId.shopNo
+                        shopNo: this.get_shopId.shopNo,
+                        enableDeposit:this.listDetai.enableDeposit, // 定金开启
+                        assemblyDeposit:this.listDetai.assemblyDeposit, // 定金
                     }
                 // 判断是否立刻下单
                 if(flag){

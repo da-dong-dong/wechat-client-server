@@ -66,14 +66,14 @@
             // 展示购物车价格
             showPrice(){
                 let num = 0;
-                this.get_carList.map(item=>num+=item.price+Number(item.filesPrice))
+                this.get_carList.map(item=>num+=item.assemblyDeposit+Number(item.filesPrice))
                 return num
             },
 
             // 展示立刻价格
             showPriceQuick(){
                 let num = 0;
-                this.get_quickList.map(item=>num+=item.price+Number(item.filesPrice))
+                this.get_quickList.map(item=>num+=item.assemblyDeposit+Number(item.filesPrice))
                 return num
             }
         },
