@@ -3,13 +3,13 @@
 <template>
 	<view class="cat-signature" @touchmove.stop.prevent="moveHandle">
 		<view class="content">
-			<canvas class='firstCanvas' :canvas-id="canvasId" @touchmove='move' @touchstart='start($event)' @touchend='end'
-			 @touchcancel='cancel' @longtap='tap' disable-scroll='true' @error='error' />
-
 			<view class="btns">
 				<view class="btn" @tap="clear">重新签名</view>
 				<view class="btn2" @tap="save">确认签名</view>
 			</view>
+			<canvas class='firstCanvas' :canvas-id="canvasId" @touchmove='move' @touchstart='start($event)' @touchend='end'
+			 @touchcancel='cancel' @longtap='tap' disable-scroll='true' @error='error' />
+
 		</view>
 	</view>
 </template>
@@ -169,7 +169,7 @@ import { mapActions, mapGetters } from 'vuex'
 			onSave (path) {
                 let str = new RegExp('<div style="color: blue;" class="location">(.*?)</div>')
                 let htmlText = this.getHtmlStr
-                let img  = `<img src="${path}" style="position: absolute;top: -50px;left: -50px;width: 100px; height: 100px"/>`
+                let img  = `<img src="${path}" style="position: absolute;top: -50px;left: 0px;width: 100px; height: 100px;transform: rotate(-90deg);"/>`
                 htmlText = htmlText.replace(str, img)
                 let params = {
                     htmlText: htmlText,
@@ -177,7 +177,10 @@ import { mapActions, mapGetters } from 'vuex'
 				}
                 updOrderContract(params).then(res => {
 					this.act_setHtml(htmlText)
-					uni.navigateBack({ delta: 2 })
+					var pages = getCurrentPages()
+					var prevPage = pages[pages.length - 2] //上一个页面
+					prevPage.$vm.signGo = false
+					uni.navigateBack({ delta: 1 })
                 })
             },
 			save(){
@@ -186,7 +189,7 @@ import { mapActions, mapGetters } from 'vuex'
 					uni.showToast({title:'请先签字',icon:'none'})
 					return;
 				}
-				uni.showLoading({title:'生成中...',mask:true})
+				uni.showLoading({title:'生成中...', mask:true})
 				setTimeout(()=>{
 					uni.canvasToTempFilePath({
 						canvasId: that.canvasId,
@@ -195,8 +198,9 @@ import { mapActions, mapGetters } from 'vuex'
 						　　　　url: res.tempFilePath,
 						　　　　method: 'GET',
 						　　　　responseType: 'arraybuffer',
-						　　　　success: async res => {
-						　　　　　　 let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+						　　　　success: async _ => {
+									console.log(555);
+						　　　　　　 let base64 = wx.arrayBufferToBase64(_.data); //把arraybuffer转成base64
 						　　　　　　 let toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
 									that.onSave(toBase64Url)
 					　　　　}
@@ -218,32 +222,33 @@ import { mapActions, mapGetters } from 'vuex'
 
 <style lang="scss" scoped>
 	.cat-signature{
-		width: 100%;
 		height: 100vh;
 		.content{
 			// display: flex;
 			background: red;
-			height: 100vh;
 			background: #fff;
+			display: flex;
+			width: 100vw;
+			height: 100vh;
+			align-items: center;
+			justify-content: center;
 			.firstCanvas{
-				// width: 650rpx;
-				// height: 100%;
-				margin: 20rpx auto;
+				margin: 20rpx 0;
 				border: 1px dashed #999;
-				width: 600rpx;
-				height: 800rpx;
+				height: 90vh;
+				position: relative;
+				right: 30rpx;
 			}
 			.btns{
-				// width: 100rpx;
-				// height: 100%;
-				width: 100%;
-				height: 100rpx;
+				width: 200rpx;
+				height: 100vh;
 				font-size: 35rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
 				text-align: center;
 				line-height: 82rpx;
 				display: flex;
+				flex-direction: column;
 				// flex-direction: column;
 				justify-content: space-around;
 				.btn{
@@ -252,8 +257,9 @@ import { mapActions, mapGetters } from 'vuex'
 					border-radius: 4rpx;
 					border: 2rpx solid #FF4852;
 					color: #FF4852;
-					// transform-origin: 50rpx;
-    				// transform: rotate(90deg);
+    				transform: rotate(90deg);
+					position: relative;
+					right: 23px;
 				}
 				.btn2{
 					width: 228rpx;
@@ -261,8 +267,9 @@ import { mapActions, mapGetters } from 'vuex'
 					background: #FF4852;
 					border-radius: 4rpx;
 					color: #FFFFFF;
-					// transform-origin: 50rpx;
-    				// transform: rotate(90deg);
+    				transform: rotate(90deg);
+					position: relative;
+					right: 23px;
 				}
 			}
 		}

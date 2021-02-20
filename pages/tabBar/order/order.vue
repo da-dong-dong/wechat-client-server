@@ -124,7 +124,7 @@ import { mapGetters } from 'vuex'
             navigateToMiniProgram(jumpAppId,outTradeNo){
                 uni.navigateToMiniProgram({
                     appId: jumpAppId,
-                    envVersion: 'trial', // develop（开发版），trial（体验版），release（正式版）
+                    envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
                     path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
                     extraData: outTradeNo,
                     success(res) {

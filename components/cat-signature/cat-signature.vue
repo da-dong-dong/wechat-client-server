@@ -199,6 +199,8 @@
 			background: red;
 			height: 100vh;
 			background: #fff;
+			transform-origin: center center;
+			transform: rotate(90deg);
 			.firstCanvas{
 				// width: 650rpx;
 				// height: 100%;
