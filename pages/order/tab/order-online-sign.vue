@@ -6,7 +6,7 @@
                 <view class="order_top">
                     <view class="order_heade">
                         <image class="order_heade_img" src="/static/image/oreder_user.png"></image>
-                        <text>{{signData.onlineCustomerContactVos && signData.onlineCustomerContactVos.map(_ => _.name).join(' ')}}</text>
+                        <text>{{signData.onlineCustomerContactVos | contactFilter}}</text>
                     </view>
                     <view class="order_info">
                         <view class="order_info_flx">
@@ -106,6 +106,10 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
                     [ 2, '拒签' ],
                 ])
                 return map.get(type)
+            },
+            contactFilter (arr) {
+                if (arr) return arr.map(_ => _.name).join(' ')
+                else return ''
             }
         },
         methods:{
@@ -121,7 +125,8 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
                 }
             },
             shopName (id) {
-                return this.get_shopIdList.filter(_ => _.shopId === id)[0].shopName
+                if (id) return this.get_shopIdList.filter(_ => _.shopId === id)[0].shopName
+                else return '' 
             },
             onclickSigna(id){
                 console.log('跳转')

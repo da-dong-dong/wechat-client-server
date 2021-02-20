@@ -175,7 +175,11 @@ import { mapActions, mapGetters } from 'vuex'
                     htmlText: htmlText,
                     id: this.id
 				}
+				console.log('签字接口');
+				uni.showLoading({title:'签字接口', mask:true})
                 updOrderContract(params).then(res => {
+					uni.showLoading({title:'签字完成', mask:true})
+					console.log('签字完成');
 					this.act_setHtml(htmlText)
 					var pages = getCurrentPages()
 					var prevPage = pages[pages.length - 2] //上一个页面
@@ -199,7 +203,7 @@ import { mapActions, mapGetters } from 'vuex'
 						　　　　method: 'GET',
 						　　　　responseType: 'arraybuffer',
 						　　　　success: async _ => {
-									console.log(555);
+									console.log('签字生成');
 						　　　　　　 let base64 = wx.arrayBufferToBase64(_.data); //把arraybuffer转成base64
 						　　　　　　 let toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
 									that.onSave(toBase64Url)
