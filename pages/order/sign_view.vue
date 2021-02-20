@@ -45,18 +45,9 @@ import { mapActions, mapGetters } from 'vuex'
 		},
 		data(){
 			return{
-				show:false,
-				visibleSync: false,
 				signImage:'',
 				hasDh:false,
 				id: null
-			}
-		},
-		watch:{
-			visible(val) {
-				this.visibleSync = val;
-				this.show = val;
-				this.getInfo()
 			}
 		},
 		computed: {
@@ -65,11 +56,7 @@ import { mapActions, mapGetters } from 'vuex'
             ])
         },
 		created(options) {
-			this.visibleSync = this.visible
 			this.getInfo()
-			setTimeout(() => {
-				this.show = this.visible;
-			}, 100)
 		},
 		methods:{
             ...mapActions('html',[
@@ -93,7 +80,6 @@ import { mapActions, mapGetters } from 'vuex'
 			},
 			// 
 			close() {
-				this.show = false;
 				this.hasDh = false;
 				this.$emit('close')
 				this.clear()
@@ -175,11 +161,7 @@ import { mapActions, mapGetters } from 'vuex'
                     htmlText: htmlText,
                     id: this.id
 				}
-				console.log('签字接口');
-				uni.showLoading({title:'签字接口', mask:true})
                 updOrderContract(params).then(res => {
-					uni.showLoading({title:'签字完成', mask:true})
-					console.log('签字完成');
 					this.act_setHtml(htmlText)
 					var pages = getCurrentPages()
 					var prevPage = pages[pages.length - 2] //上一个页面
@@ -198,27 +180,23 @@ import { mapActions, mapGetters } from 'vuex'
 					uni.canvasToTempFilePath({
 						canvasId: that.canvasId,
 						success: function(res) {
-							uni.request({
-						　　　　url: res.tempFilePath,
-						　　　　method: 'GET',
-						　　　　responseType: 'arraybuffer',
-						　　　　success: async _ => {
-									console.log('签字生成');
-						　　　　　　 let base64 = wx.arrayBufferToBase64(_.data); //把arraybuffer转成base64
-						　　　　　　 let toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
-									that.onSave(toBase64Url)
-					　　　　}
-					　　});
+						uni.getFileSystemManager().readFile({
+							filePath: res.tempFilePath,
+							encoding:'base64',
+							success:res=>{
+								let base64 = 'data:image/jpeg;base64,' + res.data; //不加上这串字符，在页面无法显示
+								that.onSave(base64)
+							}
+						})
 						uni.hideLoading()
 						that.hasDh = false;
-						that.show = false;
 						},
 						fail:function(err){
 							console.log(err)
 							uni.hideLoading()
 						}
 					},this)
-				},100)
+				}, 200)
 			}
 		}
 	}

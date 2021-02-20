@@ -54,9 +54,6 @@
                
             </view>
         </view>
-        <!-- <view class="signModal" v-show="signModal">
-            <signViw @to-close="closeSign" @save="onSave"></signViw>
-        </view> -->
     </view>
 </template>
 
@@ -128,25 +125,13 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
                 if (id) return this.get_shopIdList.filter(_ => _.shopId === id)[0].shopName
                 else return '' 
             },
-            onclickSigna(id){
-                console.log('跳转')
-                uni.navigateTo({
-					url: '/pages/order/detail/signature?id=' + id
-				})
-            },
             getOrderContract () {
                 getOrderContract({ orderId: this.orderId }).then(res => {
                     console.log(res);
                     this.signData = res.data.data
                 })
             }
-        },
-        // onShow () {
-        //     this.getOrderContract()
-        // },
-        // created () {
-        //     this.getOrderContract()
-        // }
+        }
     }
 </script>
 

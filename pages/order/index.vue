@@ -2,9 +2,9 @@
     <view class="order_box">
         <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange"></wuc-tab>
         <view>
-                <orederDetails v-if="TabCur == '0'" :orderId="orderId" class="swiper_0" />
-                <orederProgress v-if="TabCur == '1'" :orderId="orderId" class="swiper_1" />
-                <orederOnlineSign v-if="TabCur == '2'" :orderId="orderId" class="swiper_2" />
+                <orederDetails v-if="TabCur === 0" :orderId="orderId" class="swiper_0" />
+                <orederProgress v-if="TabCur === 1" :orderId="orderId" class="swiper_1" />
+                <orederOnlineSign v-if="TabCur === 2" :orderId="orderId" class="swiper_2" />
         </view>
         <!-- <swiper class="swiper_group"  :style="{height:scrollHeight+'px'}" :current="TabCur"   :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
             <swiper-item  v-for="(item,index) in tabList" :key="index">
@@ -35,7 +35,7 @@ import orederProgress from './tab/order-progress.vue';
             return {
                 orderId:null,// 订单id
                 scrollHeight:null, // 高度
-                TabCur: 0,
+                TabCur: null,
                 tabList: [
                     { name: '详情',path: "details" }, 
                     { name: '进度',path: "progress" },
@@ -47,6 +47,7 @@ import orederProgress from './tab/order-progress.vue';
         },
         onLoad(options) {
             this.orderId = options.id
+            this.TabCur = 0
         },
          mounted(){
            this.getHtight(this.TabCur)
