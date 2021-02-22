@@ -11,6 +11,7 @@
 			 @touchcancel='cancel' @longtap='tap' disable-scroll='true' @error='error' />
 
 		</view>
+		<uni-popup ref="popup" type="message">{{errMsg}}</uni-popup>
 	</view>
 </template>
 
@@ -47,7 +48,8 @@ import { mapActions, mapGetters } from 'vuex'
 			return{
 				signImage:'',
 				hasDh:false,
-				id: null
+				id: null,
+				errMsg: ''
 			}
 		},
 		computed: {
@@ -183,9 +185,13 @@ import { mapActions, mapGetters } from 'vuex'
 						uni.getFileSystemManager().readFile({
 							filePath: res.tempFilePath,
 							encoding:'base64',
-							success:res=>{
-								let base64 = 'data:image/jpeg;base64,' + res.data; //不加上这串字符，在页面无法显示
+							success: _=>{
+								let base64 = 'data:image/jpeg;base64,' + _.data; //不加上这串字符，在页面无法显示
 								that.onSave(base64)
+							},
+							fail: function(err){
+								that.errMsg = res.tempFilePath + '\n' + err.errMsg
+								that.$refs.popup.open()
 							}
 						})
 						uni.hideLoading()
