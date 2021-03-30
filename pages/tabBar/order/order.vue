@@ -31,6 +31,7 @@ import orederNoGoin from './tab/order-no-goins.vue';
 import orederNoBuy from './tab/order-no-buy.vue';
 import sPullScroll from '@/components/s-pull-scroll';
 import { orderList, orderClose, orderPay } from '@/util/api/order.js'
+const { $Message } = require('@/wxcomponents/base/index');
 import { mapGetters } from 'vuex'
     export default {
         components: { WucTab, orederAll,orederNoAppointment,orederGoOn,orederNoGoin,orederNoBuy,sPullScroll},
@@ -75,7 +76,7 @@ import { mapGetters } from 'vuex'
                     this.TabCur = 1
                     this.orderList()
                     uni.removeStorageSync('orderId');
-                    this.navigateToMiniProgram(res.data.jumpAppId,res.data.outTradeNo)
+                    this.navigateToMiniProgram(res.data)
                 },
                 fail:()=> {
                     this.TabCur=0
@@ -106,7 +107,7 @@ import { mapGetters } from 'vuex'
             onBuy(orderId){
                 orderPay({orderId}).then(res=>{
                     if(res.data.code == 200){
-                        this.navigateToMiniProgram(res.data.data.jumpAppId,res.data.data.outTradeNo)
+                        this.navigateToMiniProgram(res.data.data)
                     }
                 })
             },
@@ -121,17 +122,45 @@ import { mapGetters } from 'vuex'
             },
 
             // 跳转支付
-            navigateToMiniProgram(jumpAppId,outTradeNo){
-                uni.navigateToMiniProgram({
-                    appId: jumpAppId,
-                    envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
-                    path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
-                    extraData: outTradeNo,
-                    success(res) {
-                        // 返回成功
-                        console.log(res)
-                    }
-                })
+            navigateToMiniProgram(data){
+                let {jumpAppId,outTradeNo,payJumpMa,paySing,prepayId,nonceStr,timeStamp} = data
+                // 判断是否跳转支付
+                if(payJumpMa){
+                    uni.navigateToMiniProgram({
+                        appId: jumpAppId,
+                        envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                        path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
+                        extraData: outTradeNo,
+                        success(res) {
+                            // 返回成功
+                            console.log(res)
+                        }
+                    })
+                }else{
+                    uni.requestPayment({
+                        provider: 'wxpay',
+                        timeStamp: timeStamp,
+                        nonceStr: nonceStr,
+                        package: `prepay_id=${prepayId}`,
+                        signType: 'RSA',
+                        paySign: paySing,
+                        success: res => {
+                            $Message({
+                                content: "支付成功",
+                                type: 'success'
+                            });
+                            console.log(res)
+                        },
+                        fail: err => {
+                            $Message({
+                                content: "支付失败",
+                                type: 'error'
+                            });
+                            console.log(err)
+                        }
+                    });
+                }
+                
             },
 
             // 设置数据

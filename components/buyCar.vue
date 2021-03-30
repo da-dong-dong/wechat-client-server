@@ -90,7 +90,7 @@
 
             // 付款页面
             onQuick(){
-                this.$emit('onQuick')
+               this.$emit('onQuick')
             },
 
             // 跳转服务协议

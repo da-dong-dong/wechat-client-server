@@ -285,7 +285,8 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
                 })
                 console.log(param)
                 console.log('支付页',this.get_quickList)
-                // 下单
+               
+                //下单
                 order(param).then(res=>{
                     let data = res.data.data
                     if(res.data.code !== 200){

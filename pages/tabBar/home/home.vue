@@ -25,14 +25,28 @@
 				<img class="imgOne" :src="_.src" alt="" v-for="(_, _index) in item.data.imgs" :key="_index" @click="turnDetail(_.linkData)">
 			</view>
 			
-			<view v-if="item.type === 'moreImg'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
-				<view class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
+			<view v-if="item.type === 'moreImg'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat' }">
+				<view v-if="!item.data.titleRow.hiddenTitle" class="moreimgContent"  :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
-				<view class="flex rowFlex" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+				<view class="flex rowFlex" :class="item.data.titleRow.hiddenTitle?'paddingT5':''" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
 					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidth(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
+			</view>
+			<!-- 两列图 -->
+			<view v-if="item.type === 'double'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat' }">
+				<view v-if="!item.data.titleRow.hiddenTitle" class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
+					<span class="flex_1">{{item.data.titleRow.title}}</span>
+					<i class="iconFlex iconfont iconhtbArrowright02"></i>
+				</view>
+				<view class="flex rowFlexDouble" :class="item.data.titleRow.hiddenTitle?'paddingT5':''" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
+				</view>
+			</view>
+			<!-- 视频 -->
+			<view  v-if="item.type === 'oneVideo'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-color': item.data.bgColor }">
+				<video id="myVideo" :src="item.data.src" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" :autoplay="item.data.autoplay" ></video>
 			</view>
         </view>
        
@@ -117,6 +131,16 @@ const entriData = uni.getExtConfigSync()
 					return col === maxCol ? '66%' : '32%'
 					case 3:
 						return '32%'
+				}
+			},
+			// 组合图单图长度2列
+			getWidthDouble (data, col, i) {
+				let len = data.length
+				switch (len) {
+					case 1:
+						return '100%'
+					case 2:
+						return '49%'
 				}
 			},
             // 检查登陆
@@ -250,6 +274,17 @@ const entriData = uni.getExtConfigSync()
     &:last-child{
       margin-bottom: 0px;
     }
+}
+.rowFlexDouble{
+	padding: 0rpx 20rpx 10rpx;
+	justify-content: space-between;
+	box-sizing: border-box;
+	&:last-child{
+      margin-bottom: 0px;
+    }
+}
+.homeContent .paddingT5{
+	padding-top: 10rpx;
 }
 .flex{
 	display: flex;
