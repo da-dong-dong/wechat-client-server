@@ -8,6 +8,8 @@
             <view class="paddingT20">{{item.name}}</view>
             <text class="fontSize20 color999">{{item.remarks?item.remarks:''}}</text>
         </view>
+        <!-- 弹窗 -->
+        <i-message id="message" />
     </view>
 </template>
 

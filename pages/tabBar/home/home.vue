@@ -35,7 +35,7 @@
 				</view>
 			</view>
 			<!-- 两列图 -->
-			<view v-if="item.type === 'double'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat' }">
+			<view v-if="item.type === 'double'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat','padding':'10rpx 20rpx 20rpx 20rpx' }">
 				<view v-if="!item.data.titleRow.hiddenTitle" class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
@@ -48,6 +48,22 @@
 			<view  v-if="item.type === 'oneVideo'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-color': item.data.bgColor }">
 				<video id="myVideo" :src="item.data.src" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" :autoplay="item.data.autoplay" ></video>
 			</view>
+			<!-- 地图 -->
+			<view  v-if="item.type === 'mapPng'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-color': item.data.bgColor }">
+				<map style="width: 100%; height: 100%;" :longitude="longitude" :latitude="latitude" :markers="covers" ></map>
+			</view>
+			<!-- 层级组件 -->
+			<div class="positions" v-if="item.type === 'positions'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%','background-color': item.data.bgColor1, }">
+				<div class="positions_box" :class="{'shadow': !item.data.shadow}" :style="{ 'height': item.data.height * 2 + 'rpx', 'top':'-'+ item.data.top * 2 +'rpx', 'background-color': item.data.bgColor, 'border-radius':item.data.radius * 2 + 'rpx' }">
+					<div class="box1">
+						<img v-if="item.data.imgs.length>0"  :src="item.data.imgs[0].src" @click="turnDetail(item.data.imgs[0].linkData)">
+					</div>
+					<div v-if="!item.data.border && item.data.imgs.length>1" class="box_border"></div>
+					<div v-if="item.data.imgs.length>1" class="box1">
+						<img :src="item.data.imgs[1].src"  @click="turnDetail(item.data.imgs[1].linkData)">
+					</div>
+				</div>
+			</div>
         </view>
        
         <!-- 弹窗 -->
@@ -58,29 +74,66 @@
 <script>
 import { getHomeData } from '@/util/api/home.js'
 const { $Message } = require('@/wxcomponents/base/index');
-import { getLongin } from '@/util/api/user.js'
 import { mapGetters } from 'vuex'
 const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
 		data () {
 			return {
-				homeList: []
+				homeList: [],
+				longitude:null,
+				latitude:null,
+				covers: [{
+					latitude: '23.084657',
+					longitude: '114.382526',
+					iconPath: "/static/image/loacl.png"
+            	}]
 			}
 		},
 		computed: {
 			...mapGetters('user',[
 				'get_shopId'
+			]),
+			...mapGetters('map',[
+				'get_location'
 			])
 		},
         mounted(){
-			
+			// 判断当前门店经纬度是否值
+			let {locationX,locationY} = this.get_shopId
+			let locationArr = this.get_location.location.split(',')
+			let longitude,latitude = null;
+			if(locationX && locationY){
+				longitude = locationX
+				latitude = locationY
+			}else{
+				longitude = locationArr[0]
+				latitude = locationArr[1]
+			}
+				this.longitude = longitude
+				this.latitude = latitude
+				this.covers[0].latitude = latitude
+				this.covers[0].longitude = longitude
         },
 		 onLoad() {
-            
 			this.getHomeData()
+			
         },
         methods:{
+			// 消息推送
+			onClickMyInfo(){
+				uni.requestSubscribeMessage({
+					tmplIds: ['tGNjNY-84SP_ENugDhzq-V2BNlsfur7Ir_qCAllb2d4','uAujsYPo1Xu2-8o2RQqPoVIHs2QUjItPtRR758SJLWg','-Hecde4yZlk-9N5d-igvBg-i8m_pSEMaZni5Q5xvWoI'],
+					success (res) {
+						console.log(res)
+					},
+					fail(err){
+						console.log(err)
+					}
+				})
+			},
+
+
 			turnShop () {
 				uni.navigateTo({ url:'/pages/tabBar/shoppingCart/components/changeRegion' })
 			},
@@ -143,59 +196,6 @@ const entriData = uni.getExtConfigSync()
 						return '49%'
 				}
 			},
-            // 检查登陆
-            checkLogin(){
-                uni.authorize({
-                    scope: 'scope.userInfo',
-                    success() {
-                        uni.getUserInfo({
-                            provider: 'weixin',
-                            success: function (infoRes) {
-                                console.log(infoRes)
-                                console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                            }
-                        });
-                    }
-                })
-                // 获取code值
-                // uni.login({
-                //     provider: 'weixin',
-                //     success: function (res) {
-                //         let param = {
-                //             jsCode: res.code,
-                //             appId:  accountInfo.miniProgram.appId
-                //         }
-                //         console.log(accountInfo.miniProgram.appId)
-                //         // 获取用户信息
-                //         uni.getUserInfo({
-                //             provider: 'weixin',
-                //             success: function (infoRes) {
-                //                 console.log(infoRes)
-                //                 console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                //             }
-                //         });
-                //         // getLongin(param).then(res=>{
-                //         //     console.log(res);
-                //         //     uni.getUserInfo({
-                //         //         provider: 'weixin',
-                //         //         success: function (infoRes) {
-                //         //             console.log(infoRes)
-                //         //             console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                //         //         }
-                //         //     });
-                //         // })
-                //     }
-                // });
-            },
-            getPhoneNumber(e) { 
-                console.log(e) 
-                console.log(e.detail.errMsg);  
-                console.log(e.detail.iv);  
-                console.log(e.detail.encryptedData);  
-                
-            },
-
-           
         }   
     }
 </script>
@@ -276,7 +276,6 @@ const entriData = uni.getExtConfigSync()
     }
 }
 .rowFlexDouble{
-	padding: 0rpx 20rpx 10rpx;
 	justify-content: space-between;
 	box-sizing: border-box;
 	&:last-child{
@@ -292,5 +291,39 @@ const entriData = uni.getExtConfigSync()
 .autoWH{
 	width: auto;
 	height: auto;
+}
+// 层级定位
+.positions{
+  position: relative;
+  .shadow{
+    box-shadow:0px 1rpx 20rpx #000;
+  }
+  .positions_box{
+    z-index: 2000;
+    width: 90%;
+    height: 100%;
+    position: absolute;
+    background: red;
+    border-radius: 20rpx;
+    top: -20rpx;
+    left: 5%;
+    padding: 30rpx;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    div{
+      height: 100%;
+    }
+    .box1{
+      width: 46%;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .box_border{
+      border-left: 1rpx solid #666;
+    }
+  }
 }
 </style>
