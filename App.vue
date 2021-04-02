@@ -18,17 +18,6 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
         }, 
 		onLaunch: function() {
 			console.log('App Launch');
-			// 设置弹窗
-			// uni.getSetting({
-			// 	withSubscriptions: false,
-			// 	success (res) {
-			// 		console.log(res.authSetting)
-			// 		console.log(res.subscriptionsSetting)
-			// 		res.subscriptionsSetting = {
-			// 		  mainSwitch: true, // 订阅消息总开关
-			// 		}
-			// 	}
-			// })
 		},
 		mounted(){
 			console.log('AppMounted')
