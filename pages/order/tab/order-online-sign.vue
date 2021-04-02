@@ -49,6 +49,7 @@
                     <view class="order_show_list">
                         <view>接收时间：{{item.createTime | timeFilter}}</view>
                         <view>签字时间：{{item.signTime | timeFilter}}</view>
+                        <view v-if="item.isSign === 2">拒签原因: {{item.remarks}}</view>
                     </view>
                 </view>
                
@@ -58,7 +59,7 @@
 </template>
 
 <script>
-import { getOrderContract, updOrderContract } from '@/util/api/home.js'
+import { getOrderContract } from '@/util/api/home.js'
 import { mapGetters, mapActions } from 'vuex'
 import signViw from '@/components/cat-signature/cat-signature.vue'
 
@@ -114,10 +115,10 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
 				'act_setHtml'
 			]),
             onClickSign (data) {
-                if (data.isSign === 0) {
+                if (data.isSign !== 2) {
                     this.act_setHtml(data.htmlText)
                     uni.navigateTo({
-                        url: '/pages/order/detail/signature?id=' + data.id
+                        url: '/pages/order/detail/signature?id=' + data.id + `&type=${data.isSign}&url=${data.contractUrl}`
                     })
                 }
             },
@@ -127,7 +128,7 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
             },
             getOrderContract () {
                 getOrderContract({ orderId: this.orderId }).then(res => {
-                    console.log(res);
+                    console.log('res', res);
                     this.signData = res.data.data
                 })
             }
@@ -211,7 +212,6 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
 }
 .order_show{
     width: 100%;
-    height: 216rpx;
     background: #FFFFFF;
     border-radius: 16rpx;  
     margin-top: 20rpx;

@@ -6,10 +6,13 @@
                 <div v-html="getHtmlStr" style="transform: scale(0.5);transform-origin: 0 0;width: 750px;"></div>
             </movable-view>
         </movable-area>
-        <view class="btns">
+        <view class="btns" v-if="type === 0">
             <span class="gray" @tap="updOrderContractState">拒签</span>
             <span class="red" @tap="onClick" v-if="signGo">签字</span>
             <span class="red" @tap="confirm" v-else>确定</span>
+        </view>
+        <view class="btns" v-else-if="type !== 0 && url">
+            <span class="red" @click="downLoadPdf">下载</span>
         </view>
         <uni-popup ref="popup" type="dialog">
             <uni-popup-dialog type="input" mode="input" title="拒签原因"  @confirm="onConfirm">
@@ -29,7 +32,9 @@
             return{
                 flag : true,
                 id: null,
-                signGo: true
+                signGo: true,
+                type: 0,
+                url: ''
             }
         },
         computed: {
@@ -38,7 +43,11 @@
             ])
         },
         onLoad(option){
+            console.log(option)
             this.id = option.id
+            this.type = option.type
+            this.url = option.url
+            console.log(this.url)
 		},
         methods:{
             onConfirm (done, value) {
@@ -65,8 +74,35 @@
             confirm () {
                 var pages = getCurrentPages()
                 var prevPage = pages[pages.length - 2] //上一个页面
-                prevPage.$vm.$refs.orderSign[0].getOrderContract()
+                console.log(prevPage.$vm.$refs.orderSign)
+                prevPage.$vm.$refs.orderSign.getOrderContract()
                 uni.navigateBack({ delta: 1 })
+            },
+            downLoadPdf () {
+                uni.showToast({ title:'下载中', icon: 'loading' })
+                let str = '.pdf'
+                this.url = this.url.replace(str, '.png')
+                uni.downloadFile({
+                    url: this.url,
+                    success: (res) => {
+                        if (res.statusCode === 200) {
+                            var tempFilePath = res.tempFilePath;
+                            console.log(tempFilePath)
+                            uni.saveImageToPhotosAlbum({
+                                filePath: tempFilePath,
+                                success: function () {
+                                    uni.showToast({ title:'已保存到相册' })
+                                },
+                                fail: function (err) {
+                                    console.log('保存错误', err)
+                                }
+                            });
+                        }
+                    },
+                    fail: function (err) {
+                        console.log('下载', err)
+                    }
+                })
             }
         },
 
