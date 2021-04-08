@@ -40,7 +40,8 @@ const { $Message } = require('@/wxcomponents/base/index');
         },
         mounted() {  
             this.getMpa()
-            this.filterShop(this.get_city)
+            // 显示品牌所有门店
+            this.showShopIdList = this.get_shopIdList
         },  
         data(){
             return{
@@ -64,7 +65,7 @@ const { $Message } = require('@/wxcomponents/base/index');
 
             // 搜索
             onSearch(val){
-                this.filterShop(val)
+                this.filterShopSearch(val)
             },
 
             // 获取当地位置
@@ -78,13 +79,13 @@ const { $Message } = require('@/wxcomponents/base/index');
                         let {city} = data[0].regeocodeData.addressComponent
                         this.cityVal = city
                         //this.filterShop(this.get_city)
-                        // 显示品牌所有门店
-                        this.showShopIdList = this.get_shopIdList
+                        
                     },
                     fail: (err) =>{
                         this.showShopIdList = this.get_shopIdList
                     }
                 }); 
+                
             },
 
             // 设置门店
@@ -121,7 +122,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                 })
             },
 
-            // 过滤门店
+            // 过滤城市门店
             filterShop(val){
                 if(val){
                     this.showShopIdList = this.get_shopIdList.filter(res=> {
@@ -129,7 +130,17 @@ const { $Message } = require('@/wxcomponents/base/index');
                                return  res.city.includes(val)
                             }
                         })
-                    
+                }
+            },
+
+            // 过滤搜索门店
+            filterShopSearch(val){
+                if(val){
+                    this.showShopIdList = this.get_shopIdList.filter(res=> {
+                            if(res.shopName){
+                               return  res.shopName.includes(val)
+                            }
+                        })
                 }
             }
         }

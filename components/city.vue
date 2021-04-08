@@ -18,7 +18,7 @@
         <view class="cityDate paddingTB20 " v-for="(item,index) in showShopIdList" :key="index" >
            
             <view class="shopImg ">
-                <img v-if="item.shopImages" :src="item.shopImages" alt="">
+                <img lazy-load v-if="item.shopImages" :src="item.shopImages" alt="">
             </view>
             <view class="dateLi colorH">
                 <view class="fontSize32 fontWight">
@@ -118,7 +118,7 @@
     font-size: 32rpx;
     .shopImg{
         width: 100%;
-        height: 320rpx;
+        height: 460rpx;
         background-color: #d8d8d8;
         margin-bottom: 60rpx;
         img{

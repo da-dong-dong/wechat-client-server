@@ -6,8 +6,8 @@
         </view>
         <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)" :style="{ 'background-image': `url(${item.images})`}">
             <view class="brandListText">
-                <view class="fontWight fontSize32">{{item.name}}</view>
-                <text class="fontSize20">{{item.remarks?item.remarks:''}}</text>
+                <view class="fontWight fontSize40">{{item.name}}</view>
+                <text class="fontSize30">{{item.remarks?item.remarks:''}}</text>
             </view>
         </view>
         <!-- 弹窗 -->
@@ -69,7 +69,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 }
 .brandList{
     width: 100%;
-    height: 350rpx;
+    height: 400rpx;
     border-radius: 20rpx;
     box-sizing: border-box;
     background-size: 100% 100%;
@@ -78,7 +78,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
        display: inline-block; 
     }
     .brandListText{
-        padding-top: 230rpx;
+        padding-top: 280rpx;
         color: #fff;
         text-align: center;
     }
