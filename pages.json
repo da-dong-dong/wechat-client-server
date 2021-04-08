@@ -83,9 +83,27 @@
 
 		//******************************** 分类 ********************************
 		{
+			"path": "pages/tabBar/classify/secondary",
+			"style": {
+				"navigationBarTitleText": "二级页面"
+			}
+		},
+		{
+			"path": "pages/tabBar/classify/newDetail",
+			"style": {
+				"navigationBarTitleText": "新详情"
+			}
+		},
+		{
 			"path": "pages/tabBar/classify/classify",
 			"style": {
-				"navigationBarTitleText": "分类"
+				"navigationBarTitleText": "线上分类"
+			}
+		},
+		{
+			"path": "pages/tabBar/classify/secondClassify",
+			"style": {
+				"navigationBarTitleText": "图文分类"
 			}
 		},
 		{

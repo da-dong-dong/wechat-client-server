@@ -33,7 +33,7 @@
                         </template>
                     </div>
                     <div class="dbColumn" v-if="activeObj.goodsShowType === 0 || activeObj.goodsShowType === 1">
-                        <div v-for="_ in rightList" :key="_.id" class="oneContent" @click="onClickDetails(_.id)">
+                        <!-- <div v-for="_ in rightList" :key="_.id" class="oneContent" @click="onClickDetails(_.id)">
                             <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
                             <img class="longImg" v-else-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
                             <div v-if="activeObj.showName === 1" class="title">{{_.assemblyName}}</div>
@@ -41,12 +41,12 @@
                                 ￥{{_.assemblyPrice}}
                                 <span class="iconfont icon1202youjiantou gt_icon"></span>
                             </div>
-                        </div>
-                        <!-- <div v-for="_ in [1,2,3,4]" :key="_" class="imgContent">
-                            <img class="img" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=117402550,3524737531&fm=26&gp=0.jpg" alt="">
-                            <img class="longImg" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=117402550,3524737531&fm=26&gp=0.jpg" alt="">
-                            <div class="txt_center">精选系列</div>
                         </div> -->
+                        <div v-for="_ in rightList" :key="_.id" class="imgContent">
+                            <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
+                            <img class="longImg" v-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
+                            <div class="txt_center">{{_.imgTitle}}</div>
+                        </div>
                     </div>
                 </view>
             </view>
@@ -59,7 +59,7 @@
 <script>
 import { mapGetters } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
-import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api/goods.js'
+import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/api/goods.js'
 	import sPullScroll from '@/components/s-pull-scroll';
     export default {
         components:{sPullScroll},
@@ -77,7 +77,9 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
             },
             carouselList () {
                 if (this.id) {
+                    console.log(this.id);
                     let obj = this.leftList.filter(_ => _.id === this.id)[0]
+                    console.log(obj);
                     return (obj.slideshow && obj.slideshow.length) > 0 ? JSON.parse(obj.slideshow) : []
                 }
                 return []
@@ -94,22 +96,8 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                 id: null,
             }
         },
-        onShow() {
-            this.rightList = [];
-            this.shopId = this.get_shopId.shopId
-            uni.getStorage({
-                key: 'classId',
-                success: res => {
-                    this.getListAssemblyOnlineCategory(res.data)
-                    uni.removeStorageSync('classId');
-                },
-                fail:()=> {
-                    this.getListAssemblyOnlineCategory()
-                }
-            })
-        },
         onLoad(){
-            this.refresh();
+            this.getListAssemblyOnlineCategory()
 		},
         mounted(){
             //this.getListAssemblyOnlineCategory()
@@ -120,17 +108,17 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                 let param ={
                     shopId:this.shopId,
                     enterpriseId:this.get_enterpriseId,
-                    type: 0
+                    type: 1
                 }
                 getListAssemblyOnlineCategory(param).then(res=>{
                     this.leftList = res.data.data
                     this.id = id ? id: this.leftList[0].id
-                    this.getPageAssemblyOnline()
+                    this.getMaAssemblyOnlineTitle()
                 })
             },
 
             // 获取套系分页
-            getPageAssemblyOnline(){
+            getMaAssemblyOnlineTitle(){
                 let param ={
                     shopId:this.shopId,
                     enterpriseId:this.get_enterpriseId,
@@ -138,7 +126,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                     limit:10,
                     page:this.page
                 }
-                getPageAssemblyOnline(param).then(res=>{
+                getMaAssemblyOnlineTitle(param).then(res=>{
                     if(!res.data.data){
                         // $Message({
                         //     content:'暂无数据',
@@ -149,7 +137,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                         return 
                     }
                     this.total = res.data.data.total
-                    this.rightList = res.data.data.records
+                    this.rightList = res.data.data.list.records
                     console.log(res)
                     console.log(this.rightList)
 					// const curList = res.data.data.records
@@ -163,13 +151,13 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
             onClickTab(id){
                 this.id = id
                 this.rightList = [];
-                this.getPageAssemblyOnline()
+                this.getListAssemblyOnlineCategory()
             },
 
             // 跳转详情
             onClickDetails(idx){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/classify/components/details?id=' + idx
+                    url: '/pages/tabBar/classify/newDetail?id=' + idx
                 })
             },
             // 组件
@@ -186,7 +174,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
 					this.page = pullScroll.page
 				}
 				if(this.rightList.length < this.total){
-					this.getPageAssemblyOnline()
+					this.getMaAssemblyOnlineTitle()
 					this.showNoMore = false
 				}else{
 					this.showNoMore = true

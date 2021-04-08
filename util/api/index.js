@@ -1,8 +1,8 @@
 // true 开发环境， false 生产环境
-let test = false
+let test = true
 
-//let base = test ? 'http://192.168.5.26:8000' : 'https://wxapi.lyfz.net'
-let base = test ? 'https://wxapi.lyfz.net' : 'https://erp-wxapi.27yn.cn'
+let base = test ? 'http://192.168.5.26:8000' : 'https://wxapi.lyfz.net'
+// let base = test ? 'https://wxapi.lyfz.net' : 'https://erp-wxapi.27yn.cn'
 
 let baseUrl = {
 	// 小程序首页
@@ -45,7 +45,9 @@ let baseUrl = {
 	orderPay: `${base}/api/template/ma/auth/order_pay`, // 订单支付
 	orderClose: `${base}/api/template/ma/auth/order_close`, // 关闭订单
 
-
+	getPtdetail: `${base}/api/template/ma/get_assembly_online_detail_type`, // 获取线上图文套系详情
+	getPropelDetail: `${base}/api/template/ma/getAssemblyOnlineDetailByPropel`, // 根据推荐套系获取详情
+	getMaAssemblyOnlineTitle: `${base}/api/template/ma/page_assembly_online_title` // 获得图文类别下的套系
     //getH5Map:'https://restapi.amap.com/v3/ip' // 获取h5位置
 }
 

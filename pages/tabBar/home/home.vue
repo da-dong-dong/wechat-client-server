@@ -162,6 +162,21 @@ const entriData = uni.getExtConfigSync()
                             url:'/pages/tabBar/classify/classify'
                         })
 						break;
+						case 'imgDetail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/newDetail?id=' + data.detailId 
+						})
+						break;
+					case 'imgTow':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondary?id=' + data.classifyId 
+                        })
+						break;
+					case 'imgClassify':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondClassify?id=' + data.classifyId 
+                        })
+						break;
 				}
 			},
 			getHomeData () {

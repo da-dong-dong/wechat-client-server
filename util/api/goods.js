@@ -16,6 +16,11 @@ export const getAssemblyOnlineDetail = (params) => {
 	return get(baseUrl.getAssemblyOnlineDetail, params)
 }
 
+// 获取图文详情
+export const getAssemblptDetail = (params) => {
+	return get(baseUrl.getAssemblptDetail, params)
+}
+
 // 获取预约拍照档期
 export const reservationPhotoDate = (params) => {
 	return postObj(baseUrl.reservationPhotoDate, params)
@@ -41,4 +46,17 @@ export const orders = (params) => {
 	return get(baseUrl.orders, params)
 }
 
+// 获取线上图文套系详情
+export const getPtdetail = (params) => {
+	return get(baseUrl.getPtdetail, params)
+}
 
+// 根据推荐套系获取详情
+export const getPropelDetail = (params) => {
+	return post(baseUrl.getPropelDetail, params)
+}
+
+// 获得图文类别下的套系
+export const getMaAssemblyOnlineTitle = (params) => {
+	return get(baseUrl.getMaAssemblyOnlineTitle, params)
+}
