@@ -24,7 +24,7 @@ const { $Message } = require('@/wxcomponents/base/index');
 			...mapGetters('map',[
                 'get_shopIdList',
                 'get_city',
-                'get_barmd'
+                'get_barmd',
             ]),
            
         },
@@ -77,7 +77,13 @@ const { $Message } = require('@/wxcomponents/base/index');
                     success: (data) => {  
                         let {city} = data[0].regeocodeData.addressComponent
                         this.cityVal = city
-                    }  
+                        //this.filterShop(this.get_city)
+                        // 显示品牌所有门店
+                        this.showShopIdList = this.get_shopIdList
+                    },
+                    fail: (err) =>{
+                        this.showShopIdList = this.get_shopIdList
+                    }
                 }); 
             },
 

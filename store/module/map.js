@@ -82,6 +82,10 @@ export default{
 					uni.switchTab({
 					    url:'/pages/tabBar/home/home'
 					})
+				}else if(barmd.length === 0){
+					uni.navigateTo({
+						url:'/pages/tabBar/shoppingCart/components/changeRegion'
+					})
 				}
 			})
 			
