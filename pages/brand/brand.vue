@@ -4,9 +4,11 @@
         <view class="brandTop color000 fontSize36 fontWight paddingT40 marginB30">
             选择当前品牌
         </view>
-        <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)">
-            <view class="paddingT20">{{item.name}}</view>
-            <text class="fontSize20 color999">{{item.remarks?item.remarks:''}}</text>
+        <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)" :style="{ 'background-image': `url(${item.images})`}">
+            <view class="brandListText">
+                <view class="fontWight fontSize32">{{item.name}}</view>
+                <text class="fontSize20">{{item.remarks?item.remarks:''}}</text>
+            </view>
         </view>
         <!-- 弹窗 -->
         <i-message id="message" />
@@ -67,17 +69,18 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 }
 .brandList{
     width: 100%;
-    height: 110rpx;
-    background: #fff;
+    height: 350rpx;
     border-radius: 20rpx;
     box-sizing: border-box;
-    padding-left: 50rpx;
-    border-left: 20rpx solid #EB493B;
-    &:nth-child(odd){
-        border-left: 20rpx solid #F0A949;
-    }
+    background-size: 100% 100%;
+    background-color: #d8d8d8;
     text{
        display: inline-block; 
+    }
+    .brandListText{
+        padding-top: 230rpx;
+        color: #fff;
+        text-align: center;
     }
 }
 </style>

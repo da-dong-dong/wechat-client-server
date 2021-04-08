@@ -15,32 +15,72 @@
             </view>
         </view>
 
-        <view class="cityDate paddingTB20 marginRL10 " v-for="(item,index) in showShopIdList" :key="index" @click="onClickShop(item)">
-            <view class="dateLi marginRL10 padding20">
-                <view class="fontSize32 color000 fontWight">
+        <view class="cityDate paddingTB20 " v-for="(item,index) in showShopIdList" :key="index" >
+           
+            <view class="shopImg ">
+                <img v-if="item.shopImages" :src="item.shopImages" alt="">
+            </view>
+            <view class="dateLi colorH">
+                <view class="fontSize32 fontWight">
                     {{item.shopName}}
-                    <i-icon class="icon paddingL20 paddingL10" type="coordinates" size="24" color="#87898A"  />
                 </view>
-                <view class="paddingTB20 color999 fontSize24">
+                <view class="paddingT20 color999 fontSize24">
                     地址：{{`${item.province}${item.city}${item.area}`}}
                 </view>
+                <view class="color999 fontSize24 marginT10">
+                    营业时间：{{item.businessHours?item.businessHours:''}}
+                </view>
+                <view class="btnLIst paddingT20">
+                    <view class="btnBox marginR30" @click="onClickPhone('123456789')">拨打门店电话</view>
+                    <view class="btnBox" @click="onClickShop(item)">前往门店</view>
+                </view>
             </view>
-            <view class="dateBorder "></view>
         </view>
+        <!-- 遮罩层 -->
+        <modulPhone v-if="phoneShow" :phone="phone" type="phone" @cancel="cancel" @ok="ok"/>
     </view>
 </template>
 
 <script>
+    import modulPhone from '@/components/modulPhone.vue'
     export default {
+        components:{modulPhone},
        props:['cityVal','showShopIdList','barmd'],
         data(){
             return{
+                phoneShow:false,
+                phone:'',
                 cityLi: ['北京','上海','广州','深圳','惠州']
             }
         },
         methods:{
-            
-            
+            // 拨打电话
+            onClickPhone(phone){
+                this.phone = phone
+                this.phoneShow = true
+            },
+            cancel(){
+                this.phoneShow = false
+            },
+            ok(){
+               uni.makePhoneCall({
+                    // 手机号
+                    phoneNumber: this.phone, 
+
+                    // 成功回调
+                    success: (res) => {
+                        this.phoneShow = false;
+                        
+                    },
+
+                    // 失败回调
+                    fail: (res) => {
+                        this.phoneShow = false;
+                    }
+                    
+                }); 
+            },
+
             // 门店id
             onClickShop(item){
                 this.$emit('onSetShopId',item)
@@ -76,18 +116,33 @@
 .cityDate{
     box-sizing: border-box;
     font-size: 32rpx;
+    .shopImg{
+        width: 100%;
+        height: 320rpx;
+        background-color: #d8d8d8;
+        margin-bottom: 60rpx;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
     .dateLi{
-        background: #fff;
-        border-radius: 30rpx;
+        padding-left: 80rpx;
         box-sizing: content-box;
         box-sizing: border-box;
     }
-    .dateBorder{
-        width: 500rpx;
-        height: 2px;
-        margin: 20rpx auto;
-        background: #DDDDDD;
+    .btnLIst{
+        display: flex;
+        .btnBox{
+            height: 80rpx;
+            width: 230rpx;
+            border-radius: 10rpx;
+            background-color: #D3AA72;
+            text-align: center;
+            line-height: 80rpx;
+            color: #fff;
+            font-size: 26rpx;
+        }
     }
-
 }
 </style>

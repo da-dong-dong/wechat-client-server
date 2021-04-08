@@ -30,7 +30,7 @@
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
-				<view class="flex rowFlex" :class="item.data.titleRow.hiddenTitle?'paddingT5':''" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+				<view class="flex rowFlex" :class="item.data.titleRow.hiddenTitle?'paddingT10':''" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
 					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidth(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
 			</view>
@@ -54,18 +54,23 @@
 			</view>
 			<!-- 层级组件 -->
 			<div class="positions" v-if="item.type === 'positions'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%','background-color': item.data.bgColor1, }">
-				<div class="positions_box" :class="{'shadow': !item.data.shadow}" :style="{ 'height': item.data.height * 2 + 'rpx', 'top':'-'+ item.data.top * 2 +'rpx', 'background-color': item.data.bgColor, 'border-radius':item.data.radius * 2 + 'rpx' }">
+				<div class="positions_box"  :style="{'box-shadow': getShadow(item.data), 'height': item.data.height * 2 + 'rpx', 'top':'-'+ item.data.top * 2 +'rpx', 'background-color': item.data.bgColor, 'border-radius':item.data.radius * 2 + 'rpx' }">
 					<div class="box1">
 						<img v-if="item.data.imgs.length>0"  :src="item.data.imgs[0].src" @click="turnDetail(item.data.imgs[0].linkData)">
 					</div>
-					<div v-if="!item.data.border && item.data.imgs.length>1" class="box_border"></div>
+					<div v-if="!item.data.border && item.data.imgs.length>1" class="box_border"  :style="{'border-left': `${item.data.borderWidth*2}rpx solid ${item.data.borderColor}` }"></div>
 					<div v-if="item.data.imgs.length>1" class="box1">
 						<img :src="item.data.imgs[1].src"  @click="turnDetail(item.data.imgs[1].linkData)">
 					</div>
 				</div>
 			</div>
         </view>
-       
+       <!-- 客服 -->
+        <view class="userCall">
+            <button plain session-from="大东东" open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+                <img src="/static/image/userCall.png" alt="">
+            </button>
+        </view>
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -196,6 +201,14 @@ const entriData = uni.getExtConfigSync()
 						return '49%'
 				}
 			},
+			// 阴影样式
+			getShadow (val) {
+				if (!val.shadow) {
+					return `0px 1rpx ${val.shadowWidth*2}rpx ${val.shadowColor}`
+				} else {
+					return ''
+				}
+			},
         }   
     }
 </script>
@@ -284,6 +297,9 @@ const entriData = uni.getExtConfigSync()
 }
 .homeContent .paddingT5{
 	padding-top: 10rpx;
+}
+.homeContent .paddingT10{
+	padding-top: 20rpx;
 }
 .flex{
 	display: flex;

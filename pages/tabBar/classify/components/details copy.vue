@@ -5,44 +5,24 @@
         <banner :imgs="listDetai.topCarouseList"/>
 
         <!-- 内容文字 -->
-        <view class="content  padding10 marginRL30">
+        <view class="content marginB30 padding10 marginRL10">
             <view class="flex content_top">
                 <text>{{listDetai.name}}</text>
-                <text class="colorH">
+                <text class="colorRed">
                     ￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}
-                    <text class="colorH" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text>
+                    <text class="color333" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text>
                 </text>
             </view>
         </view>
 
         <!-- 详细内容 -->
-        <view class="content_text paddingRL40 marginRL30 colorADAD">
-            <!-- 定金 -->
-            <view class="borderTop fontSize28" v-if="listDetai.enableDeposit">
-                <view class="flex paddingTB20 flexCenten">
-                    <text class="marginR30 fontSize30">定金</text>
-                    <view>
-                         预定金: <text class="colorH marginR10">￥{{listDetai.assemblyDeposit}}</text>
-                         尾款: <text class="fontWight">￥{{listDetai.assemblyPrice-listDetai.assemblyDeposit}}</text>
-                    </view>
-                </view>
-            </view>
-
-            <!-- 详情 -->
-            <view class="context_li paddingB20 borderTop" v-for="(item,index) in listDetai['assemblyItemList']" :key='index'>
-                <view class=" fontSize28  fontWight paddingTB20 ">详情内容-{{item.name}}</view>
-                <!-- 底片 -->
-                <view class="marginB10 flexCenten fontSize28">
-                    <view>
-                         <text class="marginR30">底片{{item.bottomCount}}张</text>
-                         <text>精修{{item.refineCount}}张</text>
-                    </view>
-                </view>
-
+        <view class="content_text paddingRL40 marginRL10">
+            <view class="context_li paddingB20" v-for="(item,index) in listDetai['assemblyItemList']" :key='index'>
+                <view class=" fontSize30 color000 fontWight paddingTB20">详情内容-{{item.name}}</view>
                 <!-- 景点 -->
                 <view class="paddingTB20" v-if="item['assemblyItemPlaces'].length">
-                    <view class="fontSize28  fontWight marginB10">拍摄景点</view>
-                    <view class="flex fontSize28 " v-for="(item1,index1) in item['assemblyItemPlaces']" :key='index1'>
+                    <view class="fontSize28 color000 fontWight marginB10">拍摄景点</view>
+                    <view class="flex fontSize28 color333" v-for="(item1,index1) in item['assemblyItemPlaces']" :key='index1'>
                         <view>
                             <text class="fintSize30 fontWight">·</text>
                             <text class="paddingL10">{{item1.name}}</text>
@@ -52,8 +32,8 @@
 
                 <!-- 服装 -->
                 <view class="paddingTB20" v-if="item['assemblyItemDressInfos'].length">
-                    <view class="fontSize28  fontWight marginB10">服装</view>
-                    <view class="flex fontSize28  " v-for="(item1,index1) in item['assemblyItemDressInfos']" :key='index1'>
+                    <view class="fontSize28 color000 fontWight marginB10">服装</view>
+                    <view class="flex fontSize28 color333 " v-for="(item1,index1) in item['assemblyItemDressInfos']" :key='index1'>
                         <view>
                             <text class="fintSize30 fontWight">·</text>
                             <text class="paddingL10">{{item1.name}}</text>
@@ -64,8 +44,8 @@
                 
                 <!-- 商品 -->
                 <view class="paddingTB20" v-if="item['assemblyItemGoods'].length">
-                    <view class="fontSize28  fontWight marginB10">商品</view>
-                    <view class="flex fontSize28 " v-for="(item1,index1) in item['assemblyItemGoods']" :key='index1'>
+                    <view class="fontSize28 color000 fontWight marginB10">商品</view>
+                    <view class="flex fontSize28 color333" v-for="(item1,index1) in item['assemblyItemGoods']" :key='index1'>
                         <view>
                             <text class="fintSize30 fontWight">·</text>
                             <text class="paddingL10">{{item1.name}}</text>
@@ -77,8 +57,8 @@
 
                 <!-- 服务 -->
                 <view class="paddingTB20" v-if="item['assemblyItemServices'].length">
-                    <view class="fontSize28  fontWight marginB10">服务</view>
-                    <view class="flex fontSize28 " v-for="(item1,index1) in item['assemblyItemServices']" :key='index1'>
+                    <view class="fontSize28 color000 fontWight marginB10">服务</view>
+                    <view class="flex fontSize28 color333" v-for="(item1,index1) in item['assemblyItemServices']" :key='index1'>
                         <view>
                             <text class="fintSize30 fontWight">·</text>
                             <text class="paddingL10">{{item1.name}}</text>
@@ -90,7 +70,7 @@
         </view>
 
         <!-- 图片展示 -->
-        <view class="imgShow marginT10 marginRL30">
+        <view class="imgShow marginT10 marginRL10">
             <!-- tab切换 -->
             <view class="imgTab flex fontSize24 textC marginB30">
                 <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">{{item}}</view>
@@ -109,12 +89,6 @@
         <!-- 购物车定位 -->
         <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
 
-        <!-- 客服 -->
-        <view class="userCall">
-            <button plain session-from="大东东" open-type='contact' style="border: 0; padding: 0; line-height: unset;">
-                <img src="/static/image/userCall.png" alt="">
-            </button>
-        </view>
          <!-- 弹窗 -->
         <i-message id="message" />
    </view>
@@ -226,24 +200,20 @@ import { getAssemblyDescription } from '@/util/api/user.js'
                 uni.navigateTo({ 
                     url: '/pages/tabBar/shoppingCart/components/buyOrder'
                 })
-            },
+            }
 
         }
     }
 </script>
 
 <style lang="scss" scoped>
-
 .boxDitel{
     background: #F9F9F9;
 }
-.borderTop{
-    border-top: 1rpx solid #F6F6F6;
-}
 .content{
     background: rgba(255,255,255,0.8);
-    border-radius: 20rpx 20rpx 0 0;
-    font-size: 34rpx;
+    border-radius: 20rpx;
+    font-size: 30rpx;
     box-sizing: content-box;
     .content_top{
         padding: 40rpx 25rpx;
@@ -254,7 +224,7 @@ import { getAssemblyDescription } from '@/util/api/user.js'
 // 详细内容
 .content_text{
     background: rgba(255,255,255,0.8);
-    border-radius: 0 0 20rpx 20rpx;
+    border-radius: 20rpx;
     .context_li{
         .flex{
             justify-content: space-between;
@@ -271,7 +241,7 @@ import { getAssemblyDescription } from '@/util/api/user.js'
             width: 50%;
         }
         .active{
-            color: #D6A972;
+            color: #FF4852;
             font-weight: bold;
         }
     }
