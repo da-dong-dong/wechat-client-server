@@ -54,7 +54,7 @@
 			</view>
 			<!-- 层级组件 -->
 			<div class="positions" v-if="item.type === 'positions'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%','background-color': item.data.bgColor1, }">
-				<div class="positions_box"  :style="{'box-shadow': getShadow(item.data), 'height': item.data.height * 2 + 'rpx', 'top':'-'+ item.data.top * 2 +'rpx', 'background-color': item.data.bgColor, 'border-radius':item.data.radius * 2 + 'rpx' }">
+				<div class="positions_box"  :style="{'width': item.data.width * 2 + 'rpx','left': item.data.left * 2 + 'rpx','box-shadow': getShadow(item.data), 'height': item.data.height * 2 + 'rpx', 'top':'-'+ item.data.top * 2 +'rpx', 'background-color': item.data.bgColor, 'border-radius':item.data.radius * 2 + 'rpx' }">
 					<div class="box1">
 						<img v-if="item.data.imgs.length>0"  :src="item.data.imgs[0].src" @click="turnDetail(item.data.imgs[0].linkData)">
 					</div>
@@ -331,13 +331,13 @@ const entriData = uni.getExtConfigSync()
   }
   .positions_box{
     z-index: 2000;
-    width: 90%;
+    width: 95%;
     height: 100%;
     position: absolute;
     background: red;
     border-radius: 20rpx;
     top: -20rpx;
-    left: 5%;
+    left: 2.5%;
     padding: 30rpx;
     box-sizing: border-box;
     display: flex;
