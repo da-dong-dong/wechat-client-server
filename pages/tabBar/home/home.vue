@@ -66,11 +66,11 @@
 			</div>
         </view>
        <!-- 客服 -->
-        <view class="userCall">
-            <button plain session-from="大东东" open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+        <!-- <view class="userCall">
+            <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
                 <img src="/static/image/userCall.png" alt="">
             </button>
-        </view>
+        </view> -->
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>

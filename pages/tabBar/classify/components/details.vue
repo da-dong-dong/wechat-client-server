@@ -110,11 +110,11 @@
         <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
 
         <!-- 客服 -->
-        <view class="userCall">
+        <!-- <view class="userCall">
             <button plain session-from="大东东" open-type='contact' style="border: 0; padding: 0; line-height: unset;">
                 <img src="/static/image/userCall.png" alt="">
             </button>
-        </view>
+        </view> -->
          <!-- 弹窗 -->
         <i-message id="message" />
    </view>
