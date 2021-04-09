@@ -5,7 +5,7 @@
         	<view class="searchContent" v-if="item.type === 'search'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
 				<view class="uni-input" @click="turnSearch" :style="{ opacity: item.data.opacity/10 }">{{item.data.title}}</view>
         	</view>
-			<view class="shopContent" v-if="item.type === 'shop'" :style="{ 'background-image': `url(${item.data.backImg})`, color: item.data.color, 'background-color': item.data.bgColor }" @click="turnShop">
+			<view class="shopContent" v-if="item.type === 'shop'" :style="{'align-items': 'center','font-size': item.data.fontSize*2 + 'rpx','height': item.data.height*2 + 'rpx', 'background-image': `url(${item.data.backImg})`, color: item.data.color, 'background-color': item.data.bgColor }" @click="turnShop">
 				<span class="flex_1">当前门店: {{get_shopId.shopName}}</span>
 				<i class="iconfont iconhtbArrowright02" ></i>
 			</view>

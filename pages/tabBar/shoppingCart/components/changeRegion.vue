@@ -65,7 +65,12 @@ const { $Message } = require('@/wxcomponents/base/index');
 
             // 搜索
             onSearch(val){
-                this.filterShopSearch(val)
+                // 判断搜索是否为空
+                if(val.length === 0) {
+                    this.showShopIdList = this.get_shopIdList
+                }else{
+                    this.filterShopSearch(val)
+                }
             },
 
             // 获取当地位置

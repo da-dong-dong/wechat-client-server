@@ -26,10 +26,9 @@
 
 <style lang="scss" scoped>
 .swiper{
-    height: 240px;
+    height: 520rpx;
     .img{
-        
-        height: 240px;
+        height: 520rpx;
     }
 }
 </style>
