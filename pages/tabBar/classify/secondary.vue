@@ -66,7 +66,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .secondary{
     padding: 20rpx;
     .oneContent{
