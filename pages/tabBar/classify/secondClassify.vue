@@ -29,7 +29,7 @@
                         </template>
                     </div>
                     <div class="dbColumn" v-if="activeObj.goodsShowType === 0 || activeObj.goodsShowType === 1">
-                        <div v-for="_ in rightList" :key="_.id" class="imgContent">
+                        <div v-for="_ in rightList" :key="_.id" class="imgContent" @click="onClickDetails(_.id)">
                             <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
                             <img class="longImg" v-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
                             <div class="txt_center">{{_.imgTitle}}</div>

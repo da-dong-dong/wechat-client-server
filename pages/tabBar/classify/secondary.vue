@@ -1,7 +1,7 @@
 <template>
     <div class="secondary">
         <div class="oneContent" v-if="data.goodsShowType === 2 || data.goodsShowType === 3">
-            <div class="oneRow" v-for="_ in rightList" :key="_.id">
+            <div class="oneRow" v-for="_ in rightList" :key="_.id" @click="onClickDetails(_.id)">
                 <img class="h110" v-if="data.goodsShowType === 2" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 3" :src="_.coverPhoto" alt="">
                 <div class="title" v-if="data.showName === 1">{{_.imgTitle}}</div>
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="twoContent" v-if="data.goodsShowType === 0 || data.goodsShowType === 1">
-            <div class="oneRow" v-for="_ in rightList" :key="_.id">
+            <div class="oneRow" v-for="_ in rightList" :key="_.id" @click="onClickDetails(_.id)">
                 <img class="h110" v-if="data.goodsShowType === 0" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 1" :src="_.coverPhoto" alt="">
                 <div class="title" v-if="data.showName === 1">{{_.imgTitle}}</div>
@@ -45,6 +45,12 @@ export default {
         this.getMaAssemblyOnlineTitle(options.id)
     },
     methods: {
+        // 跳转详情
+        onClickDetails(idx){
+            uni.navigateTo({ 
+                url: '/pages/tabBar/classify/newDetail?id=' + idx
+            })
+        },
         getMaAssemblyOnlineTitle(assemblyOnlineCategoryId){
             let param ={
                 shopId: this.get_shopId.shopId,
@@ -54,10 +60,14 @@ export default {
                 page: 1
             }
             getMaAssemblyOnlineTitle(param).then(res=>{
+                console.log(res)
                 if(!res.data.data){
                     this.rightList = []
                     return 
                 }
+                uni.setNavigationBarTitle({
+                    title: res.data.data.category.name
+                })
                 this.rightList = res.data.data.list.records
                 this.data = res.data.data.category
             })
@@ -66,7 +76,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .secondary{
     padding: 20rpx;
     .oneContent{

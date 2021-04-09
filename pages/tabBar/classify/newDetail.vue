@@ -85,8 +85,10 @@ export default {
                 this.listDetai = data
                 this.topCarouseList = data.topCarouseList
                 this.detailPhotoList = data.detailPhotoList
+                uni.setNavigationBarTitle({
+                    title: res.data.data.imgTitle
+                })
                 getPropelDetail(Object.assign({propel: data.propel}, param)).then(res => {
-                    console.log(res)
                     this.recommendList = res.data.data
                 })
             })
@@ -95,7 +97,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .h200{
     width: 100%;
     height: 520rpx;
