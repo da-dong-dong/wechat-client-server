@@ -35,12 +35,12 @@
 				</view>
 			</view>
 			<!-- 两列图 -->
-			<view v-if="item.type === 'double'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat','padding':'0rpx 20rpx 20rpx 20rpx' }">
+			<view v-if="item.type === 'double'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat','padding':'10rpx 20rpx 20rpx 20rpx' }">
 				<view v-if="!item.data.titleRow.hiddenTitle" class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
-				<view class="flex rowFlexDouble" :class="!item.data.titleRow.hiddenTitle && i!==1 ?'':'paddingT5'" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+				<view class="flex rowFlexDouble" :class="item.data.titleRow.hiddenTitle?'paddingT5':''" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
 					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
 			</view>
@@ -311,7 +311,7 @@ const entriData = uni.getExtConfigSync()
     }
 }
 .homeContent .paddingT5{
-	padding-top: 2%;
+	padding-top: 10rpx;
 }
 .homeContent .paddingT10{
 	padding-top: 20rpx;

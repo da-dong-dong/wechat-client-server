@@ -98,7 +98,7 @@
 
             <!-- 展示 -->
             <view v-if="Index == 0?true:false" class="showTab padding10">
-                <image mode='widthFix'  class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
+                <image mode='widthFix' class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
             </view>
 
             <view v-else>
@@ -279,7 +279,6 @@ import { getAssemblyDescription } from '@/util/api/user.js'
         box-sizing: content-box;
         .marginB10{
             margin-bottom: -8rpx;
-            vertical-align: bottom;
         }
     }
 }
