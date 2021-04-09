@@ -28,7 +28,7 @@
                     <img class="h80" :src="_.coverPhoto" alt="">
                     <div class="flex_1 pad_rl10">
                         <div class="font600">{{_.name}}</div>
-                        <!-- <div>好物商品大牌礼赠</div> -->
+                        <div>{{_.imgIntroduction}}</div>
                         <div class="price">
                             ￥ {{_.assemblyPrice}}
                             <span class="goPhoto" @click="onClickDetails(_.id)">去拍摄</span>
@@ -98,7 +98,7 @@ export default {
 <style lang="less" scoped>
 .h200{
     width: 100%;
-    height: 500rpx;
+    height: 520rpx;
 }
 .title_tag{
     padding: 40rpx;

@@ -13,11 +13,7 @@
                 </view>
                 <!-- 右侧 -->
                 <view class="right_box">
-                    <!-- <view class="right_li textC padding5 marginRL10 "  v-for="(item) in rightList" :key="item.id" @click="onClickDetails(item.id)">
-                        <image class="img" :src="`${item.coverPhoto}?resize,w_300`"></image>
-                        <view class="fontSize24 fontWight color000">{{item.assemblyName}}</view>
-                    </view> -->
-                    <swiper class="swiper" indicator-dots v-if="carouselList.length > 0">
+                    <swiper class="swiper h150" indicator-dots v-if="carouselList.length > 0">
                         <swiper-item v-for="_ in carouselList" :key="_">
                             <view class="swiper-item uni-bg-red flex">
                                 <img class="h150" :src="_.src" alt="">
@@ -42,11 +38,6 @@
                                 <span class="iconfont icon1202youjiantou gt_icon"></span>
                             </div>
                         </div>
-                        <!-- <div v-for="_ in [1,2,3,4]" :key="_" class="imgContent">
-                            <img class="img" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=117402550,3524737531&fm=26&gp=0.jpg" alt="">
-                            <img class="longImg" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=117402550,3524737531&fm=26&gp=0.jpg" alt="">
-                            <div class="txt_center">精选系列</div>
-                        </div> -->
                     </div>
                 </view>
             </view>
@@ -229,21 +220,11 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         height: 100%;
         flex-wrap: wrap;
         padding: 20rpx;
-        .right_li{
-            width: 236rpx;
-            height: 276rpx;
-            margin-bottom: 20rpx;
-            .img{
-                width: 236rpx;
-                height: 236rpx;
-                border-radius: 20rpx;
-                vertical-align: bottom;
-            }
-        }
+        box-sizing: border-box;
     }
 }
 .h150{
-	height: 300rpx;
+	height: 320rpx;
 }
 .smallRectangle{
     margin-top: 20rpx;
@@ -261,7 +242,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
     }
 }
 .dbColumn{
-    margin-top: 20rpx;
+    margin-top: 10rpx;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -290,27 +271,8 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         }
         .longImg{
             width: 100%;
-            height: 320rpx;
+            height: 350rpx;
             vertical-align: bottom;
-        }
-    }
-    .imgContent{
-        width: 250rpx;
-        border-bottom-left-radius: 8rpx;
-        border-bottom-right-radius: 8rpx;
-        margin-bottom: 10rpx;
-        .img{
-            width: 100%;
-            height: 250rpx;
-            vertical-align: bottom;
-        }
-        .longImg{
-            width: 100%;
-            height: 320rpx;
-            vertical-align: bottom;
-        }
-        .txt_center{
-            text-align: center;
         }
     }
 }

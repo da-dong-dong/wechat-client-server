@@ -75,11 +75,11 @@ export default {
         }
         .h110{
             width: 100%;
-            height: 220rpx;
+            height: 242rpx;
         }
         .h200{
             width: 100%;
-            height: 400rpx;
+            height: 490rpx;
         }
     }
     .twoContent{
@@ -92,11 +92,11 @@ export default {
         }
         .h110{
             width: 100%;
-            height: 220rpx;
+            height: 340rpx;
         }
         .h200{
             width: 100%;
-            height: 400rpx;
+            height: 486rpx;
         }
     }
 }

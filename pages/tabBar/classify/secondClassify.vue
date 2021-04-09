@@ -6,17 +6,13 @@
                 <!-- 左侧 -->
                 <view class="left_box textC">
                     <view class="fixed">
-                        <view class="paddingTB20 fontSize26" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.name" @click="onClickTab(item.id)">
+                        <view class="paddingTB20 fontSize26" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
                             {{item.name}}
                         </view>
                     </view>
                 </view>
                 <!-- 右侧 -->
                 <view class="right_box">
-                    <!-- <view class="right_li textC padding5 marginRL10 "  v-for="(item) in rightList" :key="item.id" @click="onClickDetails(item.id)">
-                        <image class="img" :src="`${item.coverPhoto}?resize,w_300`"></image>
-                        <view class="fontSize24 fontWight color000">{{item.assemblyName}}</view>
-                    </view> -->
                     <swiper class="swiper" indicator-dots v-if="carouselList.length > 0">
                         <swiper-item v-for="_ in carouselList" :key="_">
                             <view class="swiper-item uni-bg-red flex">
@@ -33,15 +29,6 @@
                         </template>
                     </div>
                     <div class="dbColumn" v-if="activeObj.goodsShowType === 0 || activeObj.goodsShowType === 1">
-                        <!-- <div v-for="_ in rightList" :key="_.id" class="oneContent" @click="onClickDetails(_.id)">
-                            <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
-                            <img class="longImg" v-else-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
-                            <div v-if="activeObj.showName === 1" class="title">{{_.assemblyName}}</div>
-                            <div v-if="activeObj.showExtend === 1" class="price">
-                                ￥{{_.assemblyPrice}}
-                                <span class="iconfont icon1202youjiantou gt_icon"></span>
-                            </div>
-                        </div> -->
                         <div v-for="_ in rightList" :key="_.id" class="imgContent">
                             <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
                             <img class="longImg" v-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
@@ -151,7 +138,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
             onClickTab(id){
                 this.id = id
                 this.rightList = [];
-                this.getListAssemblyOnlineCategory()
+                this.getMaAssemblyOnlineTitle()
             },
 
             // 跳转详情
@@ -217,33 +204,23 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         height: 100%;
         flex-wrap: wrap;
         padding: 20rpx;
-        .right_li{
-            width: 236rpx;
-            height: 276rpx;
-            margin-bottom: 20rpx;
-            .img{
-                width: 236rpx;
-                height: 236rpx;
-                border-radius: 20rpx;
-                vertical-align: bottom;
-            }
-        }
+        box-sizing: border-box;
     }
 }
 .h150{
-	height: 300rpx;
+	height: 320rpx;
 }
 .smallRectangle{
-    margin-top: 20rpx;
+    margin-top: 10rpx;
     display: flex;
     flex-direction: column;
     .h110{
-        height: 220rpx;
+        height: 174rpx;
         width: 100%;
         margin-bottom: 10rpx;
     }
     .h200{
-        height: 400rpx;
+        height: 352rpx;
         width: 100%;
         margin-bottom: 10rpx;
     }
@@ -265,23 +242,6 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         float: right;
         color: #D4AD72;
     }
-    .oneContent{
-        width: 250rpx;
-        background: #f5f5f5;
-        border-bottom-left-radius: 8rpx;
-        border-bottom-right-radius: 8rpx;
-        margin-bottom: 10rpx;
-        .img{
-            width: 100%;
-            height: 250rpx;
-            vertical-align: bottom;
-        }
-        .longImg{
-            width: 100%;
-            height: 320rpx;
-            vertical-align: bottom;
-        }
-    }
     .imgContent{
         width: 250rpx;
         border-bottom-left-radius: 8rpx;
@@ -294,7 +254,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         }
         .longImg{
             width: 100%;
-            height: 320rpx;
+            height: 350rpx;
             vertical-align: bottom;
         }
         .txt_center{
