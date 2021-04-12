@@ -118,7 +118,7 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
             
             // 时间
             bindDateChange (e, item) {
-				this.userInfo.birthday = new Date(e.target.value)
+				this.userInfo.birthday = new Date(e.target.value).getTime()
             },
 
              // 获取选择的地区

@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
+// 导航栏
+import tabBar from './components/tabBar.vue'
 
 // 全局使用stroe
 Vue.prototype.$store = store;
 
 Vue.config.productionTip = false
+
+// 导入导航栏组件
+Vue.component('tabBar', tabBar)
 
 App.mpType = 'app'
 

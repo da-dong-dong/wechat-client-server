@@ -19,7 +19,7 @@
 				</swiper>
 			</view>
 			<view v-if="item.type === 'oneImg'" :style="{ 'background-color': item.data.bgColor }">
-				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.linkData)">
+				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.data.linkData)">
 			</view>
 			<view class="btnContent" v-if="item.type === 'moreBtn'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
 				<img class="imgOne" :src="_.src" alt="" v-for="(_, _index) in item.data.imgs" :key="_index" @click="turnDetail(_.linkData)">
@@ -71,8 +71,12 @@
                 <img src="/static/image/userCall.png" alt="">
             </button>
         </view> -->
+		
         <!-- 弹窗 -->
         <i-message id="message" />
+
+		<!-- 底部导航 -->
+		<tabBar :index="1"></tabBar>
     </view>
 </template>
 

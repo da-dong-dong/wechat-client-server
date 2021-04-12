@@ -12,8 +12,8 @@
             {{listDetai.imgTitle}}
         </div>
         <div>
-            <span class="tag">
-                日系    
+            <span class="tag" v-for="(_, i) in imagesLabel" :key="i" style="margin-right: 8rpx;">
+                {{_}}    
             </span>
         </div>
     </div>
@@ -56,6 +56,7 @@ export default {
             topCarouseList: [],
             detailPhotoList: [],
             recommendList: [],
+            imagesLabel: [],
             listDetai: {}
         }
     },
@@ -85,6 +86,7 @@ export default {
                 this.listDetai = data
                 this.topCarouseList = data.topCarouseList
                 this.detailPhotoList = data.detailPhotoList
+                this.imagesLabel = data.imagesLabel && data.imagesLabel.split(',')
                 uni.setNavigationBarTitle({
                     title: res.data.data.imgTitle
                 })

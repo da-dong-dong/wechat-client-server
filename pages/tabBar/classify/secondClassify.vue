@@ -14,7 +14,7 @@
                 <!-- 右侧 -->
                 <view class="right_box">
                     <swiper class="swiper" indicator-dots v-if="carouselList.length > 0">
-                        <swiper-item v-for="_ in carouselList" :key="_">
+                        <swiper-item v-for="_ in carouselList" :key="_" @click="turnDetail(_)">
                             <view class="swiper-item uni-bg-red flex">
                                 <img class="h150" :src="_.src" alt="">
                             </view>
@@ -90,6 +90,41 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
             //this.getListAssemblyOnlineCategory()
         },
         methods:{
+            turnDetail (data) {
+                return
+                if (!data.imgData) return
+				switch (data.imgData.type) {
+					case 'detail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/components/details?id=' + data.imgData.detailId 
+						})
+						break;
+					case 'classify':
+						uni.setStorage({
+							key: 'classId',
+							data: data.imgData.detailId
+						})
+						uni.switchTab({
+                            url:'/pages/tabBar/classify/classify'
+                        })
+						break;
+						case 'imgDetail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/newDetail?id=' + data.imgData.detailId 
+						})
+						break;
+					case 'imgTow':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondary?id=' + data.imgData.detailId 
+                        })
+						break;
+					case 'imgClassify':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondClassify?id=' + data.imgData.detailId 
+                        })
+						break;
+				}
+			},
             // 获取套系类别列表
             getListAssemblyOnlineCategory(id){
                 let param ={
