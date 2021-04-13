@@ -8,16 +8,16 @@
 			<image class="icon icon2" :src="index===2?'/static/tabBar/classifySl.png':'/static/tabBar/classify.png'" mode=""></image>
 			<view class="text">分类</view>
 		</view>
-		<view class="list tabBarShoppingCart" @click="tabBarShoppingCart"  :class="index===4?'tabBarAction':null">
-			<image class="icon icon4" :src="index===4?'/static/tabBar/shoppingCartSl.png':'/static/tabBar/shoppingCart.png'" mode=""></image>
+		<view class="list tabBarShoppingCart" @click="tabBarShoppingCart"  :class="index===3?'tabBarAction':null">
+			<image class="icon icon4" :src="index===3?'/static/tabBar/shoppingCartSl.png':'/static/tabBar/shoppingCart.png'" mode=""></image>
 			<view class="text">购物车</view>
 		</view>
-        <view class="list tabBarOrder" @click="tabBarOrder"  :class="index===5?'tabBarAction':null">
-			<image class="icon icon4" :src="index===5?'/static/tabBar/orderSl.png':'/static/tabBar/order.png'" mode=""></image>
+        <view class="list tabBarOrder" @click="tabBarOrder"  :class="index===4?'tabBarAction':null">
+			<image class="icon icon4" :src="index===4?'/static/tabBar/orderSl.png':'/static/tabBar/order.png'" mode=""></image>
 			<view class="text">订单</view>
 		</view>
-		<view class="list tabBarMy" @click="tabBarMy"  :class="index===6?'tabBarAction':null">
-			<image class="icon icon5" :src="index===6?'/static/tabBar/mySl.png':'/static/tabBar/my.png'" mode=""></image>
+		<view class="list tabBarMy" @click="tabBarMy"  :class="index===5?'tabBarAction':null">
+			<image class="icon icon5" :src="index===5?'/static/tabBar/mySl.png':'/static/tabBar/my.png'" mode=""></image>
 			<view class="text">我的</view>
 		</view>
 	</view>
@@ -79,7 +79,7 @@
 		display: flex;
 		justify-content: space-around;
 		z-index: 2;
-        color: #333333;
+        color: #B6B6B6;
 		.list{
 			flex: 1;
 			display: flex;
@@ -107,7 +107,7 @@
 			}
 		}
 		.tabBarAction{
-			color: #34B9C0;
+			color: #3E3E3E;
 		}
 	}
 </style>

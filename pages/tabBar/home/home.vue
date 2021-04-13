@@ -1,6 +1,18 @@
 /******************************** 首页 ***************************************/
 <template>
     <view class="homeContent">
+		 
+		<!-- 顶部导航 -->
+		<uni-nav-bar fixed statusBar >
+			<view class="navText">北遇映画</view>
+			<view slot="left">
+				<view class="navCrt" @click="onChangeCity">
+					<view class="textOv">{{get_city}}</view>
+					<i-icon class="icon" type="unfold" size="20" color="#333333"  />
+				</view>
+			</view>
+		</uni-nav-bar>
+
         <view v-for="(item, index) in homeList" :key="index">
         	<view class="searchContent" v-if="item.type === 'search'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
 				<view class="uni-input" @click="turnSearch" :style="{ opacity: item.data.opacity/10 }">{{item.data.title}}</view>
@@ -71,7 +83,7 @@
                 <img src="/static/image/userCall.png" alt="">
             </button>
         </view> -->
-		
+
         <!-- 弹窗 -->
         <i-message id="message" />
 
@@ -83,10 +95,12 @@
 <script>
 import { getHomeData } from '@/util/api/home.js'
 const { $Message } = require('@/wxcomponents/base/index');
+import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 import { mapGetters } from 'vuex'
 const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
+		components: {uniNavBar},
 		data () {
 			return {
 				homeList: [],
@@ -104,7 +118,8 @@ const entriData = uni.getExtConfigSync()
 				'get_shopId'
 			]),
 			...mapGetters('map',[
-				'get_location'
+				'get_location',
+				'get_city'
 			])
 		},
         mounted(){
@@ -142,6 +157,10 @@ const entriData = uni.getExtConfigSync()
 				})
 			},
 
+			// 跳转城市选择
+			onChangeCity(){
+				uni.navigateTo({ url:'/pages/tabBar/home/components/cityList' })
+			},
 
 			turnShop () {
 				uni.navigateTo({ url:'/pages/tabBar/shoppingCart/components/changeRegion' })
@@ -234,6 +253,27 @@ const entriData = uni.getExtConfigSync()
 
 <style lang="scss" scoped>
 @import url('./icon.css');
+.navText{
+	width: 100%;
+	text-align: center;
+}
+.navCrt{
+	width: 130rpx;
+    border: 1rpx solid #D6D6D6;
+    border-radius: 50rpx;
+    height: 55rpx;
+    left: 60rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 10rpx;
+	.textOv{
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 90rpx;
+		overflow: hidden;
+	}
+}
 .homeContent{
 	font-size: 24rpx;
 }
@@ -361,4 +401,9 @@ const entriData = uni.getExtConfigSync()
     }
   }
 }
+.status_bar {
+      height: var(--status-bar-height);
+      width: 100%;
+	  background: #fff;
+  }
 </style>

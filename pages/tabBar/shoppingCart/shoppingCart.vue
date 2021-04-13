@@ -40,9 +40,11 @@
            
         </view>
         <!-- 购物车定位 -->
-        <buyCar type="car" @onQuick="onQuick"/>
+        <buyCar type="car" @onQuick="onQuick" :top="true"/>
         <!-- 弹窗 -->
         <i-message id="message" />
+        <!-- 底部导航 -->
+		<tabBar :index="3"></tabBar>
     </view>
 </template>
 

@@ -19,6 +19,9 @@
         </s-pull-scroll>
       <!-- 弹窗 -->
         <i-message id="message" />
+
+        <!-- 底部导航 -->
+		<tabBar :index="4"></tabBar>
     </view>
 </template>
 

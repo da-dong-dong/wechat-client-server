@@ -105,9 +105,7 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                 setPhoneNoInfo(param).then(res=>{
                     let code = res.data.code
                     if(code == 200){
-                        uni.switchTab({
-                            url:'/pages/tabBar/home/home'
-                        })
+                        uni.navigateBack()
                     }
                 })
             }

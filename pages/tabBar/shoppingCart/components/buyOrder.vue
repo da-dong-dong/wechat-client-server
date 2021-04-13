@@ -40,7 +40,7 @@
                 
                 <!-- 预约时间 -->
                 <view class="marginT10 carTimeBox marginB20">
-                    <view class="carTime  flex" @click="onChangeTime(item.id,index)">
+                    <view class="carTime  flex" @click="onChangeTime(item.id,index,item.shopId)">
                         <text class="paddingRL40">预约时间</text>
                         <view class="flex">
                             <text class="" v-if="item.times">{{item.times}} {{item.filesTime}}</text>
@@ -218,9 +218,9 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
             },
 
             // 修改预约时间
-            onChangeTime(id,index){
+            onChangeTime(id,index,shopId){
                 uni.navigateTo({ 
-                    url: `/pages/tabBar/shoppingCart/components/changeTime?id=${id}&index=${index}&orderType=${this.get_quickList[0].orderType}`
+                    url: `/pages/tabBar/shoppingCart/components/changeTime?id=${id}&index=${index}&orderType=${this.get_quickList[0].orderType}&shopId=${shopId}`
                 })
             },
 

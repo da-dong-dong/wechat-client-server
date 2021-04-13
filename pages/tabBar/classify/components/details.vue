@@ -16,7 +16,7 @@
         </view>
 
         <!-- 详细内容 -->
-        <view class="content_text paddingRL40 marginRL30 colorADAD">
+        <view class="content_text paddingRL40 marginRL30 colorADAD ">
             <!-- 定金 -->
             <view class="borderTop fontSize28" v-if="listDetai.enableDeposit">
                 <view class="flex paddingTB20 flexCenten">
@@ -90,14 +90,14 @@
         </view>
 
         <!-- 图片展示 -->
-        <view class="imgShow marginT10 marginRL30">
+        <view class="imgShow marginT10 marginRL30 marginB30 paddingB20">
             <!-- tab切换 -->
             <view class="imgTab flex fontSize24 textC marginB30">
                 <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">{{item}}</view>
             </view>
 
             <!-- 展示 -->
-            <view v-if="Index == 0?true:false" class="showTab padding10">
+            <view v-if="Index == 0?true:false" class="showTab padding20">
                 <image mode='widthFix'  class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
             </view>
 

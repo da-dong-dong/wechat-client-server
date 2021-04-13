@@ -35,7 +35,7 @@ const request = (url, options) => {
 						case 407: //登录超时
 							// cancaelRes = true
 							setTimeout(()=>{
-								uni.reLaunch({
+								uni.navigateTo({
 									url:'/pages/login/index'
 								})
 							},1000)

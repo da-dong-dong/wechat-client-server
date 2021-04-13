@@ -12,6 +12,7 @@
             </view>
             <view class="cityLi flex paddingTB20">
                 <text v-for="(item) in cityLi" :key="item" @click="onClickVla(item)">{{item}}</text>
+                <text @click="onChangeCity">更多</text>
             </view>
         </view>
 
@@ -79,6 +80,11 @@
                     }
                     
                 }); 
+            },
+
+            // 更换城市
+            onChangeCity(){
+                this.$emit('onChangeCity')
             },
 
             // 门店id

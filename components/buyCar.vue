@@ -2,7 +2,7 @@
 <template>
     <view>
         <view class="buyCar_Span"></view>
-        <view class="buyCar fixed flex paddingRL40">
+        <view class="buyCar fixed flex paddingRL40" :style="{'bottom':`${top?'140rpx':'0'}`}">
             <!-- 详情 -->
             <view class="car" v-if="type == 'details'" @click="goCar">
                 <i-icon class="icon" type="publishgoods_fill" size="30" color="#666666"  />
@@ -50,7 +50,7 @@
  import { mapGetters } from 'vuex'
 
     export default {
-        props:['type'],
+        props:['type','top'],
         data(){
             return{
                check:false
@@ -113,7 +113,7 @@
     width: 100%;
     height: 110rpx;
     background:#fff;
-    bottom: 0;
+    bottom:  0;
     left: 0;
     justify-content: space-between;
     align-items: center;

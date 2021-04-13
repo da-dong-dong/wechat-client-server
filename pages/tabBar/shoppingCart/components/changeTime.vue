@@ -4,13 +4,13 @@
         <!-- 时间组件 -->
         <changeTimes :dateDetail="dateDetail" @getDate="getDate" @enDate="enDate"/>
         <!-- 档期选择 -->
-        <view class="timeBox paddingRL40 ">
+        <view class="timeBox paddingRL40">
             <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view>
 
-            <view v-if="momeyTime">
+            <view v-if="momeyTime && !isVacation">
                 <view v-for="(item,index) in momeyTime" :key="index">
                     <view v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
-                        <view>{{item1.controlType |headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
+                        <view>{{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
                         <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
                             <view class="list" v-for="(index3) in item2['useTypographyNum']" :key="index3">
                                 <view class="listTime active">
@@ -97,7 +97,7 @@ import { getReservationDescription } from '@/util/api/user.js'
             this.id = options.id
             this.Index = options.index
             this.orderType =options.orderType
-            this.shopId = this.get_shopId.shopId
+            this.shopId = options.shopId
             // 档期协议
             this.mack() 
         },
@@ -114,6 +114,7 @@ import { getReservationDescription } from '@/util/api/user.js'
                 endTime:null, // 结束时间
                 startTime:null, // 开始时间
                 filesPrice:0, // 档期费
+                isVacation:true, // 是否休息日
                 // 存储
                 dataItem:'',
                 dataId:''
@@ -192,7 +193,8 @@ import { getReservationDescription } from '@/util/api/user.js'
                 let checkTime = new Date(this.pickerDate).getTime()-28800000
                 let list = this.dateDetail.filter(item=>item.operationTime == checkTime)
                 this.momeyTime = list[0].reservationGroupVos
-                console.log(this.momeyTime)
+                this.isVacation = list[0].isVacation
+                console.log(this.momeyTime,list[0])
             },
 
             // 预约服务

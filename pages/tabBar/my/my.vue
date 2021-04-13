@@ -69,6 +69,9 @@
         </view>
         <!-- 弹窗 -->
         <i-message id="message" />
+
+        <!-- 底部导航 -->
+		<tabBar :index="5"></tabBar>
     </view>
 </template>
 
