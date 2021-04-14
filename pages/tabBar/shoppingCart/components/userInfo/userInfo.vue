@@ -111,6 +111,7 @@ import { getUserInfo } from '@/util/api/user.js'
             }
             
 		},
+        
         methods:{
             ...mapActions('user',[
                 'act_nickName'

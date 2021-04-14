@@ -98,8 +98,10 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
                     timingFunc: 'easeIn'
                 }
             })
-
-            
+        },
+        onShow() {
+            // 路由返回触发更新
+            this.getUserInfoAPI()
         },
         data(){
             return{
@@ -219,7 +221,7 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
                     key: 'code',
                     success: (result) => {
                         clearInterval(getApp().globalData.time)
-                        uni.redirectTo({ 
+                        uni.navigateTo({ 
                             url: '/pages/login/index' 
                         })
                     },

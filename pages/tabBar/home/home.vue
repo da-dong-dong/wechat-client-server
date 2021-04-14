@@ -272,10 +272,12 @@ const entriData = uni.getExtConfigSync()
 		text-overflow: ellipsis;
 		width: 90rpx;
 		overflow: hidden;
+		font-size: 26rpx;
 	}
 }
 .homeContent{
 	font-size: 24rpx;
+	margin-bottom: 150rpx;
 }
 .searchContent{
     padding: 20rpx 20rpx;

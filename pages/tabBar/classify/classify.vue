@@ -197,6 +197,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
 }
 .classify{
     font-size: 28rpx;
+    margin-bottom: 130rpx;
     // 左侧
     .left_box{
         width: 200rpx;
