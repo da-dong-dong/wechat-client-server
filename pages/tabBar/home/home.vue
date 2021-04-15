@@ -4,7 +4,7 @@
 		 
 		<!-- 顶部导航 -->
 		<uni-nav-bar fixed statusBar >
-			<view class="navText">北遇映画</view>
+			<view class="navText">{{get_shopId.shopName}}</view>
 			<view slot="left">
 				<view class="navCrt" @click="onChangeCity">
 					<view class="textOv">{{get_city}}</view>
@@ -139,7 +139,7 @@ const entriData = uni.getExtConfigSync()
 				this.covers[0].latitude = latitude
 				this.covers[0].longitude = longitude
         },
-		 onLoad() {
+		onLoad() {
 			this.getHomeData()
 			
         },
@@ -200,6 +200,11 @@ const entriData = uni.getExtConfigSync()
                             url:'/pages/tabBar/classify/secondClassify?id=' + data.classifyId 
                         })
 						break;
+                    case 'feedBack':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/feedBack'
+                        })
+						break;
 				}
 			},
 			getHomeData () {
@@ -256,6 +261,7 @@ const entriData = uni.getExtConfigSync()
 .navText{
 	width: 100%;
 	text-align: center;
+	font-size: 26rpx;
 }
 .navCrt{
 	width: 130rpx;

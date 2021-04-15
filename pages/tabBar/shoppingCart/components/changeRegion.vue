@@ -131,8 +131,16 @@ const { $Message } = require('@/wxcomponents/base/index');
                 this.cityVal = val
                 if(val){
                     this.showShopIdList = this.get_shopIdList.filter(res=> {
+                            let listArr = false
                             if(res.city){
-                               return  res.city.includes(val)
+                                if(val.indexOf(res.city) != -1 || res.city.indexOf(val)!= -1){
+                                    listArr = true
+                                }else if(val.indexOf(res.area) != -1 || res.area.indexOf(val)!= -1){
+                                    listArr = true
+                                }else if(val.indexOf(res.province) != -1 || res.province.indexOf(val)!= -1){
+                                    listArr = true
+                                }
+                               return  listArr
                             }
                         })
                 }

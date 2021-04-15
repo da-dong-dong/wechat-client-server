@@ -66,7 +66,6 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
                 if (this.id) {
                     console.log(this.id);
                     let obj = this.leftList.filter(_ => _.id === this.id)[0]
-                    console.log(obj);
                     return (obj.slideshow && obj.slideshow.length) > 0 ? JSON.parse(obj.slideshow) : []
                 }
                 return []
@@ -86,17 +85,13 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         onLoad(){
             this.getListAssemblyOnlineCategory()
 		},
-        mounted(){
-            //this.getListAssemblyOnlineCategory()
-        },
         methods:{
             turnDetail (data) {
-                return
                 if (!data.imgData) return
 				switch (data.imgData.type) {
 					case 'detail':
 						uni.navigateTo({ 
-							url: '/pages/tabBar/classify/components/details?id=' + data.imgData.detailId 
+							url: '/pages/tabBar/classify/components/details?id=' + data.imgData.detailId
 						})
 						break;
 					case 'classify':
@@ -121,6 +116,11 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
 					case 'imgClassify':
 						uni.navigateTo({
                             url:'/pages/tabBar/classify/secondClassify?id=' + data.imgData.detailId 
+                        })
+						break;
+                    case 'feedBack':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/feedBack'
                         })
 						break;
 				}
@@ -150,22 +150,13 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
                 }
                 getMaAssemblyOnlineTitle(param).then(res=>{
                     if(!res.data.data){
-                        // $Message({
-                        //     content:'暂无数据',
-                        //     type: 'error'
-                        // });
                         this.rightList = []
-
                         return 
                     }
                     this.total = res.data.data.total
                     this.rightList = res.data.data.list.records
                     console.log(res)
                     console.log(this.rightList)
-					// const curList = res.data.data.records
-					// curList.forEach((i)=>{
-					// 	this.rightList.push(i)
-					// })
                 })
             },
 

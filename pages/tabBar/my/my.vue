@@ -51,13 +51,13 @@
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
-            <!-- <view class="user_seting_li flex paddingRL20">
+            <view class="user_seting_li flex paddingRL20" @click="onClickFeedBack">
                 <view class="flex">
                     <image class="img" src="/static/image/my/4.png"></image>
                     <text class="paddingL20">意见反馈</text>
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view> -->
+            </view>
 
             <view class="user_seting_li flex paddingRL20" @click="onClickOut">
                 <view class="flex">
@@ -157,8 +157,8 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
             // 获取用户信息AIP
             getUserInfoAPI(flag){
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area} = res.data.data
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
                     if(flag){
                         this.onClickUserInfo()
                     }
@@ -206,7 +206,11 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
                     url: '/pages/tabBar/my/components/changePassword' 
                 })
             },
-
+            onClickFeedBack () {
+                uni.navigateTo({
+                    url:'/pages/tabBar/classify/myFeedBack'
+                })
+            },
             // 服务协议
             onClickService(type){
                 uni.navigateTo({ 
@@ -215,14 +219,18 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
             },
 
             // 退出登陆
+            // 退出登陆
             onClickOut(){
                 console.log('退出')
                 uni.removeStorage({
                     key: 'code',
                     success: (result) => {
                         clearInterval(getApp().globalData.time)
-                        uni.navigateTo({ 
-                            url: '/pages/login/index' 
+                        let headimgUrl,nickName,phone,sex,birthday,province,city,area = null
+                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                        this.act_code(null)
+                        uni.reLaunch({ 
+                            url: '/pages/tabBar/home/home' 
                         })
                     },
                     fail: (error) => {}
@@ -258,7 +266,6 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
     margin: 0 auto;
     position: relative;
     top: -200rpx;
-    height: 712rpx;
     .user_seting_li{
         height: 130rpx;
         line-height: 130rpx;

@@ -30,6 +30,8 @@ let baseUrl = {
 	getListAssemblyOnlineCategory: `${base}/api/template/ma/list_assembly_online_category`, // 获取套系类别列表
 	getPageAssemblyOnline: `${base}/api/template/ma/page_assembly_online`, // 获取套系分页
 	getAssemblyOnlineDetail: `${base}/api/template/ma/get_assembly_online_detail`, // 获取套系详情
+	addFeedBackOne: `http://192.168.5.41:8000/api/feedback/addOne`, // 意见反馈-添加
+	getMyFeedBackList: `http://192.168.5.41:8000/api/feedback/list`, // 意见反馈-用户查看列表
 	
 	// 购物车
 	reservationPhotoDate: `${base}/api/template/ma/auth/reservation_photo_date`, // 获取预约拍照档期

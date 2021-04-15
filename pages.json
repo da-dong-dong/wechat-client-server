@@ -122,7 +122,19 @@
 				"navigationBarTitleText": "套系详情"
 			}
 		},
-
+		{
+			"path": "pages/tabBar/classify/feedBack",
+			"style": {
+				"navigationBarTitleText": "意见反馈"
+			}
+		},
+		{
+			"path": "pages/tabBar/classify/myFeedBack",
+			"style": {
+				"navigationBarTitleText": "我的意见反馈"
+			}
+		},
+		
 		//******************************** 购物车 ********************************
 		{
 			"path": "pages/tabBar/shoppingCart/shoppingCart",

@@ -108,16 +108,14 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                     if(code == 200){
                         // 判断路由返回当前页面
                         let pages = getCurrentPages();
-                        console.log(pages)
                         for(let i=pages.length-1;i>=0;i--){
                             if(pages[i].route !== 'pages/login/index'){
                                 route = pages[i].route
                                 break
                             } 
                         }
-                        console.log(route)
                         // 判断是否是导航栏
-                        if(route.indexOf("components/buyOrder") != -1){
+                        if(route.indexOf("components/buyOrder") != -1 || route.indexOf("classify/feedBack") != -1 ){
                             uni.navigateTo({ 
                                 url: `/${route}`
                             })

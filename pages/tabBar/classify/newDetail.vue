@@ -111,6 +111,7 @@ export default {
 .detail_content{
     background: #f5f5f5;
     min-height: 100vh;
+    padding-bottom: 12rpx;
 }
 .recommendContent{
     width: 700rpx;
@@ -136,12 +137,16 @@ export default {
 }
 .examples{
     text-align: center;
+    margin-bottom: 10rpx;
 }
 .moreContent{
     width: 700rpx;
-    padding: 10rpx;
+    padding: 18rpx;
     height: 100%;
     margin: 0 auto;
+    background: #fff;
+    box-sizing: border-box;
+    border-radius: 10rpx;
     .img{
         width: 100%;
         height: 100%;

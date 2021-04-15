@@ -93,6 +93,31 @@ import { listCategory, order, orders } from '@/util/api/goods.js'
             // 档期类别
             this.listCategory()
         },
+        onUnload(){
+            console.log('aa')
+            let pages = getCurrentPages();
+            let backNum = 0
+            let backFlag = false; // 记录是否跳过登录页
+            for(let i=pages.length-1;i>=0;i--){
+                console.log(pages[i].route)
+                if(pages[i].route === 'pages/tabBar/classify/components/details'){
+                    break
+                } 
+                backNum++
+            }
+            //上一个页面
+            if(pages[pages.length - 2].route === 'pages/login/index'){
+                backFlag = true
+            }else{
+                backFlag = false
+            } 
+            if(backFlag){
+                uni.navigateBack({//返回
+                    delta: backNum
+                })
+            }
+           
+        },
         data(){
             return{
                 // 宝宝
