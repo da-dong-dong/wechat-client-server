@@ -239,7 +239,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         margin-bottom: 10rpx;
     }
     .h200{
-        height: 400rpx;
+        height: 350rpx;
         width: 100%;
         margin-bottom: 10rpx;
     }
@@ -274,7 +274,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         }
         .longImg{
             width: 100%;
-            height: 350rpx;
+            height: 300rpx;
             vertical-align: bottom;
         }
     }

@@ -69,7 +69,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
 }
 .brandList{
     width: 100%;
-    height: 400rpx;
+    height: 362rpx;
     border-radius: 20rpx;
     box-sizing: border-box;
     background-size: 100% 100%;
@@ -78,7 +78,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
        display: inline-block; 
     }
     .brandListText{
-        padding-top: 280rpx;
+        padding-top: 230rpx;
         color: #fff;
         text-align: center;
     }

@@ -289,7 +289,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         }
         .longImg{
             width: 100%;
-            height: 350rpx;
+            height: 300rpx;
             vertical-align: bottom;
         }
         .txt_center{
