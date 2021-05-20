@@ -2,17 +2,17 @@
 <template>
     <view>
         <view class="buyCar_Span"></view>
-        <view class="buyCar fixed flex paddingRL40">
+        <view class="buyCar fixed flex paddingRL40" :style="{'bottom':`${top?'140rpx':'0'}`}">
             <!-- 详情 -->
             <view class="car" v-if="type == 'details'" @click="goCar">
                 <i-icon class="icon" type="publishgoods_fill" size="30" color="#666666"  />
                 <view>购物车</view>
-                <text class="num colorRed">{{get_carList.length}}</text>
+                <text class="num">{{get_carList.length}}</text>
             </view>
 
             <view class="but flex" v-if="type == 'details'">
                 <view class="but_cl marginRL10" @click="addCar">加入购物车</view>
-                <view class="but_cl " @click="onQuick">立刻预约</view>
+                <view class="but_cl " style="background:#D3AA72" @click="onQuick">立刻预约</view>
             </view>
             
             <!-- 购物车 -->
@@ -50,7 +50,7 @@
  import { mapGetters } from 'vuex'
 
     export default {
-        props:['type'],
+        props:['type','top'],
         data(){
             return{
                check:false
@@ -66,14 +66,14 @@
             // 展示购物车价格
             showPrice(){
                 let num = 0;
-                this.get_carList.map(item=>num+=item.price+Number(item.filesPrice))
+                this.get_carList.map(item=>num+=item.assemblyDeposit+Number(item.filesPrice))
                 return num
             },
 
             // 展示立刻价格
             showPriceQuick(){
                 let num = 0;
-                this.get_quickList.map(item=>num+=item.price+Number(item.filesPrice))
+                this.get_quickList.map(item=>num+=item.assemblyDeposit+Number(item.filesPrice))
                 return num
             }
         },
@@ -90,7 +90,7 @@
 
             // 付款页面
             onQuick(){
-                this.$emit('onQuick')
+               this.$emit('onQuick')
             },
 
             // 跳转服务协议
@@ -113,7 +113,7 @@
     width: 100%;
     height: 110rpx;
     background:#fff;
-    bottom: 0;
+    bottom:  0;
     left: 0;
     justify-content: space-between;
     align-items: center;
@@ -125,21 +125,30 @@
             position: absolute;
             top: 0;
             right: 10rpx;
+            background: #D6A972;
+            border-radius: 50%;
+            width: 25rpx;
+            height: 25rpx;
+            font-size: 18rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 25rpx;
+            padding: 5rpx;
         }
     }
     .but{
-        width: 320rpx;
+        width: 400rpx;
         justify-content: flex-end;
         align-items: center;
         .but_cl{
-            width: 160rpx;
+            width: 190rpx;
             height: 64rpx;
             line-height: 64rpx;
             text-align: center;
             color: #fff;
             font-size: 28rpx;
             border-radius: 40rpx;
-            background: linear-gradient(270deg, #FF4852 0%, #FF6D75 100%);
+            background: linear-gradient(270deg, #413F40 0%, #413F40 100%);
             box-sizing: border-box;
         }
     }

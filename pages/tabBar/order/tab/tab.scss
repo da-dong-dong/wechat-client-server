@@ -72,13 +72,15 @@
         box-sizing: border-box;
         text-align: center;
         line-height: 76rpx;
-        &:nth-child(1){
-            border: 1rpx solid #666666;
-            color: #666666;
-        }
-        &:nth-child(2){
-            border: 1rpx solid #FF4852;
-           color: #FF4852;
-        }
+        
+        
+    }
+    .noOrder_btn1{
+        border: 1rpx solid #666666;
+        color: #666666;
+    }
+    .noOrder_btn2{
+        border: 1rpx solid #FF4852;
+       color: #FF4852;
     }
 }

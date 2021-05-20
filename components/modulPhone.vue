@@ -2,8 +2,9 @@
 <template>
 	<view class="bigBox">
 		<view class="box">
-			<view class="text">确认拨打电话</view>
-			<view class="text_blue">{{phone}}</view>
+			<view class="text ">{{type==='phone'?'拨打电话':'档期协议'}}</view>
+			<view class="textC marginB20" v-if="type === 'phone'" >{{phone}}</view>
+			<view v-else style="height:500rpx;overflow: auto;" class="fontSize28 marginB20"><view class="paddingRL40" v-html="phone"></view></view>
 			<view class="but">
 				<view class="cancel" @click="cancel">取消</view>
 				<view class="ok" @click="ok">确定</view>
@@ -14,7 +15,7 @@
 
 <script>
 	export default {
-		props:['phone'],
+		props:['phone','type'],
 		data() {
 			return {
 				

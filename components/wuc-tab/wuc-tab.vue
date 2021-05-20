@@ -123,7 +123,7 @@ swiper {
         width: 50rpx;
         height: 100%;
         border-radius: 20rpx;
-        background: #FF4852;
+        background: #D3AB75;
         &:nth-child(1){
             margin-right: 10rpx;
         }
@@ -140,7 +140,9 @@ swiper {
 	z-index: 1024;
 	box-shadow: 0 1upx 6upx rgba(0, 0, 0, 0.1);
 }
-
+.wuc-tab{
+    background: #fff;
+}
 .flex {
     display: flex;
 }
@@ -151,7 +153,7 @@ swiper {
     flex: 1;
 }
 .text-blue{
-  color:#FF4852;
+  color:#D3AB75;
 }
 .text-white{
   color:#ffffff;

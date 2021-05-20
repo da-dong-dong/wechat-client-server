@@ -1,16 +1,17 @@
 <template>
     <view class="order_box">
         <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange"></wuc-tab>
-        <swiper class="swiper_group"  :style="{height:scrollHeight+'px'}" :current="TabCur"   :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
-            <swiper-item  v-for="(item,index) in tabList" :key="index">
-                <orederDetails :orderId="orderId" class="swiper_0" v-if="item.path == 'details'"/>
-                <orederProgress :orderId="orderId" class="swiper_1" v-if="item.path == 'progress'"/>
-                <orederOnlineSign class="swiper_2" v-if="item.path == 'onlinesign'"/>
-                <!-- <orederPhoto class="swiper_2" v-if="item.path == 'photo'"/>
-                <orederPhotoDown class="swiper_3" v-if="item.path == 'down'"/>
-                <orederEvaluate class="swiper_4" v-if="item.path == 'evaluate'"/> -->
-            </swiper-item>
-      </swiper>
+        <!-- <view>
+            <orederDetails v-if="TabCur === 0" :orderId="orderId" class="swiper_0" />
+            <orederProgress v-if="TabCur === 1" :orderId="orderId" class="swiper_1" />
+            <orederOnlineSign ref="orderSign" v-if="TabCur === 2" :orderId="orderId" class="swiper_2" />
+        </view> -->
+        <view class="order_content">
+            <neworederDetails v-if="TabCur === 0" :orderId="orderId" class="swiper_0" />
+            <neworderProgress v-if="TabCur === 1" :orderId="orderId" class="swiper_1"/>
+            <!-- <neworderSignture v-if="TabCur === 2" :orderId="orderId" class="swiper_2"/> -->
+            <orederOnlineSign ref="orderSign" v-if="TabCur === 2" :orderId="orderId" class="swiper_2" />
+        </view>
        <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -19,18 +20,32 @@
 <script>
 import WucTab from '@/components/wuc-tab/wuc-tab.vue';
 import orederDetails from './tab/order-details.vue';
+import neworederDetails from './detail/order-detail.vue';
 import orederEvaluate from './tab/order-evaluate.vue';
 import orederPhoto from './tab/order-photo.vue';
 import orederPhotoDown from './tab/order-photo-down.vue';
 import orederOnlineSign from './tab/order-online-sign.vue';
 import orederProgress from './tab/order-progress.vue';
+import neworderProgress from './detail/order-progress.vue'
+import neworderSignture from './detail/order-signture.vue'
     export default {
-        components: { WucTab, orederDetails,orederEvaluate,orederPhoto,orederPhotoDown,orederProgress,orederOnlineSign},
+        components: {
+            WucTab,
+            orederDetails,
+            neworederDetails,
+            orederEvaluate,
+            orederPhoto,
+            orederPhotoDown,
+            orederProgress,
+            orederOnlineSign,
+            neworderProgress,
+            neworderSignture
+        },
         data() {
             return {
                 orderId:null,// 订单id
                 scrollHeight:null, // 高度
-                TabCur: 0,
+                TabCur: null,
                 tabList: [
                     { name: '详情',path: "details" }, 
                     { name: '进度',path: "progress" },
@@ -42,6 +57,7 @@ import orederProgress from './tab/order-progress.vue';
         },
         onLoad(options) {
             this.orderId = options.id
+            this.TabCur = 1
         },
          mounted(){
            this.getHtight(this.TabCur)
@@ -81,9 +97,15 @@ import orederProgress from './tab/order-progress.vue';
     flex:1;
     display: flex;
     flex-direction: column;
-    background: #F5F8FD;
+    // background: #F5F8FD;
+    background: #F9F9F9;
+    height: 100vh;
+    overflow: auto;
     .swiper_group{
         flex: 1;
+    }
+    .order_content{
+        padding: 20rpx;
     }
 }
 .swiper{

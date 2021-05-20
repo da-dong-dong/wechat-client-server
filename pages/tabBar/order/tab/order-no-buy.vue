@@ -2,7 +2,7 @@
 <template>
     <view>
       <view class="paddingRL20">
-            <view class="showList" v-if="get_carList.length">
+            <view class="showList" v-if="get_carList">
                 <view class="carBuyList"  v-for="(item,index) in get_carList" :key="index">
                     <view class="carLi marginB10 padding30">
                         <view class="carTop flex paddingB20 marginB30">
@@ -11,14 +11,15 @@
                                 
                                 <i-icon class="icon" type="time" size="20" color="#FF4852"  />
                                 <out-time class="fontWight paddingRL10 colorRed" :endtime="item.orderTime" />
-                                <text class="fontWight colorRed">待付款</text>
+                                
                             </view>
                             <view v-else>
                                 <text class="fontWight paddingRL10 colorRed">{{item.state}}</text>
                             </view>
                         </view>
-                        <view class="carData flex marginB30 bottb paddingB20">
-                            <image class="img" :src="item.coverPoto"></image>
+                        <!-- 跳转详情 -->
+                        <view class="carData flex marginB30 bottb paddingB20" @click="onClickDetails(item.id)">
+                            <image class="img" :src="item.coverPhoto"></image>
                             <view class="carData_text">
                                 <view class="flex fontSize30">
                                     <text class="color000">{{item.assemblyName}}</text>
@@ -35,7 +36,7 @@
                             <view class="marginT10 marginB30 carTimeBox color333" v-for="(item1,index1) in item['reservationPhotoInfoVos']" :key="index1">
                                 <view class="carTime marginB20 flex">
                                     <text class="fontSize30">预约门店：</text>
-                                    <text class="paddingL20">{{item1.reservationShopId}}</text>
+                                    <text class="paddingL20">{{item1.reservationShopId | shopID(get_shopIdList)}}</text>
                                 </view>
                                 <view class="carTime marginB20 flex">
                                     <text class="fontSize30">预约时间：</text>
@@ -70,21 +71,29 @@
 
                         <!-- 合计 -->
                         <view class=" flex marginB30 paddingB20 bottb">
-                            <view class="flex textCont">
+                            <view class="fontSize24 flex textCont" style="justify-content: space-between">
+                                <text>订单时间：{{item.orderTime | times}}</text>
                                 <text class="fontSize24 color333">合计：<text class="colorRed fontWight">￥{{item.sumPrice + item.schedulePrice}}</text></text>
                             </view>
                         </view>
 
-                        <!-- 未支付 -->
-                        <view class="noOrder flex " v-if="!item.state">
-                            <view class="flex">
-                                <view class="noOrder_btn marginR30">取消订单</view>
-                                <view class="marginRL10 noOrder_btn">立刻支付</view>
+                        <!-- 已关闭 -->
+                        <view v-if="!item.isClose">
+                            <!-- 未支付 -->
+                            <view class="noOrder flex " v-if="!item.state">
+                                <view class="flex">
+                                    <view class="noOrder_btn noOrder_btn1 marginR30" @click="onOrderClose(item.id)" v-if="item.isOnline">取消订单</view>
+                                    <view class="marginRL10 noOrder_btn2 noOrder_btn" @click="onBuy(item.id)">立刻支付</view>
+                                </view>
+                            </view>
+                            <view class="noOrder flex " v-if="item.state">
+                                <view class="noOrder_btn noOrder_btn1" @click="onClickDetails(item.id)">查看详情</view>
                             </view>
                         </view>
-                        <view class="noOrder flex " v-if="item.state">
-                           <view class="noOrder_btn" @click="onClickDetails(item.id)">查看详情</view>
+                        <view class="noOrder flex" v-else>
+                            <view class="noOrder_btn noOrder_btn1" >已关闭</view>
                         </view>
+                        
                     </view>
                     
                     
@@ -102,40 +111,28 @@
 
 <script> 
 import outTime from '../components/outTime';
+import { mapGetters } from 'vuex'
     export default {
         props:['get_carList'],
+        filters:{
+            // 测试
+            shopID(val,shopId){
+                let text = '';
+                text =  shopId.filter(item=>item.shopId == val)
+                return text[0].shopName
+            }
+        },
         components: { outTime},
         computed:{
-
+            ...mapGetters('map',[
+				'get_shopIdList'
+			]),
         },
          mounted(){
         },
         data(){
             return{
-                // get_carList:[
-                //     {
-                //         id:201001001,
-                //         name:'889宝宝照',
-                //         price:8889,
-                //         imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                //         times:'2020-10-18',
-                //         filesTime:'16:00',
-                //         filesPrice:'123',
-                //         noOrder:true,
-                //         endTime:'1612575880000'
-                //     },
-                //      {
-                //         id:201001001,
-                //         name:'889宝宝照',
-                //         price:8889,
-                //         imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                //         times:'2020-10-18',
-                //         filesTime:'16:00',
-                //         filesPrice:'123',
-                //         noOrder:true,
-                //         endTime:'1612489480000'
-                //     }
-                // ]
+                
             }
         },
         methods:{
@@ -144,6 +141,28 @@ import outTime from '../components/outTime';
                 uni.navigateTo({ 
                     url: `/pages/order/index?id=${id}`
                 })
+            },
+
+            // 立刻支付
+            onBuy(orderId){
+                // 取消订单接口
+                this.$emit('onBuy',orderId)
+                // uni.navigateToMiniProgram({
+                //     appId: jumpAppId?jumpAppId:'wx62d6b9c1cd4ba50a',
+                //     envVersion: 'trial', // develop（开发版），trial（体验版），release（正式版）
+                //     path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
+                //     extraData: outTradeNo,
+                //     success(res) {
+                //         // 返回成功
+                //         console.log(res)
+                //     }
+                // })
+            },
+
+            // 取消订单
+            onOrderClose(orderId){
+                // 取消订单接口
+                this.$emit('onOrderClose',orderId)
             }
         }
        

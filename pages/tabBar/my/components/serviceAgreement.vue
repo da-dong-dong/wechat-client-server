@@ -11,7 +11,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getAssemblyDescription,getReservationDescription } from '@/util/api/user.js'
+import { getAssemblyDescription, getAgreementDescription } from '@/util/api/user.js'
     export default {
         computed:{
 			...mapGetters('user',[
@@ -23,8 +23,14 @@ import { getAssemblyDescription,getReservationDescription } from '@/util/api/use
             this.type = options.type
             if(this.type=='setUp'){
                 this.setUp()
+                uni.setNavigationBarTitle({
+                    title: '服务说明'
+                })
             }else{
                 this.mack()
+                uni.setNavigationBarTitle({
+                    title: '协议说明'
+                })
             }
         },
         data(){
@@ -34,7 +40,7 @@ import { getAssemblyDescription,getReservationDescription } from '@/util/api/use
             }
         },
         methods:{
-            // 套系服务
+            // 预约服务
             setUp(){
                 let param = {
 					appId:this.get_appId,
@@ -45,13 +51,13 @@ import { getAssemblyDescription,getReservationDescription } from '@/util/api/use
                 })
             },
 
-            // 预约服务
+            // 协议说明
             mack(){
                 let param = {
 					appId:this.get_appId,
 					enterpriseId:this.get_enterpriseId
 				}
-                getReservationDescription(param).then(res=>{
+                getAgreementDescription(param).then(res=>{
                     this.testData = res.data.data
                 })
             },

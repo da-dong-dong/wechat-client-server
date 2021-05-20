@@ -1,8 +1,8 @@
 /******************************** 进度 ***************************************/
 <template>
-    <view class="order_box1">
+    <view class="order_box1" v-if="list">
         <!-- 头部 -->
-        <view class="progressTop">
+        <view class="progressTop" >
             <image class="img" src="/static/image/progress.png"></image>
             <view class="progressText fontSize24">
                 <view class="width fontSize36">
@@ -19,7 +19,7 @@
             </view>
         </view>
         <!-- 进度 -->
-        <view>
+        <view >
              <!-- 拍照 -->
             <view class="progressList  paddingRL40 flex fontSize24 color999">
                 <view class="time">{{list[0].photoUpdateTime?list[0].photoUpdateTime:''}}</view>
@@ -136,12 +136,6 @@ import { orderProcess } from '@/util/api/order.js'
                 }
                 return ''
             }
-        },
-        computed:{
-            // 过滤进度
-            // progress(vla,indx){
-            //     console.log(vla,indx)
-            // }
         },
         props:['orderId'],
         data(){

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view :src="url" @message="handleMessage" v-if="url"></web-view>
+		<!-- <web-view :src="url" @message="handleMessage" v-if="url"></web-view> -->
 	</view>
 </template>
 

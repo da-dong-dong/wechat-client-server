@@ -5,7 +5,7 @@
         <search  @onSearch="onSearch"/>
 
         <!-- 定位 -->
-        <city  :cityVal="cityVal" :barmd="get_barmd"  :showShopIdList="showShopIdList" @onSearch="onSearch" @onSetShopId="onSetShopId" @onChageBarmd="onChageBarmd"/>
+        <city  :cityVal="cityVal" :barmd="get_barmd"  :showShopIdList="showShopIdList" @onSearch="filterShop" @onSetShopId="onSetShopId" @onChageBarmd="onChageBarmd" @onChangeCity="onChangeCity"/>
         
         <!-- 弹窗 -->
         <i-message id="message" />
@@ -15,8 +15,7 @@
 <script>
 import search from '@/components/search.vue'
 import city from '@/components/city.vue'
-import amap from '@/util/lib/amap-wx.js'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 const { $Message } = require('@/wxcomponents/base/index');
     export default {
@@ -24,7 +23,7 @@ const { $Message } = require('@/wxcomponents/base/index');
 			...mapGetters('map',[
                 'get_shopIdList',
                 'get_city',
-                'get_barmd'
+                'get_barmd',
             ]),
            
         },
@@ -37,10 +36,18 @@ const { $Message } = require('@/wxcomponents/base/index');
             this.quick = options.quick
             this.id = options.id
             this.Index = options.index
+            this.changeCity = options.changeCity
         },
         mounted() {  
-            this.getMpa()
-            this.filterShop(this.get_city)
+            console.log(this.changeCity)
+            // 判断是否更改城市
+            if(this.changeCity === 'changeCity'){
+                this.filterShop(this.get_city)
+            }else{
+                // 显示品牌所有门店
+                this.showShopIdList = this.get_shopIdList
+            }
+            this.cityVal = this.get_city
         },  
         data(){
             return{
@@ -50,6 +57,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                 amapPlugin: null,
                 key: '1795a944cf2bc0fa0a47e22b1b67e6aa', // 高德key
                 cityVal: null, // 当前位置
+                changeCity: false, // 是否更改城市
                 showShopIdList: [], // 过滤后
             }
         },
@@ -62,23 +70,18 @@ const { $Message } = require('@/wxcomponents/base/index');
 				'mut_quickListUpDataShopId'
             ]),
 
+            ...mapMutations('map',[
+				'mut_city'
+            ]),
+
             // 搜索
             onSearch(val){
-                this.filterShop(val)
-            },
-
-            // 获取当地位置
-            getMpa(){
-                this.amapPlugin = new amap.AMapWX({  
-                    key: this.key  
-                });  
-                
-                this.amapPlugin.getRegeo({  
-                    success: (data) => {  
-                        let {city} = data[0].regeocodeData.addressComponent
-                        this.cityVal = city
-                    }  
-                }); 
+                // 判断搜索是否为空
+                if(val.length === 0) {
+                    this.showShopIdList = this.get_shopIdList
+                }else{
+                    this.filterShopSearch(val)
+                }
             },
 
             // 设置门店
@@ -93,6 +96,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                         shopNo: val.shopNo
                     }
                     this.mut_quickListUpDataShopId(data)
+                    this.mut_shopId(val)
                     uni.navigateBack()
                 }else{
                     this.mut_shopId(val)
@@ -104,6 +108,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                     uni.switchTab({
                         url:'/pages/tabBar/home/home'
                     })
+                    this.mut_city(this.cityVal)
                 }
                 
             },
@@ -115,18 +120,44 @@ const { $Message } = require('@/wxcomponents/base/index');
                 })
             },
 
-            // 过滤门店
+            // 切换城市
+            onChangeCity(){
+                uni.redirectTo({ 
+                    url:'/pages/tabBar/home/components/cityList' 
+                })
+            },
+
+            // 过滤城市门店
             filterShop(val){
+                this.cityVal = val
                 if(val){
                     this.showShopIdList = this.get_shopIdList.filter(res=> {
+                            let listArr = false
                             if(res.city){
-                               return  res.city.includes(val)
+                                if(val.indexOf(res.city) != -1 || res.city.indexOf(val)!= -1){
+                                    listArr = true
+                                }else if(val.indexOf(res.area) != -1 || res.area.indexOf(val)!= -1){
+                                    listArr = true
+                                }else if(val.indexOf(res.province) != -1 || res.province.indexOf(val)!= -1){
+                                    listArr = true
+                                }
+                               return  listArr
                             }
                         })
-                    
+                }
+            },
+
+            // 过滤搜索门店
+            filterShopSearch(val){
+                if(val){
+                    this.showShopIdList = this.get_shopIdList.filter(res=> {
+                            if(res.shopName){
+                               return  res.shopName.includes(val)
+                            }
+                        })
                 }
             }
-        }
+        },
     }
 </script>
 

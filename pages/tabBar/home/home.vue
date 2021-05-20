@@ -1,11 +1,23 @@
 /******************************** 首页 ***************************************/
 <template>
     <view class="homeContent">
+		 
+		<!-- 顶部导航 -->
+		<uni-nav-bar fixed statusBar >
+			<view class="navText">{{get_shopId.shopName}}</view>
+			<view slot="left">
+				<view class="navCrt" @click="onChangeCity">
+					<view class="textOv">{{get_city}}</view>
+					<i-icon class="icon" type="unfold" size="20" color="#333333"  />
+				</view>
+			</view>
+		</uni-nav-bar>
+
         <view v-for="(item, index) in homeList" :key="index">
-        	<view class="searchContent" v-if="item.type === 'search'" :style="{ 'background-image': `url(${item.data.backImg})` }">
+        	<view class="searchContent" v-if="item.type === 'search'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
 				<view class="uni-input" @click="turnSearch" :style="{ opacity: item.data.opacity/10 }">{{item.data.title}}</view>
         	</view>
-			<view class="shopContent" v-if="item.type === 'shop'" :style="{ 'background-image': `url(${item.data.backImg})`, color: item.data.color }" @click="turnShop">
+			<view class="shopContent" v-if="item.type === 'shop'" :style="{'align-items': 'center','font-size': item.data.fontSize*2 + 'rpx','height': item.data.height*2 + 'rpx', 'background-image': `url(${item.data.backImg})`, color: item.data.color, 'background-color': item.data.bgColor }" @click="turnShop">
 				<span class="flex_1">当前门店: {{get_shopId.shopName}}</span>
 				<i class="iconfont iconhtbArrowright02" ></i>
 			</view>
@@ -18,76 +30,180 @@
 					</swiper-item>
 				</swiper>
 			</view>
-			<view v-if="item.type === 'oneImg'">
-				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.linkData)">
+			<view v-if="item.type === 'oneImg'" :style="{ 'background-color': item.data.bgColor }">
+				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.data.linkData)">
 			</view>
-			<view class="btnContent" v-if="item.type === 'moreBtn'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-image': `url(${item.data.backImg})` }">
+			<view class="btnContent" v-if="item.type === 'moreBtn'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
 				<img class="imgOne" :src="_.src" alt="" v-for="(_, _index) in item.data.imgs" :key="_index" @click="turnDetail(_.linkData)">
 			</view>
 			
-			<view v-if="item.type === 'moreImg'" :style="{ 'background-image': `url(${item.data.backImg})` }">
-				<view class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.linkData)">
+			<view v-if="item.type === 'moreImg'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat' }">
+				<view v-if="!item.data.titleRow.hiddenTitle" class="moreimgContent"  :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
-				<view class="flex rowFlex" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+				<view class="flex rowFlex" :class="item.data.titleRow.hiddenTitle?'paddingT10':''" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
 					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidth(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
 			</view>
+			<!-- 两列图 -->
+			<view v-if="item.type === 'double'" :style="{ 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor,'background-size': '100% 100%','background-repeat':'no-repeat','padding':'0rpx 20rpx 20rpx 20rpx' }">
+				<view v-if="!item.data.titleRow.hiddenTitle" class="moreimgContent" :style="{ 'height': `${item.data.titleRow.height + 'px'}`, 'color': `${item.data.titleRow.color}`, 'font-size': `${item.data.titleRow.size + 'px'}` }" @click="turnDetail(item.data.titleRow.linkData)">
+					<span class="flex_1">{{item.data.titleRow.title}}</span>
+					<i class="iconFlex iconfont iconhtbArrowright02"></i>
+				</view>
+				<view class="flex rowFlexDouble" :class="!item.data.titleRow.hiddenTitle && i!==1 ?'':'paddingT5'" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
+				</view>
+			</view>
+			<!-- 视频 -->
+			<view  v-if="item.type === 'oneVideo'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-color': item.data.bgColor }">
+				<video id="myVideo" :src="item.data.src" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" :autoplay="item.data.autoplay" ></video>
+			</view>
+			<!-- 地图 -->
+			<view  v-if="item.type === 'mapPng'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-color': item.data.bgColor }">
+				<map style="width: 100%; height: 100%;" :longitude="longitude" :latitude="latitude" :markers="covers" ></map>
+			</view>
+			<!-- 层级组件 -->
+			<div class="positions" v-if="item.type === 'positions'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%','background-color': item.data.bgColor1, }">
+				<div class="positions_box"  :style="{'width': item.data.width * 2 + 'rpx','left': item.data.left * 2 + 'rpx','box-shadow': getShadow(item.data), 'height': item.data.height * 2 + 'rpx', 'top':'-'+ item.data.top * 2 +'rpx', 'background-color': item.data.bgColor, 'border-radius':item.data.radius * 2 + 'rpx' }">
+					<div class="box1">
+						<img v-if="item.data.imgs.length>0"  :src="item.data.imgs[0].src" @click="turnDetail(item.data.imgs[0].linkData)">
+					</div>
+					<div v-if="!item.data.border && item.data.imgs.length>1" class="box_border"  :style="{'border-left': `${item.data.borderWidth*2}rpx solid ${item.data.borderColor}` }"></div>
+					<div v-if="item.data.imgs.length>1" class="box1">
+						<img :src="item.data.imgs[1].src"  @click="turnDetail(item.data.imgs[1].linkData)">
+					</div>
+				</div>
+			</div>
         </view>
-       
+       <!-- 客服 -->
+        <view class="userCall">
+            <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+                <img src="/static/image/userCall.png" alt="">
+            </button>
+        </view>
+
         <!-- 弹窗 -->
         <i-message id="message" />
+
+		<!-- 底部导航 -->
+		<tabBar :index="1"></tabBar>
     </view>
 </template>
 
 <script>
 import { getHomeData } from '@/util/api/home.js'
 const { $Message } = require('@/wxcomponents/base/index');
-import { getLongin } from '@/util/api/user.js'
+import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 import { mapGetters } from 'vuex'
 const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
+		components: {uniNavBar},
 		data () {
 			return {
-				homeList: []
+				homeList: [],
+				longitude:null,
+				latitude:null,
+				covers: [{
+					latitude: '23.084657',
+					longitude: '114.382526',
+					iconPath: "/static/image/loacl.png"
+            	}]
 			}
 		},
 		computed: {
 			...mapGetters('user',[
 				'get_shopId'
+			]),
+			...mapGetters('map',[
+				'get_location',
+				'get_city'
 			])
 		},
         mounted(){
+			// 判断当前门店经纬度是否值
+			let {locationX,locationY} = this.get_shopId
+			let locationArr = this.get_location.location.split(',')
+			let longitude,latitude = null;
+			if(locationX && locationY){
+				longitude = locationX
+				latitude = locationY
+			}else{
+				longitude = locationArr[0]
+				latitude = locationArr[1]
+			}
+				this.longitude = longitude
+				this.latitude = latitude
+				this.covers[0].latitude = latitude
+				this.covers[0].longitude = longitude
+        },
+		onLoad() {
+			this.getHomeData()
 			
         },
-		 onLoad() {
-            
-			this.getHomeData()
-        },
         methods:{
+			// 消息推送
+			onClickMyInfo(){
+				uni.requestSubscribeMessage({
+					tmplIds: ['tGNjNY-84SP_ENugDhzq-V2BNlsfur7Ir_qCAllb2d4','uAujsYPo1Xu2-8o2RQqPoVIHs2QUjItPtRR758SJLWg','-Hecde4yZlk-9N5d-igvBg-i8m_pSEMaZni5Q5xvWoI'],
+					success (res) {
+						console.log(res)
+					},
+					fail(err){
+						console.log(err)
+					}
+				})
+			},
+
+			// 跳转城市选择
+			onChangeCity(){
+				uni.navigateTo({ url:'/pages/tabBar/home/components/cityList' })
+			},
+
 			turnShop () {
 				uni.navigateTo({ url:'/pages/tabBar/shoppingCart/components/changeRegion' })
 			},
 			turnSearch () {
-
+				uni.navigateTo({ url:'/pages/tabBar/home/search' })
 			},
 			turnDetail (data) {
+				console.log(data);
 				switch (data.type) {
-					case 'link':
-						console.log(5555)
-						uni.navigateTo({ 
-							url: '/pages/tabBar/home/web_view?url=' + data.link 
-						})
-						break;
 					case 'detail':
 						uni.navigateTo({ 
 							url: '/pages/tabBar/classify/components/details?id=' + data.detailId 
 						})
 						break;
 					case 'classify':
-						
+						uni.setStorage({
+							key: 'classId',
+							data: data.classifyId
+						})
+						uni.switchTab({
+                            url:'/pages/tabBar/classify/classify'
+                        })
+						break;
+						case 'imgDetail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/newDetail?id=' + data.detailId 
+						})
+						break;
+					case 'imgTow':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondary?id=' + data.classifyId 
+                        })
+						break;
+					case 'imgClassify':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondClassify?id=' + data.classifyId 
+                        })
+						break;
+                    case 'feedBack':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/feedBack'
+                        })
 						break;
 				}
 			},
@@ -118,67 +234,56 @@ const entriData = uni.getExtConfigSync()
 						return '32%'
 				}
 			},
-            // 检查登陆
-            checkLogin(){
-                uni.authorize({
-                    scope: 'scope.userInfo',
-                    success() {
-                        uni.getUserInfo({
-                            provider: 'weixin',
-                            success: function (infoRes) {
-                                console.log(infoRes)
-                                console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                            }
-                        });
-                    }
-                })
-                // 获取code值
-                // uni.login({
-                //     provider: 'weixin',
-                //     success: function (res) {
-                //         let param = {
-                //             jsCode: res.code,
-                //             appId:  accountInfo.miniProgram.appId
-                //         }
-                //         console.log(accountInfo.miniProgram.appId)
-                //         // 获取用户信息
-                //         uni.getUserInfo({
-                //             provider: 'weixin',
-                //             success: function (infoRes) {
-                //                 console.log(infoRes)
-                //                 console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                //             }
-                //         });
-                //         // getLongin(param).then(res=>{
-                //         //     console.log(res);
-                //         //     uni.getUserInfo({
-                //         //         provider: 'weixin',
-                //         //         success: function (infoRes) {
-                //         //             console.log(infoRes)
-                //         //             console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                //         //         }
-                //         //     });
-                //         // })
-                //     }
-                // });
-            },
-            getPhoneNumber(e) { 
-                console.log(e) 
-                console.log(e.detail.errMsg);  
-                console.log(e.detail.iv);  
-                console.log(e.detail.encryptedData);  
-                
-            },
-
-           
+			// 组合图单图长度2列
+			getWidthDouble (data, col, i) {
+				let len = data.length
+				switch (len) {
+					case 1:
+						return '100%'
+					case 2:
+						return '49%'
+				}
+			},
+			// 阴影样式
+			getShadow (val) {
+				if (!val.shadow) {
+					return `0px 1rpx ${val.shadowWidth*2}rpx ${val.shadowColor}`
+				} else {
+					return ''
+				}
+			},
         }   
     }
 </script>
 
 <style lang="scss" scoped>
 @import url('./icon.css');
+.navText{
+	width: 100%;
+	text-align: center;
+	font-size: 26rpx;
+}
+.navCrt{
+	width: 130rpx;
+    border: 1rpx solid #D6D6D6;
+    border-radius: 50rpx;
+    height: 55rpx;
+    left: 60rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 10rpx;
+	.textOv{
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 90rpx;
+		overflow: hidden;
+		font-size: 26rpx;
+	}
+}
 .homeContent{
 	font-size: 24rpx;
+	margin-bottom: 170rpx;
 }
 .searchContent{
     padding: 20rpx 20rpx;
@@ -250,6 +355,19 @@ const entriData = uni.getExtConfigSync()
       margin-bottom: 0px;
     }
 }
+.rowFlexDouble{
+	justify-content: space-between;
+	box-sizing: border-box;
+	&:last-child{
+      margin-bottom: 0px;
+    }
+}
+.homeContent .paddingT5{
+	padding-top: 2%;
+}
+.homeContent .paddingT10{
+	padding-top: 20rpx;
+}
 .flex{
 	display: flex;
 }
@@ -257,4 +375,43 @@ const entriData = uni.getExtConfigSync()
 	width: auto;
 	height: auto;
 }
+// 层级定位
+.positions{
+  position: relative;
+  .shadow{
+    box-shadow:0px 1rpx 20rpx #000;
+  }
+  .positions_box{
+    z-index: 2000;
+    width: 95%;
+    height: 100%;
+    position: absolute;
+    background: red;
+    border-radius: 20rpx;
+    top: -20rpx;
+    left: 2.5%;
+    padding: 30rpx;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    div{
+      height: 100%;
+    }
+    .box1{
+      width: 46%;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .box_border{
+      border-left: 1rpx solid #666;
+    }
+  }
+}
+.status_bar {
+      height: var(--status-bar-height);
+      width: 100%;
+	  background: #fff;
+  }
 </style>

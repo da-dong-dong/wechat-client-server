@@ -2,18 +2,66 @@
 <template>
     <view class="boxs">
         <!-- 用户信息 -->
-        <view class="user_box paddingT40  paddingRL30">
+        <!-- <view class="user_box paddingT40  paddingRL30">
             <view class="flex">
                 <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
-                    <image class="login_logo" :src="get_headimgUrl"></image>
+                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
+                    <image v-else class="login_logo" src="/static/image/my/userImg.png"></image>
                 </button>
                 <view class="text_box paddingRL30">
                     <text class="fontWight fontSize34">{{get_nickName}}</text>
                     <text>{{get_phone}}</text>
                 </view>
             </view>
+        </view> -->
+        <view class="user_seting padd20">
+            <view class="flex">
+                <div class="flex_1">
+                    <div class="register" v-if="!get_headimgUrl" @click="getCode(jsCode)">登录/注册</div>
+                    <div class="colorA6" v-if="get_nickName">{{get_nickName}}</div>
+                </div>
+                <div>
+                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
+                    <image v-else class="login_logo" src="/static/image/my/userImg.png"></image>
+                </div>
+            </view>
+            <view class="menu_list">
+                <div @click="onClikcPage('/pages/order/detail/order-my')">
+                    <i class="iconfont iconxiangce"></i>
+                    <span>我的相册</span>
+                </div>
+                <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;margin-top: 0rpx">
+                    <div>
+                        <i class="iconfont iconkefu"></i>
+                        <span>专属顾问</span>
+                    </div>
+                </button>
+                <div @click="onClickService('mack')">
+                    <i class="iconfont iconxieyi"></i>
+                    <span>预约协议</span>
+                </div>
+                <div @click="onClikcPage('/pages/zyd_page/standard/index')">
+                    <i class="iconfont iconcaidan"></i>
+                    <span>标准服务</span>
+                </div>
+            </view>
         </view>
 
+        <!-- 封面故事 -->
+        <view class="cover_content" v-if="imgList.length > 0">
+            <div>封面故事</div>
+            <scroll-view class="scroll-view_H" scroll-x="true" >
+                <view class="scroll-view-item_H" v-for="_ in imgList" :key="_.id">
+                    <div class="flex" @click="toWebView(_)">
+                        <img class="small_img" :src="_.icon" />
+                        <div class="flex_1">
+                            <div class="title">{{_.title}}</div>
+                            <div class="colorA6">{{_.descs}}</div>
+                        </div>
+                    </div>
+                </view>
+            </scroll-view>
+        </view>
         <!-- 用户设置 -->
         <view class="user_seting marginT10">
             <view class="user_seting_li flex paddingRL20" >
@@ -37,26 +85,26 @@
             <view class="user_seting_li flex paddingRL20" @click="onClickService('setUp')">
                 <view class="flex">
                     <image class="img" src="/static/image/my/3.png"></image>
-                    <text class="paddingL20">套系服务</text>
+                    <text class="paddingL20">服务说明</text>
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
-            <view class="user_seting_li flex paddingRL20" @click="onClickService('mack')">
+            <!-- <view class="user_seting_li flex paddingRL20" @click="onClickService('mack')">
                 <view class="flex">
                     <image class="img" src="/static/image/my/3.png"></image>
                     <text class="paddingL20">预约服务</text>
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view>
+            </view> -->
 
-            <!-- <view class="user_seting_li flex paddingRL20">
+            <view class="user_seting_li flex paddingRL20" @click="onClickFeedBack">
                 <view class="flex">
                     <image class="img" src="/static/image/my/4.png"></image>
                     <text class="paddingL20">意见反馈</text>
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view> -->
+            </view>
 
             <view class="user_seting_li flex paddingRL20" @click="onClickOut">
                 <view class="flex">
@@ -68,61 +116,142 @@
         </view>
         <!-- 弹窗 -->
         <i-message id="message" />
+
+        <!-- 底部导航 -->
+		<tabBar :index="5"></tabBar>
     </view>
 </template>
 
 <script>
+// 获取当前小程序信息
+const accountInfo = uni.getAccountInfoSync(); 
 import { mapGetters, mapActions } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
-import { setUserInfo,getUserInfo } from '@/util/api/user.js'
+import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
+import { getTextImageList } from '@/util/api/order.js'
     export default {
         computed:{
 			...mapGetters('user',[
                 'get_phone',
                 'get_nickName',
-                'get_headimgUrl'
+                'get_headimgUrl',
+                'get_appId',
+                'get_enterpriseId'
 			]),
         },
         onLoad(options) {
             uni.setNavigationBarColor({
-                frontColor: '#ffffff',
-                backgroundColor: '#FF6D75',
+                frontColor: '#000000',
+                backgroundColor: '#ffffff',
                 animation: {
                     duration: 400,
                     timingFunc: 'easeIn'
                 }
             })
-
-            
+        },
+        onShow() {
+            // 路由返回触发更新
+            this.getUserInfoAPI()
+        },
+        data(){
+            return{
+                jsCode:null, //存储登陆code
+                userCode:'', // 用户信息
+                imgList: []
+            }
         },
         mounted(){
             // 获取用户
             this.getUserInfoAPI()
+            this.login()
+            this.getTextImageList()
         },
         methods:{
             ...mapActions('user',[
-				'act_nickName'
+                'act_nickName',
+                'act_code'
             ]),
+            toWebView (_) {
+                uni.navigateTo({ 
+                    url: `/pages/tabBar/my/components/web_view?url=${_.link}` 
+                })
+            },
+            // 获得图文列
+            getTextImageList () {
+                let params = {
+                    appId: this.get_appId,
+                    enterpriseId: this.get_enterpriseId
+                }
+                getTextImageList(params).then(res => {
+                    console.log('图文', res)
+                    this.imgList = res.data.data
+                })
+            },
+            // 获取code值
+            login(){
+                uni.login({
+                    provider: 'weixin',
+                    success:(res) => {
+                        // 获取code值
+                        let param = {
+                            jsCode: res.code,
+                            authorizerAppid:  accountInfo.miniProgram.appId
+                        }
+                        this.jsCode = param
+                        console.log('获取了code值',this.jsCode)
+                    }
+                });
+            },
+
+            // 获取登陆信息
+            getCode(param){
+                getCode(param).then(res=>{
+                    let code = res.data.data
+                    // 存储 
+                    this.act_code(code)
+                    // 存储本地
+                    uni.setStorage({
+                        key: 'code',
+                        data: code
+                    })
+                    console.log(code)
+                    setUserInfo(this.userCode).then(res=>{
+                        this.getUserInfoAPI('1')
+                    })
+                })
+            },
             
             // 获取用户信息AIP
-            getUserInfoAPI(){
+            getUserInfoAPI(flag){
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area} = res.data.data
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    if(flag){
+                        this.onClickUserInfo()
+                    }
                 })
             },
             // 获取用户信息
             getUserInfo(val){
                 let param = val.detail
+                this.userCode = val.detail
+                
                 if(param.encryptedData){
-                    if(this.get_nickName){
-                        this.onClickUserInfo()
-                    }else{
-                        setUserInfo(param).then(res=>{
-                            this.getUserInfoAPI()
-                            this.onClickUserInfo()
-                        })
-                    }
+                    uni.checkSession({
+                        success:res=>{
+                            console.log('登陆还在')
+                            if(this.get_nickName){
+                                this.onClickUserInfo()
+                            }else{
+                                // 去验证登陆是否过期
+                                this.getCode(this.jsCode)
+                            }
+                        },
+                        fail:err=>{
+                            console.log('登陆失效')
+                            this.getCode(this.jsCode)
+                        }
+                    }) 
                 }else{
                     $Message({
                         content:'取消授权',
@@ -130,7 +259,11 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
                     });
                 }
             },
-
+            onClikcPage (url) {
+                uni.navigateTo({ 
+                    url
+                })
+            },
             // 修改个人资料
             onClickUserInfo(){
                 uni.navigateTo({ 
@@ -144,7 +277,11 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
                     url: '/pages/tabBar/my/components/changePassword' 
                 })
             },
-
+            onClickFeedBack () {
+                uni.navigateTo({
+                    url:'/pages/tabBar/classify/myFeedBack'
+                })
+            },
             // 服务协议
             onClickService(type){
                 uni.navigateTo({ 
@@ -153,14 +290,18 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
             },
 
             // 退出登陆
+            // 退出登陆
             onClickOut(){
                 console.log('退出')
                 uni.removeStorage({
                     key: 'code',
                     success: (result) => {
                         clearInterval(getApp().globalData.time)
-                        uni.redirectTo({ 
-                            url: '/pages/login/index' 
+                        let headimgUrl,nickName,phone,sex,birthday,province,city,area = null
+                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                        this.act_code(null)
+                        uni.reLaunch({ 
+                            url: '/pages/tabBar/home/home' 
                         })
                     },
                     fail: (error) => {}
@@ -172,9 +313,36 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
 </script>
 
 <style lang="scss" scoped>
+.menu_list{
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx;
+    padding-top: 30rpx;
+    margin-top: 30rpx;
+    border-top: 1px solid #ECECEC;
+    div{
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        .iconfont{
+            font-size: 36rpx;
+            margin-bottom: 10rpx;
+        }
+    }
+    span{
+        font-size: 24rpx;
+        color: #676768;
+    }
+}
+.mar_t10{
+    margin-top: 20rpx;
+}
 .boxs{
     height: 100vh;
     background: #F9F9F9;
+    box-sizing: border-box;
+    padding: 20rpx 0 160rpx;
+    overflow: auto;
     button{
         height: 100%;
         margin: 10rpx 0 0 0 ;
@@ -186,17 +354,17 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
         }
     }
 }
-
+.padd20{
+    padding: 20rpx;
+}
 // 用户设置
 .user_seting{
+    box-sizing: border-box;
     border-bottom:none;
     width: 686rpx;
     background: #fff;
     border-radius: 20rpx;
-    margin: 0 auto;
-    position: relative;
-    top: -200rpx;
-    height: 712rpx;
+    margin: 0 auto 20rpx;
     .user_seting_li{
         height: 130rpx;
         line-height: 130rpx;
@@ -223,12 +391,19 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
             display: block;
         }
     }
+    .register{
+        margin-top: 20rpx;
+        font-size: 40rpx;
+        font-weight: 600;
+    }
 }
-
+.colorA6{
+    color: #A6A6A6;
+}
 // 用户信息
 .user_box{
     height: 404rpx;
-    background: linear-gradient(180deg, #FF6D75 60%, rgba(255, 255, 255, 0) 100%);
+    // background: linear-gradient(180deg, #FF6D75 60%, rgba(255, 255, 255, 0) 100%);
     font-size: 30rpx;
     color: #fff;
     .flex{
@@ -248,10 +423,48 @@ import { setUserInfo,getUserInfo } from '@/util/api/user.js'
             }
         }
     }
-    .login_logo{
-        width: 126rpx;
-        height: 126rpx;
+}
+.login_logo{
+    width: 126rpx;
+    height: 126rpx;
+    border-radius: 50%;
+}
+.cover_content{
+    width: 686rpx;
+    margin: auto;
+    .small_img{
+        width: 120rpx;
+        height: 120rpx;
+        margin-right: 10rpx;
         border-radius: 50%;
     }
+    .title{
+        font-weight: 600;
+        margin: 10rpx 0;
+        font-size: 28rpx;
+    }
+}
+.scroll-view-item_H{
+    padding: 60rpx 40rpx;
+    display: inline-block;
+    background: #fff;
+    border-radius: 20rpx;
+	width: 560rpx;
+	height: 240rpx;
+    margin-left: 30rpx;
+    box-sizing: border-box;
+    font-size: 26rpx;
+    &:first-child{
+        margin-left: 0;
+    }
+}
+
+.scroll-view_H{
+    width: 100%;
+	height: 240rpx;
+	overflow: hidden;
+ 	white-space: nowrap;
+    border-radius: 20rpx;
+    margin: 20rpx 0;
 }
 </style>

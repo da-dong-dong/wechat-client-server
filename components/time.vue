@@ -269,9 +269,12 @@
 			box-shadow:0rpx 7rpx 29rpx 6rpx rgba(0, 0, 0, 0.03);
 			border-radius:0 0 10rpx 10rpx;
 			.list{
-				width: 39px;
+				width: 77rpx;
 				text-align: center;
-				padding: 10rpx;
+				/* padding: 10rpx; */
+				/* margin-right: 1rpx; */
+				padding-top: 10rpx;
+				padding-left: 20rpx;
 				.bg{
 					border-radius: 10rpx;
 					.typographyNum{

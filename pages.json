@@ -1,24 +1,66 @@
 {
 	"pages": [ // pages数组中第一项表示应用启动页
-		
+		// ******************************** 首页 ********************************
 		{
 			"path": "pages/brand/brand",
 			"style": {
 				"navigationBarTitleText": "品牌选择"
 			}
 		},
-		//******************************** 首页 ********************************
+		// ******************************** 首页 ********************************
 		{
 			"path": "pages/tabBar/home/home",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"navigationStyle":"custom",
+				"app-plus":{
+					"titleNView":false
+				}
 			}
 		},
-		//******************************** 首页 ********************************
+		{
+			"path": "pages/tabBar/home/components/cityList",
+			"style": {
+				"navigationBarTitleText": "城市选择"
+			}
+		},
+		{
+			"path": "pages/tabBar/order/order",
+			"style": {
+				"navigationBarTitleText": "订单"
+			}
+		},
+		{
+			"path": "pages/tabBar/shoppingCart/components/order_confirm",
+			"style": {
+				"navigationBarTitleText": "订单确认"
+			}
+		},
+		{
+			"path": "pages/tabBar/shoppingCart/components/buyOrder",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			}
+		},
+		{
+			"path": "pages/order/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		// ******************************** 首页 ********************************
 		{
 			"path": "pages/tabBar/home/web_view",
 			"style": {
 				"navigationBarTitleText": "外部链接"
+			}
+		},
+		
+		//******************************** 首页 ********************************
+		{
+			"path": "pages/order/sign_view",
+			"style": {
+				"navigationBarTitleText": "客户签名"
 			}
 		},
 		//******************************** 登陆 ********************************
@@ -28,7 +70,12 @@
 				"navigationBarTitleText": "登陆"
 			}
 		},
-		
+		{
+			"path": "pages/tabBar/home/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
 		//******************************** 我的 ********************************
 		{
 			"path": "pages/tabBar/my/my",
@@ -51,7 +98,7 @@
 		{
 			"path": "pages/tabBar/my/components/serviceAgreement",
 			"style": {
-				"navigationBarTitleText": "服务协议"
+				"navigationBarTitleText": "服务说明"
 			}
 		},
 		{
@@ -60,13 +107,47 @@
 				"navigationBarTitleText": "首页"
 			}
 		},
-		
-
+		{
+			"path": "pages/order/detail/order-my-list",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/order/detail/order-my",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
 		//******************************** 分类 ********************************
+		{
+			"path": "pages/tabBar/classify/secondary",
+			"style": {
+				"navigationBarTitleText": "二级页面"
+			}
+		},
+		{
+			"path": "pages/tabBar/my/components/web_view",
+			"style": {
+				"navigationBarTitleText": "外部链接"
+			}
+		},
+		{
+			"path": "pages/tabBar/classify/newDetail",
+			"style": {
+				"navigationBarTitleText": "新详情"
+			}
+		},
 		{
 			"path": "pages/tabBar/classify/classify",
 			"style": {
-				"navigationBarTitleText": "分类"
+				"navigationBarTitleText": "线上分类"
+			}
+		},
+		{
+			"path": "pages/tabBar/classify/secondClassify",
+			"style": {
+				"navigationBarTitleText": "图文分类"
 			}
 		},
 		{
@@ -75,14 +156,23 @@
 				"navigationBarTitleText": "套系详情"
 			}
 		},
-
-		//******************************** 购物车 ********************************
 		{
-			"path": "pages/tabBar/shoppingCart/shoppingCart",
+			"path": "pages/tabBar/classify/feedBack",
 			"style": {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "意见反馈"
 			}
 		},
+		{
+			"path": "pages/tabBar/classify/myFeedBack",
+			"style": {
+				"navigationBarTitleText": "我的意见反馈",
+				"navigationStyle":"custom",
+				"app-plus":{
+					"titleNView":false
+				}
+			}
+		},
+		//******************************** 购物车 ********************************
 		{
 			"path": "pages/tabBar/shoppingCart/components/changeRegion",
 			"style": {
@@ -96,27 +186,32 @@
 			}
 		},
 		{
-			"path": "pages/tabBar/shoppingCart/components/buyOrder",
+			"path": "pages/tabBar/shoppingCart/components/changeTimes",
 			"style": {
-				"navigationBarTitleText": "确认订单"
+				"navigationBarTitleText": "预约时间"
 			}
 		},
-
-		// //******************************** 订单 ********************************
+		// 新页面
 		{
-			"path": "pages/tabBar/order/order",
+			"path": "pages/zyd_page/standard/index",
 			"style": {
-				"navigationBarTitleText": "订单"
+				"navigationBarTitleText": "标准服务"
 			}
 		},
-
 		
 		{
-			"path": "pages/order/index",
+			"path": "pages/tabBar/shoppingCart/shoppingCart",
 			"style": {
-				"navigationBarTitleText": "订单详情"
+				"navigationBarTitleText": "购物车"
 			}
 		},
+		// //******************************** 订单 ********************************
+		// {
+		// 	"path": "pages/order/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "订单详情"
+		// 	}
+		// },
 		{
 			"path": "pages/order/detail/signature",
 			"style": {
@@ -159,6 +254,7 @@
 		}
 	},
 	"tabBar": {
+		"custom": true,
 		"color": "#333333",
 		"selectedColor": "#34B9C0",
 		"borderStyle": "black",

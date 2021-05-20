@@ -7,12 +7,14 @@ export default{
 		city: null, // 当前位置
 		barmd: null, // 品牌分类
 		barmdId: null, // 品牌分类id
+		location:null, // 经纬度
 	},
 	getters:{
 		get_shopIdList:state => state.shopIdList,
 		get_city:state => state.city,
 		get_barmd:state => state.barmd,
 		get_barmdId:state => state.barmdId,
+		get_location:state => state.location,
 	},
 	mutations:{
 		mut_shopIdList(state,data){
@@ -29,6 +31,10 @@ export default{
 
 		mut_barmdId(state,data){
 			state.barmdId = data
+		},
+
+		mut_location(state,data){
+			state.location = data
 		},
 	},
   actions: {
@@ -53,8 +59,9 @@ export default{
 			});  
 			amapPlugin.getRegeo({  
 				success: (data) => {  
-					let {city} = data[0].regeocodeData.addressComponent
+					let {city,streetNumber} = data[0].regeocodeData.addressComponent
 					commit('mut_city', city)
+					commit('mut_location', streetNumber)
 				},
 				fail: (err) => {
 					console.log(data,'取消授权')
@@ -74,6 +81,10 @@ export default{
 				if(!barmd){
 					uni.switchTab({
 					    url:'/pages/tabBar/home/home'
+					})
+				}else if(barmd.length === 0){
+					uni.navigateTo({
+						url:'/pages/tabBar/shoppingCart/components/changeRegion'
 					})
 				}
 			})

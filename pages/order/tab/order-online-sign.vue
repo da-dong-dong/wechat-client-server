@@ -5,88 +5,133 @@
             <view class="order_box">
                 <view class="order_top">
                     <view class="order_heade">
-                        <image class="order_heade_img" src="/static/image/oreder_user.png"></image>
-                        <text>吴彦祖</text>
+                        <!-- <image class="order_heade_img" src="/static/image/oreder_user.png"></image> -->
+                        <i class="iconfont iconrenyuan"></i>
+                        <text>{{signData.onlineCustomerContactVos | contactFilter}}</text>
                     </view>
                     <view class="order_info">
                         <view class="order_info_flx">
                             <view>
-                                订单门店：<text>郑州金夫人婚纱摄影</text>
+                                订单门店：<text>{{shopName(signData.orderShopId)}}</text>
                             </view>
                         </view>
                         <view class="order_info_flx">
                             <view>
-                                套系名称：<text>5999天长地久婚纱照</text>
+                                套系名称：<text>{{signData.assemblyName}}</text>
                             </view>
                         </view>
                         <view class="order_info_flx">
                             <view>
-                                套系价格：<text>5999<text class="red">（已付:1999 欠款:4000）</text></text>
+                                套系价格：<text>{{signData.assemblyPrice}}</text>
+                                    <!-- <text class="red">（已付:1999 欠款:4000）</text> -->
                             </view>
                         </view>
                         <view class="order_info_flx">
                             <view>
-                                订单日期：<text>2020年10月1日</text>
+                                订单日期：<text>{{signData.orderTime | timeFilter}}</text>
                             </view>
                         </view>
                     
                     </view>
                 </view>
                 <!-- 约单 -->
-                <view class="order_show">
+                <view class="order_show" v-for="item in signData.onlineContractVos" :key="item.id">
                     <view class="oreder_img">
-                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
+                        <image class="oreder_img_img" src="/static/image/oreder_bars.png"></image>
+                        <image class="oreder_img_img" src="/static/image/oreder_bars.png"></image>
                     </view>
                     <view class="order_show_top">
-                        <view>订单预约单</view>
-                        <view class="text_right" @click="onclickSigna(1)">
-                            <text>去签字</text> 
+                        <view>{{item.title}}</view>
+                        <view class="text_right" v-if="item.type === 2">
+                            <text @tap="onClickSign(item)">{{item.isSign | signFilter}}</text> 
                             <text> > </text> 
                         </view>
                     </view>
                     <view class="order_show_list">
-                        <view>接收时间：2020.11.11 20:0</view>
-                        <view>接收时间：2020.11.11 20:0</view>
+                        <view>接收时间：{{item.createTime | timeFilter}}</view>
+                        <view>签字时间：{{item.signTime | timeFilter}}</view>
+                        <view v-if="item.isSign === 2">拒签原因: {{item.remarks}}</view>
                     </view>
                 </view>
-
-                <view class="order_show">
-                    <view class="oreder_img">
-                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                        <image class="oreder_img_img" src="/static/image/oreder_bar.png"></image>
-                    </view>
-                    <view class="order_show_top">
-                        <view>订单预约单</view>
-                        <view class="text_right" @click="onclickSigna(2)" > 
-                            <text class="red">已拒签</text> 
-                            <text> > </text> 
-                        </view>
-                    </view>
-                    <view class="order_show_list">
-                        <view>接收时间：2020.11.11 20:0</view>
-                        <view>接收时间：2020.11.11 20:0</view>
-                    </view>
-                </view>
+               
             </view>
         </view>
-       
     </view>
 </template>
 
 <script>
+import { getOrderContract } from '@/util/api/home.js'
+import { mapGetters, mapActions } from 'vuex'
+import signViw from '@/components/cat-signature/cat-signature.vue'
+
     export default {
+        props:{
+            orderId: Number
+        },
+        components: {
+            signViw
+        },
         data(){
             return{
-                
+                signData: {},
+                saveData: {}
+            }
+        },
+        mounted(){
+            // 获取接口
+            this.getOrderContract()
+        },
+        computed: {
+            ...mapGetters('map', [
+                'get_shopIdList'
+            ])
+        },
+        filters: {
+            timeFilter (time) {
+                if (time) {
+                    let date = new Date(time)
+                    var Y = date.getFullYear() + '-';
+                    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                    var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+                    return Y + M + D
+                } else {
+                    return ''
+                }
+            },
+            signFilter (type) {
+                let map = new Map([
+                    [ 0, '未签' ],
+                    [ 1, '已签' ],
+                    [ 2, '拒签' ],
+                ])
+                return map.get(type)
+            },
+            contactFilter (arr) {
+                if (arr) return arr.map(_ => _.name).join(' ')
+                else return ''
             }
         },
         methods:{
-            onclickSigna(id){
-                console.log('跳转')
-                uni.navigateTo({
-					url: '/pages/order/detail/signature?id=' + id
-				})
+            ...mapActions('html',[
+				'act_setHtml'
+			]),
+            onClickSign (data) {
+                if (data.isSign !== 2) {
+                    this.act_setHtml(data.htmlText)
+                    uni.navigateTo({
+                        url: '/pages/order/detail/signature?id=' + data.id + `&type=${data.isSign}&url=${data.contractUrl}`
+                    })
+                }
+            },
+            shopName (id) {
+                if (id) return this.get_shopIdList.filter(_ => _.shopId === id)[0].shopName
+                else return '' 
+            },
+            getOrderContract () {
+                getOrderContract({ orderId: this.orderId }).then(res => {
+                    console.log('res', res);
+                    this.signData = res.data.data
+                })
             }
         }
     }
@@ -118,7 +163,7 @@
     margin: 40rpx 30rpx;
     box-sizing: content-box;
     width: 690rpx;
-    
+    min-height: 1200rpx;
     .order_top{
         min-height: 394rpx;
         background: #FFFFFF;
@@ -132,7 +177,7 @@
         font-size: 28rpx;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: #FF4852;
+        color: #D3AB75;
         border-bottom: 1px solid #DCDCDC;
         .order_heade_img{
             width: 32rpx;
@@ -162,13 +207,12 @@
             font-weight: bold;
         }
         .red{
-            color:#FF2402
+            color:#D3AB75
         }
     }
 }
 .order_show{
     width: 100%;
-    height: 216rpx;
     background: #FFFFFF;
     border-radius: 16rpx;  
     margin-top: 20rpx;
@@ -186,7 +230,7 @@
         color: #333333;
         .text_right{
             .red{
-                color: #FF2402;
+                color: #D3AB75;
             }
         }
     }
@@ -194,7 +238,7 @@
         font-size: 24rpx;
         text{
             &:nth-child(1){
-                color: #FF4852;
+                color: #D3AB75;
                 margin-right: 10rpx;
             }
             &:nth-child(2){
@@ -209,5 +253,19 @@
         margin-top: 30rpx;
         line-height: 45rpx;
     }
+}
+.signModal{
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+}
+.iconrenyuan{
+    color: #D3AB75;
+    margin-right: 6rpx;
 }
 </style>

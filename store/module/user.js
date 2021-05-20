@@ -13,6 +13,7 @@ export default{
 		province:null, // 省
 		city:null, // 市
 		area:null, // 区
+		userId: null,
 	},
 	getters:{
 		get_appId:state => state.appId,
@@ -27,6 +28,7 @@ export default{
 		get_province:state => state.province,
 		get_city:state => state.city,
 		get_area:state => state.area,
+		get_userId: state => state.userId,
 	},
 	mutations:{
 		mut_code(state,data){
@@ -47,6 +49,7 @@ export default{
 			state.province = data.province
 			state.city = data.city
 			state.area = data.area
+			state.userId = data.id
 		},
 
 		// 设置app 和企业id

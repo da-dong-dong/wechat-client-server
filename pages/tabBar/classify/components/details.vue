@@ -5,35 +5,100 @@
         <banner :imgs="listDetai.topCarouseList"/>
 
         <!-- 内容文字 -->
-        <view class="content marginB30 padding10 marginRL10">
+        <view class="content  padding10 marginRL30">
             <view class="flex content_top">
                 <text>{{listDetai.name}}</text>
-                <text class="colorRed">￥{{listDetai.assemblyPrice}}</text>
+                <text class="colorH">
+                    ￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}
+                    <text class="colorH" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text>
+                </text>
             </view>
-            <view class="content_text flex">
-                <view class="content_text_l">
-                    服务内容
-                </view>
-                <view class="context_li  flex">
-                    <view class="flex paddingRL20 paddingT10" v-for="(item,index) in serverList" :key="index" >
-                       <i-icon class="icon " type="success" size="20" color="#FF4852"  />
-                       <text>{{item.name}}</text><text>{{item.count? 'X '+ item.count:''}}</text>
+        </view>
+
+        <!-- 详细内容 -->
+        <view class="content_text paddingRL40 marginRL30 colorADAD ">
+            <!-- 定金 -->
+            <view class="borderTop fontSize28" v-if="listDetai.enableDeposit">
+                <view class="flex paddingTB20 flexCenten">
+                    <text class="marginR30 fontSize30">定金</text>
+                    <view>
+                         预定金: <text class="colorH marginR10">￥{{listDetai.assemblyDeposit}}</text>
+                         尾款: <text class="fontWight">￥{{listDetai.assemblyPrice-listDetai.assemblyDeposit}}</text>
                     </view>
                 </view>
             </view>
-            
+
+            <!-- 详情 -->
+            <view class="context_li paddingB20 borderTop" v-for="(item,index) in listDetai['assemblyItemList']" :key='index'>
+                <view class=" fontSize28  fontWight paddingTB20 ">详情内容-{{item.name}}</view>
+                <!-- 底片 -->
+                <view class="marginB10 flexCenten fontSize28">
+                    <view>
+                         <text class="marginR30">底片{{item.bottomCount}}张</text>
+                         <text>精修{{item.refineCount}}张</text>
+                    </view>
+                </view>
+
+                <!-- 景点 -->
+                <view class="paddingTB20" v-if="item['assemblyItemPlaces'].length">
+                    <view class="fontSize28  fontWight marginB10">拍摄景点</view>
+                    <view class="flex fontSize28 " v-for="(item1,index1) in item['assemblyItemPlaces']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                    </view>
+                </view>
+
+                <!-- 服装 -->
+                <view class="paddingTB20" v-if="item['assemblyItemDressInfos'].length">
+                    <view class="fontSize28  fontWight marginB10">服装</view>
+                    <view class="flex fontSize28  " v-for="(item1,index1) in item['assemblyItemDressInfos']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                        <text>{{`X ${item1.count}`}}</text>
+                    </view>
+                </view>
+                
+                <!-- 商品 -->
+                <view class="paddingTB20" v-if="item['assemblyItemGoods'].length">
+                    <view class="fontSize28  fontWight marginB10">商品</view>
+                    <view class="flex fontSize28 " v-for="(item1,index1) in item['assemblyItemGoods']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                        <text>{{`P数： ${item1.countP}`}}</text>
+                        <text>{{`X ${item1.count}`}}</text>
+                    </view>
+                </view>
+
+                <!-- 服务 -->
+                <view class="paddingTB20" v-if="item['assemblyItemServices'].length">
+                    <view class="fontSize28  fontWight marginB10">服务</view>
+                    <view class="flex fontSize28 " v-for="(item1,index1) in item['assemblyItemServices']" :key='index1'>
+                        <view>
+                            <text class="fintSize30 fontWight">·</text>
+                            <text class="paddingL10">{{item1.name}}</text>
+                        </view>
+                    </view>
+                </view>
+                    
+            </view>
         </view>
 
         <!-- 图片展示 -->
-        <view class="imgShow marginT10 marginRL10">
+        <view class="imgShow marginT10 marginRL30 marginB30 paddingB20">
             <!-- tab切换 -->
             <view class="imgTab flex fontSize24 textC marginB30">
                 <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">{{item}}</view>
             </view>
 
             <!-- 展示 -->
-            <view v-if="Index == 0?true:false" class="showTab padding10">
-                <image class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
+            <view v-if="Index == 0?true:false" class="showTab padding20">
+                <image mode='widthFix'  class="img marginB10 " v-for="(item,index) in listDetai.detailPhotoList" :key="index"  :src="item"></image>
             </view>
 
             <view v-else>
@@ -44,6 +109,18 @@
         <!-- 购物车定位 -->
         <buyCar type="details" @goCar="goCar" @addCar="addCar" @onQuick="onQuick"/>
 
+        <!-- 客服 -->
+        <!-- <view class="userCall">
+            <button plain session-from="大东东" open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+                <img src="/static/image/userCall.png" alt="">
+            </button>
+        </view> -->
+        <!-- 客服 -->
+        <view class="userCall">
+            <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+                <img src="/static/image/userCall.png" alt="">
+            </button>
+        </view>
          <!-- 弹窗 -->
         <i-message id="message" />
    </view>
@@ -54,14 +131,16 @@ import banner from '@/components/banner.vue'
 import buyCar from '@/components/buyCar.vue'
 import { getAssemblyOnlineDetail } from '@/util/api/goods.js'
 import { getAssemblyDescription } from '@/util/api/user.js'
+import { addRecommendOne } from '@/util/api/order.js'
  import { mapMutations, mapGetters } from 'vuex'
     export default {
         computed:{
 			...mapGetters('user',[
                 'get_appId',
                 'get_enterpriseId',
+                'get_userId',
                 'get_shopId'
-			]),
+			])
         },
         components:{
             banner,
@@ -71,7 +150,7 @@ import { getAssemblyDescription } from '@/util/api/user.js'
         data(){
             return{
                 Tab:['产品展示','服务说明'],
-                listDetai:{}, // 详情数据
+                listDetai:[], // 详情数据
                 testData:'', // 套系服务说明
                 serverList:null, // 服务内容
                 Index:0, // tab 索引
@@ -98,58 +177,16 @@ import { getAssemblyDescription } from '@/util/api/user.js'
                 }
                 getAssemblyOnlineDetail(param).then(res=>{
                     this.listDetai = res.data.data
-                    // 组装服务内容
-                    let json = {}
-                    this.listDetai.assemblyItemList.map(item=>{
-                        // 服装
-                        item.assemblyItemDressInfos.map(val=>{
-                            if(!json.assemblyItemDressInfos){
-                                json.assemblyItemDressInfos = []
-                            }
-                            json.assemblyItemDressInfos.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                        // 商品
-                        item.assemblyItemGoods.map(val=>{
-                            if(!json.assemblyItemGoods){
-                                json.assemblyItemGoods = []
-                            }
-                            json.assemblyItemGoods.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                        // 景点
-                        item.assemblyItemPlaces.map(val=>{
-                            if(!json.assemblyItemPlaces){
-                                json.assemblyItemPlaces = []
-                            }
-                            json.assemblyItemPlaces.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
-                        // 服务
-                        item.assemblyItemServices.map(val=>{
-                            if(!json.assemblyItemServices){
-                                json.assemblyItemServices = []
-                            }
-                            json.assemblyItemServices.push({
-                                name:val.name,
-                                count:val.count,
-                            })
-                        })
+                    uni.setNavigationBarTitle({
+                        title: res.data.data.name
                     })
-                    
-                    let arr = []
-                    for (const key in json) {
-                        json[key].map(item=>{
-                            arr.push(item)
-                        })
+                    let params = {
+                        appId: this.get_appId,
+                        assemblyId: this.listDetai.assemblyId,
+                        browseUser: this.get_userId,
+                        enterpriseId: this.get_enterpriseId
                     }
-                    this.serverList = arr
+                    this.get_userId && addRecommendOne(params)
                 })
             },
 
@@ -179,6 +216,7 @@ import { getAssemblyDescription } from '@/util/api/user.js'
             // 添加到购物车
             addCar(flag){
                 let datas={
+                        buyBool: true,
                         id:this.listDetai.id,
                         name:this.listDetai.name,
                         price:this.listDetai.assemblyPrice,
@@ -189,7 +227,9 @@ import { getAssemblyDescription } from '@/util/api/user.js'
                         orderType:this.listDetai.orderType,
                         shopId: this.get_shopId.shopId,
                         shopName: this.get_shopId.shopName,
-                        shopNo: this.get_shopId.shopNo
+                        shopNo: this.get_shopId.shopNo,
+                        enableDeposit:this.listDetai.enableDeposit, // 定金开启
+                        assemblyDeposit:this.listDetai.assemblyDeposit, // 定金
                     }
                 // 判断是否立刻下单
                 if(flag){
@@ -203,56 +243,42 @@ import { getAssemblyDescription } from '@/util/api/user.js'
             onQuick(){
                 this.addCar('quick')
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/shoppingCart/components/buyOrder'
+                    url: '/pages/tabBar/shoppingCart/components/order_confirm'
                 })
-            }
+            },
 
         }
     }
 </script>
 
 <style lang="scss" scoped>
+
 .boxDitel{
     background: #F9F9F9;
 }
+.borderTop{
+    border-top: 1rpx solid #F6F6F6;
+}
 .content{
     background: rgba(255,255,255,0.8);
-    border-radius: 20rpx;
-    font-size: 30rpx;
+    border-radius: 20rpx 20rpx 0 0;
+    font-size: 34rpx;
     box-sizing: content-box;
     .content_top{
         padding: 40rpx 25rpx;
         justify-content: space-between;
-        border-bottom: 1px solid #DDDDDD;
         font-weight: bold;
     }
-    .content_text{
-        justify-content: space-around;
-        align-items: center;
-        font-size: 24rpx;
-        color:#999999;
-        .content_text_l{
-            width: 80rpx;
-            line-height: 40rpx;
-            font-size: 30rpx;
-            margin-left: 40rpx;
-        }
-    }
+}
+// 详细内容
+.content_text{
+    background: rgba(255,255,255,0.8);
+    border-radius: 0 0 20rpx 20rpx;
     .context_li{
-        flex-wrap: wrap;
-        width: 550rpx;
-        .paddingRL20{
-                padding-left: 100rpx;
-            }
         .flex{
-            width: 550rpx;
-            height: 80rpx;
-            align-items: center;
-            
-            .icon{
-                padding-right: 20rpx;
-            }
+            justify-content: space-between;
         }
+        
     }
 }
 .imgShow{
@@ -264,12 +290,16 @@ import { getAssemblyDescription } from '@/util/api/user.js'
             width: 50%;
         }
         .active{
-            color: #FF4852;
+            color: #D6A972;
             font-weight: bold;
         }
     }
     .showTab{
         box-sizing: content-box;
+        .marginB10{
+            margin-bottom: -8rpx;
+            vertical-align: bottom;
+        }
     }
 }
 </style>

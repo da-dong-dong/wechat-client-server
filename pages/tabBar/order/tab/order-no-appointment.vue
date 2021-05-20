@@ -98,18 +98,18 @@
         },
         data(){
             return{
-                get_carList:[
-                    {
-                        id:201001001,
-                        name:'889宝宝照',
-                        price:8889,
-                        imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
-                        times:'',
-                        filesTime:'',
-                        filesPrice:'',
-                        noOrder:false
-                    }
-                ]
+                // get_carList:[
+                //     {
+                //         id:201001001,
+                //         name:'889宝宝照',
+                //         price:8889,
+                //         imgs:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3619181582,1012377832&fm=26&gp=0.jpg',
+                //         times:'',
+                //         filesTime:'',
+                //         filesPrice:'',
+                //         noOrder:false
+                //     }
+                // ]
             }
         },
         methods:{

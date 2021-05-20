@@ -1,5 +1,6 @@
-.flex{
-    display: flex;
+@import url('./iconfont.css');
+.flexCenten{
+    align-items: center;
 }
 .fixed{
     position: fixed;
@@ -81,14 +82,26 @@
     margin-right: 10rpx;
     margin-left: 10rpx;
 }
+.marginRL30{
+    margin-right: 30rpx;
+    margin-left: 30rpx;
+}
 .marginR30{
     margin-right: 30rpx;
+}
+.marginR10{
+    margin-right: 10rpx;
 }
 .marginL80{
     margin-left: 80rpx;
 }
-
+.mar_t10{
+    margin-top: 20rpx;
+}
 // 文字
+.fontSize40{
+    font-size: 40rpx;
+}
 .fontSize36{
     font-size: 36rpx;
 }
@@ -128,6 +141,9 @@
 .colorRed{
     color:#FF4852
 }
+.colorH{
+    color: #D6A972;
+}
 .colorL{
     color: #FF4852;
 }
@@ -143,6 +159,9 @@
 .colorDDD{
     color: #DDDDDD;
 }
+.colorADAD{
+    color: #ADADAD;
+}
 // 按钮
 .saveBtn{
     width: 320rpx;
@@ -155,5 +174,29 @@
     border-radius: 48rpx;
     margin: 100rpx auto;
 }
-
-
+.flex{
+    display: flex;
+}
+.flex_1{
+    flex: 1;
+}
+// 客服
+.userCall{
+    width: 100rpx;
+    height: 100rpx;
+    background: #fff;
+    border-radius: 50%;
+    text-align: center;
+    position: fixed;
+    bottom: 160rpx;
+    right: 40rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3500;
+}
+.userCall img{
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+}

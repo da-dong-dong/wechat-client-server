@@ -50,3 +50,8 @@ export const getAssemblyDescription = (params) => {
 export const getReservationDescription = (params) => {
 	return get(baseUrl.getReservationDescription, params)
 }
+
+// 获取预约协议说明
+export const getAgreementDescription = (params) => {
+	return get(baseUrl.getAgreementDescription, params)
+}

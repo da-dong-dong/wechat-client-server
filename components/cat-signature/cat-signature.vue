@@ -1,16 +1,16 @@
 
 /******************************** 签名画布 ***************************************/
 <template>
-	<view v-if="visibleSync" class="cat-signature" :class="{'visible':show}" @touchmove.stop.prevent="moveHandle">
+	<view class="cat-signature" @touchmove.stop.prevent="moveHandle">
 		<view class="content">
+			<div class="a_return"> <span class="red" @tap="hideSign">返回</span></div>
+			<canvas class='firstCanvas' :canvas-id="canvasId" @touchmove='move' @touchstart='start($event)' @touchend='end'
+			 @touchcancel='cancel' @longtap='tap' disable-scroll='true' @error='error' />
+
 			<view class="btns">
 				<view class="btn" @tap="clear">重新签名</view>
 				<view class="btn2" @tap="save">确认签名</view>
 			</view>
-
-			<canvas class='firstCanvas' :canvas-id="canvasId" @touchmove='move' @touchstart='start($event)' @touchend='end'
-			 @touchcancel='cancel' @longtap='tap' disable-scroll='true' @error='error' />
-			
 		</view>
 	</view>
 </template>
@@ -63,6 +63,10 @@
 			}, 100)
 		},
 		methods:{
+			hideSign () {
+				this.clear()
+				this.$emit('to-close')
+			},
 			getInfo(){
 				//获得Canvas的上下文
 				content = uni.createCanvasContext(this.canvasId,this)
@@ -161,11 +165,19 @@
 					uni.canvasToTempFilePath({
 						canvasId: this.canvasId,
 						success: function(res) {
-							that.signImage = res.tempFilePath;
-							that.$emit('save',res.tempFilePath);
-							uni.hideLoading()
-							that.hasDh = false;
-							that.show = false;
+							uni.request({
+						　　　　url: res.tempFilePath,
+						　　　　method: 'GET',
+						　　　　responseType: 'arraybuffer',
+						　　　　success: async res => {
+						　　　　　　 let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+						　　　　　　 let toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
+									that.$emit('save', toBase64Url);
+					　　　　}
+					　　});
+						uni.hideLoading()
+						that.hasDh = false;
+						that.show = false;
 						},
 						fail:function(err){
 							console.log(err)
@@ -183,25 +195,32 @@
 		width: 100%;
 		height: 100vh;
 		.content{
-			display: flex;
+			// display: flex;
 			background: red;
 			height: 100vh;
 			background: #fff;
+			transform-origin: center center;
+			transform: rotate(90deg);
 			.firstCanvas{
-				width: 650rpx;
-				height: 100%;
-				
+				// width: 650rpx;
+				// height: 100%;
+				margin: 20rpx auto;
+				border: 1px dashed #999;
+				width: 600rpx;
+				height: 800rpx;
 			}
 			.btns{
-				width: 100rpx;
-				height: 100%;
+				// width: 100rpx;
+				// height: 100%;
+				width: 100%;
+				height: 100rpx;
 				font-size: 35rpx;
 				font-family: PingFangSC-Medium, PingFang SC;
 				font-weight: 500;
 				text-align: center;
 				line-height: 82rpx;
 				display: flex;
-				flex-direction: column;
+				// flex-direction: column;
 				justify-content: space-around;
 				.btn{
 					width: 228rpx;
@@ -209,8 +228,8 @@
 					border-radius: 4rpx;
 					border: 2rpx solid #FF4852;
 					color: #FF4852;
-					transform-origin: 50rpx;
-    				transform: rotate(90deg);
+					// transform-origin: 50rpx;
+    				// transform: rotate(90deg);
 				}
 				.btn2{
 					width: 228rpx;
@@ -218,10 +237,17 @@
 					background: #FF4852;
 					border-radius: 4rpx;
 					color: #FFFFFF;
-					transform-origin: 50rpx;
-    				transform: rotate(90deg);
+					// transform-origin: 50rpx;
+    				// transform: rotate(90deg);
 				}
 			}
+		}
+	}
+	.a_return{
+		padding-left: 70rpx;
+		.red{
+			color: #FF4852;
+			padding: 0 10rpx;
 		}
 	}
 </style>

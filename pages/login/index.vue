@@ -104,10 +104,26 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
             setPhoneNoInfo(param){
                 setPhoneNoInfo(param).then(res=>{
                     let code = res.data.code
+                    let route = 1; //记录上一页路由
                     if(code == 200){
-                        uni.switchTab({
-                            url:'/pages/tabBar/home/home'
-                        })
+                        // 判断路由返回当前页面
+                        let pages = getCurrentPages();
+                        for(let i=pages.length-1;i>=0;i--){
+                            if(pages[i].route !== 'pages/login/index'){
+                                route = pages[i].route
+                                break
+                            } 
+                        }
+                        // 判断是否是导航栏
+                        if(route.indexOf("components/buyOrder") != -1 || route.indexOf("classify/feedBack") != -1 ){
+                            uni.navigateTo({ 
+                                url: `/${route}`
+                            })
+                        }else{
+                            uni.switchTab({ 
+                                url: `/${route}`
+                            })
+                        }
                     }
                 })
             }

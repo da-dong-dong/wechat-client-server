@@ -4,19 +4,21 @@
         <!-- 时间组件 -->
         <changeTimes :dateDetail="dateDetail" @getDate="getDate" @enDate="enDate"/>
         <!-- 档期选择 -->
-        <view class="timeBox paddingRL40 ">
+        <view class="timeBox paddingRL40">
             <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view>
 
-            <view v-if="momeyTime">
+            <view v-if="momeyTime && !isVacation">
                 <view v-for="(item,index) in momeyTime" :key="index">
                     <view v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
-                        <view>{{item1.controlType |headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
-                        <view class="timeList flex">
-                            <view class="list" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
-                                <view v-if="item2.useTypographyNum < item2.typographyCount" class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
+                        <view>{{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
+                        <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
+                            <view class="list" v-for="(index3) in item2['useTypographyNum']" :key="index3">
+                                <view class="listTime active">
                                     {{item2['timeFrameStr']}}
                                 </view>
-                                <view v-else class="listTime active">
+                            </view>
+                            <view class="list" v-for="(index3) in item2['typographyCount'] - item2['useTypographyNum']" :key="index3">
+                                <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
                                     {{item2['timeFrameStr']}}
                                 </view>
                             </view>
@@ -29,13 +31,17 @@
         </view>
         <!-- 弹窗 -->
         <i-message id="message" />
+        <!-- 档期弹窗 -->
+        <modulPhone v-if="flag" :phone="testData" @cancel="cancel" @ok="ok"/>
     </view>
 </template>
 
 <script>
 import changeTimes from '@/components/time.vue'
+import modulPhone from '@/components/modulPhone.vue'
 import { mapMutations, mapGetters } from 'vuex'
 import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
+import { getReservationDescription } from '@/util/api/user.js'
     export default {
         filters:{
             // 档期头部过滤
@@ -73,11 +79,14 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
             }
         },
         components:{
-            changeTimes
+            changeTimes,
+            modulPhone
         },
          computed:{
             ...mapGetters('user',[
                 'get_shopId',
+                'get_appId',
+                'get_enterpriseId'
             ]),
             ...mapGetters('carList',[
                 'get_carList',
@@ -88,7 +97,9 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
             this.id = options.id
             this.Index = options.index
             this.orderType =options.orderType
-            this.shopId = this.get_shopId.shopId
+            this.shopId = options.shopId
+            // 档期协议
+            this.mack() 
         },
         data(){
             return{
@@ -96,11 +107,17 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 dateDetail:[],
                 momeyTime:null,
                 times: '',
+                flag:false, // 弹窗档期开关
+                testData:'', // 档期协议
                 Index: 0, // 索引
                 id: null, // 当前id
                 endTime:null, // 结束时间
                 startTime:null, // 开始时间
                 filesPrice:0, // 档期费
+                isVacation:true, // 是否休息日
+                // 存储
+                dataItem:'',
+                dataId:''
             }
         },
         methods:{
@@ -176,24 +193,47 @@ import { reservationPhotoDate, typographyCost } from '@/util/api/goods.js'
                 let checkTime = new Date(this.pickerDate).getTime()-28800000
                 let list = this.dateDetail.filter(item=>item.operationTime == checkTime)
                 this.momeyTime = list[0].reservationGroupVos
-                console.log(this.momeyTime)
+                this.isVacation = list[0].isVacation
+                console.log(this.momeyTime,list[0])
             },
 
-            // 更新购物车
-            onChangeCarList(tiem,id){
-                console.log('来啦',tiem,id)
-               
+            // 预约服务
+            mack(){
+                let param = {
+					appId:this.get_appId,
+					enterpriseId:this.get_enterpriseId
+				}
+                getReservationDescription(param).then(res=>{
+                    this.testData = res.data.data
+                })
+            },
+
+            // 档期弹窗
+            ok(){
+                this.flag = false
                 let data = {
                     id:this.id, // id值
                     index:this.Index, // 索引
                     times:this.times, // 时间 yy-mm-dd
                     filesPrice:this.filesPrice, // 全天费用
-                    filesTime:tiem.startTime, // 档期 ,传开始时间
-                    typographyTypeId: id // 模板ID
+                    filesTime:this.dataItem.startTime, // 档期 ,传开始时间
+                    typographyTypeId: this.dataId // 模板ID
                 }
                 console.log(data,'*******')
                 this.mut_quickListUpData(data)
                 uni.navigateBack()
+            },
+            cancel(){
+                this.flag = false
+            },
+
+            // 更新购物车
+            onChangeCarList(tiem,id){
+                console.log('来啦',tiem,id)
+                this.flag = true
+                this.dataItem = tiem
+                this.dataId = id
+                
             }
         }
     }

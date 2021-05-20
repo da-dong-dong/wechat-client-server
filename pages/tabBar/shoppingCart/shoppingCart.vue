@@ -1,54 +1,91 @@
-/******************************** 购物车 ***************************************/
 <template>
-    <view>
-        <view class="carBox paddingRL20">
-            <view class="carTop flex padding20">
-                <text>共{{get_carList.length}}个套系</text>
-                <text @click="onCarListDelAll">清空</text>
-            </view>
-            <!-- 内容 -->
-            <view class="carTop flex padding20">
-                <text>已选门店</text>
-                <view>
+    <view class="buy_cart_content">
+        <view class="msg_div">
+            <div class="title_div">
+                <span class="title">已选门店</span>
+                <view class="title_shop">
                     <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
-                    <text class="colorL paddingL20" @click="onChangeShopId">切换</text>
+                    <text class="orange paddingL20" @click="onChangeShopId">切换</text>
                 </view>
-            </view>
-            <view class="showList" v-if="get_carList.length">
-                <view class="carLi marginB20 padding20" v-for="(item,index) in get_carList" :key="index">
-                    
-                    <view class="carData flex marginB30">
-                        <image class="img" :src="item.imgs"></image>
-                        <view class="carData_text">
-                            <view class="flex">
-                                <text class="color333">{{item.name}}</text>
-                                <text class="fontWight colorRed">￥{{item.price}}</text>
-                            </view>
-                            <view class="color999 flex">
-                                <text>X 1</text>
-                                <text class="colorRed" @click="onCarListDel(index)">删除</text>
-                            </view>
+            </div>
+            <view v-if="get_carList.length > 0">
+                
+                <view class="flex" v-for="(_, i) in get_carList" :key="i">
+                    <view class="radio">
+                        <radio color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
+                    </view>
+                    <img class="h145" :src="_.imgs" />
+                    <view class="flex_1">
+                        <view class="padding">
+                            <span class="font600">{{_.name}}</span>
+                            <span class="float_r colorA3">￥{{_.price}}</span>
+                        </view>
+                        <view class="font14">
+                            总价: <span class="orange">￥{{_.price}}</span>
+                        </view>
+                        <view class="font14">
+                            尾款: ￥{{_.price}}
                         </view>
                     </view>
-                </view>    
-            </view>
-            <view class="showList carLi" v-else>
-                <view class="noList flex">
-                    购物车空空如也
                 </view>
             </view>
-           
+
+            <view class="showList carLi" v-else>
+                购物车空空如也
+            </view>
+
+            <view class="flex buy_content"  v-if="get_carList.length > 0">
+                <view class="radio">
+                    <radio color="#D3AB75" :checked="buyAllBool" @click="allChange"/>
+                </view>
+                <div class="buy_all">全选</div>
+                <view class="buy_txt">
+                    <view class="font18">
+                        总价: <span class="orange">￥{{ sumPrice }}</span>
+                    </view>
+                    <view class="font14">
+                        尾款: ￥{{ sumPrice }}
+                    </view>
+                </view>
+                <view class="go_sub" @click="onQuick">
+                    去预约
+                </view>
+            </view>
         </view>
-        <!-- 购物车定位 -->
-        <buyCar type="car" @onQuick="onQuick"/>
+        <view class="recommend">
+            为你推荐
+        </view>
+        <div class="twoContent">
+            <div class="oneRow" v-for="_ in recommentList" :key="_.assemblyId" @click="onClickDetails(_.assemblyId)">
+                <img class="h110" :src="_.coverPhoto"/>
+                <div class="tow_title">{{_.assemblyName}}</div>
+                <div class="desc" >
+                    ￥ {{_.assemblyPrice}}
+                    <span class="iconfont icon1202youjiantou gt_icon"></span>
+                </div>
+            </div>
+        </div>
+        
+       <!-- 客服 -->
+        <view class="userCall">
+            <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+                <img src="/static/image/userCall.png" alt="">
+            </button>
+        </view>
         <!-- 弹窗 -->
         <i-message id="message" />
+        <!-- 底部导航 -->
+		<tabBar :index="3"></tabBar>
     </view>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+const accountInfo = uni.getAccountInfoSync(); 
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
+import { getRecommendAssemblyList } from '@/util/api/order.js'
+import { getUserInfo } from '@/util/api/user.js'
+
 const { $Message } = require('@/wxcomponents/base/index');
     export default {
         components:{
@@ -56,39 +93,113 @@ const { $Message } = require('@/wxcomponents/base/index');
         },
         computed:{
 			...mapGetters('user',[
-				'get_shopId'
+				'get_shopId',
+                'get_appId',
+                'get_userId',
+                'get_enterpriseId'
             ]),
-
             ...mapGetters('carList',[
 				'get_carList'
             ]),
+            sumPrice () {
+                let sum = 0
+                this.get_carList.forEach(_ => {
+                    if (_.buyBool) {
+                        sum += _.price
+                    }
+                })
+                return sum
+            }
         },
         data(){
             return{
-               check:''
-                
+                jsCode: null,
+               check:'',
+               buyAllBool: true,
+               recommentList: []
             }
         },
+        onShow () {
+            console.log('数据', this.get_carList)
+            this.getRecommendAssemblyList()
+        },
+        mounted () {
+            this.login()
+        },
         methods:{
+            ...mapActions('user',[
+                'act_nickName',
+                'act_code'
+            ]),
+            
+            onClickDetails(idx){
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/classify/components/details?id=' + idx
+                })
+            },
+            // 获取用户信息AIP
+            getUserInfoAPI(){
+                getUserInfo().then(res=>{
+                    console.log('获取用户信息AIP', res)
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    this.getRecommendAssemblyList()
+                })
+            },
+            // 获取code值
+            login(){
+                uni.login({
+                    provider: 'weixin',
+                    success:(res) => {
+                        // 获取code值
+                        let param = {
+                            jsCode: res.code,
+                            authorizerAppid:  accountInfo.miniProgram.appId
+                        }
+                        this.jsCode = param
+                        console.log('获取了code值',this.jsCode)
+                        this.getUserInfoAPI()
+                    }
+                });
+            },
             ...mapMutations('carList',[
                 'mut_carListDel',
                 'mut_carListDelAll',
                 'mut_quickListAdd'
             ]),
+            getRecommendAssemblyList () {
+                let params = {
+                    appId: this.get_appId,
+                    browseUser: this.get_userId,
+                    enterpriseId: this.get_enterpriseId
+                }
+                getRecommendAssemblyList(params).then(res => {
+                    console.log('推荐套系', res);
+                    this.recommentList = res.data.data
+                })
+            },
             // 切换门店
             onChangeShopId(){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/shoppingCart/components/changeRegion' 
+                    url: '/pages/tabBar/shoppingCart/components/changeRegion?quick=true' 
                 })
             },
-
+            allChange () {
+                this.buyAllBool = !this.buyAllBool
+                this.get_carList.forEach(_ => {
+                    _.buyBool = this.buyAllBool
+                })
+            },
+            radioChange (e) {
+                e.buyBool = !e.buyBool
+                this.buyAllBool = this.get_carList.filter(_ => _.buyBool).length === this.get_carList.length
+            },
             // 修改预约时间
             onChangeTime(index){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/shoppingCart/components/changeTime?index=' +  index
+                    url: '/pages/tabBar/shoppingCart/components/changeTimes?index=' +  index
                 })
             },
-
             // 清空
             onCarListDelAll(){
                 this.mut_carListDelAll()
@@ -125,56 +236,152 @@ const { $Message } = require('@/wxcomponents/base/index');
                 }
                 this.mut_quickListAdd(carList)
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/shoppingCart/components/buyOrder'
+                    url: '/pages/tabBar/shoppingCart/components/order_confirm'
                 })
-            }
-
+            },
         }
     }
 </script>
 
 <style lang="scss" scoped>
-.noList{
+.buy_cart_content{
+    height: 100vh;
+    padding: 20rpx;
+    padding-bottom: 150rpx;
+    overflow: auto;
+    box-sizing: border-box;
+    background: #F9F9F9;
+    overflow: auto;
+    .recommend{
+        text-align: center;
+        margin-bottom: 20rpx;
+    }
+    .msg_div{
+        padding: 20rpx 0;
+        background: #fff;
+        border-radius: 16rpx;
+        margin-bottom: 20rpx;
+    }
+    .title_div{
+        padding: 20rpx;
+        border-bottom: 1px solid #ECECEC;
+        display: flex;
+        .title{
+            width: 200rpx;
+            font-weight: 600;
+            font-size: 30rpx;
+        }
+        .title_shop{
+            text-align: right;
+            flex: 1;
+        }
+    }
+    .flex{
+        padding: 20rpx;
+        border-bottom: 1px solid #ECECEC;
+        .h145{
+            width: 150rpx;
+            height: 150rpx;
+            margin-right: 20rpx;
+            border-radius: 10rpx;
+        }
+        .radio{
+            display: flex;
+            align-items: center;
+            width: 50rpx;
+            margin-right: 10rpx;
+        }
+        .flex_1{
+            view{
+                padding: 8rpx 0;
+            }
+        }
+        
+        .font600{
+            font-weight: 600;
+        }
+        .padding{
+            padding: 10rpx 0;
+        }
+        .font14{
+            font-size: 26rpx;
+            color: #A3A3A3;
+        }
+        .font18{
+            font-size: 36rpx;
+        }
+        .colorA3{
+            color: #A3A3A3;
+        }
+    }
+    .float_r{
+        float: right;
+    }
+    .orange{
+        color: #D3AB75;
+    }
+    .no_border{
+        border: none;
+    }
+    .buy_content{
+        border: none;
+        .buy_all{
+            width: 80rpx;
+            margin-right: 20rpx;
+            display: flex;
+            align-items: center;
+        }
+        .buy_txt{
+            flex: 1;
+        }
+        .go_sub{
+            background: #D3AB75;
+            border-radius: 40rpx;
+            color: #fff;
+            width: 160rpx;
+            display: flex;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+            margin: 6rpx 0;
+        }
+    }
+}
+.twoContent{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    .oneRow{
+        background: #fff;
+        margin-bottom: 20rpx;
+        width: 340rpx;
+        border-radius: 10rpx;
+    }
+    .h110{
+        width: 100%;
+        height: 340rpx;
+    }
+    .desc{
+        padding: 10rpx;
+        color: #b2b2b2;
+    }
+    .tow_title{
+        padding: 10rpx;
+        font-weight: 600;
+    }
+    .gt_icon{
+        float: right;
+        color: #D4AD72;
+        font-size: 40rpx;
+    }
+}
+.orange{
+    color: #D3AB75;
+}
+.showList{
+    height: 300rpx;
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 234rpx;
-    color: #8BABD1;
-    font-size: 36rpx;
-}
-.carBox{
-    box-sizing: content-box;
-    background: #F9F9F9;
-    min-height: 100vh;
-    .carTop{
-        justify-content: space-between;
-        align-items: center;
-        color: #333;
-        font-size: 28rpx;
-    }
-    .carLi{
-        box-sizing: content-box;
-        background: #fff;
-        border-radius: 20rpx;
-       .carData{
-           justify-content: space-between;
-           font-size: 30rpx;
-           .img{
-               width: 160rpx;
-               height: 160rpx;
-           }
-           .carData_text{
-               width: 450rpx;
-               .color999{
-                   font-size: 28rpx;
-                   margin-top: 80rpx;
-               }
-               .flex{
-                   justify-content: space-between;
-                   align-items: center;
-               }
-           }
-       }
-    }
-
 }
 </style>

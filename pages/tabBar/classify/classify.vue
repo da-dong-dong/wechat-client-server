@@ -6,22 +6,51 @@
                 <!-- 左侧 -->
                 <view class="left_box textC">
                     <view class="fixed">
-                        <view class="paddingTB20 fontSize26" :class="Index==index?'active':''" v-for="(item,index) in leftList" :key="item.name" @click="onClickTab(index,item.id)">
+                        <view class="paddingTB20 fontSize26" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
                             {{item.name}}
                         </view>
                     </view>
                 </view>
                 <!-- 右侧 -->
-                <view class="right_box flex paddingT10">
-                    <view class="right_li textC padding5 marginRL10 "  v-for="(item) in rightList" :key="item.id" @click="onClickDetails(item.id)">
-                        <image class="img" :src="`${item.coverPhoto}?resize,w_300`"></image>
-                        <view class="fontSize24 fontWight color000">{{item.assemblyName}}</view>
-                    </view>
+                <view class="right_box">
+                    <swiper class="swiper h150" indicator-dots v-if="carouselList.length > 0">
+                        <swiper-item v-for="_ in carouselList" :key="_" @click="turnDetail(_)">
+                            <view class="swiper-item uni-bg-red flex">
+                                <img class="h150" :src="_.src" alt="">
+                            </view>
+                        </swiper-item>
+                    </swiper>
+                    <template v-if="activeObj.serverProtocol === 1">
+                        <div v-html="activeObj.protocolText" class="mar_t10"></div>
+                    </template>
+                    <template v-else>
+                        <div class="smallRectangle" v-if="activeObj.goodsShowType === 2 || activeObj.goodsShowType === 3">
+                            <template v-if="activeObj.goodsShowType === 2">
+                                <img v-for="_ in rightList" class="h110" :src="_.coverPhoto" alt="" :key="_.id" @click="onClickDetails(_.id)">
+                            </template>
+                            <template v-if="activeObj.goodsShowType === 3">
+                                <img v-for="_ in rightList" class="h200" :src="_.coverPhoto" alt="" :key="_.id" @click="onClickDetails(_.id)">
+                            </template>
+                        </div>
+                        <div class="dbColumn" v-if="activeObj.goodsShowType === 0 || activeObj.goodsShowType === 1">
+                            <div v-for="_ in rightList" :key="_.id" class="oneContent" @click="onClickDetails(_.id)">
+                                <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
+                                <img class="longImg" v-else-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
+                                <div v-if="activeObj.showName === 1" class="title">{{_.assemblyName}}</div>
+                                <div v-if="activeObj.showExtend === 1" class="price">
+                                    ￥{{_.assemblyPrice}}
+                                    <span class="iconfont icon1202youjiantou gt_icon"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </view>
             </view>
        </s-pull-scroll>
         <!-- 弹窗 -->
         <i-message id="message" />
+        <!-- 底部导航 -->
+		<tabBar :index="2"></tabBar>
     </view>
 </template>
 
@@ -35,140 +64,37 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         computed:{
 			...mapGetters('user',[
                 'get_appId',
-                'get_enterpriseId'
+                'get_enterpriseId',
+                'get_shopId'
 			]),
+            activeObj () {
+                if (this.id) {
+                    return this.leftList.filter(_ => _.id === this.id)[0]
+                }
+                return { goodsShowType: 0, showExtend: 0, showName: 0, serverProtocol: 0 }
+            },
+            carouselList () {
+                if (this.id) {
+                    let obj = this.leftList.filter(_ => _.id === this.id)[0]
+                    return (obj.slideshow && obj.slideshow.length) > 0 ? JSON.parse(obj.slideshow) : []
+                }
+                return []
+            }
         },
         data(){
             return{
-                list:[{
-                    name:'热卖套系',
-                    data:[{
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'999儿童'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222儿童'
-                    }]
-                },
-                {
-                    name:'个人写真',
-                    data:[{
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'999写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222写真'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'666写真'
-                    }]
-                },
-                 {
-                    name:'儿童套系',
-                    data:[{
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'999儿童'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888儿童'
-                    },
-                    ]
-                },
-                {
-                    name:'孕妈套系',
-                    data:[{
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'999孕妈'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'888孕妈'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'222孕妈'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'666孕妈'
-                    },
-                    {
-                        url:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fuploadfile.bizhizu.cn%2Fup%2F0a%2F1d%2F30%2F0a1d3089cddf6fc52588891d583b78ed.jpg&refer=http%3A%2F%2Fuploadfile.bizhizu.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613273432&t=12dbfbf9a754204df8c5b3bb1f986258',
-                        str:'666孕妈'
-                    }]
-                }],
                 shopId:14,
-                Index:0, // 索引
                 leftList:null,
                 rightList:[],
                 showNoMore:false,
                 page:1,
                 total:0, // 总数量
-                id:0,
+                id: null,
             }
         },
         onShow() {
             this.rightList = [];
+            this.shopId = this.get_shopId.shopId
             uni.getStorage({
                 key: 'classId',
                 success: res => {
@@ -176,7 +102,6 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                     uni.removeStorageSync('classId');
                 },
                 fail:()=> {
-                    this.Index=0
                     this.getListAssemblyOnlineCategory()
                 }
             })
@@ -188,23 +113,55 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
             //this.getListAssemblyOnlineCategory()
         },
         methods:{
+            turnDetail (data) {
+                if (!data.imgData) return
+				switch (data.imgData.type) {
+					case 'detail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/components/details?id=' + data.imgData.detailId 
+						})
+						break;
+					case 'classify':
+						uni.setStorage({
+							key: 'classId',
+							data: data.imgData.detailId
+						})
+						uni.switchTab({
+                            url:'/pages/tabBar/classify/classify'
+                        })
+						break;
+						case 'imgDetail':
+						uni.navigateTo({ 
+							url: '/pages/tabBar/classify/newDetail?id=' + data.imgData.detailId 
+						})
+						break;
+					case 'imgTow':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondary?id=' + data.imgData.detailId 
+                        })
+						break;
+					case 'imgClassify':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/secondClassify?id=' + data.imgData.detailId 
+                        })
+						break;
+                    case 'feedBack':
+						uni.navigateTo({
+                            url:'/pages/tabBar/classify/feedBack'
+                        })
+						break;
+				}
+			},
             // 获取套系类别列表
             getListAssemblyOnlineCategory(id){
                 let param ={
                     shopId:this.shopId,
-                    enterpriseId:this.get_enterpriseId
+                    enterpriseId:this.get_enterpriseId,
+                    type: 0
                 }
                 getListAssemblyOnlineCategory(param).then(res=>{
                     this.leftList = res.data.data
                     this.id = id ? id: this.leftList[0].id
-                    if(id){
-                        // 寻找索引
-                        this.leftList.map((item,index)=>{
-                            if(item.id == id){
-                                this.Index = index
-                            }
-                        })
-                    }
                     this.getPageAssemblyOnline()
                 })
             },
@@ -229,16 +186,18 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                         return 
                     }
                     this.total = res.data.data.total
-					const curList = res.data.data.records
-					curList.forEach((i)=>{
-						this.rightList.push(i)
-					})
+                    this.rightList = res.data.data.records
+                    console.log(res)
+                    console.log(this.rightList)
+					// const curList = res.data.data.records
+					// curList.forEach((i)=>{
+					// 	this.rightList.push(i)
+					// })
                 })
             },
 
             // 更新索引
-            onClickTab(idx,id){
-                this.Index = idx
+            onClickTab(id){
                 this.id = id
                 this.rightList = [];
                 this.getPageAssemblyOnline()
@@ -247,11 +206,9 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
             // 跳转详情
             onClickDetails(idx){
                 uni.navigateTo({ 
-                    url: '/pages/tabBar/classify/components/details?id=' + idx  
+                    url: '/pages/tabBar/classify/components/details?id=' + idx
                 })
             },
-
-
             // 组件
 			refresh () {
 				this.$nextTick(() => {
@@ -284,11 +241,13 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
 }
 .classify{
     font-size: 28rpx;
+    margin-bottom: 150rpx;
     // 左侧
     .left_box{
         width: 200rpx;
         position: flex;
         z-index: 1000;
+        height: 100vh;
         .fixed{
             width: 200rpx;
             background: #F9F9F9;
@@ -307,15 +266,60 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         width: 550rpx;
         height: 100%;
         flex-wrap: wrap;
-        .right_li{
-            width: 236rpx;
-            height: 276rpx;
-            margin-bottom: 20rpx;
-            .img{
-                width: 236rpx;
-                height: 236rpx;
-                border-radius: 20rpx;
-            }
+        padding: 20rpx;
+        box-sizing: border-box;
+    }
+}
+.h150{
+	height: 320rpx;
+}
+.smallRectangle{
+    margin-top: 20rpx;
+    display: flex;
+    flex-direction: column;
+    .h110{
+        height: 220rpx;
+        width: 100%;
+        margin-bottom: 10rpx;
+    }
+    .h200{
+        height: 350rpx;
+        width: 100%;
+        margin-bottom: 10rpx;
+    }
+}
+.dbColumn{
+    margin-top: 10rpx;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .title {
+        color: #919191;
+        padding: 4rpx 10rpx;
+    }
+    .price{
+        font-weight: 600;
+        padding: 0rpx 10rpx 6rpx;
+    }
+    .gt_icon{
+        float: right;
+        color: #D4AD72;
+    }
+    .oneContent{
+        width: 250rpx;
+        background: #f5f5f5;
+        border-bottom-left-radius: 8rpx;
+        border-bottom-right-radius: 8rpx;
+        margin-bottom: 10rpx;
+        .img{
+            width: 100%;
+            height: 250rpx;
+            vertical-align: bottom;
+        }
+        .longImg{
+            width: 100%;
+            height: 300rpx;
+            vertical-align: bottom;
         }
     }
 }
