@@ -12,6 +12,9 @@
                     ￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}
                     <text class="colorH" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text>
                 </text>
+                <div @click="onCollection()" class="font12">
+                    <i class="iconfont iconshoucang"></i>收藏
+                </div>
             </view>
         </view>
 
@@ -129,7 +132,7 @@
 <script>
 import banner from '@/components/banner.vue'
 import buyCar from '@/components/buyCar.vue'
-import { getAssemblyOnlineDetail } from '@/util/api/goods.js'
+import { getAssemblyOnlineDetail, cellectAssembly } from '@/util/api/goods.js'
 import { getAssemblyDescription } from '@/util/api/user.js'
 import { addRecommendOne } from '@/util/api/order.js'
  import { mapMutations, mapGetters } from 'vuex'
@@ -177,6 +180,7 @@ import { addRecommendOne } from '@/util/api/order.js'
                 }
                 getAssemblyOnlineDetail(param).then(res=>{
                     this.listDetai = res.data.data
+                    console.log(this.listDetai)
                     uni.setNavigationBarTitle({
                         title: res.data.data.name
                     })
@@ -236,6 +240,10 @@ import { addRecommendOne } from '@/util/api/order.js'
                     this.mut_quickListAdd([datas])
                 }else{
                     this.mut_carListAdd(datas)
+                    uni.showToast({
+                        title: '添加购物车成功',
+                        duration: 2000
+                    })
                 }
             },
 
@@ -246,7 +254,31 @@ import { addRecommendOne } from '@/util/api/order.js'
                     url: '/pages/tabBar/shoppingCart/components/order_confirm'
                 })
             },
-
+            // 收藏
+            async onCollection () {
+                let params = {
+                    appId: this.get_appId,
+                    assemblyId: this.listDetai.assemblyId,
+                    assemblyType: this.listDetai.assemblyType,
+                    enterpriseId: this.get_enterpriseId,
+                    isCollect: true,
+                    images: this.listDetai.coverPhoto,
+                    userId: this.get_userId,
+                    title: this.listDetai.name
+                }
+                if (this.get_userId) {
+                    await cellectAssembly(params)
+                    uni.showToast({
+                        title: '收藏成功',
+                        duration: 2000
+                    })
+                } else {
+                    uni.showToast({
+                        title: '请登录后再收藏',
+                        duration: 2000
+                    })
+                }
+            }
         }
     }
 </script>
@@ -301,5 +333,11 @@ import { addRecommendOne } from '@/util/api/order.js'
             vertical-align: bottom;
         }
     }
+}
+.font12{
+    font-size: 20rpx;
+    color: #6B6B6B;
+    text-align: center;
+    font-weight: 500;
 }
 </style>

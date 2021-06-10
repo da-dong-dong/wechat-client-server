@@ -25,10 +25,10 @@
                 <view class="fontSize32 fontWight">
                     {{item.shopName}}
                 </view>
-                <view class="paddingT20 color999 fontSize24">
+                <view class="paddingT20 color333 fontSize24 address">
                     地址：{{`${item.province}${item.city}${item.area}`}}
                 </view>
-                <view class="color999 fontSize24 marginT10">
+                <view class="color333 fontSize24 marginT10">
                     营业时间：{{item.businessHours?item.businessHours:''}}
                 </view>
                 <view class="btnLIst paddingT20">
@@ -150,5 +150,8 @@
             font-size: 26rpx;
         }
     }
+}
+.address{
+    font-family: Source Han Sans CN;
 }
 </style>

@@ -14,7 +14,7 @@
                 </view>
             </view>
         </view> -->
-        <view class="user_seting padd20">
+        <view class="user_seting padd32">
             <view class="flex">
                 <div class="flex_1">
                     <div class="register" v-if="!get_headimgUrl" @click="getCode(jsCode)">登录/注册</div>
@@ -26,30 +26,51 @@
                 </div>
             </view>
             <view class="menu_list">
-                <div @click="onClikcPage('/pages/order/detail/order-my')">
-                    <i class="iconfont iconxiangce"></i>
-                    <span>我的相册</span>
-                </div>
-                <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;margin-top: 0rpx">
-                    <div>
-                        <i class="iconfont iconkefu"></i>
-                        <span>专属顾问</span>
+                <div class="flex mar_t22">
+                    <div @click="getUserInfo">
+                        <i class="iconfont iconziliao"></i>
+                        <span>个人资料</span>
                     </div>
-                </button>
-                <div @click="onClickService('mack')">
-                    <i class="iconfont iconxieyi"></i>
-                    <span>预约协议</span>
+                    <div @click="onClikcPage('/pages/order/detail/order-my')">
+                        <i class="iconfont iconxiangce"></i>
+                        <span>我的相册</span>
+                    </div>
+                    <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;margin-top: 0rpx">
+                        <div>
+                            <i class="iconfont iconkefu"></i>
+                            <span>专属顾问</span>
+                        </div>
+                    </button>
+                    <div @click="onClickService('mack')">
+                        <i class="iconfont iconxieyi"></i>
+                        <span>预约协议</span>
+                    </div>
                 </div>
-                <div @click="onClikcPage('/pages/zyd_page/standard/index')">
-                    <i class="iconfont iconcaidan"></i>
-                    <span>标准服务</span>
+                <div class="flex mar_t40">
+                    <!-- 需要修改 -->
+                    <div @click="onClikcPage('/pages/zyd_page/standard/index')">
+                        <i class="iconfont iconcaidan"></i>
+                        <span>标准服务</span>
+                    </div>
+                    <div @click="onClickFeedBack">
+                        <i class="iconfont iconfankui"></i>
+                        <span>意见反馈</span>
+                    </div>
+                    <div @click="onClikcPage('/pages/collection/index')">
+                        <i class="iconfont iconshoucang"></i>
+                        <span>我的收藏</span>
+                    </div>
+                    <div >
+                        <i class="iconfont iconguanyu"></i>
+                        <span>关于北遇</span>
+                    </div>
                 </div>
             </view>
         </view>
 
         <!-- 封面故事 -->
         <view class="cover_content" v-if="imgList.length > 0">
-            <div>封面故事</div>
+            <div class="bold_T">封面故事</div>
             <scroll-view class="scroll-view_H" scroll-x="true" >
                 <view class="scroll-view-item_H" v-for="_ in imgList" :key="_.id">
                     <div class="flex" @click="toWebView(_)">
@@ -62,8 +83,11 @@
                 </view>
             </scroll-view>
         </view>
+        <view class="outView">
+            退出登陆
+        </view>
         <!-- 用户设置 -->
-        <view class="user_seting marginT10">
+        <!-- <view class="user_seting marginT10">
             <view class="user_seting_li flex paddingRL20" >
                 <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
                     <view class="flex ">
@@ -90,13 +114,13 @@
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
-            <!-- <view class="user_seting_li flex paddingRL20" @click="onClickService('mack')">
+            <view class="user_seting_li flex paddingRL20" @click="onClickService('mack')">
                 <view class="flex">
                     <image class="img" src="/static/image/my/3.png"></image>
                     <text class="paddingL20">预约服务</text>
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view> -->
+            </view>
 
             <view class="user_seting_li flex paddingRL20" @click="onClickFeedBack">
                 <view class="flex">
@@ -113,7 +137,7 @@
                 </view>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
-        </view>
+        </view> -->
         <!-- 弹窗 -->
         <i-message id="message" />
 
@@ -173,7 +197,7 @@ import { getTextImageList } from '@/util/api/order.js'
             ]),
             toWebView (_) {
                 uni.navigateTo({ 
-                    url: `/pages/tabBar/my/components/web_view?url=${_.link}` 
+                    url: `/pages/tabBar/my/components/web_view?url=${_.link}&title=${_.title}` 
                 })
             },
             // 获得图文列
@@ -288,8 +312,6 @@ import { getTextImageList } from '@/util/api/order.js'
                     url: `/pages/tabBar/my/components/serviceAgreement?type=${type}`
                 })
             },
-
-            // 退出登陆
             // 退出登陆
             onClickOut(){
                 console.log('退出')
@@ -314,19 +336,27 @@ import { getTextImageList } from '@/util/api/order.js'
 
 <style lang="scss" scoped>
 .menu_list{
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
     padding: 20rpx;
     padding-top: 30rpx;
     margin-top: 30rpx;
     border-top: 1px solid #ECECEC;
-    div{
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        .iconfont{
-            font-size: 36rpx;
-            margin-bottom: 10rpx;
+    .flex{
+        justify-content: space-between;
+        div{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            .iconfont{
+                font-size: 36rpx;
+                margin-bottom: 10rpx;
+            }
+        }
+        &.mar_t40{
+            margin-top: 40rpx;
+        }
+        &.mar_t22{
+            margin-top: 22rpx;
         }
     }
     span{
@@ -354,8 +384,8 @@ import { getTextImageList } from '@/util/api/order.js'
         }
     }
 }
-.padd20{
-    padding: 20rpx;
+.padd32{
+    padding: 32rpx;
 }
 // 用户设置
 .user_seting{
@@ -439,9 +469,15 @@ import { getTextImageList } from '@/util/api/order.js'
         border-radius: 50%;
     }
     .title{
-        font-weight: 600;
+        font-family: PingFang SC;
+        font-weight: bold;
         margin: 10rpx 0;
         font-size: 28rpx;
+    }
+    .bold_T{
+        font-family: Source Han Sans CN;
+        font-weight: bold;
+        font-size: 30rpx;
     }
 }
 .scroll-view-item_H{
@@ -466,5 +502,14 @@ import { getTextImageList } from '@/util/api/order.js'
  	white-space: nowrap;
     border-radius: 20rpx;
     margin: 20rpx 0;
+}
+.outView{
+    text-align: center;
+    font-size: 28rpx;
+    font-family: SourceHanSansCN;
+    font-weight: 300;
+    color: #999999;
+    height: 80rpx;
+    line-height: 80rpx;
 }
 </style>

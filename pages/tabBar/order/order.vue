@@ -263,7 +263,7 @@ import { mapGetters } from 'vuex'
     flex:1;
     display: flex;
     flex-direction: column;
-    background: #F9F9F9;
+    background: #F5F5F5;
     height: 100vh;
     .swiper_group{
         flex: 1;

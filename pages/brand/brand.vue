@@ -1,15 +1,26 @@
 /******************************** 品牌选择 ***************************************/
 <template>
-    <view class="brandBox paddingRL40">
-        <view class="brandTop color000 fontSize36 fontWight paddingT40 marginB30">
+    <view class="brandBox">
+        <!-- <view class="brandTop color000 fontSize36 fontWight paddingT40 marginB30">
             选择当前品牌
-        </view>
-        <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)" :style="{ 'background-image': `url(${item.images})`}">
-            <view class="brandListText">
-                <view class="fontWight fontSize40">{{item.name}}</view>
-                <text class="fontSize30">{{item.remarks?item.remarks:''}}</text>
+        </view> -->
+        <!-- 顶部导航 -->
+		<uni-nav-bar fixed statusBar >
+			<view class="navText">两醒影像</view>
+			<view slot="left">
+				<view class="navCrt">
+					<view class="textOv">品牌选择</view>
+				</view>
+			</view>
+		</uni-nav-bar>
+        <div class="w690">
+            <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)" :style="{ 'background-image': `url(${item.images})`}">
+                <view class="brandListText">
+                    <view class="fontWight fontSize40 brean_name">{{item.name}}</view>
+                    <text class="font20">{{item.remarks?item.remarks:''}}</text>
+                </view>
             </view>
-        </view>
+        </div>
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -56,20 +67,55 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
                 	url:'/pages/tabBar/shoppingCart/components/changeRegion'
                 })
             }
+        },
+        onLoad () {
+            uni.setNavigationBarColor({
+                frontColor: '##333333',
+                backgroundColor: '#ffffff'
+            })
         }
     }
 </script>
 
 <style lang="scss" scoped>
 .brandBox{
-    width: 100%;
+    width: 100vw;
     min-height: 100vh;
-    background: #F9F9F9;
+    background: #ffffff;
     box-sizing: border-box;
+    .navText{
+        width: 100%;
+        text-align: center;
+        font-size: 32rpx;
+        font-family: Source Han Sans CN;
+        font-weight: bold;
+        color: #333333;
+    }
+    .navCrt{
+        width: 130rpx;
+        border: 1rpx solid #D6D6D6;
+        border-radius: 50rpx;
+        height: 55rpx;
+        left: 60rpx;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding-left: 10rpx;
+        padding-right: 10rpx;
+        .textOv{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 30rpx;
+        }
+    }
+}
+.w690{
+    width: 690rpx;
+    margin: 28rpx auto;
 }
 .brandList{
-    width: 100%;
-    height: 362rpx;
+    height: 390rpx;
     border-radius: 20rpx;
     box-sizing: border-box;
     background-size: 100% 100%;
@@ -81,6 +127,16 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
         padding-top: 230rpx;
         color: #fff;
         text-align: center;
+    }
+    .font20{
+        font-size: 20rpx;
+        font-family: SourceHanSansCN;
+        font-weight: 300;
+    }
+    .brean_name{
+        font-size: 40rpx;
+        font-family: MingHei_B;
+        font-weight: 400;
     }
 }
 </style>

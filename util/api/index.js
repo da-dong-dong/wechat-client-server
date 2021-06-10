@@ -1,7 +1,8 @@
 // true 开发环境， false 生产环境
 let test = true
-
- let base = test ? 'http://192.168.5.28:8000' : 'https://wxapi.lyfz.net'
+let base = 'http://192.168.5.28:8000'
+// let base = 'https://erp-wxapi.27yn.cn'
+//  let base = test ? 'http://192.168.5.28:8000' : 'https://wxapi.lyfz.net'
 // let base = test ? 'https://wxapi.lyfz.net' : 'https://erp-wxapi.27yn.cn'
 
 let baseUrl = {
@@ -35,7 +36,15 @@ let baseUrl = {
 	getMyFeedBackList: `${base}/api/feedback/list`, // 意见反馈-用户查看列表
 	
 	// 购物车                  
-	
+	reservationPhotoDate: `${base}/api/template/ma/auth/reservation_photo_date`, // 获取预约拍照档期
+	typographyCost: `${base}/api/template/ma/auth/typography_cost`, // 查询档期费用
+	listCategory: `${base}/api/template/ma/auth/list_category`, // 获取类别列表
+	order: `${base}/api/template/ma/auth/order`, // 下单
+	orders: `${base}/api/template/ma/test_pay`, // 下单ove
+	cellectAssembly: `${base}/api/template/ma/assembly_collect`, //  收藏
+	getCollectList: `${base}/api/template/ma/get_assembly_collect_list`, // 获取套系收藏集合
+	delCollectOne: `${base}/api/template/ma/delete_assembly_collect`, // 删除套系收藏
+
 	// 订单
 	orderDetails: `${base}/api/template/ma/auth/order_details`, // 订单详情
 	orderProcess: `${base}/api/template/ma/auth/order_process`, // 订单流程

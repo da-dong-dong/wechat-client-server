@@ -1,71 +1,81 @@
 <template>
     <view class="buy_cart_content">
-        <view class="msg_div">
-            <div class="title_div">
-                <span class="title">已选门店</span>
-                <view class="title_shop">
-                    <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
-                    <text class="orange paddingL20" @click="onChangeShopId">切换</text>
-                </view>
-            </div>
+        <div class="pad20">
             <view v-if="get_carList.length > 0">
-                
-                <view class="flex" v-for="(_, i) in get_carList" :key="i">
-                    <view class="radio">
-                        <radio color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
-                    </view>
-                    <img class="h145" :src="_.imgs" />
-                    <view class="flex_1">
-                        <view class="padding">
-                            <span class="font600">{{_.name}}</span>
-                            <span class="float_r colorA3">￥{{_.price}}</span>
+                <view class="msg_div">
+                    <div class="title_div">
+                        <span class="title">已选门店</span>
+                        <view class="title_shop">
+                            <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
+                            <text class="orange paddingL20" @click="onChangeShopId">切换</text>
                         </view>
-                        <view class="font14">
-                            总价: <span class="orange">￥{{_.price}}</span>
+                    </div>
+                    <uni-swipe-action>
+                        <uni-swipe-action-item v-for="(_, i) in get_carList" :key="i">
+                            <view class="flex">
+                                <view class="radio">
+                                    <radio color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
+                                </view>
+                                <img class="h145" :src="_.imgs" />
+                                <view class="flex_1">
+                                    <view class="padding">
+                                        <span class="font600">{{_.name}}</span>
+                                        <span class="float_r colorA3">￥{{_.price}}</span>
+                                    </view>
+                                    <view class="font14">
+                                        总价: <span class="orange">￥{{_.price}}</span>
+                                    </view>
+                                    <view class="font14">
+                                        尾款: ￥{{_.price}}
+                                    </view>
+                                </view>
+                            </view>
+                            <template v-slot:right>
+                                <view class="del" @click="onCarListDel(i)">删除</view>
+                            </template>
+                        </uni-swipe-action-item>
+                    </uni-swipe-action>
+
+
+                    <view class="flex buy_content"  v-if="get_carList.length > 0">
+                        <view class="radio">
+                            <radio color="#D3AB75" :checked="buyAllBool" @click="allChange"/>
                         </view>
-                        <view class="font14">
-                            尾款: ￥{{_.price}}
+                        <div class="buy_all">全选</div>
+                        <view class="buy_txt">
+                            <view class="font18">
+                                总价: <span class="orange">￥{{ sumPrice }}</span>
+                            </view>
+                            <view class="font14">
+                                尾款: ￥{{ sumPrice }}
+                            </view>
+                        </view>
+                        <view class="go_sub" @click="onQuick">
+                            去预约
                         </view>
                     </view>
                 </view>
             </view>
-
             <view class="showList carLi" v-else>
-                购物车空空如也
+                <div class="flex_col">
+                    <img class="w144" src="/static/tabBar/beiyu.png" alt="">
+                    <div>您暂时还没有您还没加购产品喔~</div>
+                </div>
             </view>
-
-            <view class="flex buy_content"  v-if="get_carList.length > 0">
-                <view class="radio">
-                    <radio color="#D3AB75" :checked="buyAllBool" @click="allChange"/>
-                </view>
-                <div class="buy_all">全选</div>
-                <view class="buy_txt">
-                    <view class="font18">
-                        总价: <span class="orange">￥{{ sumPrice }}</span>
-                    </view>
-                    <view class="font14">
-                        尾款: ￥{{ sumPrice }}
-                    </view>
-                </view>
-                <view class="go_sub" @click="onQuick">
-                    去预约
-                </view>
+            <view class="recommend">
+                为你推荐
             </view>
-        </view>
-        <view class="recommend">
-            为你推荐
-        </view>
-        <div class="twoContent">
-            <div class="oneRow" v-for="_ in recommentList" :key="_.assemblyId" @click="onClickDetails(_.assemblyId)">
-                <img class="h110" :src="_.coverPhoto"/>
-                <div class="tow_title">{{_.assemblyName}}</div>
-                <div class="desc" >
-                    ￥ {{_.assemblyPrice}}
-                    <span class="iconfont icon1202youjiantou gt_icon"></span>
+            <div class="twoContent">
+                <div class="oneRow" v-for="_ in recommentList" :key="_.assemblyOnlineId" @click="onClickDetails(_.assemblyOnlineId)">
+                    <img class="h110" :src="_.coverPhoto"/>
+                    <div class="tow_title">{{_.assemblyName}}</div>
+                    <div class="desc" >
+                        ￥ {{_.assemblyPrice}}
+                        <span class="iconfont icon1202youjiantou gt_icon"></span>
+                    </div>
                 </div>
             </div>
         </div>
-        
        <!-- 客服 -->
         <view class="userCall">
             <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
@@ -85,11 +95,15 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import buyCar from '@/components/buyCar.vue'
 import { getRecommendAssemblyList } from '@/util/api/order.js'
 import { getUserInfo } from '@/util/api/user.js'
+import uniSwipeAction from '@/components/uni-swipe-action/uni-swipe-action.vue'
+import uniSwipeActionItem from '@/components/uni-swipe-action-item/uni-swipe-action-item.vue'
 
 const { $Message } = require('@/wxcomponents/base/index');
     export default {
         components:{
-            buyCar
+            buyCar,
+            uniSwipeAction,
+            uniSwipeActionItem
         },
         computed:{
 			...mapGetters('user',[
@@ -118,6 +132,16 @@ const { $Message } = require('@/wxcomponents/base/index');
                buyAllBool: true,
                recommentList: []
             }
+        },
+        onLoad(options) {
+            uni.setNavigationBarColor({
+                frontColor: '#000000',
+                backgroundColor: '#ffffff',
+                animation: {
+                    duration: 400,
+                    timingFunc: 'easeIn'
+                }
+            })
         },
         onShow () {
             console.log('数据', this.get_carList)
@@ -246,15 +270,18 @@ const { $Message } = require('@/wxcomponents/base/index');
 <style lang="scss" scoped>
 .buy_cart_content{
     height: 100vh;
-    padding: 20rpx;
+    // padding: 20rpx;
     padding-bottom: 150rpx;
     overflow: auto;
     box-sizing: border-box;
-    background: #F9F9F9;
+    background: #f5f5f5;
     overflow: auto;
     .recommend{
         text-align: center;
         margin-bottom: 20rpx;
+    }
+    .pad20{
+        padding: 20rpx;
     }
     .msg_div{
         padding: 20rpx 0;
@@ -379,9 +406,34 @@ const { $Message } = require('@/wxcomponents/base/index');
     color: #D3AB75;
 }
 .showList{
-    height: 300rpx;
+    margin-top: 100rpx;
+    height: 400rpx;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #9D9D9D;
+    .flex_col{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .w144{
+        width: 144rpx;
+        height: 144rpx;
+        margin-bottom: 20rpx;
+    }
+}
+.del{
+    color: #fff;
+    background: #FF3B30;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 0rpx 20rpx;
+    height: 100%;
 }
 </style>

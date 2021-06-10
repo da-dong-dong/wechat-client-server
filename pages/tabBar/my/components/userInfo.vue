@@ -92,11 +92,11 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
         },
         onLoad(){
             // 初始化数据
-
+            console.log(this.get_birthday)
             this.userInfo.nickName = this.get_nickName
             this.userInfo.phone = this.get_phone
             this.userInfo.sex = this.get_sex
-            this.userInfo.birthday =  new Date(this.get_birthday)
+            this.userInfo.birthday =  this.get_birthday ? this.get_birthday : new Date().getTime()
             this.userInfo.province = this.get_province
             this.userInfo.city = this.get_city
             this.userInfo.area = this.get_area
@@ -131,6 +131,7 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
             
             // 保存
             onClickSave(){
+                console.log(this.userInfo.birthday);
                 console.log(this.userInfo)
                 updateUserInfo(this.userInfo).then(res=>{
                     let code = res.data.code

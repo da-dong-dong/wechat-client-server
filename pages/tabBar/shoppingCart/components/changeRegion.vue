@@ -2,11 +2,9 @@
 <template>
     <view class="regionBox">
         <!-- 搜索 -->
-        <search  @onSearch="onSearch"/>
-
+        <!-- <search  @onSearch="onSearch"/> -->
         <!-- 定位 -->
         <city  :cityVal="cityVal" :barmd="get_barmd"  :showShopIdList="showShopIdList" @onSearch="filterShop" @onSetShopId="onSetShopId" @onChageBarmd="onChageBarmd" @onChangeCity="onChangeCity"/>
-        
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -163,7 +161,7 @@ const { $Message } = require('@/wxcomponents/base/index');
 
 <style lang="scss" scoped>
 .regionBox{
-    background: #F9F9F9;
+    background: #fff;
     min-height: 100vh;
 }
 </style>

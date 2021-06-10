@@ -78,7 +78,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         },
         data(){
             return{
-                shopId:14,
+                shopId: null,
                 leftList:null,
                 rightList:[],
                 showNoMore:false,
@@ -88,6 +88,15 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
             }
         },
         onLoad(){
+            uni.setNavigationBarColor({
+                frontColor: '#000000',
+                backgroundColor: '#ffffff',
+                animation: {
+                    duration: 400,
+                    timingFunc: 'easeIn'
+                }
+            })
+            this.shopId = this.get_shopId.shopId
             this.getListAssemblyOnlineCategory()
 		},
         methods:{
@@ -137,7 +146,9 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
                     enterpriseId:this.get_enterpriseId,
                     type: 1
                 }
+                console.log('图文分类params', param)
                 getListAssemblyOnlineCategory(param).then(res=>{
+                    console.log('图文分类', res);
                     this.leftList = res.data.data
                     this.id = id ? id: this.leftList[0].id
                     this.getMaAssemblyOnlineTitle()
@@ -218,14 +229,23 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         height: 100vh;
         .fixed{
             width: 200rpx;
-            background: #F9F9F9;
+            background: #f5f5f5;
             height: 100vh;
             color: #7D7E80;
         }
         .active{
-            color: #FF4852;
             background: #fff;
-            border-left: 1px solid #FF4852;
+            position: relative;
+            &::after{
+                display: block;
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 6rpx;
+                background: #D3AA72;
+            }
         }
     }
 

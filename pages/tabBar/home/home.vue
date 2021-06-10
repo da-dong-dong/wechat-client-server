@@ -283,7 +283,7 @@ const entriData = uni.getExtConfigSync()
 }
 .homeContent{
 	font-size: 24rpx;
-	margin-bottom: 170rpx;
+	margin-bottom: 150rpx;
 }
 .searchContent{
     padding: 20rpx 20rpx;

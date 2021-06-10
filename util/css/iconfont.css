@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2469080 */
-  src: url('//at.alicdn.com/t/font_2469080_pm7t2n079eh.woff2?t=1621481974277') format('woff2'),
-       url('//at.alicdn.com/t/font_2469080_pm7t2n079eh.woff?t=1621481974277') format('woff'),
-       url('//at.alicdn.com/t/font_2469080_pm7t2n079eh.ttf?t=1621481974277') format('truetype');
+  src: url('//at.alicdn.com/t/font_2469080_lfar3d0t9ff.woff2?t=1623227003990') format('woff2'),
+       url('//at.alicdn.com/t/font_2469080_lfar3d0t9ff.woff?t=1623227003990') format('woff'),
+       url('//at.alicdn.com/t/font_2469080_lfar3d0t9ff.ttf?t=1623227003990') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.iconshanchu:before {
+  content: "\e607";
+}
+
+.iconhtbArrowright02:before {
+  content: "\e605";
+}
+
+.iconziliao:before {
+  content: "\e609";
+}
+
+.iconshoucang:before {
+  content: "\e60e";
+}
+
+.iconguanyu:before {
+  content: "\e60a";
+}
+
+.iconfankui:before {
+  content: "\e62e";
 }
 
 .iconleft1:before {

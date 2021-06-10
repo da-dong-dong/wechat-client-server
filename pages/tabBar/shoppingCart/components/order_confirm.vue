@@ -163,7 +163,6 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                     delta: backNum
                 })
             }
-           
         },
         data(){
             return{
@@ -411,8 +410,6 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
         padding: 20rpx;
         border-bottom: 1px solid #ECECEC;
         .name{
-            display: flex;
-            align-items: center;
             width: 140rpx;
             margin-right: 80rpx;
             text-align: justify;

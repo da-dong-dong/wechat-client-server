@@ -3,9 +3,9 @@
     "extAppid": "wxf84f228e76e1d984",
     "directCommit": false,
     "ext": {
-      "appName":"模板演示 授权用户ID",
+      "appName":"模板演示 模板ID",
       "request": [],
-      "enterpriseId":"00000000737f5b5a01737fbfce600000"
+      "enterpriseId": "00000000737f5b5a01737fbfce600000"
     },
     "extPages": {
       "pages/index/index": {}

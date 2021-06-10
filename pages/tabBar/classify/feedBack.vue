@@ -1,11 +1,13 @@
 <template>
     <div class="my_Form">
-        <view class="title">标题:</view>
-        <input class="uni-input" @input="(event) => { feedbackTitle = event.detail.value}" name="input" placeholder="标题" />
-        <view class="title">您的问题或建议:</view>
+        <!-- <view class="title">标题:</view> -->
+        <input class="uni-input" @input="(event) => { feedbackTitle = event.detail.value}" name="input"
+        placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" style="height: 60rpx;width: 100%;padding: 10rpx" placeholder="标题" />
+        <!-- <view class="title">您的问题或建议:</view> -->
         <!-- <input class="uni-input h100" name="input" placeholder="您的问题或建议:" /> -->
-        <textarea class="uni-input h100" @input="(event) => { feedbackContent = event.detail.value}" style="height: 200rpx;width: 100%;" placeholder="您的问题或建议:"/>
-        <button class="submit_BTN" @click="addFeedBackOne">提交</button>
+        <textarea class="uni-input h100" @input="(event) => { feedbackContent = event.detail.value}" style="height: 320rpx;width: 100%;"
+           placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" placeholder="如您对北遇映画有什么好的建议，可点击填写您的建议请把您的宝贵意见填写于此处，我们将做得更好，感谢你对被的支持！:"/>
+        <div class="submit_BTN" @click="addFeedBackOne">意见反馈</div>
     </div>
 </template>
 
@@ -63,7 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 .my_Form{
-    background: #fff;
+    background: #f5f5f5;
     height: 100vh;
     padding: 40rpx;
     box-sizing: border-box;
@@ -73,14 +75,26 @@ export default {
     .uni-input{
         background: #f5f5f5;
         margin-bottom: 20rpx;
-        border-radius: 6rpx;
+        border-radius: 16rpx;
         box-sizing: border-box;
+        background: #ffffff;
     }
     .h100{
-        height: 100rpx;
+        margin: 0 auto;
+        padding: 28rpx;
+        border-radius: 16px;
     }
     .submit_BTN{
-
+        width: 692rpx;
+        height: 88rpx;
+        line-height: 88rpx;
+        margin: 82rpx auto 0;
+        background: #D3AA72;
+        color: #ffffff;
+        font-family: PingFang SC;
+        font-size: 32rpx;
+        border-radius: 42rpx;
+        text-align: center;
     }
 }
 </style>

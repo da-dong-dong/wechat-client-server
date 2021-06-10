@@ -13,6 +13,9 @@ export default {
     },
     onLoad(options) {
         this.url = options.url
+        uni.setNavigationBarTitle({
+            title: options.title
+        })
     }
 }
 </script>

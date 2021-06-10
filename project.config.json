@@ -41,7 +41,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.15.0",
-  "appid": "wxb0276f88c88697b9",
+  "appid": "wxc8dae5751b88ea32", // 用户Id
   "projectname": "miniprogram-1",
   "debugOptions": {
     "hidedInDevtools": []

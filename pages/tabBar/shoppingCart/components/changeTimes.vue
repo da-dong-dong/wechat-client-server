@@ -7,11 +7,11 @@
                     <i class="iconfont iconposition-highlighted"></i>
                     {{get_shopId?get_shopId.shopName:'请选择门店'}}
                 </div>
-                <div class="font10 pad_l16">{{ get_shopId && get_shopId.address ? get_shopId.address : '' }}</div>
+                <div class="font10 pad_l16 colorE5">{{ get_shopId && get_shopId.address ? get_shopId.address : '' }}</div>
             </div>
             <div class="changeShop" @click="onChangeShopId">
                 <i class="iconfont iconfangzu"></i>
-                <span class="font10">
+                <span class="font10 colorD3">
                     切换门店
                 </span>
             </div>
@@ -304,6 +304,12 @@ import { getReservationDescription } from '@/util/api/user.js'
     .iconposition-highlighted, .iconfangzu{
         color: #D3AB75;
     }
+    .iconposition-highlighted{
+        margin-top: 6rpx;
+    }
+    .colorD3{
+        color: #D3AB75;
+    }
     .changeShop{
         text-align: center;
         width: 90rpx;
@@ -324,5 +330,8 @@ import { getReservationDescription } from '@/util/api/user.js'
 }
 .timeBox{
     margin: 20rpx;
+}
+.colorE5{
+    color: #5E5E60;
 }
 </style>

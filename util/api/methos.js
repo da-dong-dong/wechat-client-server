@@ -5,7 +5,7 @@
 **********/
 const { $Message } = require('@/wxcomponents/base/index');
 import user from '@/store/module/user.js'
-const request = (url, options) => {
+const request = (url, options, bool = true) => {
 	uni.showLoading({
 	    title: '加载中',
 			// 蒙板层
@@ -20,7 +20,7 @@ const request = (url, options) => {
 				'Authorization': user.state.code?user.state.code:''
 			},
 			success :(res)=>{
-				uni.hideLoading();
+				bool && uni.hideLoading();
 				
 				if(res.data.code !== 200){
 					if(res.data.code !== 407){
@@ -44,7 +44,7 @@ const request = (url, options) => {
 						
 					resolve(res)
 				}else{
-					uni.hideLoading();
+					bool && uni.hideLoading();
 					resolve(res)
 				}
 			},
@@ -65,8 +65,8 @@ const request = (url, options) => {
 		})
 	})
 }
-const get = (url, options = {}) => {
-    return request(url, { method: 'GET', data: options })
+const get = (url, options = {}, bool = true) => {
+    return request(url, { method: 'GET', data: options }, bool)
 }
 
 //post对象
@@ -81,16 +81,28 @@ const post = (url, options) => {
 const put = (url, options) => {
     return request(url, { method: 'PUT', data: options, isObj: true })
 }
- 
+
 // 不能声明DELETE（关键字）
 const remove = (url, options) => {
     return request(url, { method: 'DELETE', data: options })
 }
- 
+
+const del = (url, options) => {
+	let keys = Object.keys(options) 
+	let arr = []
+	console.log(keys);
+	console.log(arr);
+	keys.forEach(_ => {
+		arr.push(`${_}=${options[_]}`)
+	})
+    return request(url + '?' + arr.join('&'), { method: 'DELETE' })
+}
+
 module.exports = {
     get,
     post,
     put,
     remove,
+	del,
     postObj,
 }

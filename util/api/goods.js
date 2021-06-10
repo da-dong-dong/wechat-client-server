@@ -1,9 +1,9 @@
 import baseUrl from './index.js'
-import { get, post, put, remove, postObj, } from './methos.js'
+import { get, post, put, remove, postObj, del } from './methos.js'
 
 // 获取套系类别列表
 export const getListAssemblyOnlineCategory = (params) => {
-	return get(baseUrl.getListAssemblyOnlineCategory, params) 
+	return get(baseUrl.getListAssemblyOnlineCategory, params, false) 
 }
 
 // 获取套系分页
@@ -59,4 +59,19 @@ export const getPropelDetail = (params) => {
 // 获得图文类别下的套系
 export const getMaAssemblyOnlineTitle = (params) => {
 	return get(baseUrl.getMaAssemblyOnlineTitle, params)
+}
+
+//  收藏
+export const cellectAssembly = (params) => {
+	return post(baseUrl.cellectAssembly, params)
+}
+
+// 获取套系收藏集合
+export const getCollectList = (params) => {
+	return get(baseUrl.getCollectList, params)
+}
+
+// 删除套系收藏
+export const delCollectOne = (params) => {
+	return del(baseUrl.delCollectOne, params, false) 
 }

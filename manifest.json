@@ -16,6 +16,13 @@
             "autoclose" : true,
             "delay" : 0
         },
+        "safearea" : {
+            //安全区域配置，仅iOS平台生效  
+            "bottom" : {
+                // 底部安全区域配置  
+                "offset" : "auto" // 底部安全区域偏移，"none"表示不空出安全区域，"auto"自动计算空出安全区域，默认值为"none"  
+            }
+        },
         /* 模块配置 */
         "modules" : {},
         /* 应用发布信息 */
@@ -57,7 +64,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxb0276f88c88697b9", // 模板ID
+        "appid" : "wxb0276f88c88697b9", // 用户ID
         "setting" : {
             "urlCheck" : true
         },

@@ -83,7 +83,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         },
         data(){
             return{
-                shopId:14,
+                shopId: null,
                 leftList:null,
                 rightList:[],
                 showNoMore:false,
@@ -107,11 +107,16 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
             })
         },
         onLoad(){
+            uni.setNavigationBarColor({
+                frontColor: '#000000',
+                backgroundColor: '#ffffff',
+                animation: {
+                    duration: 400,
+                    timingFunc: 'easeIn'
+                }
+            })
             this.refresh();
 		},
-        mounted(){
-            //this.getListAssemblyOnlineCategory()
-        },
         methods:{
             turnDetail (data) {
                 if (!data.imgData) return
@@ -177,22 +182,11 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                 }
                 getPageAssemblyOnline(param).then(res=>{
                     if(!res.data.data){
-                        // $Message({
-                        //     content:'暂无数据',
-                        //     type: 'error'
-                        // });
                         this.rightList = []
-
                         return 
                     }
                     this.total = res.data.data.total
                     this.rightList = res.data.data.records
-                    console.log(res)
-                    console.log(this.rightList)
-					// const curList = res.data.data.records
-					// curList.forEach((i)=>{
-					// 	this.rightList.push(i)
-					// })
                 })
             },
 
@@ -250,14 +244,23 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         height: 100vh;
         .fixed{
             width: 200rpx;
-            background: #F9F9F9;
+            background: #F5F5F5;
             height: 100vh;
-            color: #7D7E80;
+            color: #8B8B8B;
         }
         .active{
-            color: #FF4852;
             background: #fff;
-            border-left: 1px solid #FF4852;
+            position: relative;
+            &::after{
+                display: block;
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 6rpx;
+                background: #D3AA72;
+            }
         }
     }
 
