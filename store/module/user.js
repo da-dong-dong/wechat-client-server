@@ -43,7 +43,7 @@ export default{
 		mut_nickName(state,data){
 			state.phone = data.phone
 			state.nickName = data.nickName
-			state.headimgUrl = data.headimgUrl?data.headimgUrl:state.headimgUrl
+			state.headimgUrl = data.headimgUrl
 			state.sex = data.sex
 			state.birthday = data.birthday
 			state.province = data.province
@@ -56,6 +56,19 @@ export default{
 		mut_APPId(state,data){
 			state.appId = data.appId
 			state.enterpriseId = data.enterpriseId
+		},
+		
+		// 退出登陆
+		mut_outCode(state,data){
+			state.phone = null
+			state.nickName = null
+			state.headimgUrl = null
+			state.sex = null
+			state.birthday = null
+			state.province = null
+			state.city = null
+			state.area = null
+			state.userId = null
 		},
 	},
   actions: {

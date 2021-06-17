@@ -15,14 +15,20 @@
             </view>
         </view> -->
         <view class="user_seting padd32">
-            <view class="flex">
+            <view class="flex" style="margin-bottom: 65rpx;">
                 <div class="flex_1">
-                    <div class="register" v-if="!get_headimgUrl" @click="getCode(jsCode)">登录/注册</div>
-                    <div class="colorA6" v-if="get_nickName">{{get_nickName}}</div>
+                    <div class="register" v-if="!get_headimgUrl" @click="getUserInfoAPI(false)">
+                        登录/注册
+                        <div class="text">拍出自然美</div>
+                    </div>
+                    <div class="register" v-if="get_nickName">
+                        {{get_nickName}}
+                        <div class="text">拍出自然美</div>
+                    </div>
                 </div>
                 <div>
                     <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
-                    <image v-else class="login_logo" src="/static/image/my/userImg.png"></image>
+                    <image v-else class="login_logo" src="/static/image/my/wdl.png"></image>
                 </div>
             </view>
             <view class="menu_list">
@@ -53,7 +59,7 @@
                         <span>标准服务</span>
                     </div>
                     <div @click="onClickFeedBack">
-                        <i class="iconfont iconfankui" style="font-size: 45rpx;margin-bottom: 1px;"></i>
+                        <i class="iconfont iconfankui" style="font-size: 55rpx;margin-bottom: 1rpx;"></i>
                         <span>意见反馈</span>
                     </div>
                     <div @click="onClikcPage('/pages/collection/index')">
@@ -83,7 +89,10 @@
                 </view>
             </scroll-view>
         </view>
-        <view class="outView" @click="onClickOut">
+        <view class="outView" @click="getUserInfoAPI(false)" v-if="!get_headimgUrl" >
+            登陆
+        </view>
+        <view class="outView" @click="onClickOut" v-else >
             退出登陆
         </view>
         <!-- 用户设置 -->
@@ -151,7 +160,7 @@
 <script>
 // 获取当前小程序信息
 const accountInfo = uni.getAccountInfoSync(); 
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
 import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
 import { getTextImageList } from '@/util/api/order.js'
@@ -162,7 +171,8 @@ import { getTextImageList } from '@/util/api/order.js'
                 'get_nickName',
                 'get_headimgUrl',
                 'get_appId',
-                'get_enterpriseId'
+                'get_enterpriseId',
+                'get_code'
 			]),
         },
         onLoad(options) {
@@ -177,7 +187,7 @@ import { getTextImageList } from '@/util/api/order.js'
         },
         onShow() {
             // 路由返回触发更新
-            this.getUserInfoAPI()
+            //this.getUserInfoAPI()
         },
         data(){
             return{
@@ -188,7 +198,7 @@ import { getTextImageList } from '@/util/api/order.js'
         },
         mounted(){
             // 获取用户
-            this.getUserInfoAPI()
+            //this.getUserInfoAPI()
             this.login()
             this.getTextImageList()
         },
@@ -196,6 +206,9 @@ import { getTextImageList } from '@/util/api/order.js'
             ...mapActions('user',[
                 'act_nickName',
                 'act_code'
+            ]),
+            ...mapMutations('user',[
+                'mut_outCode'
             ]),
             toWebView (_) {
                 uni.navigateTo({ 
@@ -275,7 +288,8 @@ import { getTextImageList } from '@/util/api/order.js'
                         },
                         fail:err=>{
                             console.log('登陆失效')
-                            this.getCode(this.jsCode)
+                            //this.getCode(this.jsCode)
+                            this.onClickUserInfo()
                         }
                     }) 
                 }else{
@@ -321,18 +335,21 @@ import { getTextImageList } from '@/util/api/order.js'
                     key: 'code',
                     success: (result) => {
                         clearInterval(getApp().globalData.time)
-                        let headimgUrl,nickName,phone,sex,birthday,province,city,area = null
-                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                        this.mut_outCode()
                         this.act_code(null)
-                        uni.reLaunch({ 
-                            url: '/pages/tabBar/home/home' 
-                        })
                     },
                     fail: (error) => {}
                 })
                 
             }
-        }
+        },
+        // 监听cood
+		watch:{
+			get_code(val){
+                if(!val) return
+				this.getUserInfoAPI(false)
+			}
+		}
     }
 </script>
 
@@ -350,15 +367,15 @@ import { getTextImageList } from '@/util/api/order.js'
             display: flex;
             flex-direction: column;
             .iconfont{
-                font-size: 36rpx;
+                font-size: 48rpx;
                 margin-bottom: 10rpx;
             }
         }
         &.mar_t40{
-            margin-top: 40rpx;
+            margin-top: 50rpx;
         }
         &.mar_t22{
-            margin-top: 22rpx;
+            margin-top: 35rpx;
         }
     }
     span{
@@ -427,6 +444,11 @@ import { getTextImageList } from '@/util/api/order.js'
         margin-top: 20rpx;
         font-size: 40rpx;
         font-weight: 600;
+        .text{
+            font-size: 28rpx;
+            color: #999999;
+            padding-top: 10rpx;
+        }
     }
 }
 .colorA6{
@@ -516,16 +538,16 @@ import { getTextImageList } from '@/util/api/order.js'
 }
 .btnUser{
     position: relative;
-    top: -3rpx;
+    top: 3rpx;
     .icos{
         position: absolute;
         color: black;
-        top: -46rpx;
+        top: -59rpx;
         left: 33rpx;
-        font-size: 45rpx;
+        font-size: 56rpx;
     }
     span{
-        vertical-align: -9rpx;
+        vertical-align: -16rpx;
     }
 }
 </style>

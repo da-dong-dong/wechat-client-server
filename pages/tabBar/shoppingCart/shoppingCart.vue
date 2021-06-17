@@ -20,13 +20,13 @@
                                 <view class="flex_1">
                                     <view class="padding">
                                         <span class="font600">{{_.name}}</span>
-                                        <span class="float_r colorA3">￥{{_.price}}</span>
+                                        <span class="float_r colorA3">￥{{_.enableDeposit?_.assemblyDeposit:_.price}}</span>
                                     </view>
                                     <view class="font14">
                                         总价: <span class="orange">￥{{_.price}}</span>
                                     </view>
                                     <view class="font14">
-                                        尾款: ￥{{_.price}}
+                                        尾款: ￥{{_.enableDeposit?_.price - _.assemblyDeposit:_.price}}
                                     </view>
                                 </view>
                             </view>
@@ -44,10 +44,7 @@
                         <div class="buy_all">全选</div>
                         <view class="buy_txt">
                             <view class="font18">
-                                总价: <span class="orange">￥{{ sumPrice }}</span>
-                            </view>
-                            <view class="font14">
-                                尾款: ￥{{ sumPrice }}
+                                合计: <span class="orange">￥{{ sumPrice }}</span>
                             </view>
                         </view>
                         <view class="go_sub" @click="onQuick">
@@ -120,9 +117,15 @@ const { $Message } = require('@/wxcomponents/base/index');
             sumPrice () {
                 let sum = 0
                 this.get_carList.forEach(_ => {
-                    if (_.buyBool) {
-                        sum += _.price
+                    if(_.enableDeposit){
+                        sum += _.assemblyDeposit
+                    }else{
+                        if (_.buyBool) {
+                            sum += _.price
+                        }
                     }
+
+                    
                 })
                 return sum
             }
@@ -393,13 +396,14 @@ const { $Message } = require('@/wxcomponents/base/index');
     justify-content: space-between; 
     .oneRow{
         background: #fff;
-        margin-bottom: 20rpx;
+        margin-bottom: 30rpx;
         width: 340rpx;
         border-radius: 10rpx;
     }
     .h110{
         width: 100%;
         height: 340rpx;
+        border-radius: 20rpx;
     }
     .desc{
         padding: 10rpx;
@@ -408,6 +412,7 @@ const { $Message } = require('@/wxcomponents/base/index');
     .tow_title{
         padding: 10rpx;
         color: #b2b2b2;
+        font-size: 26rpx;
     }
     .gt_icon{
         float: right;

@@ -105,6 +105,17 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                     this.getListAssemblyOnlineCategory()
                 }
             })
+            uni.getStorage({
+                key: 'All',
+                success: res => {
+                    this.getListAssemblyOnlineCategory(res.data)
+                    uni.removeStorageSync('All');
+                },
+                fail:()=> {
+                    this.getListAssemblyOnlineCategory()
+                }
+            })
+            
         },
         onLoad(){
             uni.setNavigationBarColor({
@@ -166,7 +177,13 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
                 }
                 getListAssemblyOnlineCategory(param).then(res=>{
                     this.leftList = res.data.data
-                    this.id = id ? id: this.leftList[0].id
+                    // 判断全部套系
+                    if(id == '全部套系'){
+                        let str = this.leftList.filter(_=>_.name == id)
+                        this.id = str.length>0 ? str[0].id: this.leftList[0].id
+                    }else{
+                        this.id = id ? id: this.leftList[0].id
+                    }
                     this.getPageAssemblyOnline()
                 })
             },
@@ -292,13 +309,14 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
     }
 }
 .dbColumn{
-    margin-top: 10rpx;
+    margin-top: 30rpx;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     .title {
         color: #919191;
         padding: 4rpx 10rpx;
+        font-size: 24rpx;
     }
     .price{
         font-weight: 600;
@@ -309,11 +327,11 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
         color: #D4AD72;
     }
     .oneContent{
-        width: 250rpx;
+        width: 245rpx;
         background: #f5f5f5;
         border-bottom-left-radius: 8rpx;
         border-bottom-right-radius: 8rpx;
-        margin-bottom: 10rpx;
+        margin-bottom: 30rpx;
         .img{
             width: 100%;
             height: 250rpx;
@@ -323,6 +341,7 @@ import { getListAssemblyOnlineCategory, getPageAssemblyOnline } from '@/util/api
             width: 100%;
             height: 300rpx;
             vertical-align: bottom;
+            border-radius: 15rpx;
         }
     }
 }

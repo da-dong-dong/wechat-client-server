@@ -74,6 +74,7 @@ export default {
             listDetai: {},
             colors:false, // 套系收费
             delCollId:null, // 记录id
+            Id:null,
         }
     },
     computed:{
@@ -85,6 +86,7 @@ export default {
         ]),
     },
     onLoad(options) {
+        this.Id = options.id
         this.getPtdetail(options.id)
     },
     methods: {
@@ -120,7 +122,7 @@ export default {
         async onCollection () {
             let params = {
                 appId: this.get_appId,
-                assemblyId: this.listDetai.id,
+                assemblyId: this.Id,
                 assemblyType: 0,
                 enterpriseId: this.get_enterpriseId,
                 isCollect: true,
@@ -161,7 +163,7 @@ export default {
         getAssemblyCollect(){
             let params = {
                 appId: this.get_appId,
-                assemblyId: this.listDetai.id,
+                assemblyId: this.Id,
                 assemblyType: 0,
                 enterpriseId: this.get_enterpriseId,
                 userId: this.get_userId,

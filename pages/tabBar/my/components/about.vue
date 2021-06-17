@@ -44,9 +44,10 @@
     background: #F5F5F5;
     padding: 30rpx;
     .imgs{
-        border-radius: 30rpx;
+        border-radius: 20rpx;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
         .img{
             width: 100%;
         }

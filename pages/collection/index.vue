@@ -2,7 +2,7 @@
   <div class="my_collection">
     <template v-if="list.length > 0">
         <div class="collectionOne" v-for="_ in list" :key="_.id">
-            <img class="img" :src="_.images" alt="">
+            <img class="img" :src="_.images" alt="" @click="onClickDetail(_.assemblyId,_.assemblyType)">
             <div class="title">
                 {{ _.title }}
                 <i class="iconfont iconshanchu right" @click="delCollectOne(_.id)"></i>
@@ -59,6 +59,21 @@ export default {
                 duration: 1500
             })
             this.getCollectList()
+        },
+
+        // 跳转详情
+        onClickDetail(id,type){
+            if(type == 1){
+                // 类别
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/classify/components/details?id=' + id
+                })
+            }else{
+                // 图文
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/classify/newDetail?id=' + id
+                })
+            }
         }
     },
     created () {

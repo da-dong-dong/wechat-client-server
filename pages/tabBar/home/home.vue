@@ -172,7 +172,11 @@ const entriData = uni.getExtConfigSync()
 
 			// 跳转城市选择
 			onChangeCity(){
-				uni.navigateTo({ url:'/pages/tabBar/home/components/cityList' })
+				//this.mut_shopId(null)
+				//uni.navigateTo({ url:'/pages/tabBar/home/components/cityList' })
+				uni.redirectTo({
+					url:'/pages/tabBar/shoppingCart/components/changeRegion?changeCity=changeCity'
+				})
 			},
 
 			turnShop () {
@@ -274,7 +278,7 @@ const entriData = uni.getExtConfigSync()
 .navText{
 	width: 100%;
 	text-align: center;
-	font-size: 26rpx;
+	font-size: 32rpx;
 }
 .navCrt{
 	min-width: 140rpx;

@@ -10,13 +10,13 @@
                 <view class="flex_1">
                     <view class="padding">
                         <span class="font600">{{item.assemblyName}}</span>
-                        <span class="float_r colorA3">￥{{item.sumPrice}}</span>
+                        <span class="float_r colorA3">￥{{item.incomePrice}}</span>
                     </view>
                     <view class="font14">
                         总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        尾<span></span>款: ￥{{item.sumPrice}}
+                        尾<span></span>款: ￥{{item.sumPrice-item.incomePrice}}
                     </view>
                 </view>
             </view>
@@ -35,7 +35,7 @@
                     </view>
                     <view v-else>
                         <view class=""  v-for="(item1,index1) in item['reservationPhotoInfoVos']" :key="index1">
-                            <view class="view">
+                            <view class="view" v-if="index1 === 0">
                                 拍摄门店: {{item1.reservationShopId | shopID(get_shopIdList)}}
                             </view>
                             <view class="view">
@@ -56,8 +56,8 @@
                 <view v-else class="noBuy">
                     <!-- 待付款 -->
                     <view>
-                        <span>已付定金：￥000</span>
-                        <span>尾款待支付：￥000</span>
+                        <span>已付定金：￥{{item.incomePrice}}</span>
+                        <span>尾款待支付：￥{{item.sumPrice - item.incomePrice}}</span>
                     </view>
                 </view>
                 <span class="float_r" v-if="item.state">

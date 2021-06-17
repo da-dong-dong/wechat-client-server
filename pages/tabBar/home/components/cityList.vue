@@ -27,9 +27,13 @@
             bindCity({cityName,city}){
                 this.mut_city(cityName || city)
                 // 跳转门店选择
-                uni.redirectTo({
-                    url:'/pages/tabBar/shoppingCart/components/changeRegion?changeCity=changeCity'
-                })
+                console.log('触发')
+                setTimeout(()=>{
+                    uni.redirectTo({
+                        url:'/pages/tabBar/shoppingCart/components/changeRegion?changeCity=changeCity'
+                    })
+                },100)
+                
                 
             }
         }

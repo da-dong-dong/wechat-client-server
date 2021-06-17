@@ -60,8 +60,9 @@ export default{
 			amapPlugin.getRegeo({  
 				success: (data) => {  
 					let {city,streetNumber} = data[0].regeocodeData.addressComponent
+					console.log(data)
 					commit('mut_city', city)
-					commit('mut_location', streetNumber)
+					commit('mut_location', [data.longitude,data.latitude])
 				},
 				fail: (err) => {
 					console.log(data,'取消授权')

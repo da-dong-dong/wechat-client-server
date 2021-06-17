@@ -35,6 +35,7 @@ const { $Message } = require('@/wxcomponents/base/index');
             this.id = options.id
             this.Index = options.index
             this.changeCity = options.changeCity
+            this.flage = options.flage
         },
         mounted() {  
             console.log(this.changeCity)
@@ -57,6 +58,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                 cityVal: null, // 当前位置
                 changeCity: false, // 是否更改城市
                 showShopIdList: [], // 过滤后
+                flage:null
             }
         },
         methods:{

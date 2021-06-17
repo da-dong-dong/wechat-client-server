@@ -31,7 +31,10 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
     export default {
         computed: {
 			...mapGetters('map',[
-				'get_barmd'
+				'get_barmd',
+                'get_shopIdList',
+                'get_location',
+                'get_city'
             ]),
             ...mapGetters('user',[
 				'get_enterpriseId'
@@ -39,7 +42,8 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
         },
         methods:{
             ...mapMutations('map',[
-				'mut_barmdId'
+				'mut_barmdId',
+                'mut_city'
             ]),
             ...mapMutations('carList',[
 				'mut_carListDelAll'
@@ -48,6 +52,9 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
             ...mapActions('map',[
 				'act_shopIdList'
 			]),
+            ...mapMutations('user',[
+				'mut_shopId'
+            ]),
             
             // 设置品牌
             setBrand(id){
@@ -63,9 +70,21 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
                     shopIds: id
                 }
                 this.act_shopIdList(param)
-                uni.navigateTo({
-                	url:'/pages/tabBar/shoppingCart/components/changeRegion'
-                })
+                console.log(this.get_shopIdList,'sss')
+                this.mut_shopId(this.get_shopIdList[0])
+                    // 本地存储当前门店
+                    uni.setStorage({
+                        key: 'shopId',
+                        data: this.get_shopIdList[0]
+                    })
+                    uni.switchTab({
+                        url:'/pages/tabBar/home/home'
+                    })
+                    this.mut_city(this.get_city)
+                 
+                // uni.navigateTo({
+                // 	url:'/pages/tabBar/shoppingCart/components/changeRegion?flage=123'
+                // })
             }
         },
         onLoad () {

@@ -277,7 +277,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
     }
 }
 .dbColumn{
-    margin-top: 20rpx;
+    margin-top: 30rpx;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -294,10 +294,10 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         color: #D4AD72;
     }
     .imgContent{
-        width: 250rpx;
+        width: 245rpx;
         border-bottom-left-radius: 8rpx;
         border-bottom-right-radius: 8rpx;
-        margin-bottom: 10rpx;
+        margin-bottom: 30rpx;
         .img{
             width: 100%;
             height: 250rpx;
@@ -305,11 +305,13 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         }
         .longImg{
             width: 100%;
-            height: 300rpx;
+            height: 350rpx;
             vertical-align: bottom;
         }
         .txt_center{
             text-align: center;
+            color: #534A48;
+            margin-top: 10rpx;
         }
     }
 }

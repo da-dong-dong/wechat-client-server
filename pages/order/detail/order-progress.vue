@@ -1,6 +1,6 @@
 <template>
     <view class="progress_content">
-        <div class="order_num">订单号: {{list[0].orderNo}}</div>
+        <div class="order_num">订单号: {{list[0].orderNo?list[0].orderNo:''}}</div>
         <view class="title">
             客户信息
         </view>
@@ -21,30 +21,11 @@
             <span class="name">当前进度</span>
             <span class="flex_1">{{arrs}}</span>
         </div>
-        <div class="flex">
-            <span class="name">拍摄</span>
-            <span class="flex_1" v-if="list[0].photoUpdateTime">{{ list[0].photoUpdateTime | times }}</span>
-            <span class="flex_1" v-else> 未预约 </span>
-            <span class="circle" :class="{ current: arrs === '拍摄'}"></span>
-        </div>
-        <div class="flex">
-            <span class="name">选片</span>
-            <span class="flex_1" v-if="list[0].chooseUpdateTime">{{ list[0].chooseUpdateTime | times }}</span>
-            <span class="flex_1" v-else> 未预约 </span>
-            <span class="circle" :class="{ current: arrs === '选片'}"></span>
-        </div>
-        <div class="flex">
-            <span class="name">定稿</span>
-            
-            <span class="flex_1" v-if="list[0].watchUpdateTime">{{ list[0].watchUpdateTime | times }}</span>
-            <span class="flex_1" v-else> 未预约 </span>
-            <span class="circle" :class="{ current: arrs === '看版'}"></span>
-        </div>
-        <div class="flex">
-            <span class="name">取件</span>
-            <span class="flex_1" v-if="list[0].pickupUpdateTime">{{ list[0].pickupUpdateTime | times }}</span>
-            <span class="flex_1" v-else> 未预约 </span>
-            <span class="circle" :class="{ current: arrs === '取件'}"></span>
+        <div class="flex" v-for="_ in list[0].itemProcessVoList" :key="_.id">
+            <span class="name">{{_.name}}</span>
+            <span class="flex_1" v-if="_.reservationDate && _.isCurrentProcess">{{ _.reservationDate | times }} {{_.reservationTime?_.reservationTime.substring(5,-1):''}}</span>
+            <span class="flex_1" v-else> {{_.successTime | times('未开始')}} </span>
+            <span class="circle" :class="{ current: _.isCurrentProcess}"></span>
         </div>
     </view>
 </template>
@@ -107,15 +88,73 @@ import { orderProcess } from '@/util/api/order.js'
             // 过滤进度
             progress(){
                 let val = this.list[0];
-                if(val.photoStatus == "COMPLETE") this.arrs = '拍摄' 
-                if(val.repairStatus == "COMPLETE") this.arrs = '初修' 
-                if(val.chooseStatus == "COMPLETE") this.arrs = '选片' 
-                if(val.refineStatus == "COMPLETE") this.arrs = '精修' 
-                if(val.designStatus == "COMPLETE") this.arrs = '设计' 
-                if(val.watchStatus == "COMPLETE") this.arrs = '看版' 
-                if(val.senderStatus == "COMPLETE") this.arrs = '发片' 
-                if(val.returnStatus == "COMPLETE") this.arrs = '回件' 
-                if(val.pickupStatus == "COMPLETE") this.arrs = '取件' 
+                console.log(val,'val')
+               val = val.itemProcessVoList.map(item=>{
+                    switch (item.process) {
+                        case "ORDER":
+                            if(item.isCurrentProcess) this.arrs = '订单' 
+                            item.name = '订单'
+                            break;
+                        case "PHOTO":
+                            if(item.isCurrentProcess) this.arrs = '拍摄' 
+                            item.name = '拍摄'
+                            break;
+                        case "REPAIR":
+                            if(item.isCurrentProcess) this.arrs = '初修' 
+                            item.name = '初修'
+                            break;
+                        case "CHOOSE":
+                            if(item.isCurrentProcess) this.arrs = '选片' 
+                            item.name = '选片'
+                            break;
+                        case "CHOOSE_ONTRAST":
+                            if(item.isCurrentProcess) this.arrs = '选修' 
+                            item.name = '选修'
+                            break;
+                        case "REFINE":
+                            if(item.isCurrentProcess) this.arrs = '精修' 
+                            item.name = '精修'
+                            break;
+                        case "DESIGN":
+                            if(item.isCurrentProcess) this.arrs = '设计' 
+                            item.name = '设计'
+                            break;
+                        case "WATCH":
+                            if(item.isCurrentProcess) this.arrs = '定稿' 
+                            item.name = '定稿'
+                            break;
+                        case "SENDER":
+                            if(item.isCurrentProcess) this.arrs = '发片' 
+                            item.name = '发片'
+                            break;
+                        case "RETURN":
+                            if(item.isCurrentProcess) this.arrs = '回件' 
+                            item.name = '回件'
+                            break;
+                        case "PICKUP":
+                            if(item.isCurrentProcess) this.arrs = '取件' 
+                            item.name = '取件'
+                            break;
+                        case "TONING":
+                            if(item.isCurrentProcess) this.arrs = '调色' 
+                            item.name = '调色'
+                            break;
+                        case "CHOOSE_CLOTHES":
+                            if(item.isCurrentProcess) this.arrs = '选衣' 
+                            item.name = '选衣'
+                            break;
+                        case "ITEM_END":
+                            if(item.isCurrentProcess) this.arrs = '结单' 
+                            item.name = '结单'
+                            break;
+                    }
+                    return item
+                })
+                this.list[0].itemProcessVoList = val.filter(item=>{
+                    if(item.name == '拍摄' || item.name == '选片' || item.name == '定稿' || item.name == '取件'){
+                        return true
+                    }
+                })
             }
         }
     }

@@ -6,7 +6,7 @@
 		</view>
 		<view class="list tabBarClassify" @click="tabBarClassify"  :class="index===2?'tabBarAction':null">
 			<image class="icon icon2" :src="index===2?'/static/tabBar/classifySl.png':'/static/tabBar/classify.png'" mode=""></image>
-			<view class="text">分类</view>
+			<view class="text">预定</view>
 		</view>
 		<view class="list tabBarShoppingCart" @click="tabBarShoppingCart"  :class="index===3?'tabBarAction':null">
 			<image class="icon icon4" :src="index===3?'/static/tabBar/shoppingCartSl.png':'/static/tabBar/shoppingCart.png'" mode=""></image>
@@ -40,6 +40,10 @@
 			},
 			// 进入分类
 			tabBarClassify(){
+				uni.setStorage({
+					key: 'All',
+					data: '全部套系'
+				})
 				uni.switchTab({
 					url:'/pages/tabBar/classify/classify'
 				})

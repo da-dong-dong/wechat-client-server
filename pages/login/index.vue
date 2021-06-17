@@ -115,7 +115,7 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                             } 
                         }
                         // 判断是否是导航栏
-                        if(route.indexOf("components/buyOrder") != -1 || route.indexOf("classify/feedBack") != -1 ){
+                        if(route.indexOf("components/order_confirm") != -1 || route.indexOf("components/buyOrder") != -1 || route.indexOf("classify/feedBack") != -1 ){
                             uni.navigateTo({ 
                                 url: `/${route}`
                             })
@@ -124,6 +124,7 @@ import { getCode, setPhoneNoInfo } from '@/util/api/user.js'
                                 url: `/${route}`
                             })
                         }
+                        console.log(route)
                     }
                 })
             }

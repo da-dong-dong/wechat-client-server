@@ -19,7 +19,7 @@ const app = new Vue({
 })
 app.$mount()
 
-Vue.filter('times',function(dataStr,pattern = ''){
+Vue.filter('times',function(dataStr,pattern = '未选定时间'){
 	if(typeof(dataStr)=='string') return dataStr
 		if(dataStr){
 			 let dt = new Date(dataStr)
@@ -28,6 +28,6 @@ Vue.filter('times',function(dataStr,pattern = ''){
 			 let d = dt.getDate()
 			 return `${y}-${m}-${d}`
 		}else{
-			return '未选定时间'
+			return pattern
 		}
 })

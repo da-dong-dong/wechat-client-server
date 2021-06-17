@@ -23,24 +23,24 @@
         </view>
         <view class="msg_div">
            <div class="title border">订单信息</div>
-           <view class="flex" v-for="(_ , i) in list.onlineOrderItemVos" :key="i">
-                <img class="h145" src="/static/logo.png"/>
+           <view class="flex" style="border:none">
+                <img class="h145" :src="list.coverPhoto"/>
                 <view class="flex_1">
                     <view class="padding">
-                        <span class="font600">{{_.name}}</span>
-                        <span class="float_r colorA3">￥{{_.price}}</span>
+                        <span class="font600">{{list.onlineOrderItemVos[0].name?list.onlineOrderItemVos[0].name:''}}</span>
+                        <span class="float_r colorA3">￥{{list.onlineOrderItemVos[0].price?list.onlineOrderItemVos[0].price:''}}</span>
                     </view>
                     <view class="font14">
-                        预约定价: <span class="orange">￥{{ _.price }}</span>
+                        预约定价: <span class="orange">￥{{ list.onlineOrderItemVos[0].price?list.onlineOrderItemVos[0].price:'' }}</span>
                     </view>
                     <view class="font14">
-                        余款金额: ￥{{_.price}}
+                        余款金额: ￥{{list.onlineOrderItemVos[0].price?list.onlineOrderItemVos[0].price:''}}
                     </view>
                 </view>
             </view>
         </view>
         <view class="msg_div">
-           <div class="title">{{ list.discount * 10 }}折优惠</div>
+           <div class="title">邀请福利</div>
            <div class="flex">
                <span class="name">介绍人</span>
                <span class="flex_1">{{list.introduceName}}</span>
@@ -50,54 +50,49 @@
                <span class="flex_1">{{_.introduceMobil}}</span>
            </div>
         </view>
-        <view class="msg_div">
-           <div class="flex">
-               <span class="name">订单时间</span>
-               <span class="flex_1">{{ list.orderTime | times}}</span>
-           </div>
-           <div class="flex" v-if="list.reservationPhotoInfoVos">
-               <span class="name">拍摄门店</span>
-               <span class="flex_1">{{shopName(list.reservationPhotoInfoVos.reservationShopId)}}</span>
-           </div>
-           <div class="flex">
-               <span class="name">入底</span>
-               <span class="flex_1">{{bookCount}}</span>
-           </div>
-           <div class="flex">
-               <span class="name">入册</span>
-               <span class="flex_1">{{bottomCount}}</span>
-           </div>
-           <div class="flex">
-               <span class="name">内景</span>
-               <span class="flex_1">{{inPlace}}</span>
-           </div>
-           <div class="flex">
-               <span class="name">外景</span>
-               <span class="flex_1">{{outPlace}}</span>
-           </div>
-           <div class="flex">
-               <span class="name">内景服装</span>
-               <span class="flex_1">{{inDressNum}}</span>
-           </div>
-           <div class="flex">
-               <span class="name">外景服装</span>
-               <span class="flex_1">{{outDressNum}}</span>
-           </div>
+        <!-- 循环套系 -->
+        <view  v-for="(item,index) in list['onlineOrderItemVos']" :key="index">
+            <view class="msg_div">
+                <div class="flex" style="border:none">
+                    <span class="name">订单时间</span>
+                    <span class="flex_1">{{ list.orderTime | times}}</span>
+                </div>
+                <div class="flex" style="border:none" v-for="(item1,index) in list['reservationPhotoInfoVos']" :key="index">
+                    <span class="name">拍摄时间</span>
+                    <span class="flex_1">{{ item1.reservationDate | times}} {{item1.reservationTime.substring(5,-1)}}</span>
+                </div>
+                <div class="flex" style="border:none">
+                    <span class="name">底片</span>
+                    <span class="flex_1">{{item.bottomCount}}</span>
+                </div>
+                <div class="flex" style="border:none">
+                    <span class="name">精修</span>
+                    <span class="flex_1">{{item.refineCount}}</span>
+                </div>
+                <div class="flex" style="border:none">
+                    <span class="name">服装</span>
+                    <span class="flex_1">{{inDressNum}}</span>
+                </div>
+            </view>
+            <view class="msg_div">
+                <div class="title">产品信息</div>
+                <div class="flex_no" v-for="(_, i) in item['onlineOrderItemGoods']" :key="i">
+                    <span class="explain">{{_.name}}</span>
+                    <span class="num">x{{_.countNum}}</span>
+                </div>
+            </view>
+            <view class="msg_div">
+                <div class="title">服务信息</div>
+                <div class="flex_no" v-for="(_, i) in item['onlineOrderItemService']" :key="i">
+                    <span class="explain">{{_.name}}</span>
+                    <span class="num">x1</span>
+                </div>
+            </view>
         </view>
-        <view class="msg_div">
-           <div class="title">产品信息</div>
-           <div class="flex_no" v-for="(_, i) in onlineOrderItemGoods" :key="i">
-               <span class="explain">{{_.name}}</span>
-               <span class="num">x{{_.countNum}}</span>
-           </div>
-        </view>
-        <view class="msg_div">
-           <div class="title">服务信息</div>
-           <div class="flex_no" v-for="(_, i) in onlineOrderItemService" :key="i">
-               <span class="explain">{{_.name}}</span>
-               <span class="num">x1</span>
-           </div>
-        </view>
+
+        
+
+        
     </view>
 </template>
 
@@ -153,15 +148,15 @@ import { orderDetails } from '@/util/api/order.js'
                 return sum
             },
             inDressNum () {
-                let str = []
+                let sum = 0
                 if (this.list.onlineOrderItemVos) {
                     this.list.onlineOrderItemVos.forEach(item => {
                         item.onlineOrderItemDressInfo.forEach(_ => {
-                            if (_.type === 'INT') str.push(_.name)
+                            sum += _.count
                         })
                     })
                 }
-                return str.join()
+                return sum
             },
             outDressNum () {
                 let str = []
@@ -272,6 +267,7 @@ import { orderDetails } from '@/util/api/order.js'
                 height: 150rpx;
                 margin-right: 20rpx;
                 border-radius: 10rpx;
+                border: 1rpx solid #ECECEC;
             }
             .flex_1{
                 view{

@@ -30,7 +30,7 @@
                 <span class="name">婚期</span>
                 <span class="flex_1 r_icon">
                     <picker class="txt_r" mode="date" @change="bindDateChange">
-                        <view class="uni-input">{{ typeTime | times }}</view>
+                        <view class="uni-input">{{ typeTime | times('请选择您的婚期') }}</view>
                     </picker>
                     <i class="iconfont iconleft"></i>
                </span>
@@ -121,6 +121,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { listCategory, order } from '@/util/api/goods.js'
 import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
+import {  getUserInfo,  } from '@/util/api/user.js'
     export default {
        
         computed:{
@@ -148,6 +149,15 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
             this.onlineCustomerContactDtos1.name = this.get_nickName
             this.listCategory()
             this.get_discount()
+            if(!this.get_phone){
+                // 获取用户信息AIP
+                getUserInfo().then(res=>{
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    this.onlineCustomerContactDtos1.mobile = phone
+                    this.onlineCustomerContactDtos1.name = nickName
+                })
+            }
         },
         onUnload(){
             let pages = getCurrentPages();
@@ -171,6 +181,9 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                     delta: backNum
                 })
             }
+            this.onlineCustomerContactDtos1.mobile = this.get_phone
+            this.onlineCustomerContactDtos1.name = this.get_nickName
+            
         },
         data(){
             return{
@@ -229,6 +242,9 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
          methods:{
             ...mapActions('carList',[
                 'act_typeHeader'
+            ]),
+            ...mapActions('user',[
+                'act_nickName',
             ]),
             async get_discount () {
                 let parms = {
@@ -363,6 +379,11 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                     let data = res.data.data
                     if(res.data.code !== 200){
                         this.flag = true
+                        if(res.data.code === -1){
+                            uni.switchTab({
+                                url:'/pages/tabBar/order/order'
+                            })
+                        }
                     }else{
                         uni.setStorage({
 							key: 'orderId',

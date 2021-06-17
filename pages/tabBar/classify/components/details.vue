@@ -48,7 +48,7 @@
         </view>
 
         <!-- 图片展示 -->
-        <view class="imgShow marginT10 marginRL30 marginB30 paddingB20">
+        <view class="imgShow marginT30 marginRL30 marginB30 paddingB20">
             <!-- tab切换 -->
             <view class="imgTab flex fontSize30 textC marginB30">
                 <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">
@@ -250,13 +250,13 @@ import { addRecommendOne } from '@/util/api/order.js'
             async onCollection () {
                 let params = {
                     appId: this.get_appId,
-                    assemblyId: this.listDetai.assemblyId,
+                    assemblyId: this.Id,
                     assemblyType: this.listDetai.assemblyType,
                     enterpriseId: this.get_enterpriseId,
                     isCollect: true,
                     images: this.listDetai.coverPhoto,
                     userId: this.get_userId,
-                    title: this.listDetai.name
+                    title: this.listDetai.name,
                 }
                 if (this.get_userId) {
                     await cellectAssembly(params)
@@ -291,7 +291,7 @@ import { addRecommendOne } from '@/util/api/order.js'
             getAssemblyCollect(){
                 let params = {
                     appId: this.get_appId,
-                    assemblyId: this.listDetai.assemblyId,
+                    assemblyId: this.Id,
                     assemblyType: this.listDetai.assemblyType,
                     enterpriseId: this.get_enterpriseId,
                     userId: this.get_userId,
