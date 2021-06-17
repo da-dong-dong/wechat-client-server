@@ -5,7 +5,7 @@
                 <img class="h110" v-if="data.goodsShowType === 2" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 3" :src="_.coverPhoto" alt="">
                 <div class="title" v-if="data.showName === 1">{{_.imgTitle}}</div>
-                <div class="desc" v-if="data.showExtend === 1">{{_.imgIntroduction}} 不忘初心得东西需要时间等待</div>
+                <div class="desc fontSize25" v-if="data.showExtend === 1">{{_.imgIntroduction}} 不忘初心得东西需要时间等待</div>
             </div>
         </div>
         <div class="twoContent" v-if="data.goodsShowType === 0 || data.goodsShowType === 1">
@@ -13,7 +13,7 @@
                 <img class="h110" v-if="data.goodsShowType === 0" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 1" :src="_.coverPhoto" alt="">
                 <div class="title" v-if="data.showName === 1">{{_.imgTitle}}</div>
-                <div class="desc" v-if="data.showExtend === 1">{{_.imgIntroduction}}</div>
+                <div class="desc fontSize25" v-if="data.showExtend === 1">{{_.imgIntroduction}}</div>
             </div>
         </div>
         
@@ -88,6 +88,9 @@ export default {
     .oneContent{
         .oneRow{
             margin-bottom: 20rpx;
+            img{
+                border-radius: 15rpx;
+            }
         }
         .h110{
             width: 100%;
@@ -117,7 +120,7 @@ export default {
     }
 }
 .desc{
-    color: #b2b2b2;
+    color: #B3B3B3;
 }
 .title{
     padding: 10rpx 0;

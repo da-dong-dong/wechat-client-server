@@ -17,6 +17,7 @@
 			"style": {
 				"navigationBarTitleText": "首页",
 				"navigationStyle":"custom",
+				"enablePullDownRefresh": true,
 				"app-plus":{
 					"titleNView":false
 				}
@@ -91,6 +92,12 @@
 			"path": "pages/tabBar/my/components/userInfo",
 			"style": {
 				"navigationBarTitleText": "个人资料"
+			}
+		},
+		{
+			"path": "pages/tabBar/my/components/about",
+			"style": {
+				"navigationBarTitleText": "关于"
 			}
 		},
 		{

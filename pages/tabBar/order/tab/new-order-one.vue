@@ -13,38 +13,67 @@
                         <span class="float_r colorA3">￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        总价: <span class="orange">￥{{item.sumPrice}}</span>
+                        总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        尾款: ￥{{item.sumPrice}}
+                        尾<span></span>款: ￥{{item.sumPrice}}
                     </view>
                 </view>
             </view>
             <view class="content" >
-                <view class="" v-if="item['reservationPhotoInfoVos']" v-for="(item1,index1) in item['reservationPhotoInfoVos']" :key="index1">
-                    <view class="">
-                        拍摄门店: {{item1.reservationShopId | shopID(get_shopIdList)}}
+                <view v-if="item['reservationPhotoInfoVos']">
+                    <!-- 判断是否双日 -->
+                    <view v-if="item.assemblyType == 0">
+                        <view class="">
+                            <view class="view">
+                                拍摄门店: {{item['reservationPhotoInfoVos'][0].reservationShopId | shopID(get_shopIdList)}}
+                            </view>
+                            <view class="view">
+                                拍摄时间: {{item['reservationPhotoInfoVos'][0].reservationTime}}
+                            </view>
+                        </view>
                     </view>
-                    <view class="">
-                        拍摄门店: {{item1.reservationTime}}
+                    <view v-else>
+                        <view class=""  v-for="(item1,index1) in item['reservationPhotoInfoVos']" :key="index1">
+                            <view class="view">
+                                拍摄门店: {{item1.reservationShopId | shopID(get_shopIdList)}}
+                            </view>
+                            <view class="view">
+                                拍摄时间: {{item1.reservationTime}}
+                            </view>
+                        </view>
                     </view>
                 </view>
-                <view class="">
+                <view class="view">
                     订单时间: {{item.orderTime | times}}
                 </view>
             </view>
 
             <view class="footer">
                 <span v-if="item.state" class="float_l orange" @click="onClickDetails(item.id)">
-                    查看详情<i class="iconfont iconleft"></i>
+                    查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i>
                 </span>
-                <view v-else class="float_l orange" @click="onBuy(item.id)">立刻支付<i class="iconfont iconleft"></i></view>
+                <view v-else class="noBuy">
+                    <!-- 待付款 -->
+                    <view>
+                        <span>已付定金：￥000</span>
+                        <span>尾款待支付：￥000</span>
+                    </view>
+                </view>
                 <span class="float_r" v-if="item.state">
                     <span class="font600">实付款: </span>
                     <span class="orange" >￥{{item.sumPrice + item.schedulePrice}}</span>
                 </span>
             </view>
+            <!-- 待付款 -->
+            <view class="footer bottB" v-if="!item.state">
+                <view class="orange noBuyBut">
+                    <view class="text" @click="onClickDetails(item.id)">查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i></view>
+                    <view class="btn" @click="onBuy(item.id)">去付款</view>
+                </view>
+            </view>
         </view>
+        <view class="noOrder" v-if="get_carList.length === 0"> 您暂时还没有订单喔~</view>
     </view>
 </template>
 
@@ -136,7 +165,7 @@ import { mapGetters } from 'vuex'
     .content{
         padding: 20rpx 30rpx;
         border-bottom: 1px solid #ECECEC;
-        view{
+        .view{
             padding: 10rpx 0;
         }
     }
@@ -161,6 +190,10 @@ import { mapGetters } from 'vuex'
     .font14{
         font-size: 26rpx;
         color: #A3A3A3;
+        span{
+            width: 24rpx;
+            display: inline-block;
+        }
     }
     .colorA3{
         color: #A3A3A3;
@@ -172,5 +205,52 @@ import { mapGetters } from 'vuex'
 .iconleft{
     position: relative;
     top: 4rpx;
+}
+.noOrder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #9D9D9D;
+    }
+.noBuy{
+    width: 100%;
+    font-size: 20rpx;
+    color:#A3A3A3;
+    text-align: right;
+    span{
+        &:nth-child(2){
+            margin:0 10rpx 0 20rpx;
+            color: #414143;
+            font-weight: bold;
+            font-size: 24rpx;
+        }
+    }
+}
+.bottB{
+    border-top: 1px solid #ECECEC;
+}
+.noBuyBut{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 28rpx;
+    .text{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn{
+        width: 183rpx;
+        height: 54rpx;
+        background: #D3AA72;
+        line-height: 54rpx;
+        text-align: center;
+        border-radius: 30rpx;
+        color: #fff;
+    }
 }
 </style>

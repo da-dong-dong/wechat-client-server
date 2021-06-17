@@ -1,7 +1,14 @@
 /******************************** 个人信息 ***************************************/
 <template>
-    <view>
+    <view class="user_box">
          <view class="user_seting marginT10">
+             <!-- 头像 -->
+             <view class="user_logo">
+                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
+                    <image v-else class="login_logo" src="/static/image/my/userImg.png"></image>
+             </view>
+             <!-- 文字 -->
+             <view class="color333 fontSize32 fontWight paddingRL30 paddingB20">拍摄人信息</view>
             <view class="user_seting_li flex paddingRL20" >
                 <view class="flex">
                     <text class="paddingL20 color999">姓名</text>
@@ -38,7 +45,7 @@
                 </view>
             </picker>
 
-            <view class="user_seting_li flex paddingRL20" >
+            <view class="user_seting_li flex paddingRL20" style="border:none">
                 <view class="flex">
                     <text class="paddingL20 color999">地址</text>
                 </view>
@@ -64,6 +71,7 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
         components:{ pickRegions },
         computed:{
             ...mapGetters('user',[
+                'get_headimgUrl',
                 'get_nickName',
                 'get_phone',
                 'get_sex',
@@ -148,14 +156,19 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
 </script>
 
 <style lang="scss" scoped>
+.user_box{
+    height: 100vh;
+    background: #F5F5F5;
+    padding: 30rpx;
+}
 .user_seting{
-    border: 1px solid #D8D8D8;
-    border-bottom:none;
+    border-radius: 30rpx;
+    background: #fff;
     font-size: 28rpx;
     .user_seting_li{
         height: 100rpx;
         line-height: 100rpx;
-        border-bottom: 1px solid #D8D8D8;
+        border-bottom: 1px solid #EEEEEE;
         align-items: center;
         justify-content: space-between;
         .flex{
@@ -165,5 +178,20 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
             width: 330rpx;
         }
     }
+    
+}
+.user_logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50rpx 0;
+    .login_logo{
+        width: 194rpx;
+        height: 194rpx;
+        border-radius: 50%;
+    }
+}
+.user_text{
+
 }
 </style>

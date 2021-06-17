@@ -3,23 +3,9 @@
     <view class="order_box" >
         <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData">
             <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder"></wuc-tab>
-        
-            <!-- <view v-for="(item,index) in tabList" :key="index">
-                <orederNoBuy :class="'swiper_'+ index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose"/>
-            </view> -->
             <view class="order_box_content">
-                <!-- <orederOne  v-for="(item,index) in tabList" :key="index"></orederOne> -->
                 <orederOne  v-for="(item,index) in tabList" :key="index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose"/>
             </view>
-            <!-- <swiper class="swiper_group" :style="{height:scrollHeight+'px'}" :current="TabCur"  :circular="true" indicator-color="rgba(255,255,255,0)" indicator-active-color="rgba(255,255,255,0)" @change="swiperChange">
-                <swiper-item  v-for="(item,index) in tabList" :key="index">
-                    <orederAll class="swiper_4" v-if="item.path == 'all'"/>
-                    <orederNoBuy class="swiper_1" v-if="item.path == 'noBuy'"/>
-                    <orederNoAppointment class="swiper_2" v-if="item.path == 'noAppointment'"/>
-                    <orederGoOn class="swiper_3" v-if="item.path == 'goOn'"/>
-                    <orederNoGoin class="swiper_0" v-if="item.path == 'noGoIn'"/>
-                </swiper-item>
-            </swiper>  -->
         </s-pull-scroll>
       <!-- 弹窗 -->
         <i-message id="message" />

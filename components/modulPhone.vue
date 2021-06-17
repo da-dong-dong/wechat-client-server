@@ -41,10 +41,12 @@
 		background-color: rgba(0,0,0,0.5);
 		top: 0;
 		color: #8d8d8d;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		.box{
 			background-color: #FFFFFF;
 			width: 550rpx;
-			margin: 50% auto;
 			border-radius: 15rpx;
 			.text{
 				padding: 54rpx 0 30rpx;

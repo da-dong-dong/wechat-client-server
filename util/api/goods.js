@@ -75,3 +75,8 @@ export const getCollectList = (params) => {
 export const delCollectOne = (params) => {
 	return del(baseUrl.delCollectOne, params, false) 
 }
+
+// 获取套系收藏数据
+export const getAssemblyCollect = (params) => {
+	return get(baseUrl.getAssemblyCollect, params)
+}

@@ -8,13 +8,23 @@
         </swiper-item>
     </swiper>
     <div class="title_tag">
-        <div class="mar_b5">
-            {{listDetai.imgTitle}}
-        </div>
-        <div>
-            <span class="tag" v-for="(_, i) in imagesLabel" :key="i" style="margin-right: 8rpx;">
-                {{_}}    
-            </span>
+        <div class="flex">
+            <div>
+                <div class="mar_b5">
+                {{listDetai.imgTitle?listDetai.imgTitle:''}}
+                </div>
+                <div>
+                    <span class="tag" v-for="(_, i) in imagesLabel" :key="i" style="margin-right: 8rpx;">
+                        {{_}}    
+                    </span>
+                </div>
+            </div>
+            <div @click="onDelCollection()" class="font12 width60" v-if="colors">
+                <image  class="login_logo" src="/static/image/checkCall.png"></image>已收藏
+            </div>
+            <div @click="onCollection()" class="font12 width60" v-else>
+                <image  class="login_logo" src="/static/image/noShow.png"></image>收藏
+            </div>
         </div>
     </div>
     <div class="recommendContent" v-if="recommendList.length > 0">
@@ -28,7 +38,7 @@
                     <img class="h80" :src="_.coverPhoto" alt="">
                     <div class="flex_1 pad_rl10">
                         <div class="font600">{{_.name}}</div>
-                        <div>{{_.imgIntroduction}}</div>
+                        <div class="paddingT15 fontSize25 color666">{{_.imgIntroduction}}</div>
                         <div class="price">
                             ￥ {{_.assemblyPrice}}
                             <span class="goPhoto" @click="onClickDetails(_.id)">去拍摄</span>
@@ -39,16 +49,20 @@
         </swiper>
     </div>
     <div class="examples">
-        案例展示
+        <view class="borders"></view>
+        <view class="text">案例展示</view>
+        <view class="borders"></view>
     </div>
     <div class="moreContent">
         <img v-for="(_, i) in detailPhotoList" :key="i" mode="widthFix" class="img" :src="_" alt="">
     </div>
+    <!-- 弹窗 -->
+    <i-message id="message" />
   </div>
 </template>
 
 <script>
-import { getPtdetail, getPropelDetail } from '@/util/api/goods.js'
+import { getPtdetail, getPropelDetail,cellectAssembly,getAssemblyCollect,delCollectOne } from '@/util/api/goods.js'
 import { mapGetters } from 'vuex'
 export default {
     data () {
@@ -57,12 +71,17 @@ export default {
             detailPhotoList: [],
             recommendList: [],
             imagesLabel: [],
-            listDetai: {}
+            listDetai: {},
+            colors:false, // 套系收费
+            delCollId:null, // 记录id
         }
     },
     computed:{
         ...mapGetters('user',[
+            'get_appId',
             'get_enterpriseId',
+            'get_userId',
+            'get_shopId'
         ]),
     },
     onLoad(options) {
@@ -93,8 +112,67 @@ export default {
                 getPropelDetail(Object.assign({propel: data.propel}, param)).then(res => {
                     this.recommendList = res.data.data
                 })
+                this.getAssemblyCollect()
             })
         },
+
+        // 收藏
+        async onCollection () {
+            let params = {
+                appId: this.get_appId,
+                assemblyId: this.listDetai.id,
+                assemblyType: 0,
+                enterpriseId: this.get_enterpriseId,
+                isCollect: true,
+                images: this.listDetai.coverPhoto,
+                userId: this.get_userId,
+                title: this.listDetai.imgTitle
+            }
+            if (this.get_userId) {
+                await cellectAssembly(params)
+                uni.showToast({
+                    title: '收藏成功',
+                    duration: 2000
+                })
+                this.getAssemblyCollect()
+            } else {
+                uni.showToast({
+                    title: '请登录后再收藏',
+                    duration: 2000
+                })
+            }
+        },
+
+        // 删除收藏
+        onDelCollection(){
+            delCollectOne({id:this.delCollId}).then(res=>{
+                if(res.data.data){
+                    this.delCollId = null
+                    this.colors = false
+                    uni.showToast({
+                        title: '删除成功',
+                        duration: 1500
+                    })
+                }
+            })
+        },
+
+        // 获取是否收藏
+        getAssemblyCollect(){
+            let params = {
+                appId: this.get_appId,
+                assemblyId: this.listDetai.id,
+                assemblyType: 0,
+                enterpriseId: this.get_enterpriseId,
+                userId: this.get_userId,
+            }
+            getAssemblyCollect(params).then(res=>{
+                if(res.data.data){
+                    this.delCollId = res.data.data.id
+                    this.colors = true
+                }
+            })
+        }
     }
 }
 </script>
@@ -107,6 +185,10 @@ export default {
 .title_tag{
     padding: 40rpx;
     background: #fff;
+    .flex{
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 .detail_content{
     background: #f5f5f5;
@@ -128,9 +210,9 @@ export default {
         margin-top: 10rpx;
     }
     .goPhoto{
-        border-radius: 10rpx;
+        border-radius: 30rpx;
         float: right;
-        padding: 10rpx 20rpx;
+        padding: 6rpx 25rpx;
         color: #fff;
         background: #D4AD72;
     }
@@ -138,6 +220,17 @@ export default {
 .examples{
     text-align: center;
     margin-bottom: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .borders{
+        width: 200rpx;
+        border-bottom: 2rpx solid #ECECEC;
+    }
+    .text{
+        text-align: center;
+        padding: 0 20rpx;
+    }
 }
 .moreContent{
     width: 700rpx;
@@ -165,6 +258,8 @@ export default {
 .h80{
     width: 160rpx;
     height: 160rpx;
+    border-radius: 10rpx;
+    border: 1rpx solid #DFDFDF;
 }
 .mar_b5{
     margin-bottom: 10rpx;
@@ -179,5 +274,17 @@ export default {
 }
 .font600{
     font-weight: 600;
+}
+.font12{
+    font-size: 20rpx;
+    color: #6B6B6B;
+    text-align: center;
+    font-weight: 500;
+}
+.login_logo{
+    width: 32rpx;
+    height: 32rpx;
+    display: inherit;
+    margin: 0 auto;
 }
 </style>

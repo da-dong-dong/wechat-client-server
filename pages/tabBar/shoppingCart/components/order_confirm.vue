@@ -5,25 +5,25 @@
             <div class="flex">
                <span class="name">{{onlineCustomerContactDtos.callName}}</span>
                <span class="flex_1">
-                   <input class="uni-input" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" focus placeholder="请输入您的姓名" />
+                   <input class="uni-input" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" placeholder="请输入您的姓名" />
                </span>
             </div>
             <div class="flex">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" focus placeholder="请输入您的联系方式" />
+                    <input class="uni-input" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
             <div class="flex">
                 <span class="name">{{onlineCustomerContactDtos1.callName}}</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" focus placeholder="请输入您的姓名" />
+                    <input class="uni-input" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" placeholder="请输入您的姓名" />
                 </span>
             </div>
             <div class="flex">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" focus placeholder="请输入您的联系方式" />
+                    <input class="uni-input" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
             <div class="flex no_border">
@@ -61,8 +61,16 @@
                 <view class="msg_div">
                     <div class="flex">
                         <span class="name">预约时间</span>
-                        <span class="flex_1 r_icon" @click="onChangeTime(item.id,index,item.shopId)">
+                        <span class="flex_1 r_icon" @click="onChangeTime(item.id,index,item.shopId,0)">
                                 <text class="" v-if="item.times">{{item.times}} {{item.filesTime}}</text>
+                                <text class="" v-else>请选择</text>
+                                <i class="iconfont iconleft"></i>
+                        </span>
+                    </div>
+                    <div class="flex" v-if="item.assemblyType === 1">
+                        <span class="name">预约时间</span>{{}}
+                        <span class="flex_1 r_icon" @click="onChangeTime(item.id,index,item.shopId,1)">
+                                <text class="" v-if="item.times1">{{item.times1}} {{item.filesTime1}}</text>
                                 <text class="" v-else>请选择</text>
                                 <i class="iconfont iconleft"></i>
                         </span>
@@ -86,13 +94,13 @@
             <div class="flex">
                 <span class="name">介绍人</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="introduceName" @input="(e) => { introduceName = e.detail.value }" focus placeholder="请输入介绍人" />
+                    <input class="uni-input" :value="introduceName" @input="(e) => { introduceName = e.detail.value }" placeholder="请输入介绍人" />
                 </span>
             </div>
             <div class="flex no_border">
                 <span class="name">手机号码</span>
                 <span class="flex_1">
-                    <input class="uni-input" @input="changeInput" :value="introduceMobil" focus placeholder="请输入手机号码" :maxlength="11"/>
+                    <input class="uni-input" @input="changeInput" :value="introduceMobil" placeholder="请输入手机号码" :maxlength="11"/>
                 </span>
             </div>
            </template>
@@ -188,7 +196,7 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                     mobile: "", // 手机号码
                     name: "", // 客户姓名
                     qq: "", // QQ
-                    sex: true, // 	性别，false：女，true：男
+                    sex: false, // 	性别，false：女，true：男
                     tel: "", // 固定电话
                     wechat: "", //	微信
                     workUnit: "", // 工作单位
@@ -258,9 +266,9 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
             },
 
             // 修改预约时间
-            onChangeTime(id,index,shopId){
+            onChangeTime(id,index,shopId,assemblyType){
                 uni.navigateTo({ 
-                    url: `/pages/tabBar/shoppingCart/components/changeTimes?id=${id}&index=${index}&orderType=${this.get_quickList[0].orderType}&shopId=${shopId}`
+                    url: `/pages/tabBar/shoppingCart/components/changeTimes?id=${id}&index=${index}&orderType=${this.get_quickList[0].orderType}&shopId=${shopId}&assemblyType=${assemblyType}`
                 })
             },
 
@@ -290,7 +298,14 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                 this.flag = false
 
                 // 客户信息
-                let userInfoData = [ this.onlineCustomerContactDtos, this.onlineCustomerContactDtos1 ]
+                let userInfoData =  []
+                // 判断第一项是否有值
+                if(this.onlineCustomerContactDtos.name){
+                    userInfoData =  [ this.onlineCustomerContactDtos, this.onlineCustomerContactDtos1 ]
+                }else{
+                    userInfoData =  [  this.onlineCustomerContactDtos1 ]
+                    userInfoData[0].main = true
+                }
                 // 宝宝信息
                 // let refBabaData = []
                 // if(this.get_quickList[0].orderType == "BABY"){
@@ -320,16 +335,28 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                 
                 this.get_quickList.map(item=>{
                     let json = {}
+                    let arr = []
                     json.reservationPhotoDto = {} //预约信息
                     json.assemblyId = item.id // 套系ID
                     json.reservationPhotoDto.reservationDate = new Date(item.times).getTime()-28800000  // 预约时间 时间戳
                     json.reservationPhotoDto.reservationShopId = item.shopId //	预约门店ID
                     json.reservationPhotoDto.reservationTime = item.filesTime // 预约门店ID
                     json.reservationPhotoDto.typographyTypeId = item.typographyTypeId //模板ID
+                    
+                    arr.push(json.reservationPhotoDto)
+                    if(item.times1 !== undefined){
+                        arr.push({
+                            reservationDate : new Date(item.times1).getTime()-28800000,  // 预约时间 时间戳
+                            reservationShopId : item.shopId, //	预约门店ID
+                            reservationTime : item.filesTime1, // 预约门店ID
+                            typographyTypeId : item.typographyTypeId1, //模板ID
+                        })
+                    }
+                    json.reservationPhotoDto = arr
                     param.orderDtos.push(json)
                 })
-                console.log(param)
-                console.log('支付页',this.get_quickList)
+                console.log(param,'请求参数')
+                //console.log('支付页！',this.get_quickList)
                
                 //下单
                 order(param).then(res=>{
@@ -345,7 +372,7 @@ import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
                             url:'/pages/tabBar/order/order'
                         })
                     }
-                    console.log(data)
+                    console.log(data,'支付结果')
                     
                 })
                 

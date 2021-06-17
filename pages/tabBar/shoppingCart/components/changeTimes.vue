@@ -22,18 +22,20 @@
             <view class="timeBox">
                 <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view>
 
-                <view v-if="momeyTime && !isVacation">
+                <view v-if="momeyTime && !isVacation" style="margin-bottom: 110px;">
                     <view v-for="(item,index) in momeyTime" :key="index">
                         <view v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
                             <view>{{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
                             <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
                                 <view class="list" v-for="(index3) in item2['useTypographyNum']" :key="index3">
                                     <view class="listTime active">
+                                        <!-- <radio style="transform: scale(0.75);" color="#D3AB75" :checked="false" /> -->
                                         {{item2['timeFrameStr']}}
                                     </view>
                                 </view>
-                                <view class="list" v-for="(index3) in item2['typographyCount'] - item2['useTypographyNum']" :key="index3">
-                                    <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId)">
+                                <view class="list" v-for="(index3,_) in item2['typographyCount'] - item2['useTypographyNum']" :key="index3">
+                                    <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId,_)">
+                                        <radio style="transform: scale(0.75);" color="#D3AB75" :checked="current === _ && item1.typographyTypeId === dataId" />
                                         {{item2['timeFrameStr']}}
                                     </view>
                                 </view>
@@ -43,6 +45,12 @@
                 </view>
             </view>
         </changeTimes>
+
+        <!-- 底部按钮 -->
+        <view class="btnBox">
+            <view class="btn" @click="onChageBtn">确定</view>
+        </view>
+
         <!-- 弹窗 -->
         <i-message id="message" />
         <!-- 档期弹窗 -->
@@ -117,6 +125,11 @@ import { getReservationDescription } from '@/util/api/user.js'
             this.Index = options.index
             this.orderType =options.orderType
             this.shopId = options.shopId
+            // 是否双日
+            console.log(options.assemblyType)
+            if(options.assemblyType){
+                this.assemblyType = options.assemblyType
+            }
             // 档期协议
             this.mack() 
         },
@@ -134,9 +147,11 @@ import { getReservationDescription } from '@/util/api/user.js'
                 startTime:null, // 开始时间
                 filesPrice:0, // 档期费
                 isVacation:true, // 是否休息日
+                assemblyType:0,// 0 单日套系 1双日套系
                 // 存储
                 dataItem:'',
-                dataId:''
+                dataId:'',
+                current:0
             }
         },
         methods:{
@@ -239,14 +254,28 @@ import { getReservationDescription } from '@/util/api/user.js'
             // 档期弹窗
             ok(){
                 this.flag = false
-                let data = {
-                    id:this.id, // id值
-                    index:this.Index, // 索引
-                    times:this.times, // 时间 yy-mm-dd
-                    filesPrice:this.filesPrice, // 全天费用
-                    filesTime:this.dataItem.startTime, // 档期 ,传开始时间
-                    typographyTypeId: this.dataId // 模板ID
+                let data = {}
+                // 多个档期
+                if(this.assemblyType == 0){
+                    data = {
+                        id:this.id, // id值
+                        index:this.Index, // 索引
+                        times:this.times, // 时间 yy-mm-dd
+                        filesPrice:this.filesPrice, // 全天费用
+                        filesTime:this.dataItem.startTime, // 档期 ,传开始时间
+                        typographyTypeId: this.dataId, // 模板ID
+                    }
+                }else{
+                    data = {
+                        id:this.id, // id值
+                        index:this.Index, // 索引
+                        times1:this.times, // 时间 yy-mm-dd
+                        filesPrice1:this.filesPrice, // 全天费用
+                        filesTime1:this.dataItem.startTime, // 档期 ,传开始时间
+                        typographyTypeId1: this.dataId, // 模板ID
+                    }    
                 }
+                
                 console.log(data,'*******')
                 this.mut_quickListUpData(data)
                 uni.navigateBack()
@@ -256,18 +285,44 @@ import { getReservationDescription } from '@/util/api/user.js'
             },
 
             // 更新购物车
-            onChangeCarList(tiem,id){
+            onChangeCarList(tiem,id,index){
                 console.log('来啦',tiem,id)
-                this.flag = true
+                
                 this.dataItem = tiem
                 this.dataId = id
-                
+                this.current = index
+            },
+
+            // 确定事件
+            onChageBtn(){
+                if(!this.dataId) return
+                this.flag = true
             }
+
         }
     }
 </script>
 
 <style lang="scss" scoped>
+.btnBox{
+    background: #F5F5F5;
+    height: 130rpx;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    .btn{
+        height: 76rpx;
+        background: #D3AA72;
+        margin: 16rpx 25rpx 20px;
+        box-sizing: border-box;
+        border-radius: 40rpx;
+        text-align: center;
+        line-height: 76rpx;
+        color: #fff;
+        font-size: 28rpx;
+    }
+}
 .mar_t10{
     margin-top: 20rpx;
 }
@@ -275,7 +330,7 @@ import { getReservationDescription } from '@/util/api/user.js'
     // justify-content: space-between;
     flex-wrap: wrap;
     .list{
-        width: 180rpx;
+        width: 275rpx;
         text-align: center;
         margin: 10rpx 0;
         font-size: 26rpx;
@@ -288,6 +343,7 @@ import { getReservationDescription } from '@/util/api/user.js'
         border-radius: 20rpx;
         padding: 18rpx 10rpx;
         background: #fff;
+        font-weight: bold;
     }
 }
 .changeTime_content{

@@ -23,14 +23,24 @@ export default{
         
         // 更新立刻下单时间
         mut_quickListUpData(state,data){
-            let {id,index,times,filesTime,filesPrice,typographyTypeId} = data
-            state.quickList.map((item,idx)=>{
+            let {id,index,times,filesTime,filesPrice,typographyTypeId,times1,filesTime1,filesPrice1,typographyTypeId1} = data
+            // 多个预约时间 待讨论
+            state.quickList = state.quickList.map((item,idx)=>{
                 if(item.id == id && idx == index){
-                    item.times = times
-                    item.filesTime = filesTime
-                    item.filesPrice = filesPrice
-                    item.typographyTypeId = typographyTypeId
+                    // 判断
+                    if(times !== undefined){
+                        item.times = times
+                        item.filesTime = filesTime
+                        item.filesPrice = filesPrice
+                        item.typographyTypeId = typographyTypeId
+                    }else{
+                        item.times1 = times1
+                        item.filesTime1 = filesTime1
+                        item.filesPrice1 = filesPrice1
+                        item.typographyTypeId1 = typographyTypeId1
+                    }
                 }
+                return item
             })
         },
 

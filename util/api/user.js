@@ -55,3 +55,8 @@ export const getReservationDescription = (params) => {
 export const getAgreementDescription = (params) => {
 	return get(baseUrl.getAgreementDescription, params)
 }
+
+// 关于
+export const getReservationServer = (params) => {
+	return get(baseUrl.getReservationServer, params)
+}

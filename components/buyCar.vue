@@ -106,17 +106,18 @@
 
 <style lang="scss" scoped>
 .buyCar_Span{
-    height: 110rpx;
+    height: 160rpx;
     width: 100%;
 }
 .buyCar{
     width: 100%;
-    height: 110rpx;
+    height: 160rpx;
     background:#fff;
     bottom:  0;
     left: 0;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
+    padding-top: 18rpx;
     box-sizing: border-box;
     .car{
         font-size: 28rpx;
@@ -141,13 +142,13 @@
         justify-content: flex-end;
         align-items: center;
         .but_cl{
-            width: 190rpx;
-            height: 64rpx;
-            line-height: 64rpx;
+            width: 230rpx;
+            height: 80rpx;
+            line-height: 80rpx;
             text-align: center;
             color: #fff;
             font-size: 28rpx;
-            border-radius: 40rpx;
+            border-radius: 50rpx;
             background: linear-gradient(270deg, #413F40 0%, #413F40 100%);
             box-sizing: border-box;
         }

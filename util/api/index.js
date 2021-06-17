@@ -1,7 +1,7 @@
 // true 开发环境， false 生产环境
 let test = true
-let base = 'http://192.168.5.28:8000'
-// let base = 'https://erp-wxapi.27yn.cn'
+//let base = 'http://192.168.5.28:8000'
+let base = 'https://erp-wxapi.27yn.cn'
 //  let base = test ? 'http://192.168.5.28:8000' : 'https://wxapi.lyfz.net'
 // let base = test ? 'https://wxapi.lyfz.net' : 'https://erp-wxapi.27yn.cn'
 
@@ -23,6 +23,8 @@ let baseUrl = {
 	getAssemblyDescription: `${base}/api/template/ma/get_assembly_description`, // 获取套系服务说明
 	getReservationDescription: `${base}/api/template/ma/get_reservation_description`, // 获取档期
 	getAgreementDescription: `${base}/api/template/ma/get_server_description`, // 获取预约协议说明
+	getAgreementDescription: `${base}/api/template/ma/get_server_description`, // 获取预约协议说明
+	getReservationServer: `${base}/api/template/ma/get_server_as_regards`, // 获取关于
 
 	// 定位
 	getCityShop: `${base}/api/template/ma/get_city_shop`, // 获取门店信息
@@ -44,6 +46,7 @@ let baseUrl = {
 	cellectAssembly: `${base}/api/template/ma/assembly_collect`, //  收藏
 	getCollectList: `${base}/api/template/ma/get_assembly_collect_list`, // 获取套系收藏集合
 	delCollectOne: `${base}/api/template/ma/delete_assembly_collect`, // 删除套系收藏
+	getAssemblyCollect: `${base}/api/template/ma/get_assembly_collect`, // 获取套系收藏数据
 
 	// 订单
 	orderDetails: `${base}/api/template/ma/auth/order_details`, // 订单详情

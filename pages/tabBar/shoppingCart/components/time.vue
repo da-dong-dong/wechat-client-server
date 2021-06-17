@@ -313,7 +313,7 @@
             text-align: center;
             height: 100%;
             div{
-                margin: 10rpx 0;
+                margin: 25rpx 0;
             }
             .current{
                 position: relative;

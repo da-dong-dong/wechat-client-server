@@ -27,10 +27,10 @@
             </view>
             <view class="menu_list">
                 <div class="flex mar_t22">
-                    <div @click="getUserInfo">
-                        <i class="iconfont iconziliao"></i>
+                    <button class="btnUser" open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
+                        <i class="icos iconfont iconziliao"></i>
                         <span>个人资料</span>
-                    </div>
+                    </button>
                     <div @click="onClikcPage('/pages/order/detail/order-my')">
                         <i class="iconfont iconxiangce"></i>
                         <span>我的相册</span>
@@ -53,14 +53,14 @@
                         <span>标准服务</span>
                     </div>
                     <div @click="onClickFeedBack">
-                        <i class="iconfont iconfankui"></i>
+                        <i class="iconfont iconfankui" style="font-size: 45rpx;margin-bottom: 1px;"></i>
                         <span>意见反馈</span>
                     </div>
                     <div @click="onClikcPage('/pages/collection/index')">
-                        <i class="iconfont iconshoucang"></i>
+                        <i class="iconfont iconshoucang" ></i>
                         <span>我的收藏</span>
                     </div>
-                    <div >
+                    <div @click="onClikcPage('/pages/tabBar/my/components/about')">
                         <i class="iconfont iconguanyu"></i>
                         <span>关于北遇</span>
                     </div>
@@ -83,7 +83,7 @@
                 </view>
             </scroll-view>
         </view>
-        <view class="outView">
+        <view class="outView" @click="onClickOut">
             退出登陆
         </view>
         <!-- 用户设置 -->
@@ -140,6 +140,8 @@
         </view> -->
         <!-- 弹窗 -->
         <i-message id="message" />
+
+        
 
         <!-- 底部导航 -->
 		<tabBar :index="5"></tabBar>
@@ -505,11 +507,25 @@ import { getTextImageList } from '@/util/api/order.js'
 }
 .outView{
     text-align: center;
-    font-size: 28rpx;
+    font-size: 32rpx;
     font-family: SourceHanSansCN;
     font-weight: 300;
     color: #999999;
     height: 80rpx;
     line-height: 80rpx;
+}
+.btnUser{
+    position: relative;
+    top: -3rpx;
+    .icos{
+        position: absolute;
+        color: black;
+        top: -46rpx;
+        left: 33rpx;
+        font-size: 45rpx;
+    }
+    span{
+        vertical-align: -9rpx;
+    }
 }
 </style>

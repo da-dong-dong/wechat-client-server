@@ -63,7 +63,9 @@
                 </div>
             </view>
             <view class="recommend">
-                为你推荐
+               <view class="borders"></view>
+               <view class="text">为你推荐</view>
+               <view class="borders"></view>
             </view>
             <div class="twoContent">
                 <div class="oneRow" v-for="_ in recommentList" :key="_.assemblyOnlineId" @click="onClickDetails(_.assemblyOnlineId)">
@@ -279,6 +281,17 @@ const { $Message } = require('@/wxcomponents/base/index');
     .recommend{
         text-align: center;
         margin-bottom: 20rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .borders{
+            width: 200rpx;
+            border-bottom: 2rpx solid #ECECEC;
+        }
+        .text{
+            text-align: center;
+            padding: 0 20rpx;
+        }
     }
     .pad20{
         padding: 20rpx;
@@ -390,11 +403,11 @@ const { $Message } = require('@/wxcomponents/base/index');
     }
     .desc{
         padding: 10rpx;
-        color: #b2b2b2;
+        font-weight: 600;
     }
     .tow_title{
         padding: 10rpx;
-        font-weight: 600;
+        color: #b2b2b2;
     }
     .gt_icon{
         float: right;

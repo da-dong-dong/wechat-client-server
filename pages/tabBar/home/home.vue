@@ -4,7 +4,7 @@
 		 
 		<!-- 顶部导航 -->
 		<uni-nav-bar fixed statusBar >
-			<view class="navText">{{get_shopId.shopName}}</view>
+			<view class="navText fontWight">{{get_shopId.shopName}}</view>
 			<view slot="left">
 				<view class="navCrt" @click="onChangeCity">
 					<view class="textOv">{{get_city}}</view>
@@ -87,6 +87,13 @@
         <!-- 弹窗 -->
         <i-message id="message" />
 
+		<!-- 我是底线 -->
+        <view class="bottText" v-if="showBootm">
+            <view class="text_border"></view>
+            <view class="text">我是有底线的</view>
+            <view class="text_border"></view>
+        </view>
+
 		<!-- 底部导航 -->
 		<tabBar :index="1"></tabBar>
     </view>
@@ -110,7 +117,8 @@ const entriData = uni.getExtConfigSync()
 					latitude: '23.084657',
 					longitude: '114.382526',
 					iconPath: "/static/image/loacl.png"
-            	}]
+            	}],
+				showBootm:false
 			}
 		},
 		computed: {
@@ -143,6 +151,11 @@ const entriData = uni.getExtConfigSync()
 			this.getHomeData()
 			
         },
+		onReachBottom(){
+			setTimeout(()=>{
+				this.showBootm = true
+			},500)
+		},
         methods:{
 			// 消息推送
 			onClickMyInfo(){
@@ -264,7 +277,7 @@ const entriData = uni.getExtConfigSync()
 	font-size: 26rpx;
 }
 .navCrt{
-	width: 130rpx;
+	min-width: 140rpx;
     border: 1rpx solid #D6D6D6;
     border-radius: 50rpx;
     height: 55rpx;
@@ -272,7 +285,11 @@ const entriData = uni.getExtConfigSync()
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-left: 10rpx;
+    padding-left: 15rpx;
+	padding-right: 15rpx;
+	.icon{
+		 height: 90rpx;
+	}
 	.textOv{
 		white-space: nowrap;
 		text-overflow: ellipsis;
