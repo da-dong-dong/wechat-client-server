@@ -402,8 +402,8 @@ const { $Message } = require('@/wxcomponents/base/index');
     }
     .h110{
         width: 100%;
-        height: 340rpx;
-        border-radius: 20rpx;
+        height: 415rpx;
+        border-radius: 10rpx;
     }
     .desc{
         padding: 10rpx;

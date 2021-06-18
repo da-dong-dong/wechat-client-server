@@ -3,7 +3,11 @@
         <view class="order_One"  v-for="(item,index) in get_carList" :key="index">
             <view class="title">
                 订单号: {{item.orderNo}}
-                <span class="float_r colorA3">{{item.state ? item.state : ''}}</span>
+                <span class="float_r colorA3" v-if="item.state">{{item.state ? item.state : ''}}</span>
+                <view v-if="!item.state" class="timeOut">
+                    <i-icon class="icon" type="time" size="18" color="#D3AA72"  />
+                    <out-time class="paddingRL10 fontSize28" :endtime="item.orderTime" />
+                </view>
             </view>
             <view class="flex">
                 <img class="h145" :src="item.coverPhoto"/>
@@ -161,6 +165,18 @@ import { mapGetters } from 'vuex'
     .title{
         padding: 20rpx 30rpx;
         border-bottom: 1px solid #ECECEC;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .icon{
+            line-height: 22rpx;
+        }
+        .timeOut{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color:#D3AA72;
+        }
     }
     .content{
         padding: 20rpx 30rpx;

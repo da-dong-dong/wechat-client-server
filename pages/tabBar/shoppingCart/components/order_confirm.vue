@@ -113,6 +113,12 @@
             <span class="footer_r" @click="onQuick">立即支付</span>
         </view>
 
+        <!-- 弹窗信息 -->
+        <uni-popup ref="popup" type="dialog">
+            <uni-popup-dialog mode="input" message="成功消息" :duration="2000" :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
+        </uni-popup>
+        <!-- <uni-popup ref="popup" type="message">您输入的介绍人的手机号不存在，不能享受优惠</uni-popup> -->
+
         <i-message id="message" />
     </view>
 </template>
@@ -122,8 +128,10 @@ import { mapGetters, mapActions } from 'vuex'
 import { listCategory, order } from '@/util/api/goods.js'
 import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
 import {  getUserInfo,  } from '@/util/api/user.js'
+import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue'
+const { $Message } = require('@/wxcomponents/base/index');
     export default {
-       
+       components:{ uniPopupDialog},
         computed:{
 			...mapGetters('user',[
                 'get_shopId',
@@ -260,15 +268,35 @@ import {  getUserInfo,  } from '@/util/api/user.js'
                     mobile: this.introduceMobil
                 }
                 let res = await getCustomerContactByMobile(parms)
-                console.log('是否能享受折扣', res)
+                console.log('是否能享受折扣', res.data)
+                // 禁止支付
+                if(res.data.data) {
+                    this.flag = false
+                    this.$refs.popup.open()
+                }
                 this.discountCan = res.data.data
             },
             // 输入手机号
             changeInput (e) {
                 this.introduceMobil = e.detail.value
                 if (this.introduceMobil.length >= 11) {
+                    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.introduceMobil))){ 
+                        $Message({
+							content: '手机号码有误，请重填',
+							type: 'error',
+						}); 
+                        return false; 
+                    } 
                     this.getCustomerContactByMobile()
                 }
+            },
+            // 关闭弹窗
+            close() {
+                this.$refs.popup.close()
+            },
+            confirm(value) {
+                console.log(value)
+                this.$refs.popup.close()
             },
             // 婚纱
 			bindDateChange (e) {
