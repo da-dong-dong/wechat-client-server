@@ -1,9 +1,9 @@
-// true 开发环境， false 生产环境
-let test = true
-//let base = 'http://192.168.5.28:8000'
-let base = 'https://erp-wxapi.27yn.cn'
-//  let base = test ? 'http://192.168.5.28:8000' : 'https://wxapi.lyfz.net'
-// let base = test ? 'https://wxapi.lyfz.net' : 'https://erp-wxapi.27yn.cn'
+
+let base = 'http://192.168.5.28:8000' // 开发
+
+//let base = 'https://erp-wxapi.27yn.cn' // 测试
+
+//let base = 'https://wxapi.lyfz.net' // 正式
 
 let baseUrl = {
 	// 小程序首页

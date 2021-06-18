@@ -3,14 +3,15 @@
     <view class="changeTime_content flex_col">
         <view class="shop_view">
             <div class="flex_1">
-                <div class="flex">
+                <div class="flex mar_b10">
                     <i class="iconfont iconposition-highlighted"></i>
                     {{get_shopId?get_shopId.shopName:'请选择门店'}}
                 </div>
                 <div class="font10 pad_l16 colorE5">{{ get_shopId && get_shopId.address ? get_shopId.address : '' }}</div>
             </div>
             <div class="changeShop" @click="onChangeShopId">
-                <i class="iconfont iconfangzu"></i>
+                <!-- <i class="iconfont iconfangzu"></i> -->
+				<image class="w30" src="../../../../static/image/qhmd.png" mode=""></image>
                 <span class="font10 colorD3">
                     切换门店
                 </span>
@@ -20,29 +21,51 @@
         <changeTimes class="flex_1 flex_col" :dateDetail="dateDetail" @getDate="getDate" @enDate="enDate">
             <!-- 档期选择 -->
             <view class="timeBox">
-                <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view>
-
+				<radio-group @change="radioChange">
+                <!-- <view class="fontWight paddingB20">当天档期费用 {{filesPrice}} 元</view> -->
                 <view v-if="momeyTime && !isVacation" style="margin-bottom: 110px;">
                     <view v-for="(item,index) in momeyTime" :key="index">
-                        <view v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
-                            <view>{{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}}</view>
+                        <view class="bgFFF" v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
+                            <view class="centerTxt">
+								{{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}}
+								<text class="colorC6">拍摄时间</text>
+							</view>
+							<view class="flex flex_w">
                             <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
-                                <view class="list" v-for="(index3) in item2['useTypographyNum']" :key="index3">
+								<template v-if="item2['typographyCount'] >= item2['useTypographyNum']">
+									<view class="list" >
+									    <view class="listTime active" >
+									        <radio style="transform: scale(0.75);" :value="item1.typographyTypeId" :checked="false" @click.native="onChangeCarList(item2)"/>
+									        {{item2['timeFrameStr']}}
+									    </view>
+									</view>
+								</template>
+								<template v-else>
+									<view class="list" >
+									    <view class="listTime active" @click.native="onChangeCarList(item2)">
+									        <radio style="transform: scale(0.75);" color="#D3AB75" disabled />
+									        {{item2['timeFrameStr']}}
+									    </view>
+									</view>
+								</template>
+                            <!--    <view class="list" v-for="(index3) in item2['useTypographyNum']" :key="index3">
                                     <view class="listTime active">
-                                        <!-- <radio style="transform: scale(0.75);" color="#D3AB75" :checked="false" /> -->
+                                        <radio style="transform: scale(0.75);" color="#D3AB75" :checked="false" />
                                         {{item2['timeFrameStr']}}
                                     </view>
-                                </view>
-                                <view class="list" v-for="(index3,_) in item2['typographyCount'] - item2['useTypographyNum']" :key="index3">
+                                </view> -->
+                               <!-- <view class="list" v-for="(index3,_) in item2['typographyCount'] - item2['useTypographyNum']" :key="index3">
                                     <view class="listTime" @click="onChangeCarList(item2, item1.typographyTypeId,_)">
                                         <radio style="transform: scale(0.75);" color="#D3AB75" :checked="current === _ && item1.typographyTypeId === dataId" />
                                         {{item2['timeFrameStr']}}
                                     </view>
-                                </view>
+                                </view> -->
                             </view>
+							</view>
                         </view>
                     </view>
                 </view>
+				</radio-group>
             </view>
         </changeTimes>
 
@@ -135,6 +158,7 @@ import { getReservationDescription } from '@/util/api/user.js'
         },
         data(){
             return{
+				checkedIds: [0, 0],
                 shopId:15,
                 dateDetail:[],
                 momeyTime:null,
@@ -150,7 +174,7 @@ import { getReservationDescription } from '@/util/api/user.js'
                 assemblyType:0,// 0 单日套系 1双日套系
                 // 存储
                 dataItem:'',
-                dataId:'',
+                dataId: null,
                 current:0
             }
         },
@@ -158,7 +182,9 @@ import { getReservationDescription } from '@/util/api/user.js'
             ...mapMutations('carList',[
 				'mut_quickListUpData'
             ]),
-
+			radioChange (e) {
+				this.dataId = e.detail.value
+			},
             // 切换门店
             onChangeShopId(){
                 uni.navigateTo({ 
@@ -237,7 +263,7 @@ import { getReservationDescription } from '@/util/api/user.js'
                 let list = this.dateDetail.filter(item=>item.operationTime == checkTime)
                 this.momeyTime = list[0].reservationGroupVos
                 this.isVacation = list[0].isVacation
-                console.log(this.momeyTime,list[0])
+                console.log('momeyTime', this.momeyTime)
             },
 
             // 预约服务
@@ -289,8 +315,8 @@ import { getReservationDescription } from '@/util/api/user.js'
                 console.log('来啦',tiem,id)
                 
                 this.dataItem = tiem
-                this.dataId = id
-                this.current = index
+                // this.dataId = id
+                // this.current = index
             },
 
             // 确定事件
@@ -303,11 +329,21 @@ import { getReservationDescription } from '@/util/api/user.js'
     }
 </script>
 
+<style lang="less">
+	page{
+		height: 100vh;
+		box-sizing: border-box;
+		background: #F5F5F5;
+	}
+	view{
+		box-sizing: border-box;
+	}
+</style>
 <style lang="scss" scoped>
 .btnBox{
     background: #F5F5F5;
     height: 130rpx;
-    position: fixed;
+    // position: fixed;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -326,36 +362,65 @@ import { getReservationDescription } from '@/util/api/user.js'
 .mar_t10{
     margin-top: 20rpx;
 }
+.flex_w{
+	flex-wrap: wrap;
+}
 .timeList{
     // justify-content: space-between;
     flex-wrap: wrap;
     .list{
-        width: 275rpx;
-        text-align: center;
-        margin: 10rpx 0;
+        width: 255rpx;
+        // text-align: center;
+        // margin: 10rpx;
         font-size: 26rpx;
         .active{
-            background: #D3AB75;
+            // background: #D3AB75;
         }
     }
     .listTime{
-        display: inline-block;
+        // display: inline-block;
         border-radius: 20rpx;
         padding: 18rpx 10rpx;
         background: #fff;
         font-weight: bold;
     }
 }
+.bgFFF{
+	background: #FFFFFF;
+	border-radius: 16rpx;
+	margin-bottom: 20rpx;
+	padding: 20rpx;
+	.centerTxt{
+		text-align: center;
+		// font-size: 20rpx;
+		color: #C6C6C6;
+		font-size: 20rpx;
+	}
+	.colorC6{
+		color: #C6C6C6;
+		font-size: 20rpx;
+		margin-left: 10rpx;
+	}
+}
 .changeTime_content{
     background: #F9F9F9;
-    overflow: auto;
-    height: 100vh;
+    height: 100%;
+	overflow: auto;
+	.w30{
+		width: 30rpx;
+		height: 30rpx;
+		margin-bottom: 20rpx;
+	}
+	.mar_b10{
+		margin-bottom: 20rpx;
+	}
     .shop_view{
         border-radius: 0 0 30rpx 30rpx;
         background: #fff;
         display: flex;
         padding: 30rpx 20rpx;
         box-sizing: border-box;
+		margin-bottom: 20rpx;
     }
     .iconposition-highlighted, .iconfangzu{
         color: #D3AB75;
@@ -369,6 +434,10 @@ import { getReservationDescription } from '@/util/api/user.js'
     .changeShop{
         text-align: center;
         width: 90rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
     }
     .pad_l16{
         padding-left: 32rpx;
@@ -383,6 +452,7 @@ import { getReservationDescription } from '@/util/api/user.js'
 .flex_col{
     display: flex;
     flex-direction: column;
+	overflow: auto;
 }
 .timeBox{
     margin: 20rpx;

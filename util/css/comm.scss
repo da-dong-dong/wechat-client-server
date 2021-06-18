@@ -6,6 +6,10 @@ page{
 .flexCenten{
     align-items: center;
 }
+.flex_col{
+	display: flex;
+	flex-direction: column;
+}
 .fixed{
     position: fixed;
 }

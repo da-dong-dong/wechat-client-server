@@ -1,48 +1,49 @@
 /******************************** 分类 ***************************************/
 <template>
-    <view>
-        <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData">
-            <view class="classify flex">
-                <!-- 左侧 -->
-                <view class="left_box textC">
-                    <view class="fixed">
-                        <view class="paddingTB20 fontSize26" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
-                            {{item.name}}
-                        </view>
-                    </view>
-                </view>
-                <!-- 右侧 -->
-                <view class="right_box">
-                    <swiper class="swiper" indicator-dots v-if="carouselList.length > 0">
-                        <swiper-item v-for="_ in carouselList" :key="_" @click="turnDetail(_)">
-                            <view class="swiper-item uni-bg-red flex">
-                                <img class="h150" :src="_.src" alt="">
-                            </view>
-                        </swiper-item>
-                    </swiper>
-                    <template v-if="activeObj.serverProtocol === 1">
-                        <div v-html="activeObj.protocolText" class="mar_t10"></div>
-                    </template>
-                    <template v-else>
-                        <div class="smallRectangle" v-if="activeObj.goodsShowType === 2 || activeObj.goodsShowType === 3">
-                            <template v-if="activeObj.goodsShowType === 2">
-                                <img v-for="_ in rightList" class="h110" :src="_.coverPhoto" alt="" :key="_.id" @click="onClickDetails(_.id)">
-                            </template>
-                            <template v-if="activeObj.goodsShowType === 3">
-                                <img v-for="_ in rightList" class="h200" :src="_.coverPhoto" alt="" :key="_.id" @click="onClickDetails(_.id)">
-                            </template>
-                        </div>
-                        <div class="dbColumn" v-if="activeObj.goodsShowType === 0 || activeObj.goodsShowType === 1">
-                            <div v-for="_ in rightList" :key="_.id" class="imgContent" @click="onClickDetails(_.id)">
-                                <img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
-                                <img class="longImg" v-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
-                                <div class="txt_center">{{_.imgTitle}}</div>
-                            </div>
-                        </div>
-                    </template>
-                </view>
-            </view>
-       </s-pull-scroll>
+    <view class="flex_col">
+		<navSearch :type="0"></navSearch>
+        <!-- <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData"> -->
+		<view class="classify flex flex_1">
+			<!-- 左侧 -->
+			<view class="left_box textC">
+				<view class="">
+					<view class="paddingTB20 fontSize26" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
+						{{item.name}}
+					</view>
+				</view>
+			</view>
+			<!-- 右侧 -->
+			<view class="right_box">
+				<swiper class="swiper" indicator-dots v-if="carouselList.length > 0">
+					<swiper-item v-for="_ in carouselList" :key="_" @click="turnDetail(_)">
+						<view class="swiper-item uni-bg-red flex">
+							<img class="h150" :src="_.src" alt="">
+						</view>
+					</swiper-item>
+				</swiper>
+				<template v-if="activeObj.serverProtocol === 1">
+					<div v-html="activeObj.protocolText" class="mar_t10"></div>
+				</template>
+				<template v-else>
+					<div class="smallRectangle" v-if="activeObj.goodsShowType === 2 || activeObj.goodsShowType === 3">
+						<template v-if="activeObj.goodsShowType === 2">
+							<img v-for="_ in rightList" class="h110" :src="_.coverPhoto" alt="" :key="_.id" @click="onClickDetails(_.id)">
+						</template>
+						<template v-if="activeObj.goodsShowType === 3">
+							<img v-for="_ in rightList" class="h200" :src="_.coverPhoto" alt="" :key="_.id" @click="onClickDetails(_.id)">
+						</template>
+					</div>
+					<div class="dbColumn" v-if="activeObj.goodsShowType === 0 || activeObj.goodsShowType === 1">
+						<div v-for="_ in rightList" :key="_.id" class="imgContent" @click="onClickDetails(_.id)">
+							<img class="img" v-if="activeObj.goodsShowType === 0" :src="_.coverPhoto" alt="">
+							<img class="longImg" v-if="activeObj.goodsShowType === 1" :src="_.coverPhoto" alt="">
+							<div class="txt_center">{{_.imgTitle}}</div>
+						</div>
+					</div>
+				</template>
+			</view>
+		</view>
+       <!-- </s-pull-scroll> -->
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -51,10 +52,11 @@
 <script>
 import { mapGetters } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
+import navSearch from "./components/classify_search.vue"
 import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/api/goods.js'
 	import sPullScroll from '@/components/s-pull-scroll';
     export default {
-        components:{sPullScroll},
+        components:{sPullScroll, navSearch},
         computed:{
 			...mapGetters('user',[
                 'get_appId',
@@ -213,8 +215,18 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
         }
     }
 </script>
-
+<style lang="less">
+	page{
+		height: 100vh;
+	}
+</style>
 <style lang="scss" scoped>
+.flex_col{
+	height: 100%;
+}
+view{
+	box-sizing: border-box;
+}
 .webView{
     width: 500rpx;
     height: 100prx;
@@ -224,15 +236,9 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
     // 左侧
     .left_box{
         width: 200rpx;
-        position: flex;
         z-index: 1000;
-        height: 100vh;
-        .fixed{
-            width: 200rpx;
-            background: #f5f5f5;
-            height: 100vh;
-            color: #7D7E80;
-        }
+		color: #8B8B8B;
+		background: #F5F5F5;
         .active{
             background: #fff;
             position: relative;
@@ -252,10 +258,11 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
     // 右侧
     .right_box{
         width: 550rpx;
-        height: 100%;
+        // height: 100%;
         flex-wrap: wrap;
         padding: 20rpx;
         box-sizing: border-box;
+		overflow: auto;
     }
 }
 .h150{

@@ -152,15 +152,24 @@
 		{
 			"path": "pages/tabBar/classify/classify",
 			"style": {
+				"navigationStyle":"custom",
 				"navigationBarTitleText": "线上分类"
 			}
 		},
 		{
 			"path": "pages/tabBar/classify/secondClassify",
 			"style": {
+				"navigationStyle":"custom",
 				"navigationBarTitleText": "图文分类"
 			}
 		},
+		{
+			"path": "pages/tabBar/classify/components/classify_result",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		
 		{
 			"path": "pages/tabBar/classify/components/details",
 			"style": {
@@ -205,7 +214,7 @@
 		{
 			"path": "pages/tabBar/shoppingCart/components/changeTimes",
 			"style": {
-				"navigationBarTitleText": "预约时间"
+				"navigationBarTitleText": "确认订单"
 			}
 		},
 		// 新页面

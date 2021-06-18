@@ -34,18 +34,17 @@
                     <view class="weekBox">
                         <view v-for="(item,index) in weekArr" :key="index">{{item}}</view>
                     </view>
-                    <view class="flex flex_wrap">
-                        <view  v-for="(item,index) in dateAllArr" :key="index">
-                            <view class="list">
-                                 <!-- :class="noBg(dateDetail,(item.num - 1)) ? (bgColor(dateDetail,(item.num-1)) ? 'optional' : 'ban' ) :'noBg'" -->
-                                <view class="bg"
-                                 :class="{ noBg: !noBg(dateDetail,(item.num - 1)), optional: bgColor(dateDetail,(item.num-1)), currentDay: item.num === currentDay }"
-                                  @click="enDate(dateDetail,item.num,item.date,index)">
-                                    <view class="day">{{item.num}}</view>
-                                    <view class="typographyNum">{{dateDetail | typographyNum(item.num-1)}}</view>
-                                </view>
-                            </view>
-                        </view>
+                    <view class="flex flex_wrap myList">
+                        <!-- <view class="list" v-for="(item,index) in dateAllArr" :key="index"> -->
+							<!-- :class="noBg(dateDetail,(item.num - 1)) ? (bgColor(dateDetail,(item.num-1)) ? 'optional' : 'ban' ) :'noBg'" -->
+						<view class="bg list" v-for="(item,index) in dateAllArr" :key="index"
+						 :class="{ noBg: !noBg(dateDetail,(item.num - 1)), optional: bgColor(dateDetail,(item.num-1)), currentDay: item.num === currentDay }"
+						  @click="enDate(dateDetail,item.num,item.date,index)">
+							{{ item.num ? item.num : '' }}
+							<!-- <view class="day">{{item.num}}</view> -->
+							<!-- <view class="typographyNum">{{dateDetail | typographyNum(item.num-1)}}</view> -->
+						</view>
+                        <!-- </view> -->
                     </view>
                 </view>
                 <slot></slot>
@@ -273,11 +272,15 @@
 		font-size: 32rpx;
 		flex: 1;
 		display: flex;
+		height: 100%;
 		flex-direction: column;
+		.flex_1{
+			overflow: auto;
+		}
 		.header{
 			// width: 690rpx;
             width: 100vw;
-            margin-top: 20rpx;
+            // margin-top: 20rpx;
 			// margin: 30rpx;
 			// margin-bottom: 0rpx;
 			border-radius: 10rpx 10rpx 0 0 ;
@@ -312,12 +315,19 @@
             width: 160rpx;
             text-align: center;
             height: 100%;
+			display: flex;
+			flex-direction: column;
             div{
-                margin: 25rpx 0;
+                // padding: 25rpx 0;
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
             }
             .current{
                 position: relative;
-                color: #D3AB75;
+                // color: #D3AB75;
+				background: #f5f5f5;
                 &::before{
                     content: '';
                     display: block;
@@ -333,25 +343,34 @@
         }
 		.calenarBox{
 			// width: 690rpx;
-			margin: 20rpx;
+			margin: 10rpx;
+			padding: 20rpx 10rpx;
 			// margin-top: 0rpx;
 			// display: flex;
 			flex-wrap:wrap;
 			background-color: #FFFFFF;
 			box-shadow:0rpx 7rpx 29rpx 6rpx rgba(0, 0, 0, 0.03);
-			border-radius:0 0 10rpx 10rpx;
+			border-radius: 16rpx;
             .flex_wrap{
                 flex-wrap: wrap;
             }
-			.list{
-				width: 70rpx;
-				text-align: center;
-				/* padding: 10rpx; */
-				/* margin-right: 1rpx; */
-				padding-top: 10rpx;
-				padding-left: 9rpx;
+			.myList{
+				.list{
+					color: #414143;
+					width: 70rpx;
+					height: 70rpx;
+					border-radius: 50%;
+					text-align: center;
+					/* padding: 10rpx; */
+					/* margin-right: 1rpx; */
+					// padding-top: 10rpx;
+					// padding-left: 9rpx;
+					line-height: 70rpx;
+					margin-top: 10rpx;
+					margin-left: 9rpx;
+				}
 				.bg{
-					border-radius: 10rpx;
+					// border-radius: 10rpx;
 					.typographyNum{
 						font-size: 18rpx;
 						padding: 5rpx;
@@ -365,9 +384,9 @@
 				.optional{
 					// background-color: #D3AB75;
 					// color: #FFFFFF;
-					background-color: #FFFFFF;
-					color: #000;
-					box-shadow:0rpx 7rpx 29rpx 6rpx rgba(0, 0, 0, 0.03);
+					// background-color: #FFFFFF;
+					// color: #000;
+					// box-shadow:0rpx 7rpx 29rpx 6rpx rgba(0, 0, 0, 0.03);
 				}
 				.ban{
 					background-color: #CCCCCC;
