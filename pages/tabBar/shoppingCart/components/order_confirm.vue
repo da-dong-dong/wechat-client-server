@@ -115,9 +115,8 @@
 
         <!-- 弹窗信息 -->
         <uni-popup ref="popup" type="dialog">
-            <uni-popup-dialog mode="input" message="成功消息" :duration="2000" :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
+            <uni-popup-dialog mode="base" content="您输入的介绍人的手机号不存在，不能享受优惠" :duration="2000" :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
         </uni-popup>
-        <!-- <uni-popup ref="popup" type="message">您输入的介绍人的手机号不存在，不能享受优惠</uni-popup> -->
 
         <i-message id="message" />
     </view>
@@ -270,9 +269,11 @@ const { $Message } = require('@/wxcomponents/base/index');
                 let res = await getCustomerContactByMobile(parms)
                 console.log('是否能享受折扣', res.data)
                 // 禁止支付
-                if(res.data.data) {
+                if(!res.data.data) {
                     this.flag = false
                     this.$refs.popup.open()
+                }else{
+                    this.flag = true
                 }
                 this.discountCan = res.data.data
             },
@@ -293,9 +294,10 @@ const { $Message } = require('@/wxcomponents/base/index');
             // 关闭弹窗
             close() {
                 this.$refs.popup.close()
+                this.introduceMobil = ''
             },
-            confirm(value) {
-                console.log(value)
+            confirm() {
+                this.introduceMobil = ''
                 this.$refs.popup.close()
             },
             // 婚纱
@@ -339,6 +341,15 @@ const { $Message } = require('@/wxcomponents/base/index');
             // 支付页
             onQuick(){
                 if(!this.flag) return
+                if(this.discountBool){
+                    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.introduceMobil))){ 
+                        $Message({
+                            content: '手机号码有误，请重填',
+                            type: 'error',
+                        }); 
+                        return
+                    }
+                }
                 this.flag = false
 
                 // 客户信息

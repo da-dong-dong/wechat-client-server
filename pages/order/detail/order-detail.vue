@@ -27,14 +27,14 @@
                 <img class="h145" :src="list.coverPhoto"/>
                 <view class="flex_1">
                     <view class="padding">
-                        <span class="font600">{{list.onlineOrderItemVos[0].name?list.onlineOrderItemVos[0].name:''}}</span>
-                        <span class="float_r colorA3">￥{{list.onlineOrderItemVos[0].price?list.onlineOrderItemVos[0].price:''}}</span>
+                        <span class="font600">{{list.assemblyName?list.assemblyName:''}}</span>
+                        <span class="float_r colorA3">￥{{list.assemblyPrice?list.assemblyPrice:''}}</span>
                     </view>
                     <view class="font14">
-                        预约定价: <span class="orange">￥{{ list.onlineOrderItemVos[0].price?list.onlineOrderItemVos[0].price:'' }}</span>
+                        预约定价: <span class="orange">￥{{ list.earnestMoney?list.earnestMoney:'' }}</span>
                     </view>
                     <view class="font14">
-                        余款金额: ￥{{list.onlineOrderItemVos[0].price?list.onlineOrderItemVos[0].price:''}}
+                        余款金额: ￥{{list.spareMoney?list.spareMoney:''}}
                     </view>
                 </view>
             </view>

@@ -71,7 +71,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
             },
             carouselList () {
                 if (this.id) {
-                    console.log(this.id);
+                    console.log(this.id,'过滤');
                     let obj = this.leftList.filter(_ => _.id === this.id)[0]
                     return (obj.slideshow && obj.slideshow.length) > 0 ? JSON.parse(obj.slideshow) : []
                 }
@@ -89,7 +89,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
                 id: null,
             }
         },
-        onLoad(){
+        onLoad(options){
             uni.setNavigationBarColor({
                 frontColor: '#000000',
                 backgroundColor: '#ffffff',
@@ -99,7 +99,7 @@ import { getListAssemblyOnlineCategory, getMaAssemblyOnlineTitle } from '@/util/
                 }
             })
             this.shopId = this.get_shopId.shopId
-            this.getListAssemblyOnlineCategory()
+            this.getListAssemblyOnlineCategory(Number(options.id))
 		},
         methods:{
             turnDetail (data) {
@@ -249,7 +249,7 @@ view{
                 top: 0;
                 bottom: 0;
                 left: 0;
-                width: 6rpx;
+                width:12rpx;
                 background: #D3AA72;
             }
         }

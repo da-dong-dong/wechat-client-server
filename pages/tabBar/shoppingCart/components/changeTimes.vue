@@ -70,7 +70,7 @@
         </changeTimes>
 
         <!-- 底部按钮 -->
-        <view class="btnBox">
+       <view class="btnBox">
             <view class="btn" @click="onChageBtn">确定</view>
         </view>
 
@@ -345,18 +345,22 @@ import { getReservationDescription } from '@/util/api/user.js'
     height: 130rpx;
     // position: fixed;
     width: 100%;
-    bottom: 0;
-    left: 0;
+    // bottom: 0;
+    // left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
     .btn{
         height: 76rpx;
+		line-height: 76rpx;
         background: #D3AA72;
-        margin: 16rpx 25rpx 20px;
+        // padding: 16rpx 25rpx 20px;
         box-sizing: border-box;
         border-radius: 40rpx;
         text-align: center;
-        line-height: 76rpx;
         color: #fff;
         font-size: 28rpx;
+		width: 700rpx;
     }
 }
 .mar_t10{

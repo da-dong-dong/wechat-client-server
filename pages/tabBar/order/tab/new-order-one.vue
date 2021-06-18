@@ -14,13 +14,13 @@
                 <view class="flex_1">
                     <view class="padding">
                         <span class="font600">{{item.assemblyName}}</span>
-                        <span class="float_r colorA3">￥{{item.incomePrice}}</span>
+                        <span class="float_r colorA3">￥{{item.earnestMoney}}</span>
                     </view>
                     <view class="font14">
                         总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        尾<span></span>款: ￥{{item.sumPrice-item.incomePrice}}
+                        尾<span></span>款: ￥{{item.sumPrice-item.earnestMoney}}
                     </view>
                 </view>
             </view>
@@ -60,13 +60,13 @@
                 <view v-else class="noBuy">
                     <!-- 待付款 -->
                     <view>
-                        <span>已付定金：￥{{item.incomePrice}}</span>
-                        <span>尾款待支付：￥{{item.sumPrice - item.incomePrice}}</span>
+                        <span>已付定金：￥{{item.earnestMoney}}</span>
+                        <span>尾款待支付：￥{{item.sumPrice - item.earnestMoney}}</span>
                     </view>
                 </view>
                 <span class="float_r" v-if="item.state">
                     <span class="font600">实付款: </span>
-                    <span class="orange" >￥{{item.sumPrice + item.schedulePrice}}</span>
+                    <span class="orange" >￥{{item.assemblyPrice}}</span>
                 </span>
             </view>
             <!-- 待付款 -->

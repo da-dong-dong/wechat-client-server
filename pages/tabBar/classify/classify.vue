@@ -98,25 +98,26 @@ import navSearch from "./components/classify_search.vue"
             this.rightList = [];
             this.shopId = this.get_shopId.shopId
             uni.getStorage({
-                key: 'classId',
-                success: res => {
-                    this.getListAssemblyOnlineCategory(res.data)
-                    uni.removeStorageSync('classId');
-                },
-                fail:()=> {
-                    this.getListAssemblyOnlineCategory()
-                }
-            })
-            uni.getStorage({
                 key: 'All',
                 success: res => {
                     this.getListAssemblyOnlineCategory(res.data)
                     uni.removeStorageSync('All');
                 },
                 fail:()=> {
-                    this.getListAssemblyOnlineCategory()
+                    uni.getStorage({
+                        key: 'classId',
+                        success: res => {
+                            this.getListAssemblyOnlineCategory(res.data)
+                            uni.removeStorageSync('classId');
+                        },
+                        fail:()=> {
+                            this.getListAssemblyOnlineCategory()
+                        }
+                    })
                 }
             })
+            
+            
             
         },
         onLoad(){
@@ -283,7 +284,7 @@ view{
                 top: 0;
                 bottom: 0;
                 left: 0;
-                width: 6rpx;
+                width: 12rpx;
                 background: #D3AA72;
             }
         }

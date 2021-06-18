@@ -111,9 +111,12 @@ export default {
                 uni.setNavigationBarTitle({
                     title: res.data.data.imgTitle
                 })
-                getPropelDetail(Object.assign({propel: data.propel}, param)).then(res => {
-                    this.recommendList = res.data.data
-                })
+                // 判断对接套系
+                if(data.propel){
+                     getPropelDetail(Object.assign({propel: data.propel}, param)).then(res => {
+                        this.recommendList = res.data.data
+                    })
+                }
                 this.getAssemblyCollect()
             })
         },

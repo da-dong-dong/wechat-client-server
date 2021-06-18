@@ -10,14 +10,14 @@
                 <text>{{listDetai.name}}</text>
                 <text class="colorH">
                     ￥{{listDetai.assemblyPrice?listDetai.assemblyPrice:''}}
-                    <text class="colorH" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text>
+                    <!-- <text class="colorH" v-if="listDetai.enableDeposit">(定金：{{listDetai.assemblyDeposit}})</text> -->
                 </text>
-                <div @click="onDelCollection()" class="font12 width60" v-if="colors">
+                <!-- <div @click="onDelCollection()" class="font12 width60" v-if="colors">
                     <image  class="login_logo" src="/static/image/checkCall.png"></image>已收藏
                 </div>
                 <div @click="onCollection()" class="font12 width60" v-else>
                     <image  class="login_logo" src="/static/image/noShow.png"></image>收藏
-                </div>
+                </div> -->
             </view>
         </view>
 
@@ -63,7 +63,7 @@
             </view>
 
             <view v-else>
-                <view class="paddingRL40" v-html="testData"></view>
+                <view class="paddingRL40" v-html="listDetai.serviceDesc"></view>
             </view>
         </view>
 
