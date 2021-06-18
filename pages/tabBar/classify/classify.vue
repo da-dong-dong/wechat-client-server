@@ -7,7 +7,7 @@
 			<!-- 左侧 -->
 			<view class="left_box textC">
 				<view class="">
-					<view class="paddingTB20 fontSize26" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
+					<view class="paddingTB25 fontSize28" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
 						{{item.name}}
 					</view>
 				</view>
