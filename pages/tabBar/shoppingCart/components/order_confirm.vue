@@ -87,7 +87,8 @@
         </view>
 
         <view class="msg_div">
-           <div class="title border">{{ discountNum * 10 }}折优惠
+			<!-- {{ discountNum * 10 }}折优惠 -->
+           <div class="title border"> 邀请福利
                <span class="float_r circle" :class="{ current: discountBool }" @click="() => { discountBool = !discountBool }"></span>
            </div>
            <template v-if="discountBool">
@@ -237,7 +238,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                     wechat: "", //	微信
                     workUnit: "", // 工作单位
                 },
-                discountBool: true,
+                discountBool: false,
                 discountCan: false,
                 typeTime: null,
                 discountNum: 1,
@@ -270,10 +271,10 @@ const { $Message } = require('@/wxcomponents/base/index');
                 console.log('是否能享受折扣', res.data)
                 // 禁止支付
                 if(!res.data.data) {
-                    this.flag = false
+                    // this.flag = false
                     this.$refs.popup.open()
                 }else{
-                    this.flag = true
+                    // this.flag = true
                 }
                 this.discountCan = res.data.data
             },
@@ -281,13 +282,13 @@ const { $Message } = require('@/wxcomponents/base/index');
             changeInput (e) {
                 this.introduceMobil = e.detail.value
                 if (this.introduceMobil.length >= 11) {
-                    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.introduceMobil))){ 
-                        $Message({
-							content: '手机号码有误，请重填',
-							type: 'error',
-						}); 
-                        return false; 
-                    } 
+      //               if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.introduceMobil))){ 
+      //                   $Message({
+						// 	content: '手机号码有误，请重填',
+						// 	type: 'error',
+						// }); 
+      //                   return false; 
+      //               } 
                     this.getCustomerContactByMobile()
                 }
             },
@@ -341,25 +342,34 @@ const { $Message } = require('@/wxcomponents/base/index');
             // 支付页
             onQuick(){
                 if(!this.flag) return
-                if(this.discountBool){
-                    if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.introduceMobil))){ 
-                        $Message({
-                            content: '手机号码有误，请重填',
-                            type: 'error',
-                        }); 
-                        return
-                    }
+                if(this.discountBool && this.introduceMobil.length < 11){
+                //     if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.introduceMobil))){ 
+					$Message({
+						content: '手机号码需要十一位',
+						type: 'error',
+					}); 
+					return
+                //     }
                 }
+				// if(this.discountBool && !this.discountCan) {
+				// 	$Message({
+				// 		content: '该介绍人手机号不存在, 不能享受优惠',
+				// 		type: 'error',
+				// 	}); 
+				// 	return
+				// }
                 this.flag = false
 
                 // 客户信息
                 let userInfoData =  []
                 // 判断第一项是否有值
                 if(this.onlineCustomerContactDtos.name){
+					this.onlineCustomerContactDtos1.main = false
                     userInfoData =  [ this.onlineCustomerContactDtos, this.onlineCustomerContactDtos1 ]
                 }else{
+					this.onlineCustomerContactDtos1.main = true
                     userInfoData =  [  this.onlineCustomerContactDtos1 ]
-                    userInfoData[0].main = true
+                    // userInfoData[0].main = true
                 }
                 // 宝宝信息
                 // let refBabaData = []
@@ -501,6 +511,14 @@ const { $Message } = require('@/wxcomponents/base/index');
             margin-right: 80rpx;
             text-align: justify;
             text-align-last: justify;
+            height: 40rpx;
+        }
+        .name:after {
+            content: "";
+            width: 100%;
+            height: 0;
+            display: inline-block;
+            visibility: hidden;
         }
         .h145{
             width: 150rpx;

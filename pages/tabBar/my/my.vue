@@ -27,47 +27,45 @@
                     </div>
                 </div>
                 <div>
-                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
-                    <image v-else class="login_logo" src="/static/image/my/wdl.png"></image>
+                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl" @click="setUserInfoImg"></image>
+                    <image v-else @click="getUserInfoAPI(false)" class="login_logo" src="/static/image/my/wdl.png"></image>
                 </div>
             </view>
             <view class="menu_list">
                 <div class="flex mar_t22">
-                    <button class="btnUser" open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
-                        <i class="icos iconfont iconziliao"></i>
+                    <button class="newImgFlex" open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
+                        <image class="newImg" src="/static/image/my/new1.png"></image>
                         <span>个人资料</span>
                     </button>
-                    <div @click="onClikcPage('/pages/order/detail/order-my')">
-                        <i class="iconfont iconxiangce"></i>
+                    <div class="newImgFlex" @click="onClikcPage('/pages/order/detail/order-my')">
+                        <image class="newImg" src="/static/image/my/new2.png"></image>
                         <span>我的相册</span>
                     </div>
-                    <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;margin-top: 0rpx">
-                        <div>
-                            <i class="iconfont iconkefu"></i>
-                            <span>专属顾问</span>
-                        </div>
+                    <button class="newImgFlex" plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0;">
+                        <image class="newImg " src="/static/image/my/new3.png"></image>
+                        <span>专属顾问</span>
                     </button>
-                    <div @click="onClickService('mack')">
-                        <i class="iconfont iconxieyi"></i>
+                    <div class="newImgFlex" @click="onClickService('mack')">
+                        <image class="newImg " src="/static/image/my/new4.png"></image>
                         <span>预约协议</span>
                     </div>
                 </div>
                 <div class="flex mar_t40">
                     <!-- 需要修改 -->
-                    <div @click="onClikcPage('/pages/zyd_page/standard/index')">
-                        <i class="iconfont iconcaidan"></i>
+                    <div class="newImgFlex" @click="onClikcPage('/pages/zyd_page/standard/index')">
+                        <image class="newImg " src="/static/image/my/new5.png"></image>
                         <span>标准服务</span>
                     </div>
-                    <div @click="onClickFeedBack">
-                        <i class="iconfont iconfankui" style="font-size: 55rpx;margin-bottom: 1rpx;"></i>
+                    <div class="newImgFlex" @click="onClickFeedBack">
+                       <image class="newImg " src="/static/image/my/new6.png"></image>
                         <span>意见反馈</span>
                     </div>
-                    <div @click="onClikcPage('/pages/collection/index')">
-                        <i class="iconfont iconshoucang" ></i>
+                    <div class="newImgFlex" @click="onClikcPage('/pages/collection/index')">
+                        <image class="newImg " src="/static/image/my/new7.png"></image>
                         <span>我的收藏</span>
                     </div>
-                    <div @click="onClikcPage('/pages/tabBar/my/components/about')">
-                        <i class="iconfont iconguanyu"></i>
+                    <div class="newImgFlex" @click="onClikcPage('/pages/tabBar/my/components/about')">
+                        <image class="newImg " src="/static/image/my/new8.png"></image>
                         <span>关于北遇</span>
                     </div>
                 </div>
@@ -150,6 +148,9 @@
         <!-- 弹窗 -->
         <i-message id="message" />
 
+        <!-- 设置用户弹窗 -->
+        <modulUser v-if="showModalUser" @cancel="cancel"/>
+
         
 
         <!-- 底部导航 -->
@@ -164,7 +165,9 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 const { $Message } = require('@/wxcomponents/base/index');
 import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
 import { getTextImageList } from '@/util/api/order.js'
+import modulUser from './components/modulUser';
     export default {
+        components: { modulUser},
         computed:{
 			...mapGetters('user',[
                 'get_phone',
@@ -193,7 +196,8 @@ import { getTextImageList } from '@/util/api/order.js'
             return{
                 jsCode:null, //存储登陆code
                 userCode:'', // 用户信息
-                imgList: []
+                imgList: [],
+                showModalUser:false, // 设置用户弹窗
             }
         },
         mounted(){
@@ -289,7 +293,7 @@ import { getTextImageList } from '@/util/api/order.js'
                         fail:err=>{
                             console.log('登陆失效')
                             //this.getCode(this.jsCode)
-                            this.onClickUserInfo()
+                            this.getUserInfoAPI('1')
                         }
                     }) 
                 }else{
@@ -341,6 +345,16 @@ import { getTextImageList } from '@/util/api/order.js'
                     fail: (error) => {}
                 })
                 
+            },
+
+            // 设置用户弹窗
+            setUserInfoImg(){
+                this.showModalUser = true
+            },
+
+            // 
+            cancel(){
+                this.showModalUser = false
             }
         },
         // 监听cood
@@ -354,6 +368,10 @@ import { getTextImageList } from '@/util/api/order.js'
 </script>
 
 <style lang="scss" scoped>
+.newImg{
+    width: 45rpx;
+    height: 45rpx;
+}
 .menu_list{
     // display: flex;
     padding: 20rpx;
@@ -536,18 +554,12 @@ import { getTextImageList } from '@/util/api/order.js'
     height: 80rpx;
     line-height: 80rpx;
 }
-.btnUser{
-    position: relative;
-    top: 3rpx;
-    .icos{
-        position: absolute;
-        color: black;
-        top: -59rpx;
-        left: 33rpx;
-        font-size: 56rpx;
+.newImgFlex{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 125rpx;
+    line-height: 60rpx;
     }
-    span{
-        vertical-align: -16rpx;
-    }
-}
 </style>

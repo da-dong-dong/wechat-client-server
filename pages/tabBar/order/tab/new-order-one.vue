@@ -4,8 +4,7 @@
             <view class="title">
                 订单号: {{item.orderNo}}
                 <span class="float_r colorA3" v-if="item.state">{{item.state ? item.state : ''}}</span>
-                <view v-if="!item.state" class="timeOut">
-                    <i-icon class="icon" type="time" size="18" color="#D3AA72"  />
+                <view v-if="!item.state && !item.earnestMoney" class="timeOut">
                     <out-time class="paddingRL10 fontSize28" :endtime="item.orderTime" />
                 </view>
             </view>
@@ -33,7 +32,7 @@
                                 拍摄门店: {{item['reservationPhotoInfoVos'][0].reservationShopId | shopID(get_shopIdList)}}
                             </view>
                             <view class="view">
-                                拍摄时间: {{item['reservationPhotoInfoVos'][0].reservationTime}}
+                                拍摄时间: {{ item['reservationPhotoInfoVos'][0].reservationDate | times}} {{item['reservationPhotoInfoVos'][0].reservationTime.slice(0, 5)}}
                             </view>
                         </view>
                     </view>
@@ -43,7 +42,7 @@
                                 拍摄门店: {{item1.reservationShopId | shopID(get_shopIdList)}}
                             </view>
                             <view class="view">
-                                拍摄时间: {{item1.reservationTime}}
+                                拍摄时间: {{ item1.reservationDate | times}} {{item1.reservationTime.slice(0, 5)}}
                             </view>
                         </view>
                     </view>
@@ -61,7 +60,7 @@
                     <!-- 待付款 -->
                     <view>
                         <span>已付定金：￥{{item.earnestMoney}}</span>
-                        <span>尾款待支付：￥{{item.sumPrice - item.earnestMoney}}</span>
+                        <span>{{item.earnestMoney==0?"待付定金":"尾款待支付"}}：￥{{item.sumPrice - item.earnestMoney}}</span>
                     </view>
                 </view>
                 <span class="float_r" v-if="item.state">
@@ -77,7 +76,12 @@
                 </view>
             </view>
         </view>
-        <view class="noOrder" v-if="get_carList.length === 0"> 您暂时还没有订单喔~</view>
+        <view class="noOrder" v-if="get_carList.length === 0"> 
+            <view class="flex">
+                <image class="login_logo" src="/static/image/my/wdl.png"></image>
+                <span>您暂时还没有订单喔~</span>
+            </view>
+        </view>
     </view>
 </template>
 
@@ -231,6 +235,16 @@ import { mapGetters } from 'vuex'
     font-family: PingFang SC;
     font-weight: 500;
     color: #9D9D9D;
+    .flex{
+        align-items: center;
+        flex-direction: column;
+    }
+    .login_logo{
+        width: 144rpx;
+        height: 144rpx;
+        display: block;
+        margin-bottom: 40rpx;
+    }
     }
 .noBuy{
     width: 100%;

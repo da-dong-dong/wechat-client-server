@@ -9,6 +9,14 @@
             </view>
             我的意见反馈
         </view>
+        <!-- 标题回复 -->
+        <view class="userImg">
+            <image class="login_logo" src="/static/image/my/userI.png"></image>
+            <view class="userText">
+                <span>北遇的留声机</span>
+                <view class="text">很抱歉给您的体验带来不便！ 请按以下指引，联系我们， 反馈您的意见！</view>
+            </view>
+        </view>
         <view class="fixed_content">
             <button class="mar_pad36" plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;margin-top: 0rpx">
                 <view class="">
@@ -29,10 +37,6 @@
         </view>
         <div class="pad10" v-if="feedBackList.length > 0">
             <view class="feedOne" v-for="_ in feedBackList" :key="_.id">
-                <view class="mar_b10">
-                    <span class="backColor">意见标题: </span>
-                    <span class="ccc">{{ _.feedbackTitle }}</span>
-                </view>
                 <view >
                     <span class="backColor">意见内容: </span>
                     <span class="ccc">{{ _.feedbackContent }}</span>
@@ -51,11 +55,11 @@
                 </view>
             </view>
         </div>
-        <div class="pad10" v-else>
+        <!-- <div class="pad10" v-else>
             <div class="feedOne_no">
                 无意见反馈
             </div>
-        </div>
+        </div> -->
     </view>
 </template>
 
@@ -106,6 +110,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.userImg{
+    width: 692rpx;
+    margin: 20rpx auto;
+    box-sizing: border-box;
+    display: flex;
+    .login_logo{
+        width: 96rpx;
+        height: 96rpx;
+        border-radius: 15rpx;
+    }
+    .userText{
+        margin-left: 10rpx;
+        span{
+            font-size: 26rpx;
+            padding-bottom: 20rpx;
+            display: inline-block;
+            color: #333333;
+            font-weight: 600;
+        }
+        .text{
+            width: 507rpx;
+            background: #fff;
+            border-radius: 20rpx;
+            padding: 30rpx 94rpx 30rpx 40rpx;
+            box-sizing: border-box;
+            font-size: 28rpx;
+            color: #666666;
+        }
+    }
+}
 .demo{
     position: relative;
     display: flex;

@@ -55,7 +55,7 @@
             </view>
             <view class="showList carLi" v-else>
                 <div class="flex_col">
-                    <img class="w144" src="/static/tabBar/beiyu.png" alt="">
+                    <img class="w144"  src="/static/image/my/wdl.png">
                     <div>您暂时还没有您还没加购产品喔~</div>
                 </div>
             </view>
@@ -237,6 +237,10 @@ const { $Message } = require('@/wxcomponents/base/index');
             // 清空单个
             onCarListDel(index){
                 this.mut_carListDel(index)
+                uni.showToast({
+                    title: '删除成功',
+                    duration: 1500
+                })
             },
 
             // 跳支付页
@@ -440,8 +444,8 @@ const { $Message } = require('@/wxcomponents/base/index');
         align-items: center;
     }
     .w144{
-        width: 144rpx;
-        height: 144rpx;
+        width: 200rpx;
+        height: 200rpx;
         margin-bottom: 20rpx;
     }
 }

@@ -117,7 +117,7 @@ import { mapGetters } from 'vuex'
 
             // 跳转支付
             navigateToMiniProgram(data){
-                let {jumpAppId,outTradeNo,payJumpMa,paySing,prepayId,nonceStr,timeStamp} = data
+                let {jumpAppId,outTradeNo,payJumpMa,paySign,prepayId,nonceStr,timestamp} = data
                 // 判断是否跳转支付
                 if(payJumpMa){
                     uni.navigateToMiniProgram({
@@ -133,11 +133,11 @@ import { mapGetters } from 'vuex'
                 }else{
                     uni.requestPayment({
                         provider: 'wxpay',
-                        timeStamp: timeStamp,
+                        timeStamp: timestamp.toString(),
                         nonceStr: nonceStr,
                         package: `prepay_id=${prepayId}`,
                         signType: 'RSA',
-                        paySign: paySing,
+                        paySign: paySign,
                         success: res => {
                             $Message({
                                 content: "支付成功",

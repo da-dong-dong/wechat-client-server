@@ -1,7 +1,7 @@
 /******************************** 倒计时组件 ***************************************/
 <template>
     <text>
-        {{TimeText}}
+        <i-icon class="icon" type="time" size="18" color="#D3AA72"  v-if="TimeText!='已关闭'"/> {{TimeText}}
     </text>
 </template>
 
@@ -9,7 +9,7 @@
     export default {
         data(){
             return {
-                TimeText: '00:00 已关闭',
+                TimeText: '已关闭',
                 now: 0,
                 tiems: null,
             };
@@ -33,7 +33,7 @@
                 this.now = new Date().getTime();
                 this.formate((this.endtime+1000*60*30) - this.now);
                 if((this.endtime+1000*60*30) - this.now<=0){
-                    this.TimeText = '00:00 已关闭'
+                    this.TimeText = '已关闭'
                     clearTimeout(this.tiems)
                     return
                 }

@@ -1,8 +1,8 @@
 <template>
     <div class="my_Form">
         <!-- <view class="title">标题:</view> -->
-        <input class="uni-input" @input="(event) => { feedbackTitle = event.detail.value}" name="input"
-        placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" style="height: 60rpx;width: 100%;padding: 10rpx" placeholder="标题" />
+        <!-- <input class="uni-input" @input="(event) => { feedbackTitle = event.detail.value}" name="input"
+        placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" style="height: 60rpx;width: 100%;padding: 10rpx" placeholder="标题" /> -->
         <!-- <view class="title">您的问题或建议:</view> -->
         <!-- <input class="uni-input h100" name="input" placeholder="您的问题或建议:" /> -->
         <textarea class="uni-input h100" @input="(event) => { feedbackContent = event.detail.value}" style="height: 320rpx;width: 100%;"
@@ -28,7 +28,8 @@ export default {
     computed: {
         ...mapGetters('user', [
             'get_shopId',
-            'get_enterpriseId'
+            'get_enterpriseId',
+            'get_phone'
         ])
     },
     methods: {
@@ -39,7 +40,7 @@ export default {
                 enterpriseId: this.get_enterpriseId,
                 feedbackContent: this.feedbackContent,
                 feedbackTime: timestampToTime(new Date()),
-                feedbackTitle: this.feedbackTitle,
+                feedbackTitle: `${this.peopleData.nickName}的意见反馈`,
                 userId: this.peopleData.id,
                 shopId: this.get_shopId ? this.get_shopId.shopId : null,
                 userMobile: this.peopleData.phone,

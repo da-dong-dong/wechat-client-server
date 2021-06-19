@@ -39,15 +39,15 @@
                 </view>
             </view>
         </view>
-        <view class="msg_div">
+        <view class="msg_div" v-if="list.introduceName || list.referrerName">
            <div class="title">邀请福利</div>
            <div class="flex">
                <span class="name">介绍人</span>
-               <span class="flex_1">{{list.introduceName}}</span>
+               <span class="flex_1">{{list.referrerName}}</span>
            </div>
            <div class="flex">
                <span class="name">手机号码</span>
-               <span class="flex_1">{{_.introduceMobil}}</span>
+               <span class="flex_1">{{list.referrerMobile}}</span>
            </div>
         </view>
         <!-- 循环套系 -->
@@ -63,15 +63,15 @@
                 </div>
                 <div class="flex" style="border:none">
                     <span class="name">底片</span>
-                    <span class="flex_1">{{item.bottomCount}}</span>
+                    <span class="flex_1">{{item.bottomCount}} 张</span>
                 </div>
                 <div class="flex" style="border:none">
                     <span class="name">精修</span>
-                    <span class="flex_1">{{item.refineCount}}</span>
+                    <span class="flex_1">{{item.refineCount}} 张</span>
                 </div>
                 <div class="flex" style="border:none">
                     <span class="name">服装</span>
-                    <span class="flex_1">{{inDressNum}}</span>
+                    <span class="flex_1">{{inDressNum}} 套</span>
                 </div>
             </view>
             <view class="msg_div">

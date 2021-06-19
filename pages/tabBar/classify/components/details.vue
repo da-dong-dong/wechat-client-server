@@ -37,11 +37,13 @@
             <view class="context_li paddingB20 borderTop paddingTB20" >
                 <view class="flex">
                     <div class="title fontSize30">服务</div>
-                    <div class="list fontSize28">
+                    <div class="list fontSize24">
                         <text  v-if="listUl['assemblyItemDressInfos']">造型{{listUl['assemblyItemDressInfos']}}套</text>
                         <text v-if="listUl['bottom']">底片{{listUl['bottom']}}张</text>
                         <text v-if="listUl['refine']">精修{{listUl['refine']}}张</text>
-                        <text v-for="(item,index) in listUl['goods']" :key="index">{{index}}{{item}}件</text>
+                       
+                        <text class="textFlex" v-for="(item,index) in listUl['goods']" :key="index">{{index}}{{item}}件</text>
+                        
                     </div>
                 </view>
             </view>
@@ -339,6 +341,7 @@ import { addRecommendOne } from '@/util/api/order.js'
             flex: 6;
             width: 20rpx;
             flex-wrap: wrap;
+            line-height: 45rpx;
             text{
                 padding-right: 50rpx;
             }
@@ -395,5 +398,11 @@ import { addRecommendOne } from '@/util/api/order.js'
     height: 32rpx;
     display: inherit;
     margin: 0 auto;
+}
+.textFlex{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 210rpx;
+    overflow: hidden;
 }
 </style>

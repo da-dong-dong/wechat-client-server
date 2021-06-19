@@ -10,7 +10,12 @@
         </div>
     </template>
     <template v-else>
-        暂无收藏
+       <view class="noOrder"> 
+            <view class="flex">
+                <image class="login_logo" src="/static/image/my/wdl.png"></image>
+                <span>你的喜欢还没有收藏哦~</span>
+            </view>
+        </view>
     </template>
   </div>
 </template>
@@ -83,6 +88,27 @@ export default {
 </script>
 
 <style lang="less">
+.noOrder{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-size: 24rpx;
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: #9D9D9D;
+    .flex{
+        align-items: center;
+        flex-direction: column;
+    }
+    .login_logo{
+        width: 200rpx;
+        height: 200rpx;
+        display: block;
+        margin-bottom: 40rpx;
+    }
+    }
 .my_collection{
     padding: 30rpx;
     box-sizing: border-box;
