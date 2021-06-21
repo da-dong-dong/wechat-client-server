@@ -5,28 +5,28 @@
             <div class="flex">
                <span class="name">{{onlineCustomerContactDtos.callName}}</span>
                <span class="flex_1">
-                   <input class="uni-input" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" placeholder="请输入您的姓名" />
+                   <input class="uni-input" placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" placeholder="请输入您的姓名" />
                </span>
             </div>
             <div class="flex">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
+                    <input class="uni-input"  placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
             <div class="flex">
                 <span class="name">{{onlineCustomerContactDtos1.callName}}</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" placeholder="请输入您的姓名" />
+                    <input class="uni-input" placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" placeholder="请输入您的姓名" />
                 </span>
             </div>
             <div class="flex">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
+                    <input class="uni-input" placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
-            <div class="flex no_border">
+            <div class="flex no_border flexCenten">
                 <span class="name">婚期</span>
                 <span class="flex_1 r_icon">
                     <picker class="txt_r" mode="date" @change="bindDateChange">
@@ -46,12 +46,12 @@
                         <view class="flex_1">
                             <view class="padding">
                                 <span class="font600">{{item.name}}</span>
-                                <span class="float_r colorA3">￥{{item.price}}</span>
+                                <span class="float_r colorA3 fontFamilyST fontWight">￥{{item.price}}</span>
                             </view>
                             <view class="font14">
                                 预付金: <span class="orange">￥{{item.assemblyDeposit ? item.assemblyDeposit : 0 }}</span> 
                             </view>
-                            <view class="font14">
+                            <view class="font14 fontFamilyST fontWight">
                                 尾款: ￥{{ item.assemblyDeposit ? item.price - item.assemblyDeposit : item.price }}
                             </view>
                         </view>
@@ -109,7 +109,7 @@
 
         <view class="footer">
             <div class="footer_l">
-                预定金: <span class="orange">￥{{sumPayment}}</span>
+                预定金: <span class="orange fontWight fontFamilyST">￥{{sumPayment}}</span>
             </div>
             <span class="footer_r" @click="onQuick">立即支付</span>
         </view>
@@ -542,6 +542,7 @@ const { $Message } = require('@/wxcomponents/base/index');
             }
             .txt_r{
                 flex: 1;
+                color: #414143;
             }
         }
         .font600{

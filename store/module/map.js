@@ -60,14 +60,14 @@ export default{
 			amapPlugin.getRegeo({  
 				success: (data) => {  
 					let {city,streetNumber} = data[0].regeocodeData.addressComponent
-					console.log(data)
+					console.log('定位成功信息',data)
 					commit('mut_city', city)
 					commit('mut_location', [data.longitude,data.latitude])
 				},
 				fail: (err) => {
 					console.log(data,'取消授权')
 					commit('mut_city', '取消授权')
-					console.log(err)
+					console.log('定位错误信息',err)
 				}  
 			}); 
 		},

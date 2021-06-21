@@ -40,7 +40,7 @@
             </view>
         </view>
         <view class="msg_div" v-if="list.introduceName || list.referrerName">
-           <div class="title">邀请福利</div>
+           <div class="title" style="font-weight:500">邀请福利</div>
            <div class="flex">
                <span class="name">介绍人</span>
                <span class="flex_1">{{list.referrerName}}</span>
@@ -52,7 +52,7 @@
         </view>
         <!-- 循环套系 -->
         <view  v-for="(item,index) in list['onlineOrderItemVos']" :key="index">
-            <view class="msg_div">
+            <view class="msg_div textColor">
                 <div class="flex" style="border:none">
                     <span class="name">订单时间</span>
                     <span class="flex_1">{{ list.orderTime | times}}</span>
@@ -220,6 +220,11 @@ import { orderDetails } from '@/util/api/order.js'
 </script>
 <style lang="less" scoped>
 .detail_content{
+    .textColor{
+        .flex_1{
+            color: #5E5E60;
+        }
+    }
     .msg_div{
         padding: 20rpx 0;
         background: #fff;
@@ -235,6 +240,7 @@ import { orderDetails } from '@/util/api/order.js'
         }
         .explain{
             color: #6C6C6C;
+            font-size: 26rpx;
             flex: 1;
         }
         .num{
@@ -256,6 +262,7 @@ import { orderDetails } from '@/util/api/order.js'
         .flex{
             padding: 20rpx;
             border-bottom: 1px solid #ECECEC;
+            color: #414143;
             .name{
                 width: 140rpx;
                 margin-right: 80rpx;

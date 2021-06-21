@@ -11,7 +11,7 @@
             </div>
             <div class="changeShop" @click="onChangeShopId">
                 <!-- <i class="iconfont iconfangzu"></i> -->
-				<image class="w30" src="../../../../static/image/qhmd.png" mode=""></image>
+				<image class="w36" src="../../../../static/image/qhmd.png" mode=""></image>
                 <span class="font10 colorD3">
                     切换门店
                 </span>
@@ -35,7 +35,7 @@
 								<template v-if="item2['typographyCount'] >= item2['useTypographyNum']">
 									<view class="list" >
 									    <view class="listTime active" >
-									        <radio style="transform: scale(0.75);" :value="item1.typographyTypeId" :checked="false" @click.native="onChangeCarList(item2)"/>
+									        <radio style="transform: scale(0.75);" color="#D3AB75" :value="item1.typographyTypeId" :checked="false" @click.native="onChangeCarList(item2)"/>
 									        {{item2['timeFrameStr']}}
 									    </view>
 									</view>
@@ -43,7 +43,7 @@
 								<template v-else>
 									<view class="list" >
 									    <view class="listTime active" @click.native="onChangeCarList(item2)">
-									        <radio style="transform: scale(0.75);" color="#D3AB75" disabled />
+									        <radio style="transform: scale(0.75);" color="#D3AB75" disabled /> 
 									        {{item2['timeFrameStr']}}
 									    </view>
 									</view>
@@ -334,6 +334,7 @@ import { getReservationDescription } from '@/util/api/user.js'
 		height: 100vh;
 		box-sizing: border-box;
 		background: #F5F5F5;
+		font-family: PingFangSC-Regular, PingFang SC;
 	}
 	view{
 		box-sizing: border-box;
@@ -391,14 +392,15 @@ import { getReservationDescription } from '@/util/api/user.js'
 }
 .bgFFF{
 	background: #FFFFFF;
-	border-radius: 16rpx;
+	border-radius: 30rpx;
 	margin-bottom: 20rpx;
-	padding: 20rpx;
+	padding: 50rpx 20rpx 30rpx;
 	.centerTxt{
 		text-align: center;
 		// font-size: 20rpx;
 		color: #C6C6C6;
 		font-size: 20rpx;
+		margin-bottom: 10rpx;
 	}
 	.colorC6{
 		color: #C6C6C6;
@@ -410,9 +412,9 @@ import { getReservationDescription } from '@/util/api/user.js'
     background: #F9F9F9;
     height: 100%;
 	overflow: auto;
-	.w30{
-		width: 30rpx;
-		height: 30rpx;
+	.w36{
+		width: 36rpx;
+		height: 36rpx;
 		margin-bottom: 20rpx;
 	}
 	.mar_b10{
@@ -431,6 +433,7 @@ import { getReservationDescription } from '@/util/api/user.js'
     }
     .iconposition-highlighted{
         margin-top: 6rpx;
+		margin-right: 8rpx;
     }
     .colorD3{
         color: #D3AB75;
@@ -447,7 +450,7 @@ import { getReservationDescription } from '@/util/api/user.js'
         padding-left: 32rpx;
     }
     .font10{
-        font-size: 20rpx;
+        font-size: 22rpx;
     }
     .center{
         text-align: center;

@@ -35,16 +35,11 @@
                         <view v-for="(item,index) in weekArr" :key="index">{{item}}</view>
                     </view>
                     <view class="flex flex_wrap myList">
-                        <!-- <view class="list" v-for="(item,index) in dateAllArr" :key="index"> -->
-							<!-- :class="noBg(dateDetail,(item.num - 1)) ? (bgColor(dateDetail,(item.num-1)) ? 'optional' : 'ban' ) :'noBg'" -->
 						<view class="bg list" v-for="(item,index) in dateAllArr" :key="index"
-						 :class="{ noBg: !noBg(dateDetail,(item.num - 1)), optional: bgColor(dateDetail,(item.num-1)), currentDay: item.num === currentDay }"
+						 :class="{ noBg: !noBg(dateDetail,(item.num - 1)), boforeTime: boforeTimeFun(item.date) , optional: bgColor(dateDetail,(item.num-1)), currentDay: item.num === currentDay }"
 						  @click="enDate(dateDetail,item.num,item.date,index)">
 							{{ item.num ? item.num : '' }}
-							<!-- <view class="day">{{item.num}}</view> -->
-							<!-- <view class="typographyNum">{{dateDetail | typographyNum(item.num-1)}}</view> -->
 						</view>
-                        <!-- </view> -->
                     </view>
                 </view>
                 <slot></slot>
@@ -87,7 +82,7 @@
 				pickerStartDate:'2010-01-01',
 				pickerEndDate:'2050-12-31',
 				
-				weekArr:['日', '一', '二', '三', '四', '五', '六'],
+				weekArr:['一', '二', '三', '四', '五', '六', '日' ],
 				
 				// 日历
 				dateAllArr: [],
@@ -105,6 +100,14 @@
 			this.getNowDate();
 		},
 		methods:{
+			boforeTimeFun (time) {
+				console.log(time);
+				let now = new Date().getTime()
+				let timeNum = new Date(time).getTime() + (24 * 60 * 60 * 1000)
+				console.log(now);
+				console.log(timeNum);
+				return now > timeNum
+			},
 			clickMonth (_) {
                 this.currentMonth = _
                 this.dateInit()
@@ -115,9 +118,7 @@
 				let year = date.getFullYear()
 				let month = date.getMonth() + 1
                 this.currentMonth = date.getMonth() + 1
-				// let day = date.getDate()
                 this.currentDay = date.getDate()
-				// this.pickerDate = `${year}-${this.completeDate(month)}-${this.completeDate(day)}`
                 this.pickerDate = year
 				this.dateInit()
 			},
@@ -143,7 +144,7 @@
 				let dayNums = new Date(nowYear, nowMonth, 0).getDate();
 				
 				// 获取当月1号对应的星期
-				let startWeek = new Date(nowYear + '/' + nowMonth + '/' + 1).getDay()
+				let startWeek = new Date(nowYear + '/' + nowMonth + '/' + 1).getDay() - 1
 				let dateAllArr = []
 				let obj = [];
 				
@@ -200,32 +201,10 @@
 			// 切换上月
 			lastMonth(){
                 this.pickerDate = Number(this.pickerDate) - 1
-				// let arr = this.pickerDate.split('-')
-				// // 获得当前年份
-				// let nowYear = Number(arr[0])
-				// // 获得当前月份
-				// let nowMonth = Number(arr[1])
-				// // 判断需不需要减去年份
-				// let newYear = nowMonth < 2 ? nowYear - 1 : nowYear
-				// // 获取新月份
-				// let newMonth = nowMonth < 2 ? 12 : nowMonth -1
-				// this.pickerDate = `${newYear}-${this.completeDate(newMonth)}-${arr[2]}`
-				// this.dateInit()
 			},
 			// 切换下月
 			nextMonth(){
                 this.pickerDate = Number(this.pickerDate) + 1
-				// let arr = this.pickerDate.split('-')
-				// // 获得当前年份
-				// let nowYear = Number(arr[0])
-				// // 获得当前月份
-				// let nowMonth = Number(arr[1])
-				// // 判断需不需要增加年份
-				// let newYear = nowMonth > 11 ? nowYear + 1 : nowYear
-				// // 获取新月份
-				// let newMonth = nowMonth > 11 ? 1 : nowMonth + 1
-				// this.pickerDate = `${newYear}-${this.completeDate(newMonth)}-${arr[2]}`
-				// this.dateInit()
 			},
 			// 日历选择返回
 			DateChange(e){
@@ -235,6 +214,13 @@
 			},		
 		
 			enDate(detail,num,time,index){
+				if (this.boforeTimeFun(time)) {
+					$Message({
+						content: '该日期不可选',
+						type: 'warning'
+					});
+					return
+				}
                 let arr = this.dateAllArr[index].date.split('-')
 				// this.pickerDate = this.dateAllArr[index].date
 				this.pickerDate = arr[0]
@@ -243,8 +229,6 @@
 				let isVacation = detail[num-1].isVacation
 				if(!isVacation){
 					this.$emit('enDate',time)
-                    // let str = `${this.pickerDate}-${this.currentMonth}-${this.currentDay}`
-				    // this.$emit('getDate', str);
 				}else{
 					$Message({
 						content: '该时间为休息日',
@@ -255,8 +239,6 @@
 		},
 		watch:{
 			currentTime(){
-				// this.$emit('getDate',this.pickerDate);
-				// this.$emit('getDate',this.pickerDate);
 				this.$emit('getDate', this.currentTime);
 			},
 			dateDetail(val){
@@ -301,6 +283,7 @@
 				.Y_M{
 					.showDate{
 						padding: 0 15rpx;
+						color: #D3AA72;
 					}
 				}
 			}
@@ -332,7 +315,7 @@
                     content: '';
                     display: block;
                     position: absolute;
-                    width: 4rpx;
+                    width: 6rpx;
                     bottom: 0;
                     top: 0;
                     left: 0;
@@ -343,14 +326,14 @@
         }
 		.calenarBox{
 			// width: 690rpx;
-			margin: 10rpx;
-			padding: 20rpx 10rpx;
+			margin: 20rpx;
+			padding: 30rpx 10rpx;
 			// margin-top: 0rpx;
 			// display: flex;
 			flex-wrap:wrap;
 			background-color: #FFFFFF;
 			box-shadow:0rpx 7rpx 29rpx 6rpx rgba(0, 0, 0, 0.03);
-			border-radius: 16rpx;
+			border-radius: 30rpx;
             .flex_wrap{
                 flex-wrap: wrap;
             }
@@ -367,7 +350,7 @@
 					// padding-left: 9rpx;
 					line-height: 70rpx;
 					margin-top: 10rpx;
-					margin-left: 9rpx;
+					margin-left: 4rpx;
 				}
 				.bg{
 					// border-radius: 10rpx;
@@ -377,9 +360,13 @@
 					}
 				}
 				.noBg{
+					color: #999999;
 					.typographyNum{
 						color: #FF0000;
 					}
+				}
+				.boforeTime{
+					color: #999999;
 				}
 				.optional{
 					// background-color: #D3AB75;

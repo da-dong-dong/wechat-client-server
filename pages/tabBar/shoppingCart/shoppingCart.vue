@@ -43,7 +43,7 @@
                         </view>
                         <div class="buy_all">全选</div>
                         <view class="buy_txt">
-                            <view class="font18">
+                            <view class="font18 fontFamilyST fontWight">
                                 合计: <span class="orange">￥{{ sumPrice }}</span>
                             </view>
                         </view>

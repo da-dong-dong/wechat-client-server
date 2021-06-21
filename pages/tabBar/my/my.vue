@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div>
-                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl" @click="setUserInfoImg"></image>
+                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl" @click="setUserInfoImg" style="background: #ECECEC;"></image>
                     <image v-else @click="getUserInfoAPI(false)" class="login_logo" src="/static/image/my/wdl.png"></image>
                 </div>
             </view>

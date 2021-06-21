@@ -78,11 +78,17 @@
 			</div>
         </view>
        <!-- 客服 -->
-        <view class="userCall">
+        <view class="userCall" :style="{ bottom: get_code?'160rpx':'260rpx'}">
             <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
                 <img src="/static/image/userCall.png" alt="">
             </button>
         </view>
+
+		<!-- 登陆提示 -->
+		<view class="loginInfo" v-if="!get_code">
+			<view>点击登陆，立刻预约</view>
+			<view class="btm" @click="getUserInfo">立即登录</view>
+		</view>
 
         <!-- 弹窗 -->
         <i-message id="message" />
@@ -101,9 +107,10 @@
 
 <script>
 import { getHomeData } from '@/util/api/home.js'
+import { getUserInfo } from '@/util/api/user.js'
 const { $Message } = require('@/wxcomponents/base/index');
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
@@ -123,7 +130,8 @@ const entriData = uni.getExtConfigSync()
 		},
 		computed: {
 			...mapGetters('user',[
-				'get_shopId'
+				'get_shopId',
+				'get_code'
 			]),
 			...mapGetters('map',[
 				'get_location',
@@ -157,6 +165,9 @@ const entriData = uni.getExtConfigSync()
 			},500)
 		},
         methods:{
+			 ...mapActions('user',[
+                'act_nickName',
+            ]),
 			// 消息推送
 			onClickMyInfo(){
 				uni.requestSubscribeMessage({
@@ -202,7 +213,7 @@ const entriData = uni.getExtConfigSync()
                             url:'/pages/tabBar/classify/classify'
                         })
 						break;
-						case 'imgDetail':
+					case 'imgDetail':
 						uni.navigateTo({ 
 							url: '/pages/tabBar/classify/newDetail?id=' + data.detailId 
 						})
@@ -222,6 +233,10 @@ const entriData = uni.getExtConfigSync()
                             url:'/pages/tabBar/classify/feedBack'
                         })
 						break;
+					case 'link':
+						uni.navigateTo({ 
+							url: `/pages/tabBar/my/components/web_view?url=${data.link}&title=外部链接`
+						})
 				}
 			},
 			getHomeData () {
@@ -269,12 +284,44 @@ const entriData = uni.getExtConfigSync()
 					return ''
 				}
 			},
+
+			// 登陆信息
+			getUserInfo(){
+				getUserInfo().then(res=>{
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                })
+			}
         }   
     }
 </script>
 
 <style lang="scss" scoped>
 @import url('./icon.css');
+.loginInfo{
+	position: fixed;
+    bottom: 145rpx;
+    right: 0;
+    width: 100%;
+    height: 100rpx;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2020;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+	font-size: 26rpx;
+	.btm{
+		width: 140rpx;
+		height: 70rpx;
+		border-radius: 40rpx;
+		background: #D3AA72;
+		line-height: 70rpx;
+		text-align: center;
+	}
+}
 .navText{
 	width: 100%;
 	text-align: center;
@@ -291,8 +338,9 @@ const entriData = uni.getExtConfigSync()
     align-items: center;
     padding-left: 15rpx;
 	padding-right: 15rpx;
+	line-height: 55rpx;
 	.icon{
-		 height: 90rpx;
+		 height: 55rpx;
 	}
 	.textOv{
 		white-space: nowrap;
@@ -300,6 +348,7 @@ const entriData = uni.getExtConfigSync()
 		width: 90rpx;
 		overflow: hidden;
 		font-size: 26rpx;
+		height: 55rpx;
 	}
 }
 .homeContent{

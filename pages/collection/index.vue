@@ -115,6 +115,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    border-top: 1rpx solid #B2B2B2;
     .collectionOne{
         width: 330rpx;
         margin-bottom: 26rpx;

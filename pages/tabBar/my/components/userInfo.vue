@@ -13,7 +13,7 @@
                 <view class="flex">
                     <text class="paddingL20 color999">姓名</text>
                 </view>
-                <input class="width" type="text" placeholder="请输入姓名" v-model="userInfo.nickName"/>
+                <input class="width" type="text" placeholder="请输入姓名" v-model="userInfo.nickName" @blur="onClickSave"/>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
@@ -31,7 +31,7 @@
                 <view class="flex">
                     <text class="paddingL20 color999">手机号码</text>
                 </view>
-                <input class="width" type="text" placeholder="请输入手机号码" v-model="userInfo.phone"/>
+                <input class="width" type="text" placeholder="请输入手机号码" v-model="userInfo.phone" @blur="onClickSave"/>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
             </view>
 
@@ -57,7 +57,7 @@
         </view>
 
         <!-- 保存 -->
-        <view class="saveBtn" @click="onClickSave">保存</view>
+        <!-- <view class="saveBtn" @click="onClickSave(false)">保存</view> -->
         <!-- 弹窗 -->
         <i-message id="message" />
     </view>
@@ -122,11 +122,17 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
             change(e){
                 this.Index = Number(e.detail.value)
                 this.userInfo.sex = this.Index==0?1:2
+
+                // 失去焦点保存
+                this.onClickSave(true)
             },
             
             // 时间
             bindDateChange (e, item) {
 				this.userInfo.birthday = new Date(e.target.value).getTime()
+
+                // 失去焦点保存
+                this.onClickSave(true)
             },
 
              // 获取选择的地区
@@ -135,10 +141,14 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
                 this.userInfo.province = this.region[0]
                 this.userInfo.city = this.region[1]
                 this.userInfo.area = this.region[2]
+
+                // 失去焦点保存
+                this.onClickSave(true)
             },
             
             // 保存
-            onClickSave(){
+            onClickSave(noBack){
+                console.log(noBack)
                 console.log(this.userInfo.birthday);
                 console.log(this.userInfo)
                 updateUserInfo(this.userInfo).then(res=>{
@@ -146,7 +156,9 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
                     if(code == 200){
                         let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = this.userInfo
                         this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
-                        uni.navigateBack()
+                        if(!noBack){
+                            uni.navigateBack()
+                        }
                     }
                 })
                
