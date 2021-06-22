@@ -195,7 +195,7 @@
 		height: 82rpx;
 		display: flex;
 		padding-bottom: 20rpx;
-		border-bottom: 2rpx solid #B2B2B2;
+		border-bottom: 2rpx solid #f5f5f5;
 		.left{
 			width: 100rpx;
 			text-align: center;

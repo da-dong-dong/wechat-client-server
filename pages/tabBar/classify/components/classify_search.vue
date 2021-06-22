@@ -59,7 +59,7 @@
 		height: 82rpx;
 		display: flex;
 		padding-bottom: 20rpx;
-		border-bottom: 2rpx solid #B2B2B2;
+		border-bottom: 2rpx solid #f5f5f5;
 		&.searchAssembly{
 			.left{
 				width: 20rpx;

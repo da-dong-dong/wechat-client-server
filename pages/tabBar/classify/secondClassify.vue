@@ -7,7 +7,7 @@
 			<!-- 左侧 -->
 			<view class="left_box textC">
 				<view class="">
-					<view class="paddingTB25 fontSize28" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
+					<view class="paddingTB30 fontSize28" :class="item.id === id ? 'active' : '' " v-for="item in leftList" :key="item.id" @click="onClickTab(item.id)">
 						{{item.name}}
 					</view>
 				</view>
@@ -249,7 +249,7 @@ view{
                 top: 0;
                 bottom: 0;
                 left: 0;
-                width:12rpx;
+                width:8rpx;
                 background: #D3AA72;
             }
         }
@@ -269,18 +269,18 @@ view{
 	height: 320rpx;
 }
 .smallRectangle{
-    margin-top: 10rpx;
+    margin-top: 30rpx;
     display: flex;
     flex-direction: column;
     .h110{
         height: 174rpx;
         width: 100%;
-        margin-bottom: 10rpx;
+        margin-bottom: 30rpx;
     }
     .h200{
         height: 352rpx;
         width: 100%;
-        margin-bottom: 10rpx;
+        margin-bottom: 30rpx;
     }
 }
 .dbColumn{
@@ -290,11 +290,11 @@ view{
     justify-content: space-between;
     .title {
         color: #919191;
-        padding: 4rpx 10rpx;
+        padding: 15rpx 10rpx;
     }
     .price{
         font-weight: 600;
-        padding: 0rpx 10rpx 6rpx;
+        padding: 5rpx 11rpx 20rpx;
     }
     .gt_icon{
         float: right;

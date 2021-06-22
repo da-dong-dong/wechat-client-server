@@ -32,7 +32,7 @@
             <swiper-item v-for="(_, i) in recommendList" :key="_.id">
                 <div class="pad10 border_b">
                     <span class="font600">推荐套系</span>
-                    <span class="index">{{i + 1}} / {{recommendList.length}}</span>
+                    <span class="index">{{i + 1}}/{{recommendList.length}}</span>
                 </div>
                 <div class="flex pad10">
                     <img class="h80" :src="_.coverPhoto" alt="">
@@ -40,7 +40,7 @@
                         <div class="font600">{{_.name}}</div>
                         <div class="paddingT15 fontSize25 color666">{{_.imgIntroduction}}</div>
                         <div class="price">
-                            ￥ {{_.assemblyPrice}}
+                            <span class="fontFamilyST fontWight">￥ {{_.assemblyPrice}}</span>
                             <span class="goPhoto" @click="onClickDetails(_.id)">去拍摄</span>
                         </div>
                     </div>
@@ -213,13 +213,17 @@ export default {
     .price{
         color: #D4AD72;
         margin-top: 10rpx;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     .goPhoto{
         border-radius: 30rpx;
         float: right;
-        padding: 6rpx 25rpx;
+        padding: 2rpx 20rpx;
         color: #fff;
         background: #D4AD72;
+        font-size: 28rpx;
     }
 }
 .examples{
@@ -228,8 +232,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: gray;
     .borders{
-        width: 200rpx;
+        width: 120rpx;
         border-bottom: 2rpx solid #ECECEC;
     }
     .text{
@@ -273,8 +278,8 @@ export default {
     display: inline-block;
     color: #fff;
     background: #D3AA72;
-    padding: 10rpx 14rpx;
-    font-size: 20rpx;
+    padding: 4rpx 14rpx;
+    font-size: 24rpx;
     border-radius: 8rpx;
 }
 .font600{

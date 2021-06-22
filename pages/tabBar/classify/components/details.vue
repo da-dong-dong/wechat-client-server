@@ -28,7 +28,7 @@
                 <view class="flex paddingTB20 flexCenten">
                     <text class="marginR30 fontSize30">定金</text>
                     <view>
-                         预定金: <text class="colorH marginR10">￥{{listDetai.assemblyDeposit}}</text>
+                         预定金: <text class="colorH marginR10 fontWight">￥{{listDetai.assemblyDeposit}}</text>
                          尾款: <text class="fontWight">￥{{listDetai.assemblyPrice-listDetai.assemblyDeposit}}</text>
                     </view>
                 </view>
@@ -38,9 +38,9 @@
                 <view class="flex">
                     <div class="title fontSize30">服务</div>
                     <div class="list fontSize24">
-                        <text  v-if="listUl['assemblyItemDressInfos']">造型{{listUl['assemblyItemDressInfos']}}套</text>
-                        <text v-if="listUl['bottom']">底片{{listUl['bottom']}}张</text>
-                        <text v-if="listUl['refine']">精修{{listUl['refine']}}张</text>
+                        <text class="textFlex"  v-if="listUl['assemblyItemDressInfos']">造型{{listUl['assemblyItemDressInfos']}}套</text>
+                        <text class="textFlex"  v-if="listUl['bottom']">底片{{listUl['bottom']}}张</text>
+                        <text class="textFlex"  v-if="listUl['refine']">精修{{listUl['refine']}}张</text>
                        
                         <text class="textFlex" v-for="(item,index) in listUl['goods']" :key="index">{{index}}{{item}}件</text>
                         
@@ -315,7 +315,7 @@ import { addRecommendOne } from '@/util/api/order.js'
     background: #F9F9F9;
 }
 .borderTop{
-    border-top: 1rpx solid #F6F6F6;
+    border-top: 1rpx solid #dedede;
 }
 .content{
     background: rgba(255,255,255,0.8);
@@ -343,7 +343,7 @@ import { addRecommendOne } from '@/util/api/order.js'
             flex-wrap: wrap;
             line-height: 45rpx;
             text{
-                padding-right: 50rpx;
+                margin-right: 40rpx;
             }
         }
         .flex{
@@ -358,7 +358,7 @@ import { addRecommendOne } from '@/util/api/order.js'
     .imgTab{
         padding-top: 30rpx;
         box-sizing: content-box;
-        border-bottom: #EAEAEA 1px solid;
+        border-bottom: #EAEAEA 1rpx solid;
         margin-left: 30rpx;
         margin-right: 30rpx;
         padding-bottom: 20rpx;
@@ -401,8 +401,8 @@ import { addRecommendOne } from '@/util/api/order.js'
 }
 .textFlex{
     white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 210rpx;
+    /* text-overflow: clip; */
+    width: 135rpx;
     overflow: hidden;
 }
 </style>

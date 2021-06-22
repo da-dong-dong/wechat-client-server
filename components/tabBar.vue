@@ -78,7 +78,7 @@
 		width: 750rpx;
 		border-top: 2rpx solid #f7f7f9;
 		background-color: #fff;
-		font-size: 22rpx;
+		font-size: 20rpx;
 		text-align: center;
 		display: flex;
 		justify-content: space-around;
@@ -92,22 +92,23 @@
 			.icon{
 				margin-left: 50%;
 				transform: translateX(-50%);
+				margin-bottom: 5rpx;
 			}
 			.icon1{
-				width: 50rpx;
-				height: 50rpx;
+				width: 40rpx;
+				height: 40rpx;
 			}
 			.icon2{
-				width: 50rpx;
-				height: 50rpx;
+				width: 40rpx;
+				height: 40rpx;
 			}
 			.icon4{
-				width:50rpx;
-				height: 50rpx;
+				width:40rpx;
+				height: 40rpx;
 			}
 			.icon5{
-				width: 50rpx;
-				height: 50rpx;
+				width: 40rpx;
+				height: 40rpx;
 			}
 		}
 		.tabBarAction{

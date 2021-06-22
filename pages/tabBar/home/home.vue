@@ -300,7 +300,7 @@ const entriData = uni.getExtConfigSync()
 @import url('./icon.css');
 .loginInfo{
 	position: fixed;
-    bottom: 145rpx;
+    bottom: 139rpx;
     right: 0;
     width: 100%;
     height: 100rpx;
@@ -315,10 +315,10 @@ const entriData = uni.getExtConfigSync()
 	font-size: 26rpx;
 	.btm{
 		width: 140rpx;
-		height: 70rpx;
+		height: 50rpx;
 		border-radius: 40rpx;
 		background: #D3AA72;
-		line-height: 70rpx;
+		line-height: 50rpx;
 		text-align: center;
 	}
 }
