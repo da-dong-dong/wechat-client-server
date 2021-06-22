@@ -6,7 +6,7 @@
         <!-- <view class="title">您的问题或建议:</view> -->
         <!-- <input class="uni-input h100" name="input" placeholder="您的问题或建议:" /> -->
         <textarea class="uni-input h100" @input="(event) => { feedbackContent = event.detail.value}" style="height: 320rpx;width: 100%;"
-           placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" placeholder="如您对北遇映画有什么好的建议，可点击填写您的建议请把您的宝贵意见填写于此处，我们将做得更好，感谢你对被的支持！:"/>
+           placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" placeholder="如您对我们有什么好的建议，可点击填写您的建议请把您的宝贵意见填写于此处，我们将做得更好，感谢你对被的支持！:"/>
         <div class="submit_BTN" @click="addFeedBackOne">意见反馈</div>
     </div>
 </template>

@@ -221,8 +221,12 @@ import { orderDetails } from '@/util/api/order.js'
 <style lang="less" scoped>
 .detail_content{
     .textColor{
+        .name{
+            font-size: 30rpx;
+        }
         .flex_1{
             color: #5E5E60;
+            font-size: 28rpx;
         }
     }
     .msg_div{
@@ -250,7 +254,7 @@ import { orderDetails } from '@/util/api/order.js'
             padding-bottom: 6rpx;
         }
         .title{
-            font-weight: 600;
+            font-weight: bold;
             font-size: 30rpx;
             padding: 20rpx;
         }

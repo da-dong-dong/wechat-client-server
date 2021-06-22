@@ -1,12 +1,18 @@
 /******************************** 订单 ***************************************/
 <template>
     <view class="order_box" >
-        <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData">
-            <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder"></wuc-tab>
+        <uni-nav-bar id="editor" fixed statusBar title="订单列表"></uni-nav-bar>
+
+        <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData" >
+             <view  :style="{height:`${heightNav}px`}"></view>
+            <view>
+                <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder" ></wuc-tab>
+            </view>
             <view class="order_box_content">
                 <orederOne  v-for="(item,index) in tabList" :key="index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose"/>
             </view>
         </s-pull-scroll>
+        
       <!-- 弹窗 -->
         <i-message id="message" />
 
@@ -39,11 +45,12 @@ import { mapGetters } from 'vuex'
                 TabCur: 0,
                 showBorder:false,
                 tabList: [
-                     { name: '进行中',path: "goOn" },
+                     { name: '全部',path: "all" },
                     { name: '未付款',path: "noBuy" },
-                    { name: '未预约',path: "noAppointment" },
-                    { name: '未到店',path: "noGoIn" },
-                     { name: '全部/关闭',path: "all" } 
+                    { name: '待拍摄',path: "noAppointment" },
+                    { name: '进行中',path: "goOn" },
+                    { name: '已完成',path: "noGoIn" },
+                    
                 ],
                 scrollHeight:null,
                 get_carList:[],
@@ -52,6 +59,7 @@ import { mapGetters } from 'vuex'
                 page:1,
                 total:5, // 总数量
                 list:[], // 总数据
+                heightNav:0
             }
         },
         onLoad(){
@@ -60,6 +68,12 @@ import { mapGetters } from 'vuex'
         mounted(){
             // 获取
             //this.orderList()
+            // 获取高度
+            const query = uni.createSelectorQuery().in(this);
+            query.select('#editor').boundingClientRect(data => {
+                console.log(data.height,'data')
+                this.heightNav = data.height
+            }).exec();
             
         },
         onShow() {
@@ -122,7 +136,7 @@ import { mapGetters } from 'vuex'
                 if(payJumpMa){
                     uni.navigateToMiniProgram({
                         appId: jumpAppId,
-                        envVersion: 'release', // develop（开发版），trial（体验版），release（正式版）
+                        envVersion: 'trial', // develop（开发版），trial（体验版），release（正式版）
                         path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
                         extraData: outTradeNo,
                         success(res) {
@@ -156,63 +170,58 @@ import { mapGetters } from 'vuex'
                 }
                 
             },
-
             // 设置数据
             setData(idx){
                 let setList = null
                 switch (idx) {
                     case 0:
-                        // 进行中
-                        setList = this.list.filter(item=> (item.sumPrice - item.incomePrice > 0  && !item.isClose) || (!item.reservationPhotoInfoVos && !item.isClose) || (!item.isToShop && !item.isClose))
-                        setList.map(item=>{
-                            if(!item.reservationPhotoInfoVos){
-                                item.state = '未预约'
+                        // 全部
+                         setList= this.list.filter(item=>item)
+                         setList.map(item=>{
+                            if(!item.isPhotoAccomplish){
+                                item.state = '待拍摄'
                             }
-                            if(!item.isToShop){
-                                item.state = '未到店'
-                            }
+                            // if(!item.isToShop){
+                            //     item.state = '未到店'
+                            // }
                         })
                         this.get_carList = setList
                         break;
-                
-                     case 1:
+                    case 1:
                         // 未付款
                         setList = this.list.filter(item=>item.sumPrice - item.incomePrice > 0 && !item.isClose )
                         setList.map(item=>item.state = null)
                         this.get_carList = setList
                         break;
-
                     case 2:
-                        // 未预约
-                        setList = this.list.filter(item=>!item.reservationPhotoInfoVos && !item.isClose)
+                        // 待拍摄
+                        setList = this.list.filter(item=>!item.isPhotoAccomplish && !item.isClose)
                         
-                        setList.map(item=>item.state = '未预约')
+                        setList.map(item=>item.state = '待拍摄')
                         this.get_carList = setList
 
                         break;
+
                     case 3:
-                        // 未到店
-                        setList = this.list.filter(item=>!item.isToShop && !item.isClose)
-                        setList.map(item=>item.state = '未到店')
-                        this.get_carList = setList
-                        
-                        break;
-
-                    case 4:
-                        // 全部
-                         setList= this.list.filter(item=>item)
-                         setList.map(item=>{
-                            if(!item.reservationPhotoInfoVos){
-                                item.state = '未预约'
+                        // 进行中
+                        setList = this.list.filter(item=> (item.sumPrice - item.incomePrice > 0  && !item.isClose) || (!item.isPhotoAccomplish && !item.isClose))
+                        setList.map(item=>{
+                            if(!item.isPhotoAccomplish){
+                                item.state = '待拍摄'
                             }
-                            if(!item.isToShop){
-                                item.state = '未到店'
+                            if(item.sumPrice - item.incomePrice > 0  && !item.isClose){
+                                item.state = null
                             }
                         })
                         this.get_carList = setList
                         break;
-                
-                
+                    case 4:
+                        // 已完成
+                        setList = this.list.filter(item=>item.isOrderAccomplish && !item.isClose)
+                        setList.map(item=>item.state = '已完成')
+                        this.get_carList = setList
+                        
+                        break;
                 }
             },
 
@@ -245,6 +254,9 @@ import { mapGetters } from 'vuex'
 </script>
 
 <style lang="scss" scoped>
+.nav-bar{
+    margin-bottom: 20rpx;
+}
 .order_box{
     flex:1;
     display: flex;

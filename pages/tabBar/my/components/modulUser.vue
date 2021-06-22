@@ -7,8 +7,7 @@
 				<view>我们需要您最基本的授权（头像，昵称）</view>
 				</view>
 			<view class="but">
-				
-				<button style="width: 440rpx; margin:20rpx" class="saveBtn" open-type="getUserInfo" @getuserinfo="onClickUserInfoAPI" type="primary">同意</button>
+				<button style="width: 440rpx; margin:20rpx" class="saveBtn" @click="onClickUserInfoAPI" type="primary">同意</button>
 				<view class="cancel" @click="cancel">取消</view>
 			</view>
 		</view>
@@ -18,12 +17,16 @@
 <script>
 import { mapActions,mapGetters,mapMutations } from 'vuex'
 import { setUserInfo, getUserInfo } from '@/util/api/user.js'
+const { $Message } = require('@/wxcomponents/base/index');
 	export default {
 		props:['phone','type'],
 		data() {
 			return {
 				
 			};
+		},
+		mounted(){
+			
 		},
 		methods:{
 			...mapActions('user',[
@@ -49,21 +52,22 @@ import { setUserInfo, getUserInfo } from '@/util/api/user.js'
                 })
             },
 			// 获取用户信息
-            onClickUserInfoAPI(val){
-                let param = val.detail
-                if(param.encryptedData){
-                    param.errMsg = null
-                    param.userInfo = null
-                    setUserInfo(param).then(res=>{
-                        this.getUserInfoAPI()
-						
-                    })
-                }else{
-                    $Message({
-                        content:'取消授权',
-                        type: 'error'
-                    });
-                }
+            onClickUserInfoAPI(){
+				uni.getUserProfile({
+					desc: '用于完善个人资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+					success: (param) => {
+						console.log('用户信息参数',param)
+						setUserInfo(param).then(res=>{
+							console.log(res)
+							if(res.data.code === 200){
+								this.getUserInfoAPI()
+							}else{
+								console.log(res.data.message)
+								uni.showToast({title:res.data.message,icon:'none'})
+							}
+						})
+					}
+				})
             },
 		}
 	}

@@ -13,7 +13,7 @@
         <view class="userImg">
             <image class="login_logo" src="/static/image/my/userI.png"></image>
             <view class="userText">
-                <span>北遇的留声机</span>
+                <span>客服的留声机</span>
                 <view class="text">很抱歉给您的体验带来不便！ 请按以下指引，联系我们， 反馈您的意见！</view>
             </view>
         </view>
@@ -30,7 +30,7 @@
             <view @click="toFeedback">
                 <div class="title">去填写意见</div>
                 <div class="flex">
-                    <div class="content">如您对北遇映画有什么好的建议，可点击填写您的建议请把您的宝贵意见填写于此处，我们将做得更好，感谢你对被的支持！</div>
+                    <div class="content">如您对我们有什么好的建议，可点击填写您的建议请把您的宝贵意见填写于此处，我们将做得更好，感谢你对被的支持！</div>
                     <div class="w60 iconfont iconhtbArrowright02"></div>
                 </div>
             </view>
@@ -127,7 +127,7 @@ export default {
             padding-bottom: 20rpx;
             display: inline-block;
             color: #333333;
-            font-weight: 600;
+            font-weight: bold;
         }
         .text{
             width: 507rpx;

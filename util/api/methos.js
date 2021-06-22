@@ -74,8 +74,8 @@ const postObj = (url, options) => {
     return request(url, { method: 'POST', data: options, isObj: true })
 }
 //post参数
-const post = (url, options) => {
-    return request(url, { method: 'POST', data: options, isObj: false })
+const post = (url, options,bool = true) => {
+    return request(url, { method: 'POST', data: options, isObj: false },bool)
 }
  
 const put = (url, options) => {

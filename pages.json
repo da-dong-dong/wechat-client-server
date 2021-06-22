@@ -32,7 +32,11 @@
 		{
 			"path": "pages/tabBar/order/order",
 			"style": {
-				"navigationBarTitleText": "订单"
+				"navigationBarTitleText": "订单列表",
+				"navigationStyle":"custom",
+				"app-plus":{
+					"titleNView":false
+				}
 			}
 		},
 		{
@@ -85,7 +89,11 @@
 		{
 			"path": "pages/tabBar/my/my",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "我的",
+				"navigationStyle":"custom",
+				"app-plus":{
+					"titleNView":false
+				}
 			}
 		},
 		{
@@ -228,7 +236,11 @@
 		{
 			"path": "pages/tabBar/shoppingCart/shoppingCart",
 			"style": {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "购物车",
+				"navigationStyle":"custom",
+				"app-plus":{
+					"titleNView":false
+				}
 			}
 		},
 		// //******************************** 订单 ********************************

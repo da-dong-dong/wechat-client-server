@@ -1,5 +1,5 @@
 <template>
-    <view class="order_list">
+    <view class="order_list" >
         <view class="order_One"  v-for="(item,index) in get_carList" :key="index">
             <view class="title">
                 订单号: {{item.orderNo}}
@@ -19,7 +19,7 @@
                         总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        尾<span></span>款: ￥{{item.sumPrice-item.earnestMoney}}
+                        尾<span></span>款: ￥{{item.sumPrice-item.earnestMoney | toFile}}
                     </view>
                 </view>
             </view>
@@ -59,13 +59,13 @@
                 <view v-else class="noBuy">
                     <!-- 待付款 -->
                     <view>
-                        <span>已付定金：￥{{item.earnestMoney}}</span>
+                        <span>已付定金：￥{{item.assemblyEarnestMoney}}</span>
                         <span>{{item.earnestMoney==0?"待付定金":"尾款待支付"}}：￥{{item.sumPrice - item.earnestMoney}}</span>
                     </view>
                 </view>
                 <span class="float_r" v-if="item.state">
                     <span class="font600">实付款: </span>
-                    <span class="orange" >￥{{item.assemblyPrice}}</span>
+                    <span class="orange" >￥{{item.incomePrice}}</span>
                 </span>
             </view>
             <!-- 待付款 -->
@@ -96,6 +96,10 @@ import { mapGetters } from 'vuex'
                 let text = '';
                 text =  shopId.filter(item=>item.shopId == val)
                 return text[0].shopName
+            },
+            // 保留两位小数点
+            toFile(val){
+                return Number(val.toString().match(/^\d+(?:\.\d{0,2})?/)) 
             }
         },
         components: { outTime},

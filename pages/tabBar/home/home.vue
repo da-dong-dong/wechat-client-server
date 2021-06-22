@@ -78,14 +78,14 @@
 			</div>
         </view>
        <!-- 客服 -->
-        <view class="userCall" :style="{ bottom: get_code?'160rpx':'260rpx'}">
+        <view class="userCall" :style="{ bottom: get_phone?'160rpx':'260rpx'}">
             <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
                 <img src="/static/image/userCall.png" alt="">
             </button>
         </view>
 
 		<!-- 登陆提示 -->
-		<view class="loginInfo" v-if="!get_code">
+		<view class="loginInfo" v-if="!get_phone">
 			<view>点击登陆，立刻预约</view>
 			<view class="btm" @click="getUserInfo">立即登录</view>
 		</view>
@@ -131,7 +131,7 @@ const entriData = uni.getExtConfigSync()
 		computed: {
 			...mapGetters('user',[
 				'get_shopId',
-				'get_code'
+				'get_phone'
 			]),
 			...mapGetters('map',[
 				'get_location',

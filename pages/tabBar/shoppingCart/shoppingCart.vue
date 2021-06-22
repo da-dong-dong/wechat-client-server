@@ -1,5 +1,6 @@
 <template>
     <view class="buy_cart_content">
+        <uni-nav-bar fixed statusBar title="购物车"></uni-nav-bar>
         <div class="pad20">
             <view v-if="get_carList.length > 0">
                 <view class="msg_div">

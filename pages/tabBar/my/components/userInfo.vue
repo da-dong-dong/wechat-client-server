@@ -49,7 +49,7 @@
                 <view class="flex">
                     <text class="paddingL20 color999">地址</text>
                 </view>
-                <pick-regions :defaultRegion="region"  @getRegion="handleGetRegion" class="width" >
+                <pick-regions :defaultRegion="region"  @getRegion="handleGetRegion" class="width" style="white-space: nowrap; text-overflow: ellipsis; width: 53%;" >
                     <text >{{region?region.join(' '):'可选'}}</text>
                 </pick-regions>
                 <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />

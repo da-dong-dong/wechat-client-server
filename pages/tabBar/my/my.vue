@@ -1,20 +1,9 @@
 /******************************** 我的 ***************************************/
 <template>
     <view class="boxs">
+         <uni-nav-bar fixed statusBar title="我的"></uni-nav-bar>
         <!-- 用户信息 -->
-        <!-- <view class="user_box paddingT40  paddingRL30">
-            <view class="flex">
-                <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
-                    <image v-if="get_headimgUrl" class="login_logo" :src="get_headimgUrl"></image>
-                    <image v-else class="login_logo" src="/static/image/my/userImg.png"></image>
-                </button>
-                <view class="text_box paddingRL30">
-                    <text class="fontWight fontSize34">{{get_nickName}}</text>
-                    <text>{{get_phone}}</text>
-                </view>
-            </view>
-        </view> -->
-        <view class="user_seting padd32">
+        <view class="user_seting padd32" >
             <view class="flex" style="margin-bottom: 65rpx;">
                 <div class="flex_1">
                     <div class="register" v-if="!get_headimgUrl" @click="getUserInfoAPI(false)">
@@ -33,7 +22,7 @@
             </view>
             <view class="menu_list">
                 <div class="flex mar_t22">
-                    <button class="newImgFlex" open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
+                    <button class="newImgFlex"  @click="getUserInfo" type="primary">
                         <image class="newImg" src="/static/image/my/new1.png"></image>
                         <span>个人资料</span>
                     </button>
@@ -93,58 +82,6 @@
         <view class="outView" @click="onClickOut" v-else >
             退出登陆
         </view>
-        <!-- 用户设置 -->
-        <!-- <view class="user_seting marginT10">
-            <view class="user_seting_li flex paddingRL20" >
-                <button open-type="getUserInfo" @getuserinfo="getUserInfo" type="primary">
-                    <view class="flex ">
-                        <image class="img" src="/static/image/my/1.png"></image>
-                        <text class="paddingL20">个人资料</text>
-                    </view>
-                    <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-                </button>
-            </view>
-
-            <view class="user_seting_li flex paddingRL20" @click="onClickPassword">
-                <view class="flex">
-                    <image class="img" src="/static/image/my/2.png"></image>
-                    <text class="paddingL20">修改密码</text>
-                </view>
-                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view>
-
-            <view class="user_seting_li flex paddingRL20" @click="onClickService('setUp')">
-                <view class="flex">
-                    <image class="img" src="/static/image/my/3.png"></image>
-                    <text class="paddingL20">服务说明</text>
-                </view>
-                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view>
-
-            <view class="user_seting_li flex paddingRL20" @click="onClickService('mack')">
-                <view class="flex">
-                    <image class="img" src="/static/image/my/3.png"></image>
-                    <text class="paddingL20">预约服务</text>
-                </view>
-                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view>
-
-            <view class="user_seting_li flex paddingRL20" @click="onClickFeedBack">
-                <view class="flex">
-                    <image class="img" src="/static/image/my/4.png"></image>
-                    <text class="paddingL20">意见反馈</text>
-                </view>
-                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view>
-
-            <view class="user_seting_li flex paddingRL20" @click="onClickOut">
-                <view class="flex">
-                    <image class="img" src="/static/image/my/5.png"></image>
-                    <text class="paddingL20">退出登陆</text>
-                </view>
-                <i-icon class="icon" type="enter" size="20" color="#D8D8D8"  />
-            </view>
-        </view> -->
         <!-- 弹窗 -->
         <i-message id="message" />
 
@@ -203,7 +140,7 @@ import modulUser from './components/modulUser';
         mounted(){
             // 获取用户
             //this.getUserInfoAPI()
-            this.login()
+            //this.login()
             this.getTextImageList()
         },
         methods:{
@@ -276,32 +213,7 @@ import modulUser from './components/modulUser';
             },
             // 获取用户信息
             getUserInfo(val){
-                let param = val.detail
-                this.userCode = val.detail
-                
-                if(param.encryptedData){
-                    uni.checkSession({
-                        success:res=>{
-                            console.log('登陆还在')
-                            if(this.get_nickName){
-                                this.onClickUserInfo()
-                            }else{
-                                // 去验证登陆是否过期
-                                this.getCode(this.jsCode)
-                            }
-                        },
-                        fail:err=>{
-                            console.log('登陆失效')
-                            //this.getCode(this.jsCode)
-                            this.getUserInfoAPI('1')
-                        }
-                    }) 
-                }else{
-                    $Message({
-                        content:'取消授权',
-                        type: 'error'
-                    });
-                }
+                this.getUserInfoAPI('1')
             },
             onClikcPage (url) {
                 uni.navigateTo({ 
@@ -408,8 +320,11 @@ import modulUser from './components/modulUser';
     height: 100vh;
     background: #F9F9F9;
     box-sizing: border-box;
-    padding: 20rpx 0 160rpx;
+    padding: 0rpx 0 160rpx;
     overflow: auto;
+    .uni-status-bar{
+        height: 0;
+    }
     button{
         height: 100%;
         margin: 10rpx 0 0 0 ;
@@ -431,7 +346,7 @@ import modulUser from './components/modulUser';
     width: 686rpx;
     background: #fff;
     border-radius: 20rpx;
-    margin: 0 auto 20rpx;
+    margin: 20rpx auto 20rpx;
     .user_seting_li{
         height: 130rpx;
         line-height: 130rpx;

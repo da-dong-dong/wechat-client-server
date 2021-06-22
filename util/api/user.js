@@ -23,7 +23,7 @@ export const setPhoneNoInfo = (params) => {
 
 // 设置小程序用户信息
 export const setUserInfo = (params) => {
-	return postObj(baseUrl.setUserInfo, params)
+	return postObj(baseUrl.setUserInfo, params,false)
 }
 
 // 修改个人信息

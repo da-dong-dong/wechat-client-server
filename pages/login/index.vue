@@ -15,7 +15,7 @@
 
            <!-- 按钮 -->
            <button v-if="showUserURl" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" class="saveBtn">微信快捷登录</button>
-           <button v-else class="saveBtn" open-type="getUserInfo" @getuserinfo="onClickUserInfoAPI" type="primary">同意</button>
+           <button v-else class="saveBtn" @click="onClickUserInfoAPI" type="primary">同意</button>
 
            <!-- 按钮 -->
            <view v-if="showUserURl"  class="color999 fontSize24">使用手机号登录</view>
@@ -163,41 +163,37 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
 
             // 获取用户信息
             onClickUserInfoAPI(val){
-                let param = val.detail
-                if(param.encryptedData){
-                    param.errMsg = null
-                    param.userInfo = null
-                    setUserInfo(param).then(res=>{
-                        let code = res.data.code
-                        let route = 1; //记录上一页路由
-                        if(code == 200){
-                            // 判断路由返回当前页面
-                            let pages = getCurrentPages();
-                            for(let i=pages.length-1;i>=0;i--){
-                                if(pages[i].route !== 'pages/login/index'){
-                                    route = pages[i].route
-                                    break
-                                } 
+                uni.getUserProfile({
+					desc: '用于完善个人资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+					success: (param) => {
+						console.log('用户信息参数',param)
+                        setUserInfo(param).then(res=>{
+                            let code = res.data.code
+                            let route = 1; //记录上一页路由
+                            if(code == 200){
+                                // 判断路由返回当前页面
+                                let pages = getCurrentPages();
+                                for(let i=pages.length-1;i>=0;i--){
+                                    if(pages[i].route !== 'pages/login/index'){
+                                        route = pages[i].route
+                                        break
+                                    } 
+                                }
+                                // 判断是否是导航栏
+                                if(route.indexOf("components/order_confirm") != -1 || route.indexOf("components/buyOrder") != -1 || route.indexOf("classify/feedBack") != -1 ){
+                                    uni.navigateTo({ 
+                                        url: `/${route}`
+                                    })
+                                }else{
+                                    uni.switchTab({ 
+                                        url: `/${route}`
+                                    })
+                                }
+                                this.getUserInfoAPI()
                             }
-                            // 判断是否是导航栏
-                            if(route.indexOf("components/order_confirm") != -1 || route.indexOf("components/buyOrder") != -1 || route.indexOf("classify/feedBack") != -1 ){
-                                uni.navigateTo({ 
-                                    url: `/${route}`
-                                })
-                            }else{
-                                uni.switchTab({ 
-                                    url: `/${route}`
-                                })
-                            }
-                            this.getUserInfoAPI()
-                        }
-                    })
-                }else{
-                    $Message({
-                        content:'取消授权',
-                        type: 'error'
-                    });
-                }
+                        })
+					}
+				})
             },
 
 
