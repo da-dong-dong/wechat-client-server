@@ -7,33 +7,25 @@
                     <span class="name">{{item.callName}}</span>
                     <span class="flex_1">{{item.name}}</span>
                 </div>
-                <div class="flex">
+                <div class="flex" :style="{borderBottom:list['onlineCustomerContactVos'].length-1 == index? 'none':'1px solid #ECECEC'}">
                     <span class="name">联系方式</span>
                     <span class="flex_1">{{item.mobile}}</span>
                 </div>
            </div>
-           <!-- <div class="flex">
-               <span class="name">男士</span>
-               <span class="flex_1">利益帅</span>
-           </div>
-           <div class="flex">
-               <span class="name">联系方式</span>
-               <span class="flex_1">13688976654</span>
-           </div> -->
         </view>
         <view class="msg_div">
            <div class="title border">订单信息</div>
            <view class="flex" style="border:none">
                 <img class="h145" :src="list.coverPhoto"/>
                 <view class="flex_1">
-                    <view class="padding">
+                    <view class="padding" style="padding-bottom: 20rpx;">
                         <span class="font600">{{list.assemblyName?list.assemblyName:''}}</span>
                         <span class="float_r colorA3">￥{{list.assemblyPrice?list.assemblyPrice:''}}</span>
                     </view>
-                    <view class="font14">
+                    <view class="font14" style="padding-bottom: 5rpx;">
                         预约定价: <span class="orange">￥{{ list.earnestMoney?list.earnestMoney:'' }}</span>
                     </view>
-                    <view class="font14">
+                    <view class="font14" style="padding:0">
                         余款金额: ￥{{list.spareMoney?list.spareMoney:''}}
                     </view>
                 </view>
@@ -264,7 +256,7 @@ import { orderDetails } from '@/util/api/order.js'
             }
         }
         .flex{
-            padding: 20rpx;
+            padding: 30rpx 20rpx;
             border-bottom: 1px solid #ECECEC;
             color: #414143;
             .name{

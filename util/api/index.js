@@ -1,7 +1,7 @@
 
-//let base = 'http://192.168.5.28:8000' // 开发
+let base = 'http://192.168.5.28:8000' // 开发
 
-let base = 'https://erp-wxapi.27yn.cn' // 测试
+//let base = 'https://erp-wxapi.27yn.cn' // 测试
 
 //let base = 'https://wxapi.lyfz.net' // 正式
 

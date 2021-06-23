@@ -182,8 +182,10 @@ import { orderProcess } from '@/util/api/order.js'
             margin-right: 80rpx;
             text-align: justify;
             text-align-last: justify;
+            color: #414143;
         }
         .circle{
+            transform: scale(0.75);
             width: 42rpx;
             height: 42rpx;
             border-radius: 50%;
@@ -213,6 +215,7 @@ import { orderProcess } from '@/util/api/order.js'
             border-radius: 10rpx;
         }
         .flex_1{
+            color: #999999;
             view{
                 padding: 8rpx 0;
             }

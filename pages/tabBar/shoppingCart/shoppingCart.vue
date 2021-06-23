@@ -4,18 +4,18 @@
         <div class="pad20">
             <view v-if="get_carList.length > 0">
                 <view class="msg_div">
-                    <div class="title_div">
-                        <span class="title">已选门店</span>
-                        <view class="title_shop">
-                            <text>{{get_shopId?get_shopId.shopName:'请选择门店'}}</text>
-                            <text class="orange paddingL20" @click="onChangeShopId">切换</text>
+                    <div class="topShop">
+                        <span class="topSelect fontWight">已选门店</span>
+                        <view class="topShopText">
+                            <view>{{get_shopId?get_shopId.shopName:'请选择门店'}}</view>
+                            <view class="orange paddingL20" @click="onChangeShopId">切换 <i-icon type="enter" size="20" color="#D3AA72" /></view>
                         </view>
                     </div>
                     <uni-swipe-action>
                         <uni-swipe-action-item v-for="(_, i) in get_carList" :key="i">
                             <view class="flex">
                                 <view class="radio">
-                                    <radio color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
+                                    <radio class="scale75" color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
                                 </view>
                                 <img class="h145" :src="_.imgs" />
                                 <view class="flex_1">
@@ -24,10 +24,10 @@
                                         <span class="float_r colorA3">￥{{_.enableDeposit?_.assemblyDeposit:_.price}}</span>
                                     </view>
                                     <view class="font14">
-                                        总价: <span class="orange">￥{{_.price}}</span>
+                                        总 价: <span class="orange">￥{{_.price}}</span>
                                     </view>
-                                    <view class="font14">
-                                        尾款: ￥{{_.enableDeposit?_.price - _.assemblyDeposit:_.price}}
+                                    <view class="font14 paddingT5">
+                                        尾 款: ￥{{_.enableDeposit?_.price - _.assemblyDeposit:_.price}}
                                     </view>
                                 </view>
                             </view>
@@ -38,9 +38,9 @@
                     </uni-swipe-action>
 
 
-                    <view class="flex buy_content"  v-if="get_carList.length > 0">
+                    <view class="flex buy_content flexCenten"  v-if="get_carList.length > 0">
                         <view class="radio">
-                            <radio color="#D3AB75" :checked="buyAllBool" @click="allChange"/>
+                            <radio class="scale75" color="#D3AB75" :checked="buyAllBool" @click="allChange"/>
                         </view>
                         <div class="buy_all">全选</div>
                         <view class="buy_txt">
@@ -278,6 +278,28 @@ const { $Message } = require('@/wxcomponents/base/index');
 </script>
 
 <style lang="scss" scoped>
+.topShop{
+    display: flex;
+    justify-content: space-between;
+    line-height: 50rpx;
+    color: #000000;
+    padding: 0 20rpx 20rpx;
+    box-sizing: content-box;
+    border-bottom: 1rpx solid #ECECEC;
+    font-size: 30rpx;
+    .topShopText{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 50rpx;
+        color: #414143;
+        .paddingL20{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}
 .buy_cart_content{
     height: 100vh;
     // padding: 20rpx;
@@ -288,7 +310,8 @@ const { $Message } = require('@/wxcomponents/base/index');
     overflow: auto;
     .recommend{
         text-align: center;
-        margin-bottom: 20rpx;
+        margin-bottom: 30rpx;
+        margin-top: 30rpx;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -340,16 +363,14 @@ const { $Message } = require('@/wxcomponents/base/index');
             margin-right: 10rpx;
         }
         .flex_1{
-            view{
-                padding: 8rpx 0;
-            }
+            
         }
         
         .font600{
             font-weight: 600;
         }
         .padding{
-            padding: 10rpx 0;
+            padding: 10rpx 0 20rpx;
         }
         .font14{
             font-size: 26rpx;
@@ -392,6 +413,8 @@ const { $Message } = require('@/wxcomponents/base/index');
             justify-content: center;
             align-items: center;
             margin: 6rpx 0;
+            height: 60rpx;
+            line-height: 60rpx;
         }
     }
 }
@@ -411,25 +434,26 @@ const { $Message } = require('@/wxcomponents/base/index');
         border-radius: 10rpx;
     }
     .desc{
-        padding: 10rpx;
+        padding: 0 10rpx 30rpx;
         font-weight: 600;
+        line-height: 30rpx;
     }
     .tow_title{
-        padding: 10rpx;
+        padding: 20rpx 10rpx 10rpx;
         color: #b2b2b2;
         font-size: 26rpx;
     }
     .gt_icon{
         float: right;
         color: #D4AD72;
-        font-size: 40rpx;
+        font-size: 30rpx;
     }
 }
 .orange{
     color: #D3AB75;
 }
 .showList{
-    margin-top: 100rpx;
+    margin-bottom: 50rpx;
     height: 400rpx;
     display: flex;
     justify-content: center;
@@ -437,7 +461,8 @@ const { $Message } = require('@/wxcomponents/base/index');
     font-size: 24rpx;
     font-family: PingFang SC;
     font-weight: 500;
-    color: #9D9D9D;
+    // color: #9D9D9D;
+    color: #d8d8d8;
     .flex_col{
         display: flex;
         flex-direction: column;
@@ -445,9 +470,8 @@ const { $Message } = require('@/wxcomponents/base/index');
         align-items: center;
     }
     .w144{
-        width: 200rpx;
-        height: 200rpx;
-        margin-bottom: 20rpx;
+        width: 144rpx;
+        height: 144rpx;
     }
 }
 .del{

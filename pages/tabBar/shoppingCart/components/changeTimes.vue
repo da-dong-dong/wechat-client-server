@@ -31,7 +31,7 @@
 								<text class="colorC6">拍摄时间</text>
 							</view>
 							<view class="flex flex_w">
-                            <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2">
+                            <view class="timeList flex" v-for="(item2,index2) in item1['timeFrames']" :key="index2" :class="item1['timeFrames'].length==1?'marginAuto':''">
 								<template v-if="item2['typographyCount'] >= item2['useTypographyNum']">
 									<view class="list" >
 									    <view class="listTime active" >
@@ -341,6 +341,9 @@ import { getReservationDescription } from '@/util/api/user.js'
 	}
 </style>
 <style lang="scss" scoped>
+.marginAuto{
+    margin: 0 auto;
+}
 .btnBox{
     background: #F5F5F5;
     height: 130rpx;
@@ -388,6 +391,7 @@ import { getReservationDescription } from '@/util/api/user.js'
         padding: 18rpx 10rpx;
         background: #fff;
         font-weight: bold;
+        text-align: center;
     }
 }
 .bgFFF{

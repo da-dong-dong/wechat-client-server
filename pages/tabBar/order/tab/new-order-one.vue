@@ -4,7 +4,7 @@
             <view class="title">
                 订单号: {{item.orderNo}}
                 <span class="float_r colorA3" v-if="item.state">{{item.state ? item.state : ''}}</span>
-                <view v-if="!item.state && !item.earnestMoney" class="timeOut">
+                <view v-if="!item.state && !item.assemblyEarnestMoney" class="timeOut">
                     <out-time class="paddingRL10 fontSize28" :endtime="item.orderTime" />
                 </view>
             </view>
@@ -15,11 +15,11 @@
                         <span class="font600">{{item.assemblyName}}</span>
                         <span class="float_r colorA3">￥{{item.earnestMoney}}</span>
                     </view>
-                    <view class="font14">
+                    <view class="font14 fontWight">
                         总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        尾<span></span>款: ￥{{item.sumPrice-item.earnestMoney | toFile}}
+                        尾<span></span>款: ￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice-item.earnestMoney | toFile}}
                     </view>
                 </view>
             </view>
@@ -47,7 +47,7 @@
                         </view>
                     </view>
                 </view>
-                <view class="view">
+                <view class="view fontWight">
                     订单时间: {{item.orderTime | times}}
                 </view>
             </view>
@@ -60,12 +60,12 @@
                     <!-- 待付款 -->
                     <view>
                         <span>已付定金：￥{{item.assemblyEarnestMoney}}</span>
-                        <span>{{item.earnestMoney==0?"待付定金":"尾款待支付"}}：￥{{item.sumPrice - item.earnestMoney}}</span>
+                        <span>{{item.earnestMoney==0?"待付定金":"尾款待支付"}}：￥{{item.sumPrice - item.assemblyEarnestMoney}}</span>
                     </view>
                 </view>
                 <span class="float_r" v-if="item.state">
                     <span class="font600">实付款: </span>
-                    <span class="orange" >￥{{item.incomePrice}}</span>
+                    <span class="orange fontWight" >￥{{item.proceeds}}</span>
                 </span>
             </view>
             <!-- 待付款 -->
@@ -234,11 +234,12 @@ import { mapGetters } from 'vuex'
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 65vh;
     font-size: 24rpx;
     font-family: PingFang SC;
     font-weight: 500;
-    color: #9D9D9D;
+   // color: #9D9D9D;
+    color: #d8d8d8;
     .flex{
         align-items: center;
         flex-direction: column;
@@ -247,7 +248,6 @@ import { mapGetters } from 'vuex'
         width: 144rpx;
         height: 144rpx;
         display: block;
-        margin-bottom: 40rpx;
     }
     }
 .noBuy{

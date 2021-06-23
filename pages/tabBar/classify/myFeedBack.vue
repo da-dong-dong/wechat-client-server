@@ -235,6 +235,7 @@ export default {
         .w60{
             text-align: center;
             width: 60rpx;
+            color: #919191;
         }
     }
 }

@@ -13,9 +13,7 @@
         <text :class="item.icon"></text>
         <span class="border_post">
             {{item.name}}
-            <view class="border_box" v-if="showBorder">
-                <view class="border"></view>
-                <view class="border"></view>
+            <view class="border_box borderSelect" v-if="showBorder">
             </view>
         </span>
       </div>
@@ -130,6 +128,9 @@ swiper {
         &:nth-child(2){
             width: 20rpx;
         }
+    }
+    .borderSelect{
+        border-bottom: 4rpx solid #D3AA72;
     }
 }
 

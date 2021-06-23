@@ -7,7 +7,7 @@
 			<view class="Y_M_Box">
 				<!-- 上个月 -->
 			  <view class='icon' @tap='lastMonth'>
-					<i-icon type="enterinto_fill" size="20" color="#D3AB75" />
+					<i class="iconfont icon-sanjiaoright" :style="{color:newYeay>=pickerDate?'#999999':'#D3AA72'}"></i>
 			  </view>
 				<!-- 显示年月 -->
 				<view class="Y_M">
@@ -17,7 +17,7 @@
 				</view>
 			  <!-- 下个月 -->
 			  <view class='icon' @tap='nextMonth'>
-					<i-icon type="enterinto_fill" size="20" color="#D3AB75" />
+				 	<i class="iconfont icon-sanjiaoright"></i>
 			  </view>
 			</view>
 			<!-- 星期 -->
@@ -87,7 +87,8 @@
 				// 日历
 				dateAllArr: [],
                 currentMonth: 1,
-                currentDay: 1
+                currentDay: 1,
+				newYeay:null,// 当前年份
 			}
 		},
         computed: {
@@ -98,6 +99,7 @@
         },
 		created(){
 			this.getNowDate();
+			this.newYeay = new Date().getFullYear()
 		},
 		methods:{
 			boforeTimeFun (time) {
@@ -251,7 +253,7 @@
 
 <style lang="scss" scoped>
 	.bigBox{
-		font-size: 32rpx;
+		font-size: 30rpx;
 		flex: 1;
 		display: flex;
 		height: 100%;
@@ -277,6 +279,10 @@
 				justify-content: space-between;
 				margin-left: 50%;
 				transform: translateX(-50%);
+				align-items: center;
+				.iconfont{
+					color: #D3AA72;
+				}
 				.icon:nth-child(1){
 					transform:rotateY(180deg)
 				}
@@ -284,6 +290,7 @@
 					.showDate{
 						padding: 0 15rpx;
 						color: #D3AA72;
+						font-size: 35rpx;
 					}
 				}
 			}

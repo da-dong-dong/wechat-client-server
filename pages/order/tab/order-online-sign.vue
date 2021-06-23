@@ -5,52 +5,47 @@
             <view class="order_box">
                 <view class="order_top">
                     <view class="order_heade">
-                        <!-- <image class="order_heade_img" src="/static/image/oreder_user.png"></image> -->
-                        <i class="iconfont iconrenyuan"></i>
-                        <text>{{signData.onlineCustomerContactVos | contactFilter}}</text>
+                        <text>订单号： {{signData.orderNo}}</text>
                     </view>
-                    <view class="order_info">
-                        <view class="order_info_flx">
-                            <view>
-                                订单门店：<text>{{shopName(signData.orderShopId)}}</text>
-                            </view>
-                        </view>
-                        <view class="order_info_flx">
-                            <view>
-                                套系名称：<text>{{signData.assemblyName}}</text>
-                            </view>
-                        </view>
-                        <view class="order_info_flx">
-                            <view>
-                                套系价格：<text>{{signData.assemblyPrice}}</text>
-                                    <!-- <text class="red">（已付:1999 欠款:4000）</text> -->
-                            </view>
-                        </view>
-                        <view class="order_info_flx">
-                            <view>
-                                订单日期：<text>{{signData.orderTime | timeFilter}}</text>
-                            </view>
-                        </view>
-                    
+
+                    <!-- 用户 -->
+                    <view class="flex userInfo" v-for="(item,index) in signData.onlineCustomerContactVos" :key="index">
+                        <view class="num">{{item.callName}}</view>
+                        <view class="untext">{{item.name}}</view>
+                    </view>
+                    <view class="flex userInfo" >
+                        <view class="num">订单门店</view>
+                        <view class="untext">{{shopName(signData.orderShopId)}}</view>
+                    </view>
+                    <view class="flex userInfo" >
+                        <view class="num">套系名称</view>
+                        <view class="untext">{{signData.assemblyName}}</view>
+                    </view>
+                    <view class="flex userInfo" >
+                        <view class="num">套系价格</view>
+                        <view class="untext">{{signData.assemblyPrice}}</view>
+                    </view>
+                    <view class="flex userInfo" style="border:none">
+                        <view class="num">订单日期</view>
+                        <view class="untext">{{signData.orderTime | timeFilter}}</view>
                     </view>
                 </view>
                 <!-- 约单 -->
                 <view class="order_show" v-for="item in signData.onlineContractVos" :key="item.id">
-                    <view class="oreder_img">
-                        <image class="oreder_img_img" src="/static/image/oreder_bars.png"></image>
-                        <image class="oreder_img_img" src="/static/image/oreder_bars.png"></image>
-                    </view>
-                    <view class="order_show_top">
-                        <view>{{item.title}}</view>
-                        <view class="text_right" v-if="item.type === 2">
-                            <text @tap="onClickSign(item)">{{item.isSign | signFilter}}</text> 
-                            <text> > </text> 
-                        </view>
+                    <view class="order_header">
+                        <view>订单预约单</view>
+                        <view class="orderIcon" v-if="item.type === 2" @tap="onClickSign(item)">{{item.isSign | signFilter}} <i-icon type="enter" size="18" color="#D3AA72" /></view>
                     </view>
                     <view class="order_show_list">
-                        <view>接收时间：{{item.createTime | timeFilter}}</view>
-                        <view>签字时间：{{item.signTime | timeFilter}}</view>
-                        <view v-if="item.isSign === 2">拒签原因: {{item.remarks}}</view>
+                        <view class="flex">
+                            <view class="listText">接收时间</view>
+                            <view class="listTime">{{item.createTime | timeFilter}}</view>
+                        </view>
+                        <view class="flex">
+                            <view class="listText">签字时间</view>
+                            <view class="listTime">{{item.signTime | timeFilter}}</view>
+                        </view>
+                        <!-- <view v-if="item.isSign === 2">拒签原因: {{item.remarks}}</view> -->
                     </view>
                 </view>
                
@@ -167,7 +162,7 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
     .order_top{
         min-height: 394rpx;
         background: #FFFFFF;
-        border-radius: 8rpx;
+        border-radius: 20rpx;
     }
     .order_heade{
         padding-left: 36rpx;
@@ -176,13 +171,26 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
         align-items: center;
         font-size: 28rpx;
         font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #D3AB75;
-        border-bottom: 1px solid #DCDCDC;
-        .order_heade_img{
-            width: 32rpx;
-            height: 32rpx;
-            margin-right: 12rpx;
+        font-weight: bold;
+        color: #000;
+        border-bottom: 1px solid #ECECEC;
+    }
+    .userInfo{
+        padding-left: 36rpx;
+        border-bottom: 1px solid #ECECEC;
+        height: 88rpx;
+        line-height: 88rpx;
+        .untext{
+            font-size: 28rpx;
+            color: #414143
+        }
+        .num{
+            font-size: 29rpx;
+            color: #999999;
+            width: 120rpx;
+            text-align: justify;
+            text-align-last: justify;
+            margin-right: 128rpx;
         }
     }
 }
@@ -217,41 +225,38 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
     border-radius: 16rpx;  
     margin-top: 20rpx;
     position: relative;  
-    padding: 26rpx 40rpx;
     box-sizing: border-box;
-    font-size: 24rpx;
+    font-size: 29rpx;
     font-family: PingFangSC-Medium, PingFang SC;
-    color: #999999;
-    .order_show_top{
+    color: #414143;
+    .order_header{
         display: flex;
         justify-content: space-between;
-        font-size: 28rpx;
-        font-weight: bold;
-        color: #333333;
-        .text_right{
-            .red{
-                color: #D3AB75;
-            }
-        }
+        align-items: center;
+        padding-left: 36rpx;
+        border-bottom: 1px solid #ECECEC;
+        height: 88rpx;
+        line-height: 88rpx;
+        padding-right: 20rpx;
     }
-    .text_right{
-        font-size: 24rpx;
-        text{
-            &:nth-child(1){
-                color: #D3AB75;
-                margin-right: 10rpx;
-            }
-            &:nth-child(2){
-                color: #979797;
-            }
-            
-        }
-        
-        
+    .orderIcon{
+        color: #D3AA72;
     }
     .order_show_list{
-        margin-top: 30rpx;
-        line-height: 45rpx;
+        line-height: 50rpx;
+        padding-top: 20rpx;
+        padding-left: 36rpx;
+        padding-bottom: 20rpx;
+        .listText{
+            width: 120rpx;
+            text-align: justify;
+            text-align-last: justify;
+            margin-right: 128rpx;
+            color:#999999
+        }
+        .listTime{
+            font-size: 28rpx;
+        }
     }
 }
 .signModal{

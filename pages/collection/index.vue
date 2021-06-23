@@ -97,16 +97,16 @@ export default {
     font-size: 24rpx;
     font-family: PingFang SC;
     font-weight: 500;
-    color: #9D9D9D;
+    // color: #9D9D9D;
+    color: #d8d8d8;
     .flex{
         align-items: center;
         flex-direction: column;
     }
     .login_logo{
-        width: 200rpx;
-        height: 200rpx;
+        width: 144rpx;
+        height: 144rpx;
         display: block;
-        margin-bottom: 40rpx;
     }
     }
 .my_collection{

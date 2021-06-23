@@ -88,7 +88,7 @@
 
         <view class="msg_div">
 			<!-- {{ discountNum * 10 }}折优惠 -->
-           <div class="title border"> 邀请福利
+           <div class="title border" :style="{ borderBottom: discountBool?'1px solid #ECECEC':'none' }"> 邀请福利
                <span class="float_r circle" :class="{ current: discountBool }" @click="() => { discountBool = !discountBool }"></span>
            </div>
            <template v-if="discountBool">
@@ -483,10 +483,13 @@ const { $Message } = require('@/wxcomponents/base/index');
             display: flex;
             align-items: center;
             background: #D3AB75;
-            border-radius: 30rpx;
+            border-radius: 80rpx;
             justify-content: center;
-            width: 200rpx;
+            width: 250rpx;
             margin: 4rpx 0;
+            height: 65rpx; 
+            line-height: 65rpx; 
+            font-size: 28rpx;
         }
     }
     .msg_div{
