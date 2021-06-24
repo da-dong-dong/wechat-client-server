@@ -141,7 +141,7 @@ const entriData = uni.getExtConfigSync()
         mounted(){
 			// 判断当前门店经纬度是否值
 			let {locationX,locationY} = this.get_shopId
-			let locationArr = this.get_location.location.split(',')
+			let locationArr = this.get_location
 			let longitude,latitude = null;
 			if(locationX && locationY){
 				longitude = locationX

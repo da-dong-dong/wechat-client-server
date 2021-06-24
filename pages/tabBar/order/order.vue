@@ -13,8 +13,8 @@
             </view>
         </s-pull-scroll>
         
-      <!-- 弹窗 -->
-        <i-message id="message" />
+        <!-- 弹窗 -->
+        <i-message id="message" :style="{marginTop:`${heightNav}px`}"/>
 
         <!-- 底部导航 -->
 		<tabBar :index="4"></tabBar>
@@ -71,7 +71,6 @@ import { mapGetters } from 'vuex'
             // 获取高度
             const query = uni.createSelectorQuery().in(this);
             query.select('#editor').boundingClientRect(data => {
-                console.log(data.height,'data')
                 this.heightNav = data.height
             }).exec();
             

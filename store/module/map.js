@@ -59,10 +59,15 @@ export default{
 			});  
 			amapPlugin.getRegeo({  
 				success: (data) => {  
-					let {city,streetNumber} = data[0].regeocodeData.addressComponent
+					let {city,province,streetNumber} = data[0].regeocodeData.addressComponent
 					console.log('定位成功信息',data)
-					commit('mut_city', city)
-					commit('mut_location', [data.longitude,data.latitude])
+					// 兼容直辖市
+					if(city.length>0){
+						commit('mut_city', city)
+					}else{
+						commit('mut_city', province)
+					}
+					commit('mut_location', [data[0].longitude,data[0].latitude])
 				},
 				fail: (err) => {
 					console.log(data,'取消授权')

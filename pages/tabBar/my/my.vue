@@ -1,7 +1,7 @@
 /******************************** 我的 ***************************************/
 <template>
     <view class="boxs">
-         <uni-nav-bar fixed statusBar title="我的"></uni-nav-bar>
+         <uni-nav-bar id="editor" fixed statusBar title="我的"></uni-nav-bar>
         <!-- 用户信息 -->
         <view class="user_seting padd32" >
             <view class="flex" style="margin-bottom: 65rpx;">
@@ -83,7 +83,7 @@
             退出登陆
         </view>
         <!-- 弹窗 -->
-        <i-message id="message" />
+        <i-message id="message" :style="{marginTop:`${heightNav}px`}"/>
 
         <!-- 设置用户弹窗 -->
         <modulUser v-if="showModalUser" @cancel="cancel"/>
@@ -134,6 +134,7 @@ import modulUser from './components/modulUser';
                 jsCode:null, //存储登陆code
                 userCode:'', // 用户信息
                 imgList: [],
+                heightNav:0,
                 showModalUser:false, // 设置用户弹窗
             }
         },
@@ -142,6 +143,11 @@ import modulUser from './components/modulUser';
             //this.getUserInfoAPI()
             //this.login()
             this.getTextImageList()
+            // 获取高度
+            const query = uni.createSelectorQuery().in(this);
+            query.select('#editor').boundingClientRect(data => {
+                this.heightNav = data.height
+            }).exec();
         },
         methods:{
             ...mapActions('user',[

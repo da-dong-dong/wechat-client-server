@@ -1,6 +1,6 @@
 <template>
     <view class="buy_cart_content">
-        <uni-nav-bar fixed statusBar title="购物车"></uni-nav-bar>
+        <uni-nav-bar fixed statusBar id="editor" title="购物车"></uni-nav-bar>
         <div class="pad20">
             <view v-if="get_carList.length > 0">
                 <view class="msg_div">
@@ -83,7 +83,7 @@
             </button>
         </view>
         <!-- 弹窗 -->
-        <i-message id="message" />
+        <i-message id="message" :style="{marginTop:`${heightNav}px`}"/>
         <!-- 底部导航 -->
 		<tabBar :index="3"></tabBar>
     </view>
@@ -136,7 +136,8 @@ const { $Message } = require('@/wxcomponents/base/index');
                 jsCode: null,
                check:'',
                buyAllBool: true,
-               recommentList: []
+               recommentList: [],
+               heightNav:0
             }
         },
         onLoad(options) {
@@ -155,6 +156,11 @@ const { $Message } = require('@/wxcomponents/base/index');
         },
         mounted () {
             this.login()
+            // 获取高度
+            const query = uni.createSelectorQuery().in(this);
+            query.select('#editor').boundingClientRect(data => {
+                this.heightNav = data.height
+            }).exec();
         },
         methods:{
             ...mapActions('user',[

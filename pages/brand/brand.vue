@@ -70,12 +70,21 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
                     shopIds: id
                 }
                 this.act_shopIdList(param)
-                console.log(this.get_shopIdList,'sss')
-                this.mut_shopId(this.get_shopIdList[0])
+                let arrMin = []
+                let locationArr = this.get_location
+                let index = 0
+                this.get_shopIdList.map(item=>{
+                    let x = Math.abs(item.locationX-locationArr[0])
+                    let y = Math.abs(item.locationY-locationArr[1])
+                    arrMin.push(x+y)
+                })
+                console.log(arrMin)
+                index = this.getMinIndex([arrMin])
+                this.mut_shopId(this.get_shopIdList[index])
                     // 本地存储当前门店
                     uni.setStorage({
                         key: 'shopId',
-                        data: this.get_shopIdList[0]
+                        data: this.get_shopIdList[index]
                     })
                     uni.switchTab({
                         url:'/pages/tabBar/home/home'
@@ -85,6 +94,19 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
                 // uni.navigateTo({
                 // 	url:'/pages/tabBar/shoppingCart/components/changeRegion?flage=123'
                 // })
+            },
+            // 获取最小下标
+            getMinIndex(arr) {
+                let min = arr[0];
+                //声明了个变量 保存下标值
+                let index = 0;
+                for (let i = 0; i < arr.length; i++) {
+                    if (min > arr[i]) {
+                        min = arr[i];
+                        index = i;
+                    }
+                }
+                return index;
             }
         },
         onLoad () {
