@@ -331,14 +331,14 @@ const entriData = uni.getExtConfigSync()
 	min-width: 140rpx;
     border: 1rpx solid #D6D6D6;
     border-radius: 50rpx;
-    height: 55rpx;
+    height: 52rpx;
     left: 60rpx;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-left: 15rpx;
 	padding-right: 15rpx;
-	line-height: 55rpx;
+	line-height: 52rpx;
 	.icon{
 		 height: 55rpx;
 	}
