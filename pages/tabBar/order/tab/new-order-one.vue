@@ -19,7 +19,7 @@
                         总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
-                        尾<span></span>款: ￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice-item.earnestMoney | toFile}}
+                        尾<span></span>款: ￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice - item.assemblyEarnestMoney | toFile}}
                     </view>
                 </view>
             </view>
@@ -60,12 +60,12 @@
                     <!-- 待付款 -->
                     <view>
                         <span>已付定金：￥{{item.assemblyEarnestMoney}}</span>
-                        <span>{{item.earnestMoney==0?"待付定金":"尾款待支付"}}：￥{{item.sumPrice - item.assemblyEarnestMoney}}</span>
+                        <span>{{item.earnestMoney==0?"待付定金":"尾款待支付"}}：￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice - item.assemblyEarnestMoney}}</span>
                     </view>
                 </view>
                 <span class="float_r" v-if="item.state">
                     <span class="font600">实付款: </span>
-                    <span class="orange fontWight" >￥{{item.proceeds}}</span>
+                    <span class="orange fontWight" >￥{{item.proceeds==undefined?0:item.proceeds}}</span>
                 </span>
             </view>
             <!-- 待付款 -->

@@ -26,7 +26,7 @@
                         预约定价: <span class="orange">￥{{ list.earnestMoney?list.earnestMoney:'' }}</span>
                     </view>
                     <view class="font14" style="padding:0">
-                        余款金额: ￥{{list.spareMoney?list.spareMoney:''}}
+                        余款金额: ￥{{list.spareMoney}}
                     </view>
                 </view>
             </view>
