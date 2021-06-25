@@ -27,7 +27,7 @@
                     <view v-for="(item,index) in momeyTime" :key="index">
                         <view class="bgFFF" v-for="(item1,index1) in item['reservationGroupTypeVos']" :key="index1">
                             <view class="centerTxt">
-								{{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}}
+								<!-- {{item1.controlType | headerTime(item.groupTypeCategoryId,get_typeHeader)}} -->
 								<text class="colorC6">拍摄时间</text>
 							</view>
 							<view class="flex flex_w">

@@ -5,25 +5,25 @@
             <div class="flex">
                <span class="name">{{onlineCustomerContactDtos.callName}}</span>
                <span class="flex_1">
-                   <input class="uni-input" placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" placeholder="请输入您的姓名" />
+                   <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" placeholder="请输入您的姓名" />
                </span>
             </div>
             <div class="flex">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
-                    <input class="uni-input"  placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
+                    <input class="uni-input"  placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
             <div class="flex">
                 <span class="name">{{onlineCustomerContactDtos1.callName}}</span>
                 <span class="flex_1">
-                    <input class="uni-input" placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" placeholder="请输入您的姓名" />
+                    <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" placeholder="请输入您的姓名" />
                 </span>
             </div>
             <div class="flex">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
-                    <input class="uni-input" placeholder-style="color: #D7D7D9;" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
+                    <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
             <div class="flex no_border flexCenten">
@@ -49,10 +49,10 @@
                                 <span class="float_r colorA3 fontFamilyST fontWight">￥{{item.price}}</span>
                             </view>
                             <view class="font14">
-                                预付金: <span class="orange">￥{{item.assemblyDeposit ? item.assemblyDeposit : 0 }}</span> 
+                                预付金: <span class="orange fontWight">￥{{item.assemblyDeposit ? item.assemblyDeposit : 0 }}</span> 
                             </view>
-                            <view class="font14 fontFamilyST fontWight">
-                                尾款: ￥{{ item.assemblyDeposit ? item.price - item.assemblyDeposit : item.price }}
+                            <view class="font14 fontFamilyST ">
+                                尾<span class="block"></span>款:<span class="fontWight">￥{{ item.assemblyDeposit ? item.price - item.assemblyDeposit : item.price }}</span>
                             </view>
                         </view>
                     </view>
@@ -95,13 +95,13 @@
             <div class="flex">
                 <span class="name">介绍人</span>
                 <span class="flex_1">
-                    <input class="uni-input" :value="introduceName" @input="(e) => { introduceName = e.detail.value }" placeholder="请输入介绍人" />
+                    <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="introduceName" @input="(e) => { introduceName = e.detail.value }" placeholder="请输入介绍人" />
                 </span>
             </div>
             <div class="flex no_border">
                 <span class="name">手机号码</span>
                 <span class="flex_1">
-                    <input class="uni-input" @input="changeInput" :value="introduceMobil" placeholder="请输入手机号码" :maxlength="11"/>
+                    <input class="uni-input" placeholder-style="color: #e8e8e8;" @input="changeInput" :value="introduceMobil" placeholder="请输入手机号码" :maxlength="11"/>
                 </span>
             </div>
            </template>
@@ -138,6 +138,7 @@ const { $Message } = require('@/wxcomponents/base/index');
                 'get_phone',
                 'get_nickName',
                 'get_appId',
+                'get_sex',
                 'get_enterpriseId'
             ]),
             ...mapGetters('carList',[
@@ -153,8 +154,14 @@ const { $Message } = require('@/wxcomponents/base/index');
         },
         mounted(){
             // 档期类别
-            this.onlineCustomerContactDtos1.mobile = this.get_phone
-            this.onlineCustomerContactDtos1.name = this.get_nickName
+            if(this.get_sex==1){
+                this.onlineCustomerContactDtos1.mobile = this.get_phone
+                this.onlineCustomerContactDtos1.name = this.get_nickName
+            }else{
+                this.onlineCustomerContactDtos.mobile = this.get_phone
+                this.onlineCustomerContactDtos.name = this.get_nickName
+            }
+            
             this.listCategory()
             this.get_discount()
             if(!this.get_phone){
@@ -162,8 +169,13 @@ const { $Message } = require('@/wxcomponents/base/index');
                 getUserInfo().then(res=>{
                     let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
                     this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
-                    this.onlineCustomerContactDtos1.mobile = phone
-                    this.onlineCustomerContactDtos1.name = nickName
+                    if(sex==1){
+                        this.onlineCustomerContactDtos1.mobile = phone
+                        this.onlineCustomerContactDtos1.name = nickName
+                    }else{
+                        this.onlineCustomerContactDtos.mobile = phone
+                        this.onlineCustomerContactDtos.name = nickName
+                    }
                 })
             }
         },
@@ -189,8 +201,13 @@ const { $Message } = require('@/wxcomponents/base/index');
                     delta: backNum
                 })
             }
-            this.onlineCustomerContactDtos1.mobile = this.get_phone
-            this.onlineCustomerContactDtos1.name = this.get_nickName
+            if(this.get_sex==1){
+                this.onlineCustomerContactDtos1.mobile = this.get_phone
+                this.onlineCustomerContactDtos1.name = this.get_nickName
+            }else{
+                this.onlineCustomerContactDtos.mobile = this.get_phone
+                this.onlineCustomerContactDtos.name = this.get_nickName
+            }
             
         },
         data(){
@@ -487,8 +504,8 @@ const { $Message } = require('@/wxcomponents/base/index');
             justify-content: center;
             width: 250rpx;
             margin: 4rpx 0;
-            height: 65rpx; 
-            line-height: 65rpx; 
+            height: 68rpx; 
+            line-height: 68rpx; 
             font-size: 28rpx;
         }
     }
@@ -588,5 +605,9 @@ const { $Message } = require('@/wxcomponents/base/index');
             background: #D3AB75;
         }
     }
+}
+.block{
+    display: inline-block;
+    width: 26rpx;
 }
 </style>

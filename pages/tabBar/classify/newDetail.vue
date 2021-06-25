@@ -28,19 +28,19 @@
         </div>
     </div>
     <div class="recommendContent" v-if="recommendList.length > 0">
-        <swiper class="swiper" indicator-dots>
+        <swiper class="swiper" indicator-dots style="    height: 340rpx">
             <swiper-item v-for="(_, i) in recommendList" :key="_.id">
                 <div class="pad10 border_b">
                     <span class="font600">推荐套系</span>
                     <span class="index">{{i + 1}}/{{recommendList.length}}</span>
                 </div>
-                <div class="flex pad10">
+                <div class="flex pad10" style="padding-top:30rpx;">
                     <img class="h80" :src="_.coverPhoto" alt="">
                     <div class="flex_1 pad_rl10">
                         <div class="font600">{{_.name}}</div>
                         <div class="paddingT15 fontSize25 color666">{{_.imgIntroduction}}</div>
                         <div class="price">
-                            <span class="fontFamilyST fontWight">￥ {{_.assemblyPrice}}</span>
+                            <span class="fontFamilyST fontWight">￥{{_.assemblyPrice}}</span>
                             <span class="goPhoto" @click="onClickDetails(_.id)">去拍摄</span>
                         </div>
                     </div>
@@ -205,6 +205,7 @@ export default {
     margin: 20rpx auto;
     background: #fff;
     border-radius: 18rpx;
+        height: 340rpx;
     .index{
         color: gray;
         float: right;
@@ -228,11 +229,12 @@ export default {
 }
 .examples{
     text-align: center;
-    margin-bottom: 10rpx;
+    margin-bottom: 25rpx;
+    padding-top: 10rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: gray;
+    color: #7B7B7B;
     .borders{
         width: 120rpx;
         border-bottom: 2rpx solid #ECECEC;
@@ -240,6 +242,7 @@ export default {
     .text{
         text-align: center;
         padding: 0 20rpx;
+        font-size: 28rpx;
     }
 }
 .moreContent{
@@ -278,7 +281,7 @@ export default {
     display: inline-block;
     color: #fff;
     background: #D3AA72;
-    padding: 4rpx 14rpx;
+    padding: 4rpx 18rpx;
     font-size: 24rpx;
     border-radius: 8rpx;
 }

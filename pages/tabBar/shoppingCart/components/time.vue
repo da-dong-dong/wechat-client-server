@@ -274,7 +274,7 @@
             // margin-bottom: 10rpx;
 			.Y_M_Box{
 				padding: 30rpx 0 ;
-				width: 300rpx;
+				width: 230rpx;
 				display: flex;
 				justify-content: space-between;
 				margin-left: 50%;
@@ -290,7 +290,7 @@
 					.showDate{
 						padding: 0 15rpx;
 						color: #D3AA72;
-						font-size: 35rpx;
+						font-size: 32rpx;
 					}
 				}
 			}
@@ -346,7 +346,7 @@
             }
 			.myList{
 				.list{
-					color: #414143;
+					color: black;
 					width: 70rpx;
 					height: 70rpx;
 					border-radius: 50%;
@@ -373,7 +373,7 @@
 					}
 				}
 				.boforeTime{
-					color: #999999;
+					color: #dedede;
 				}
 				.optional{
 					// background-color: #D3AB75;

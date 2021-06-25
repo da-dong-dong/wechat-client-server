@@ -42,7 +42,7 @@
 		{
 			"path": "pages/tabBar/shoppingCart/components/order_confirm",
 			"style": {
-				"navigationBarTitleText": "订单确认"
+				"navigationBarTitleText": "确认订单"
 			}
 		},
 		{

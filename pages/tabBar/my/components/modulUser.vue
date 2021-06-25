@@ -16,17 +16,19 @@
 
 <script>
 import { mapActions,mapGetters,mapMutations } from 'vuex'
-import { setUserInfo, getUserInfo } from '@/util/api/user.js'
+import {getCode, setUserInfo, getUserInfo } from '@/util/api/user.js'
 const { $Message } = require('@/wxcomponents/base/index');
+// 获取当前小程序信息
+const accountInfo = uni.getAccountInfoSync(); 
 	export default {
 		props:['phone','type'],
 		data() {
 			return {
-				
+				jsCode:null,
 			};
 		},
 		mounted(){
-			
+			this.login()
 		},
 		methods:{
 			...mapActions('user',[
@@ -42,6 +44,22 @@ const { $Message } = require('@/wxcomponents/base/index');
 			ok(){
 				this.$emit('ok')
 			},
+			// 获取code值
+            login(){
+                uni.login({
+                    provider: 'weixin',
+                    success:(res) => {
+                        // 获取code值
+                        let param = {
+                            jsCode: res.code,
+                            authorizerAppid:  accountInfo.miniProgram.appId
+                        }
+						console.log(res.code,'code')
+                        this.jsCode = param
+                    }
+                });
+            },
+
 			// 获取用户信息AIP
             getUserInfoAPI(){
                 getUserInfo().then(res=>{
@@ -51,21 +69,37 @@ const { $Message } = require('@/wxcomponents/base/index');
 					this.$emit('cancel')
                 })
             },
+
 			// 获取用户信息
             onClickUserInfoAPI(){
 				uni.getUserProfile({
 					desc: '用于完善个人资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 					success: (param) => {
 						console.log('用户信息参数',param)
-						setUserInfo(param).then(res=>{
-							console.log(res)
-							if(res.data.code === 200){
-								this.getUserInfoAPI()
-							}else{
-								console.log(res.data.message)
-								uni.showToast({title:res.data.message,icon:'none'})
-							}
-						})
+						this.getCode(param)
+					}
+				})
+            },
+
+			// 获取登陆信息
+           	async getCode(param){
+               let code = await getCode(this.jsCode)
+                code = code.data.data
+                // 存储 
+                this.act_code(code)
+                // 存储本地
+                uni.setStorage({
+                    key: 'code',
+                    data: code
+                })
+				// 设置用户信息
+                setUserInfo(param).then(res=>{
+					console.log(res)
+					if(res.data.code === 200){
+						this.getUserInfoAPI()
+					}else{
+						console.log(res.data.message)
+						uni.showToast({title:res.data.message,icon:'none'})
 					}
 				})
             },

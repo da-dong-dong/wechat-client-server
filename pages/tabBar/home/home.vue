@@ -7,7 +7,7 @@
 			<view class="navText fontWight">{{get_shopId.shopName}}</view>
 			<view slot="left">
 				<view class="navCrt" @click="onChangeCity">
-					<view class="textOv">{{get_city}}</view>
+					<view class="textOv">{{get_city | flegCity}}</view>
 					<i-icon class="icon" type="unfold" size="20" color="#333333"  />
 				</view>
 			</view>
@@ -30,7 +30,7 @@
 					</swiper-item>
 				</swiper>
 			</view>
-			<view v-if="item.type === 'oneImg'" :style="{ 'background-color': item.data.bgColor }">
+			<view v-if="item.type === 'oneImg'" :style="{ 'background-color': item.data.bgColor }" class="paddingT3">
 				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.data.linkData)">
 			</view>
 			<view class="btnContent" v-if="item.type === 'moreBtn'" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%', 'background-image': `url(${item.data.backImg})`, 'background-color': item.data.bgColor }">
@@ -115,6 +115,15 @@ const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
 		components: {uniNavBar},
+		filters:{
+			flegCity(val){
+				let cheVal = val
+				if(val[val.length-1] == "市"){
+					cheVal = val.substring(0,val.length-1)
+				}
+				return cheVal
+			}
+		},
 		data () {
 			return {
 				homeList: [],
@@ -273,7 +282,7 @@ const entriData = uni.getExtConfigSync()
 					case 1:
 						return '100%'
 					case 2:
-						return '49%'
+						return '48%'
 				}
 			},
 			// 阴影样式
@@ -300,7 +309,7 @@ const entriData = uni.getExtConfigSync()
 @import url('./icon.css');
 .loginInfo{
 	position: fixed;
-    bottom: 139rpx;
+    bottom: 136rpx;
     right: 0;
     width: 100%;
     height: 100rpx;
@@ -343,6 +352,7 @@ const entriData = uni.getExtConfigSync()
 		 height: 55rpx;
 	}
 	.textOv{
+		text-align: center;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		width: 90rpx;
@@ -427,13 +437,16 @@ const entriData = uni.getExtConfigSync()
 }
 .rowFlexDouble{
 	justify-content: space-between;
-	box-sizing: border-box;
+	// box-sizing: border-box;
 	&:last-child{
       margin-bottom: 0px;
     }
 }
 .homeContent .paddingT5{
-	padding-top: 2%;
+	padding-top: 5%;
+}
+.homeContent .paddingT3{
+	padding-top: 3%;
 }
 .homeContent .paddingT10{
 	padding-top: 20rpx;

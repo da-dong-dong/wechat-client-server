@@ -28,7 +28,7 @@
                 <view class="flex paddingTB20 flexCenten">
                     <text class="marginR30 fontSize30">定金</text>
                     <view>
-                         预定金: <text class="colorH marginR10 fontWight">￥{{listDetai.assemblyDeposit}}</text>
+                         预定金: <text class="colorH marginR25 fontWight">￥{{listDetai.assemblyDeposit}}</text>
                          尾款: <text class="fontWight">￥{{listDetai.assemblyPrice-listDetai.assemblyDeposit}}</text>
                     </view>
                 </view>
@@ -42,7 +42,7 @@
                         <text class="textFlex"  v-if="listUl['bottom']">底片{{listUl['bottom']}}张</text>
                         <text class="textFlex"  v-if="listUl['refine']">精修{{listUl['refine']}}张</text>
                        
-                        <text class="textFlex" v-for="(item,index) in listUl['goods']" :key="index">{{index}}{{item}}件</text>
+                        <text class="textFlex" v-for="(item,index) in listUl['goods']" :key="index">{{index}}{{item | goodsUit}}</text>
                         
                     </div>
                 </view>
@@ -54,8 +54,7 @@
             <!-- tab切换 -->
             <view class="imgTab flex fontSize30 textC marginB30">
                 <view class="imgTab_li" :class="Index==index?'active':''" v-for="(item,index) in Tab" :key="index" @click="onClickTab(index)">
-                    {{item}}
-                    <div class="borderBottom" v-show="Index==index"></div>
+                    <div class="border">{{item}}</div>
                 </view>
             </view>
 
@@ -80,6 +79,11 @@
         </view>
          <!-- 弹窗 -->
         <i-message id="message" />
+        <!-- 弹窗购物车 -->
+        <view v-if="showGoos" class="showGoos">
+            <i-icon class="icon" type="right" size="35" color="#FFFFFF"  />
+            <text class="goods">添加购物车成功</text>
+        </view>
    </view>
 </template>
 
@@ -99,6 +103,11 @@ import { addRecommendOne } from '@/util/api/order.js'
                 'get_shopId'
 			])
         },
+        filters:{
+			goodsUit(val){
+				return val.replace(/,/,'')
+			}
+		},
         components:{
             banner,
             buyCar
@@ -116,6 +125,7 @@ import { addRecommendOne } from '@/util/api/order.js'
                 Id:0,
                 colors:false, // 套系收费
                 delCollId:null, // 记录id
+                showGoos:false
                }
         },
         onLoad(options) {
@@ -157,9 +167,11 @@ import { addRecommendOne } from '@/util/api/order.js'
                         //商品个数
                         item.assemblyItemGoods.map(_=>{
                             if(goods.hasOwnProperty(_.name)){
-                                goods[_.name]+=_.count
+                                let num = Number(goods[_.name].split(',')[0])
+                                num += _.count
+                                goods[_.name] = `${num},${_.unitStr}`
                             }else{
-                                goods[_.name]=_.count
+                                goods[_.name] = `${_.count},${_.unitStr}`
                             }
                         })
                         // 底片 精修
@@ -234,10 +246,10 @@ import { addRecommendOne } from '@/util/api/order.js'
                     this.mut_quickListAdd([datas])
                 }else{
                     this.mut_carListAdd(datas)
-                    uni.showToast({
-                        title: '添加购物车成功',
-                        duration: 2000
-                    })
+                    setTimeout(()=>{
+                        this.showGoos = false
+                    },2000)
+                    this.showGoos = true
                 }
             },
 
@@ -342,6 +354,7 @@ import { addRecommendOne } from '@/util/api/order.js'
             width: 20rpx;
             flex-wrap: wrap;
             line-height: 45rpx;
+            text-align: center;
             text{
                 margin-right: 40rpx;
             }
@@ -361,22 +374,30 @@ import { addRecommendOne } from '@/util/api/order.js'
         border-bottom: #EAEAEA 1rpx solid;
         margin-left: 30rpx;
         margin-right: 30rpx;
-        padding-bottom: 20rpx;
         color: #A3A3A3;
         .imgTab_li{
             width: 50%;
             position: relative;
+            // height: 70rpx;
             .borderBottom{
-                border-bottom: 2rpx solid #D3AA72;
-                width: 100rpx;
+                border-bottom: 3rpx solid #D3AA72;
+                width: 125rpx;
                 position: absolute;
                 bottom: -21rpx;
-                left: 108rpx;
+                left: 95rpx;
             }
         }
         .active{
             color: #D3AA72;
             font-weight: bold;
+            .border{
+                 border-bottom: 4rpx solid #D3AA72;
+            }
+        }
+        .border{
+            width: 120rpx;
+            margin: 0 auto;
+            height: 62rpx;
         }
     }
     .showTab{
@@ -404,5 +425,28 @@ import { addRecommendOne } from '@/util/api/order.js'
     /* text-overflow: clip; */
     width: 135rpx;
     overflow: hidden;
+}
+.showGoos{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: 245rpx;
+    height: 245rpx;
+    background: #666666;
+    opacity: 0.8;
+    border-radius: 21px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    .goods{
+        color: #fff;
+        padding: 20rpx 48rpx;
+        text-align: center;
+        font-size: 30rpx;
+        font-family: SourceHanSansCN;
+        font-weight: 300;
+    }
 }
 </style>

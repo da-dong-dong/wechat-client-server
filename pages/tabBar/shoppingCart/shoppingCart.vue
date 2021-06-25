@@ -13,7 +13,7 @@
                     </div>
                     <uni-swipe-action>
                         <uni-swipe-action-item v-for="(_, i) in get_carList" :key="i">
-                            <view class="flex">
+                            <view class="flex" @click="onClickDetails(_.id)">
                                 <view class="radio">
                                     <radio class="scale75" color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
                                 </view>
@@ -24,10 +24,10 @@
                                         <span class="float_r colorA3">￥{{_.enableDeposit?_.assemblyDeposit:_.price}}</span>
                                     </view>
                                     <view class="font14">
-                                        总 价: <span class="orange">￥{{_.price}}</span>
+                                        总 价:<span class="orange fontWight">￥{{_.price}}</span>
                                     </view>
                                     <view class="font14 paddingT5">
-                                        尾 款: ￥{{_.enableDeposit?_.price - _.assemblyDeposit:_.price}}
+                                        尾 款:￥{{_.enableDeposit?_.price - _.assemblyDeposit:_.price}}
                                     </view>
                                 </view>
                             </view>

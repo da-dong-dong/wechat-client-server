@@ -22,17 +22,25 @@
             ...mapMutations('map',[
 				'mut_city'
             ]),
-
+            ...mapMutations('user',[
+				'mut_shopId'
+			]),
             //点击城市时触发,event = {cityId,cityName,spell}
             bindCity({cityName,city}){
                 this.mut_city(cityName || city)
                 // 跳转门店选择
                 console.log('触发')
-                setTimeout(()=>{
-                    uni.redirectTo({
-                        url:'/pages/tabBar/shoppingCart/components/changeRegion?changeCity=changeCity'
-                    })
-                },100)
+                uni.removeStorage({
+                    key: 'shopId',
+                    success: (result) => {
+                        this.mut_shopId(null)
+                        uni.redirectTo({
+                            url:'/pages/tabBar/shoppingCart/components/changeRegion?changeCity=changeCity'
+                        })
+                    },
+                    fail: (error) => {}
+                })
+                
                 
                 
             }

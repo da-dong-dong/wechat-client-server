@@ -4,16 +4,16 @@
             <div class="oneRow" v-for="_ in rightList" :key="_.id" @click="onClickDetails(_.id)">
                 <img class="h110" v-if="data.goodsShowType === 2" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 3" :src="_.coverPhoto" alt="">
-                <div class="title" v-if="data.showName === 1">{{_.imgTitle}}</div>
-                <div class="desc fontSize25" v-if="data.showExtend === 1">{{_.imgIntroduction}} 不忘初心得东西需要时间等待</div>
+                <div class="title marginT20" v-if="data.showName === 1">{{_.imgTitle}}</div>
+                <div class="desc fontSize25 paddingB20" v-if="data.showExtend === 1">{{_.imgIntroduction}} 不忘初心得东西需要时间等待</div>
             </div>
         </div>
         <div class="twoContent" v-if="data.goodsShowType === 0 || data.goodsShowType === 1">
             <div class="oneRow" v-for="_ in rightList" :key="_.id" @click="onClickDetails(_.id)">
                 <img class="h110" v-if="data.goodsShowType === 0" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 1" :src="_.coverPhoto" alt="">
-                <div class="title" v-if="data.showName === 1">{{_.imgTitle}}</div>
-                <div class="desc fontSize25" v-if="data.showExtend === 1">{{_.imgIntroduction}}</div>
+                <div class="title paddingT20" v-if="data.showName === 1">{{_.imgTitle}}</div>
+                <div class="desc fontSize25 paddingB20" v-if="data.showExtend === 1">{{_.imgIntroduction}}</div>
             </div>
         </div>
         

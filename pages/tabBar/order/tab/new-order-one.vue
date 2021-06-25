@@ -15,8 +15,8 @@
                         <span class="font600">{{item.assemblyName}}</span>
                         <span class="float_r colorA3">￥{{item.earnestMoney}}</span>
                     </view>
-                    <view class="font14 fontWight">
-                        总<span></span>价: <span class="orange paddingL9">  ￥{{item.sumPrice}}</span>
+                    <view class="font14 ">
+                        总<span></span>价: <span class="orange paddingL9 fontWight">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
                         尾<span></span>款: ￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice - item.assemblyEarnestMoney | toFile}}
@@ -71,7 +71,7 @@
             <!-- 待付款 -->
             <view class="footer bottB" v-if="!item.state">
                 <view class="orange noBuyBut">
-                    <view class="text" @click="onClickDetails(item.id)">查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i></view>
+                    <view class="text" @click="onClickDetails(item.id,true)">查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i></view>
                     <view class="btn" @click="onBuy(item.id)">去付款</view>
                 </view>
             </view>
@@ -118,9 +118,13 @@ import { mapGetters } from 'vuex'
         },
         methods:{
             // 跳转蓝湖详情
-            onClickDetails(id){
+            onClickDetails(id,val){
+                let type = 1
+                if(val){
+                    type = 0
+                }
                 uni.navigateTo({ 
-                    url: `/pages/order/index?id=${id}`
+                    url: `/pages/order/index?id=${id}&type=${type}`
                 })
             },
 
@@ -161,7 +165,7 @@ import { mapGetters } from 'vuex'
     margin-bottom: 20rpx;
     .flex{
         display: flex;
-        padding: 20rpx 30rpx;
+        padding: 30rpx;
         border-bottom: 1px solid #ECECEC;
     }
     .h145{

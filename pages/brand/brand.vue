@@ -89,8 +89,12 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
                     uni.switchTab({
                         url:'/pages/tabBar/home/home'
                     })
-                    this.mut_city(this.get_city)
-                 
+                    // 判断市辖区
+                    if(this.get_shopIdList[index].city == "市辖区"){
+                        this.mut_city(this.get_shopIdList[index].province)
+                    }else{
+                        this.mut_city(this.get_shopIdList[index].city)
+                    }
                 // uni.navigateTo({
                 // 	url:'/pages/tabBar/shoppingCart/components/changeRegion?flage=123'
                 // })
@@ -177,7 +181,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
     .brean_name{
         font-size: 40rpx;
         font-family: MingHei_B;
-        font-weight: 400;
+        font-weight: 700;
     }
 }
 </style>

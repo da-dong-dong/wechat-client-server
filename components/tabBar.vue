@@ -74,15 +74,15 @@
 	.tabbar{
 		position: fixed;
 		bottom: 0;
-		padding: 5rpx 0 60rpx;
+		padding: 15rpx 0 65rpx;
 		width: 750rpx;
 		border-top: 2rpx solid #f7f7f9;
 		background-color: #fff;
-		font-size: 20rpx;
+		font-size: 18rpx;
 		text-align: center;
 		display: flex;
 		justify-content: space-around;
-		z-index: 2;
+		z-index: 2021;
         color: #B6B6B6;
 		.list{
 			flex: 1;
@@ -95,20 +95,20 @@
 				margin-bottom: 5rpx;
 			}
 			.icon1{
-				width: 40rpx;
-				height: 40rpx;
+				width: 38rpx;
+				height: 38rpx;
 			}
 			.icon2{
-				width: 40rpx;
-				height: 40rpx;
+				width: 38rpx;
+				height: 38rpx;
 			}
 			.icon4{
-				width:40rpx;
-				height: 40rpx;
+				width:38rpx;
+				height: 38rpx;
 			}
 			.icon5{
-				width: 40rpx;
-				height: 40rpx;
+				width: 38rpx;
+				height: 38rpx;
 			}
 		}
 		.tabBarAction{

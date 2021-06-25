@@ -57,7 +57,7 @@ import neworderSignture from './detail/order-signture.vue'
         },
         onLoad(options) {
             this.orderId = options.id
-            this.TabCur = 1
+            this.TabCur = Number(options.type)
         },
          mounted(){
            this.getHtight(this.TabCur)

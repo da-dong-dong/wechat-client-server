@@ -5,9 +5,9 @@
         <view class="buyCar fixed flex paddingRL40" :style="{'bottom':`${top?'140rpx':'0'}`}">
             <!-- 详情 -->
             <view class="car" v-if="type == 'details'" @click="goCar">
-                <i-icon class="icon" type="publishgoods_fill" size="30" color="#666666"  />
-                <view>购物车</view>
-                <text class="num">{{get_carList.length}}</text>
+                <image class="icon icon4" src="/static/tabBar/shoppingCartSl.png" mode=""></image>
+                <view class="fontSize26">购物车</view>
+                <text class="num" v-if="get_carList.length>0">{{get_carList.length}}</text>
             </view>
 
             <view class="but flex" v-if="type == 'details'">
@@ -108,6 +108,11 @@
 .buyCar_Span{
     height: 160rpx;
     width: 100%;
+}
+.icon4{
+    width: 45rpx;
+    height: 45rpx;
+    margin-left: 10rpx;
 }
 .buyCar{
     width: 100%;
