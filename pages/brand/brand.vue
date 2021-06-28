@@ -137,21 +137,26 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
         color: #333333;
     }
     .navCrt{
-        width: 130rpx;
+        min-width: 140rpx;
         border: 1rpx solid #D6D6D6;
         border-radius: 50rpx;
-        height: 55rpx;
+        height: 46rpx;
         left: 60rpx;
         display: flex;
         justify-content: space-around;
         align-items: center;
         padding-left: 10rpx;
         padding-right: 10rpx;
+        line-height: 50rpx;
+        margin-bottom: 6rpx;
+        position: relative;
+        z-index: 5000;
+        left: 10rpx;
         .textOv{
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            font-size: 30rpx;
+            font-size: 26rpx;
         }
     }
 }

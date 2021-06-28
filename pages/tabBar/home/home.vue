@@ -22,13 +22,16 @@
 				<i class="iconfont iconhtbArrowright02" ></i>
 			</view>
 			<view v-if="item.type === 'carousel'">
-				<swiper class="swiper" :autoplay="item.data.autoplay" indicator-dots :style="{ height: item.data.height * 2 + 'rpx'}">
-					<swiper-item v-for="(_, _i) in item.data.imgs" :key="_i">
-						<view class="swiper-item uni-bg-red" :style="{ height: item.data.height * 2 + 'rpx'}" @click="turnDetail(_.linkData)">
-							<img :src="_.src" class="wh100"/>
-						</view>
-					</swiper-item>
-				</swiper>
+				<swiperDer :info="item.data.imgs" :current="currentSwiper" :dotsStyles="dotsStyles" field="content" mode="dot" :style="{ height: item.data.height * 2 + 'rpx'}">
+					<swiper class="swiper-box" @change="changeSwiper" :autoplay="item.data.autoplay" :indicator-dots="false" :style="{ height: item.data.height * 2 + 'rpx'}">
+						<swiper-item v-for="(_, _i) in item.data.imgs" :key="_i" >
+							<view class="swiper-item uni-bg-red" :style="{ height: item.data.height * 2 + 'rpx'}" @click="turnDetail(_.linkData)">
+								<img :src="_.src" class="wh100"/>
+							</view>
+						</swiper-item>
+					</swiper>
+				</swiperDer>
+				
 			</view>
 			<view v-if="item.type === 'oneImg'" :style="{ 'background-color': item.data.bgColor }" class="paddingT3">
 				<img :src="item.data.src" alt="" :style="{ 'height': item.data.height * 2 + 'rpx', 'width': '100%' }" style="vertical-align:top;" @click="turnDetail(item.data.linkData)">
@@ -110,11 +113,12 @@ import { getHomeData } from '@/util/api/home.js'
 import { getUserInfo } from '@/util/api/user.js'
 const { $Message } = require('@/wxcomponents/base/index');
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
+import swiperDer from '@/components/swiper-der.vue'
 import { mapGetters, mapActions } from 'vuex'
 const accountInfo = uni.getAccountInfoSync();
 const entriData = uni.getExtConfigSync()
     export default {
-		components: {uniNavBar},
+		components: {uniNavBar,swiperDer},
 		filters:{
 			flegCity(val){
 				let cheVal = val
@@ -134,7 +138,11 @@ const entriData = uni.getExtConfigSync()
 					longitude: '114.382526',
 					iconPath: "/static/image/loacl.png"
             	}],
-				showBootm:false
+				showBootm:false,
+				currentSwiper:0,
+				dotsStyles:{
+					bottom:25
+				}
 			}
 		},
 		computed: {
@@ -305,7 +313,11 @@ const entriData = uni.getExtConfigSync()
                     let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
                     this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
                 })
-			}
+			},
+
+			changeSwiper(e){
+				this.currentSwiper = e.detail.current;
+			},
         }   
     }
 </script>
@@ -345,15 +357,18 @@ const entriData = uni.getExtConfigSync()
 	min-width: 140rpx;
     border: 1rpx solid #D6D6D6;
     border-radius: 50rpx;
-    height: 52rpx;
+    height: 46rpx;
     left: 60rpx;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-left: 15rpx;
 	padding-right: 15rpx;
-	line-height: 52rpx;
+	line-height: 50rpx;
 	margin-bottom: 6rpx;
+	position: relative;
+	z-index: 5000;
+	left: 10rpx;
 	.icon{
 		 height: 55rpx;
 	}
