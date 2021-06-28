@@ -15,7 +15,7 @@
                         <uni-swipe-action-item v-for="(_, i) in get_carList" :key="i">
                             <view class="flex" @click="onClickDetails(_.id)">
                                 <view class="radio">
-                                    <radio class="scale75" color="#D3AB75" :checked="_.buyBool" @click="radioChange(_)"/>
+                                    <radio class="scale75" color="#D3AB75" :checked="_.buyBool" @click.stop="radioChange(_)"/>
                                 </view>
                                 <img class="h145" :src="_.imgs" />
                                 <view class="flex_1">
@@ -252,7 +252,8 @@ const { $Message } = require('@/wxcomponents/base/index');
 
             // 跳支付页
             onQuick(){
-                let carList = this.get_carList;
+                // 过滤选中
+                let carList = this.get_carList.filter(_ => _.buyBool)
                 
                 if(!carList.length){
                     $Message({
