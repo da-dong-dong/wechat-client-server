@@ -173,6 +173,11 @@ const entriData = uni.getExtConfigSync()
 				this.showBootm = true
 			},500)
 		},
+		onPullDownRefresh(){
+			setTimeout(()=>{
+				uni.stopPullDownRefresh()
+			},1000)
+		},
         methods:{
 			 ...mapActions('user',[
                 'act_nickName',
