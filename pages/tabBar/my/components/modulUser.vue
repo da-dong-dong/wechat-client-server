@@ -62,12 +62,12 @@ const accountInfo = uni.getAccountInfoSync();
 
 			// 获取用户信息AIP
             getUserInfoAPI(){
-                getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
-                    this.mut_outCode()
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
-					this.$emit('cancel')
-                })
+				this.$emit('cancel')
+                // getUserInfo().then(res=>{
+                //     let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                //     this.mut_outCode()
+                //     this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                // })
             },
 
 			// 获取用户信息

@@ -8,7 +8,7 @@ export const getTicket = (params) => {
 
 // 获取微信登录凭证
 export const getCode = (params) => {
-	return postObj(baseUrl.getCode, params)
+	return postObj(baseUrl.getCode, params,false)
 }
 
 // 获取用户信息

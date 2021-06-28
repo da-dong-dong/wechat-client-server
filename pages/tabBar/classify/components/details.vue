@@ -354,7 +354,7 @@ import { addRecommendOne } from '@/util/api/order.js'
             width: 20rpx;
             flex-wrap: wrap;
             line-height: 45rpx;
-            text-align: center;
+            // text-align: center;
             text{
                 margin-right: 40rpx;
             }

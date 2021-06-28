@@ -658,7 +658,7 @@ export default {
   /* 回到顶部的按钮 */
   .s-pull-back-top {
     position: relative;
-    z-index: 99;
+    z-index: 2022;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s linear;

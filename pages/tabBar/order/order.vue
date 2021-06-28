@@ -177,12 +177,12 @@ import { mapGetters } from 'vuex'
                         // 全部
                          setList= this.list.filter(item=>item)
                          setList.map(item=>{
-                            if(!item.isPhotoAccomplish){
+                            if(!item.isPhotoAccomplish && !item.isClose){
                                 item.state = '待拍摄'
                             }
-                            // if(!item.isToShop){
-                            //     item.state = '未到店'
-                            // }
+                            if(item.isClose){
+                                item.state = '已关闭'
+                            }
                         })
                         this.get_carList = setList
                         break;
