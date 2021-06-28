@@ -1,5 +1,5 @@
 <template>
-    <view class="view_content">
+    <view class="view_content HeaderBorderTop">
         <view class="standart_list">
             <view class="flex" v-for="_ in standaerList" :key="_.id">
                 <img class="h145" :src="_.titleImages"/>
@@ -50,7 +50,7 @@ export default {
 .view_content{
     height: 100vh;
     background: #f5f5f5;
-    border-top: 1px solid transparent;
+    //border-top: 1px solid transparent;
 }
 .standart_list{
     margin: 20rpx;

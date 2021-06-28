@@ -118,7 +118,7 @@ export default {
     border-top: 1rpx solid #B2B2B2;
     .collectionOne{
         width: 330rpx;
-        margin-bottom: 26rpx;
+        margin-bottom: 35rpx;
         .img{
             width: 100%;
             height: 480rpx;

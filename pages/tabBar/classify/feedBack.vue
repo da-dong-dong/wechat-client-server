@@ -1,5 +1,5 @@
 <template>
-    <div class="my_Form">
+    <div class="my_Form HeaderBorderTop">
         <!-- <view class="title">标题:</view> -->
         <!-- <input class="uni-input" @input="(event) => { feedbackTitle = event.detail.value}" name="input"
         placeholder-style="font-size: 24rpx; font-family: PingFang SC; color: #C6C6C6;" style="height: 60rpx;width: 100%;padding: 10rpx" placeholder="标题" /> -->

@@ -325,7 +325,7 @@ view{
     justify-content: space-between;
     .title {
         color: #919191;
-        padding: 15rpx 10rpx;
+        padding: 15rpx 10rpx 0;
         font-size: 24rpx;
     }
     .price{

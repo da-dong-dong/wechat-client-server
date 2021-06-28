@@ -52,8 +52,8 @@
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
-				<view class="flex rowFlexDouble" :class="!item.data.titleRow.hiddenTitle && i!==1 ?'':'paddingT5'" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
-					<img class="autoWH" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
+				<view class="flex rowFlexDouble" :class="!item.data.titleRow.hiddenTitle && i!==1 ?'':'paddingT3'" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+					<img class="autoWH"  :class="i>=1 ?'paddingT2':''" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
 			</view>
 			<!-- 视频 -->
@@ -78,7 +78,7 @@
 			</div>
         </view>
        <!-- 客服 -->
-        <view class="userCall" :style="{ bottom: get_phone?'160rpx':'260rpx'}">
+        <view class="userCall" :style="{ bottom: get_phone?'200rpx':'260rpx'}">
             <button plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
                 <img src="/static/image/userCall.png" alt="">
             </button>
@@ -348,6 +348,7 @@ const entriData = uni.getExtConfigSync()
     padding-left: 15rpx;
 	padding-right: 15rpx;
 	line-height: 52rpx;
+	margin-bottom: 6rpx;
 	.icon{
 		 height: 55rpx;
 	}
@@ -359,6 +360,7 @@ const entriData = uni.getExtConfigSync()
 		overflow: hidden;
 		font-size: 26rpx;
 		height: 55rpx;
+		font-family: Source Han Sans CN;
 	}
 }
 .homeContent{
@@ -442,11 +444,14 @@ const entriData = uni.getExtConfigSync()
       margin-bottom: 0px;
     }
 }
-.homeContent .paddingT5{
-	padding-top: 5%;
+.homeContent .paddingT3{
+	padding-top: 3%;
 }
 .homeContent .paddingT3{
 	padding-top: 3%;
+}
+.homeContent .paddingT2{
+	padding-top: 2%;
 }
 .homeContent .paddingT10{
 	padding-top: 20rpx;

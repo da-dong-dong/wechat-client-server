@@ -246,7 +246,7 @@ page{
     justify-content: center;
     align-items: center;
     z-index: 3500;
-    
+    box-shadow: 0rpx 0rpx 10rpx 0 rgba(89, 89, 89, 0.35);
 }
 .userCall button{
     display: flex;
@@ -277,4 +277,8 @@ page{
     width:0;
     height:0;
     color:transparent;
+}
+
+.HeaderBorderTop{
+    border-top: 1rpx solid #B2B2B2;
 }

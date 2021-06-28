@@ -1,5 +1,5 @@
 <template>
-    <view class="myFeedBackContent">
+    <view class="myFeedBackContent ">
         <view class="demo" :style="'height:' +  demo.height + 'px;' + 'padding-top:' + demo.top + 'px;padding-bottom:10rpx'">
             <view class="left" :style="'top:' + demo.top + 'px'" >
                 <span class="flex" @click="toGoBack">
@@ -147,6 +147,7 @@ export default {
     justify-content: center;
     background: #fff;
     font-size: 26rpx;
+    border-bottom: 1rpx solid #B2B2B2;
     .left{
         float: left;
         position: absolute;

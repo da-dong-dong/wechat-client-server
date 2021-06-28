@@ -1,5 +1,5 @@
 <template>
-    <div class="my_content">
+    <div class="my_content HeaderBorderTop">
         <view class="msg_div">
             <div class="flex border">
                 <span class="flex_1">拍摄时间: 2021-46-16</span>

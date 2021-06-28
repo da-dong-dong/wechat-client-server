@@ -81,7 +81,7 @@
         <i-message id="message" />
         <!-- 弹窗购物车 -->
         <view v-if="showGoos" class="showGoos">
-            <i-icon class="icon" type="right" size="35" color="#FFFFFF"  />
+            <i-icon class="icon marginT20" type="right" size="35" color="#FFFFFF"  />
             <text class="goods">添加购物车成功</text>
         </view>
    </view>
@@ -442,7 +442,7 @@ import { addRecommendOne } from '@/util/api/order.js'
     transform: translate(-50%, -50%);
     .goods{
         color: #fff;
-        padding: 20rpx 48rpx;
+        padding: 5rpx 48rpx 20rpx;
         text-align: center;
         font-size: 30rpx;
         font-family: SourceHanSansCN;

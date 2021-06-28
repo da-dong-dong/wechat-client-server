@@ -1,6 +1,6 @@
 /******************************** 个人信息 ***************************************/
 <template>
-    <view class="user_box">
+    <view class="user_box HeaderBorderTop">
          <view class="user_seting marginT10">
              <!-- 头像 -->
              <view class="user_logo">

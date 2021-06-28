@@ -1,6 +1,6 @@
 /******************************** 关于 ***************************************/
 <template>
-    <view class="aboutImg">
+    <view class="aboutImg HeaderBorderTop">
         <view class="imgs">
             <image class="img" v-for="item in aboutImg" :key="item" :src="item" mode="widthFix" />
         </view>
