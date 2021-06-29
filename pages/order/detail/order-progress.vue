@@ -183,6 +183,14 @@ import { orderProcess } from '@/util/api/order.js'
             text-align: justify;
             text-align-last: justify;
             color: #414143;
+            height: 40rpx;
+        }
+        .name:after {
+            content: "";
+            width: 100%;
+            height: 0;
+            display: inline-block;
+            visibility: hidden;
         }
         .circle{
             transform: scale(0.75);

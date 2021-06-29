@@ -264,6 +264,14 @@ import { orderDetails } from '@/util/api/order.js'
                 margin-right: 80rpx;
                 text-align: justify;
                 text-align-last: justify;
+                height: 40rpx;
+            }
+            .name:after {
+                content: "";
+                width: 100%;
+                height: 0;
+                display: inline-block;
+                visibility: hidden;
             }
             .h145{
                 width: 150rpx;

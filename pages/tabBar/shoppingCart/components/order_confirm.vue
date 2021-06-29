@@ -532,6 +532,7 @@ const { $Message } = require('@/wxcomponents/base/index');
             text-align: justify;
             text-align-last: justify;
             height: 40rpx;
+            display: inline-block;
         }
         .name:after {
             content: "";
