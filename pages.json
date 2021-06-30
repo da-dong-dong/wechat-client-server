@@ -181,7 +181,8 @@
 		{
 			"path": "pages/tabBar/classify/components/details",
 			"style": {
-				"navigationBarTitleText": "套系详情"
+				"navigationBarTitleText": "套系详情",
+				"backgroundColor": "#fff"
 			}
 		},
 		{

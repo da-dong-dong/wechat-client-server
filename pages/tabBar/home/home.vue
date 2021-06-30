@@ -22,7 +22,7 @@
 				<i class="iconfont iconhtbArrowright02" ></i>
 			</view>
 			<view v-if="item.type === 'carousel'">
-				<swiperDer :info="item.data.imgs" :current="currentSwiper" :dotsStyles="dotsStyles" field="content" mode="dot" :style="{ height: item.data.height * 2 + 'rpx'}">
+				<swiperDer :info="item.data.imgs" :current="currentSwiper" :dotsStyles="{ bottom:item.data.itemBottom }" field="content" mode="dot" :style="{ height: item.data.height * 2 + 'rpx'}">
 					<swiper class="swiper-box" @change="changeSwiper" :autoplay="item.data.autoplay" :indicator-dots="false" :style="{ height: item.data.height * 2 + 'rpx'}">
 						<swiper-item v-for="(_, _i) in item.data.imgs" :key="_i" >
 							<view class="swiper-item uni-bg-red" :style="{ height: item.data.height * 2 + 'rpx'}" @click="turnDetail(_.linkData)">
@@ -55,8 +55,8 @@
 					<span class="flex_1">{{item.data.titleRow.title}}</span>
 					<i class="iconFlex iconfont iconhtbArrowright02"></i>
 				</view>
-				<view class="flex rowFlexDouble" :class="!item.data.titleRow.hiddenTitle && i!==1 ?'':'paddingT3'" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
-					<img class="autoWH"  :class="i>=1 ?'paddingT2':''" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
+				<view class="flex rowFlexDouble" :class="!item.data.titleRow.hiddenTitle && i!==1 ?'':'paddingT2'" v-for="(_, i) in item.data.picRow" :key="i" :style="{ 'height': `${_.height + 'px'}`, 'width': '100%' }">
+					<img class="autoWH"  :class="i>=1 ?'paddingT5':''" :src="sub.src" alt="" v-for="(sub, _i) in _.imgs" :key="_i" :style="{ 'width': getWidthDouble(_.imgs, sub.col, _i) }" @click="turnDetail(sub.linkData)">
 				</view>
 			</view>
 			<!-- 视频 -->
@@ -141,7 +141,7 @@ const entriData = uni.getExtConfigSync()
 				showBootm:false,
 				currentSwiper:0,
 				dotsStyles:{
-					bottom:25
+					bottom:28
 				}
 			}
 		},
@@ -357,14 +357,14 @@ const entriData = uni.getExtConfigSync()
 	min-width: 140rpx;
     border: 1rpx solid #D6D6D6;
     border-radius: 50rpx;
-    height: 46rpx;
+    height: 52rpx;
     left: 60rpx;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-left: 15rpx;
 	padding-right: 15rpx;
-	line-height: 50rpx;
+	line-height: 52rpx;
 	margin-bottom: 6rpx;
 	position: relative;
 	z-index: 5000;
@@ -464,8 +464,8 @@ const entriData = uni.getExtConfigSync()
       margin-bottom: 0px;
     }
 }
-.homeContent .paddingT3{
-	padding-top: 3%;
+.homeContent .paddingT5{
+	padding-top: 5%;
 }
 .homeContent .paddingT3{
 	padding-top: 3%;
@@ -514,6 +514,8 @@ const entriData = uni.getExtConfigSync()
     }
     .box_border{
       border-left: 1rpx solid #666;
+	  height: 90%;
+	  margin-top: 3%;
     }
   }
 }

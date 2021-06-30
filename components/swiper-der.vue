@@ -78,8 +78,8 @@
 		data() {
 			return {
 				dots: {
-					width: 8,
-					height: 8,
+					width: 6,
+					height: 6,
 					bottom: 10,
 					color: '#fff',
 					backgroundColor: 'rgba(0, 0, 0, .3)',
@@ -98,8 +98,8 @@
 					this.dots.width = 20
 					this.dots.height = 20
 				} else {
-					this.dots.width = 8
-					this.dots.height = 8
+					this.dots.width = 6
+					this.dots.height = 6
 				}
 			}
 

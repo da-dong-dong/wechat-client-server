@@ -329,7 +329,7 @@ view{
         font-size: 24rpx;
     }
     .price{
-        font-weight: 600;
+        font-weight: 700;
         padding: 5rpx 11rpx 20rpx;
     }
     .gt_icon{

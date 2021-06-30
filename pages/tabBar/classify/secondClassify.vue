@@ -319,6 +319,7 @@ view{
             text-align: center;
             color: #534A48;
             margin-top: 10rpx;
+            font-size: 24rpx;
         }
     }
 }

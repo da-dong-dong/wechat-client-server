@@ -1,7 +1,7 @@
 /******************************** 购物车底部组件 ***************************************/
 <template>
     <view>
-        <view class="buyCar_Span"></view>
+        <view :class="isIos?'buyCar_Span_ios':'buyCar_Span_android'"></view>
         <view class="buyCar fixed flex paddingRL40" :style="{'bottom':`${top?'140rpx':'0'}`}">
             <!-- 详情 -->
             <view class="car" v-if="type == 'details'" @click="goCar">
@@ -53,8 +53,18 @@
         props:['type','top'],
         data(){
             return{
-               check:false
-                
+               check:false,
+                isIos:false
+            }
+        },
+        mounted(){
+			switch(uni.getSystemInfoSync().platform){
+                case 'android':
+                    this.isIos = false
+                 break;
+                case 'ios':
+                    this.isIos = true
+                  break;
             }
         },
         computed:{
@@ -105,8 +115,12 @@
 </script>
 
 <style lang="scss" scoped>
-.buyCar_Span{
+.buyCar_Span_android{
     height: 160rpx;
+    width: 100%;
+}
+.buyCar_Span_ios{
+    height: 60rpx;
     width: 100%;
 }
 .icon4{
