@@ -210,6 +210,7 @@
 			border-radius: 30rpx;
 			padding-left: 20rpx;
 			width: 400rpx;
+			text-align: center;
 		}
 	}
 	.relative{

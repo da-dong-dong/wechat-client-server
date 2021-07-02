@@ -4,8 +4,8 @@
             <div class="oneRow" v-for="_ in rightList" :key="_.id" @click="onClickDetails(_.id)">
                 <img class="h110" v-if="data.goodsShowType === 2" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 3" :src="_.coverPhoto" alt="">
-                <div class="title marginT20" v-if="data.showName === 1">{{_.imgTitle}}</div>
-                <div class="desc fontSize25 paddingB20" v-if="data.showExtend === 1">{{_.imgIntroduction}} 不忘初心得东西需要时间等待</div>
+                <div class="title fontSize30" v-if="data.showName === 1">{{_.imgTitle}}</div>
+                <div class="desc fontSize22" v-if="data.showExtend === 1">{{_.imgIntroduction}} 不忘初心得东西需要时间等待</div>
             </div>
         </div>
         <div class="twoContent" v-if="data.goodsShowType === 0 || data.goodsShowType === 1">
@@ -13,7 +13,7 @@
                 <img class="h110" v-if="data.goodsShowType === 0" :src="_.coverPhoto" alt="">
                 <img class="h200" v-if="data.goodsShowType === 1" :src="_.coverPhoto" alt="">
                 <div class="title paddingT20" v-if="data.showName === 1">{{_.imgTitle}}</div>
-                <div class="desc fontSize25 paddingB20" v-if="data.showExtend === 1">{{_.imgIntroduction}}</div>
+                <div class="desc fontSize22" v-if="data.showExtend === 1">{{_.imgIntroduction}}</div>
             </div>
         </div>
         
@@ -85,9 +85,11 @@ export default {
 <style lang="scss" scoped>
 .secondary{
     padding: 20rpx;
+     border-top: 1rpx solid #ECECEC;
     .oneContent{
         .oneRow{
-            margin-bottom: 20rpx;
+        
+            padding: 10rpx;
             img{
                 border-radius: 15rpx;
             }
@@ -123,7 +125,7 @@ export default {
     color: #B3B3B3;
 }
 .title{
-    padding: 10rpx 0;
-    font-weight: 600;
+    padding: 20rpx 0 10rpx;
+    // font-weight: 600;
 }
 </style>

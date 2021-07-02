@@ -1,5 +1,5 @@
 <template>
-    <view class="progress_content">
+    <view class="progress_content fontSize28">
         <div class="order_num">订单号: {{list[0].orderNo?list[0].orderNo:''}}</div>
         <view class="title">
             客户信息

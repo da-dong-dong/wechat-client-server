@@ -1,26 +1,26 @@
 <template>
-    <view class="order_confirm_detail">
+    <view class="order_confirm_detail fontSize28">
         <view class="msg_div">
             <div class="title">客户信息</div>
-            <div class="flex">
+            <div class="flex" style="padding:0 20rpx 20rpx">
                <span class="name">{{onlineCustomerContactDtos.callName}}</span>
                <span class="flex_1">
                    <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos.name"  @input="(e) => { onlineCustomerContactDtos.name = e.detail.value }" placeholder="请输入您的姓名" />
                </span>
             </div>
-            <div class="flex">
+            <div class="flex flexHeight">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
                     <input class="uni-input"  placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos.mobile" @input="(e) => { onlineCustomerContactDtos.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
                 </span>
             </div>
-            <div class="flex">
+            <div class="flex flexHeight">
                 <span class="name">{{onlineCustomerContactDtos1.callName}}</span>
                 <span class="flex_1">
                     <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos1.name" @input="(e) => { onlineCustomerContactDtos1.name = e.detail.value }" placeholder="请输入您的姓名" />
                 </span>
             </div>
-            <div class="flex">
+            <div class="flex flexHeight">
                 <span class="name">联系方式</span>
                 <span class="flex_1">
                     <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="onlineCustomerContactDtos1.mobile" @input="(e) => { onlineCustomerContactDtos1.mobile = e.detail.value }" placeholder="请输入您的联系方式" />
@@ -40,18 +40,18 @@
         <view class="" v-if="get_quickList.length">
             <view v-for="(item,index) in get_quickList" :key="index">
                 <view class="msg_div" >
-                    <div class="title">订单信息</div>
+                    <div class="title border">订单信息</div>
                     <view class="flex no_border" >
                         <img class="h145" :src="item.imgs"/>
                         <view class="flex_1">
-                            <view class="padding">
-                                <span class="font600">{{item.name}}</span>
+                            <view class="padding"  style="padding:10rpx 0 15rpx">
+                                <span class="font700">{{item.name}}</span>
                                 <span class="float_r colorA3 fontFamilyST fontWight">￥{{item.price}}</span>
                             </view>
-                            <view class="font14">
+                            <view class="font14" style="padding:0">
                                 预付金: <span class="orange fontWight">￥{{item.assemblyDeposit ? item.assemblyDeposit : 0 }}</span> 
                             </view>
-                            <view class="font14 fontFamilyST ">
+                            <view class="font14 fontFamilyST " style="padding:2rpx 0 0">
                                 尾<span class="block"></span>款:<span class="fontWight">￥{{ item.assemblyDeposit ? item.price - item.assemblyDeposit : item.price }}</span>
                             </view>
                         </view>
@@ -477,6 +477,7 @@ const { $Message } = require('@/wxcomponents/base/index');
     background: #F9F9F9;
     overflow: auto;
     padding-bottom: 100rpx;
+
     .border{
         border-bottom: 1px solid #ECECEC;
     }
@@ -514,10 +515,15 @@ const { $Message } = require('@/wxcomponents/base/index');
         background: #fff;
         border-radius: 16rpx;
         margin-bottom: 20rpx;
+        .flexHeight{
+            padding: 24rpx 20rpx;
+        }
+        .flexCenten{
+            padding: 20rpx 20rpx 5rpx;
+        }
     }
     .title{
-        font-weight: 600;
-        font-size: 30rpx;
+        font-weight: 700;
         padding: 20rpx;
     }
     .float_r{
@@ -525,7 +531,7 @@ const { $Message } = require('@/wxcomponents/base/index');
     }
     .flex{
         padding: 20rpx;
-        border-bottom: 1px solid #ECECEC;
+        border-bottom: 1rpx solid #ECECEC;
         .name{
             width: 140rpx;
             margin-right: 80rpx;
@@ -542,10 +548,11 @@ const { $Message } = require('@/wxcomponents/base/index');
             visibility: hidden;
         }
         .h145{
-            width: 150rpx;
-            height: 150rpx;
+            width: 140rpx;
+            height: 140rpx;
             margin-right: 20rpx;
             border-radius: 10rpx;
+            border: 1rpx solid #DFDFDF;
         }
         .flex_1{
             view{
@@ -566,14 +573,14 @@ const { $Message } = require('@/wxcomponents/base/index');
                 color: #414143;
             }
         }
-        .font600{
-            font-weight: 600;
+        .font700{
+            font-weight: 700;
         }
         .padding{
             padding: 10rpx 0;
         }
         .font14{
-            font-size: 26rpx;
+            font-size: 24rpx;
             color: #A3A3A3;
         }
         .colorA3{

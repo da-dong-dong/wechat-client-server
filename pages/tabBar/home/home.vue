@@ -6,9 +6,11 @@
 		<uni-nav-bar fixed statusBar >
 			<view class="navText fontWight">{{get_shopId.shopName}}</view>
 			<view slot="left">
-				<view class="navCrt" @click="onChangeCity">
-					<view class="textOv">{{get_city | flegCity}}</view>
-					<i-icon class="icon" type="unfold" size="20" color="#333333"  />
+				<view style="position:relative">
+					<view class="navCrt" @click="onChangeCity">
+						<view class="textOv">{{get_city | flegCity}}</view>
+						<i-icon class="icon" type="unfold" size="20" color="#333333"  />
+					</view>
 				</view>
 			</view>
 		</uni-nav-bar>
@@ -355,7 +357,7 @@ const entriData = uni.getExtConfigSync()
 }
 .navCrt{
 	min-width: 140rpx;
-    border: 1rpx solid #D6D6D6;
+    border: 1px solid #D6D6D6;
     border-radius: 50rpx;
     height: 52rpx;
     left: 60rpx;
@@ -365,10 +367,11 @@ const entriData = uni.getExtConfigSync()
     padding-left: 15rpx;
 	padding-right: 15rpx;
 	line-height: 52rpx;
-	margin-bottom: 6rpx;
-	position: relative;
-	z-index: 5000;
-	left: 10rpx;
+	// margin-bottom: 6rpx;
+	// position: absolute;
+	// z-index: 5000;
+	// top: -24rpx;
+	// left: 10rpx;
 	.icon{
 		 height: 55rpx;
 	}
@@ -386,6 +389,7 @@ const entriData = uni.getExtConfigSync()
 .homeContent{
 	font-size: 24rpx;
 	margin-bottom: 150rpx;
+	
 }
 .searchContent{
     padding: 20rpx 20rpx;

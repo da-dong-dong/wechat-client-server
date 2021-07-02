@@ -28,25 +28,28 @@
         </div>
     </div>
     <div class="recommendContent" v-if="recommendList.length > 0">
-        <swiper class="swiper" indicator-dots style="    height: 340rpx">
-            <swiper-item v-for="(_, i) in recommendList" :key="_.id">
-                <div class="pad10 border_b">
-                    <span class="font600">推荐套系</span>
-                    <span class="index">{{i + 1}}/{{recommendList.length}}</span>
-                </div>
-                <div class="flex pad10" style="padding-top:30rpx;">
-                    <img class="h80" :src="_.coverPhoto" alt="">
-                    <div class="flex_1 pad_rl10">
-                        <div class="font600">{{_.name}}</div>
-                        <div class="paddingT15 fontSize25 color666">{{_.imgIntroduction}}</div>
-                        <div class="price">
-                            <span class="fontFamilyST fontWight">￥{{_.assemblyPrice}}</span>
-                            <span class="goPhoto" @click="onClickDetails(_.id)">去拍摄</span>
+        <swiperDer :info="recommendList" :current="currentSwiper" field="content" mode="dot" style="    height: 340rpx">
+            <swiper class="swiper" @change="changeSwiper" :indicator-dots="false" style="    height: 340rpx">
+                <swiper-item v-for="(_, i) in recommendList" :key="_.id">
+                    <div class="pad10 border_b">
+                        <span class="font600">推荐套系</span>
+                        <span class="index">{{i + 1}}/{{recommendList.length}}</span>
+                    </div>
+                    <div class="flex pad10" style="padding-top:30rpx;">
+                        <img class="h80" :src="_.coverPhoto" alt="">
+                        <div class="flex_1 pad_rl10 fontSize28">
+                            <div class="font600">{{_.name}}</div>
+                            <div class="paddingT10 fontSize22 color666">{{_.imgIntroduction}}</div>
+                            <div class="price">
+                                <span class="fontFamilyST fontWight">￥{{_.assemblyPrice}}</span>
+                                <span class="goPhoto" @click="onClickDetails(_.id)">去拍摄</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </swiper-item>
-        </swiper>
+                </swiper-item>
+            </swiper>
+        </swiperDer>
+        
     </div>
     <div class="examples">
         <view class="borders"></view>
@@ -58,13 +61,18 @@
     </div>
     <!-- 弹窗 -->
     <i-message id="message" />
+
+    <!-- 兼容下拉白框 -->
+    <view class="isIosView"></view>
   </div>
 </template>
 
 <script>
 import { getPtdetail, getPropelDetail,cellectAssembly,getAssemblyCollect,delCollectOne } from '@/util/api/goods.js'
 import { mapGetters } from 'vuex'
+import swiperDer from '@/components/swiper-der.vue'
 export default {
+    components: {swiperDer},
     data () {
         return {
             topCarouseList: [],
@@ -75,6 +83,7 @@ export default {
             colors:false, // 套系收费
             delCollId:null, // 记录id
             Id:null,
+            currentSwiper:0,
         }
     },
     computed:{
@@ -90,6 +99,9 @@ export default {
         this.getPtdetail(options.id)
     },
     methods: {
+        changeSwiper(e){
+            this.currentSwiper = e.detail.current;
+        },
         // 跳转详情
         onClickDetails(idx){
             uni.navigateTo({ 
@@ -199,6 +211,16 @@ export default {
     background: #f5f5f5;
     min-height: 100vh;
     padding-bottom: 12rpx;
+    position: relative;
+}
+.isIosView{
+    position: absolute;
+    width: 100%;
+    height: 66rpx;
+    bottom: -66rpx;
+    left: 0;
+    background: #f5f5f5;
+    z-index: -1;
 }
 .recommendContent{
     width: 700rpx;
@@ -213,18 +235,18 @@ export default {
     }
     .price{
         color: #D4AD72;
-        margin-top: 10rpx;
+        margin-top: 15rpx;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
     .goPhoto{
-        border-radius: 30rpx;
-        float: right;
-        padding: 2rpx 20rpx;
-        color: #fff;
-        background: #D4AD72;
-        font-size: 28rpx;
+            border-radius: 30rpx;
+            float: right;
+            padding: 6rpx 25rpx;
+            color: #fff;
+            background: #D4AD72;
+            font-size: 26rpx;
     }
 }
 .examples{
@@ -275,13 +297,13 @@ export default {
     border: 1rpx solid #DFDFDF;
 }
 .mar_b5{
-    margin-bottom: 10rpx;
+    margin-bottom: 20rpx;
 }
 .tag {
     display: inline-block;
     color: #fff;
     background: #D3AA72;
-    padding: 4rpx 18rpx;
+    padding: 2rpx 15rpx;
     font-size: 24rpx;
     border-radius: 8rpx;
 }

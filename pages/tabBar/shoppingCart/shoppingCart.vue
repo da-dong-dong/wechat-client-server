@@ -1,7 +1,7 @@
 <template>
     <view class="buy_cart_content">
         <uni-nav-bar fixed statusBar id="editor" title="购物车"></uni-nav-bar>
-        <div class="pad20">
+        <div class="pad20 fontSize28">
             <view v-if="get_carList.length > 0">
                 <view class="msg_div">
                     <div class="topShop">
@@ -15,12 +15,12 @@
                         <uni-swipe-action-item v-for="(_, i) in get_carList" :key="i">
                             <view class="flex" @click="onClickDetails(_.id)">
                                 <view class="radio">
-                                    <radio class="scale75" color="#D3AB75" :checked="_.buyBool" @click.stop="radioChange(_)"/>
+                                    <radio color="#D3AB75" :checked="_.buyBool" @click.stop="radioChange(_)"/>
                                 </view>
                                 <img class="h145" :src="_.imgs" />
                                 <view class="flex_1">
                                     <view class="padding">
-                                        <span class="font600">{{_.name}}</span>
+                                        <span class="font700">{{_.name}}</span>
                                         <span class="float_r colorA3">￥{{_.enableDeposit?_.assemblyDeposit:_.price}}</span>
                                     </view>
                                     <view class="font14">
@@ -69,8 +69,8 @@
                 <div class="oneRow" v-for="_ in recommentList" :key="_.assemblyOnlineId" @click="onClickDetails(_.assemblyOnlineId)">
                     <img class="h110" :src="_.coverPhoto"/>
                     <div class="tow_title">{{_.assemblyName}}</div>
-                    <div class="desc" >
-                        ￥ {{_.assemblyPrice}}
+                    <div class="desc fontSize26">
+                        ￥{{_.assemblyPrice}}
                         <span class="iconfont icon1202youjiantou gt_icon"></span>
                     </div>
                 </div>
@@ -293,7 +293,6 @@ const { $Message } = require('@/wxcomponents/base/index');
     padding: 0 20rpx 20rpx;
     box-sizing: content-box;
     border-bottom: 1rpx solid #ECECEC;
-    font-size: 30rpx;
     .topShopText{
         display: flex;
         justify-content: space-between;
@@ -355,13 +354,14 @@ const { $Message } = require('@/wxcomponents/base/index');
         }
     }
     .flex{
-        padding: 20rpx;
+        padding: 30rpx 20rpx;
         border-bottom: 1px solid #ECECEC;
         .h145{
-            width: 150rpx;
-            height: 150rpx;
+            width: 140rpx;
+            height: 140rpx;
             margin-right: 20rpx;
             border-radius: 10rpx;
+            margin-top: 6rpx;
         }
         .radio{
             display: flex;
@@ -373,18 +373,18 @@ const { $Message } = require('@/wxcomponents/base/index');
             
         }
         
-        .font600{
-            font-weight: 600;
+        .font700{
+            font-weight: 700;
         }
         .padding{
             padding: 10rpx 0 20rpx;
         }
         .font14{
-            font-size: 26rpx;
+            font-size: 24rpx;
             color: #A3A3A3;
         }
         .font18{
-            font-size: 36rpx;
+            font-size: 32rpx;
         }
         .colorA3{
             color: #A3A3A3;

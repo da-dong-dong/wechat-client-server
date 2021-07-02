@@ -6,12 +6,12 @@
             <!-- 详情 -->
             <view class="car" v-if="type == 'details'" @click="goCar">
                 <image class="icon icon4" src="/static/tabBar/shoppingCartSl.png" mode=""></image>
-                <view class="fontSize26">购物车</view>
+                <view class="fontSize24">购物车</view>
                 <text class="num" v-if="get_carList.length>0">{{get_carList.length}}</text>
             </view>
 
             <view class="but flex" v-if="type == 'details'">
-                <view class="but_cl marginRL10" @click="addCar">加入购物车</view>
+                <view class="but_cl marginR20" @click="addCar">加入购物车</view>
                 <view class="but_cl " style="background:#D3AA72" @click="onQuick">立刻预约</view>
             </view>
             
@@ -116,11 +116,11 @@
 
 <style lang="scss" scoped>
 .buyCar_Span_android{
-    height: 160rpx;
+    height: 100rpx;
     width: 100%;
 }
 .buyCar_Span_ios{
-    height: 60rpx;
+    height: 100rpx;
     width: 100%;
 }
 .icon4{
@@ -141,6 +141,7 @@
     .car{
         font-size: 28rpx;
         position: relative;
+        line-height: 25rpx;
         .num{
             position: absolute;
             top: 0;
@@ -157,7 +158,7 @@
         }
     }
     .but{
-        width: 400rpx;
+        width: 450rpx;
         justify-content: flex-end;
         align-items: center;
         .but_cl{

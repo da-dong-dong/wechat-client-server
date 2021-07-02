@@ -1,5 +1,5 @@
 <template>
-    <view class="detail_content">
+    <view class="detail_content fontSize28">
         <view class="msg_div">
            <div class="title">客户信息</div>
            <div v-for="(item,index) in list['onlineCustomerContactVos']" :key="index">

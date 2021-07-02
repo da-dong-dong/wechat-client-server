@@ -1,6 +1,6 @@
 <template>
     <view class="order_list" >
-        <view class="order_One"  v-for="(item,index) in get_carList" :key="index">
+        <view class="order_One fontSize28"  v-for="(item,index) in get_carList" :key="index">
             <view class="title">
                 订单号: {{item.orderNo}}
                 <span class="float_r colorA3" v-if="item.state">{{item.state ? item.state : ''}}</span>
@@ -15,7 +15,7 @@
                         <span class="font600">{{item.assemblyName}}</span>
                         <span class="float_r colorA3">￥{{item.earnestMoney}}</span>
                     </view>
-                    <view class="font14 ">
+                    <view class="font14 paddingT10">
                         总<span></span>价: <span class="orange paddingL9 fontWight">  ￥{{item.sumPrice}}</span>
                     </view>
                     <view class="font14">
@@ -167,7 +167,7 @@ import { mapGetters } from 'vuex'
     .flex{
         display: flex;
         padding: 30rpx;
-        border-bottom: 1px solid #ECECEC;
+        border-bottom: 1rpx solid rgba(236, 236, 236, 0.6);
     }
     .h145{
         width: 150rpx;
@@ -177,7 +177,7 @@ import { mapGetters } from 'vuex'
     }
     .title{
         padding: 20rpx 30rpx;
-        border-bottom: 1px solid #ECECEC;
+        border-bottom: 1rpx solid rgba(236, 236, 236, 0.6);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -193,7 +193,7 @@ import { mapGetters } from 'vuex'
     }
     .content{
         padding: 20rpx 30rpx;
-        border-bottom: 1px solid #ECECEC;
+        border-bottom: 1rpx solid rgba(236, 236, 236, 0.6);
         .view{
             padding: 10rpx 0;
         }
@@ -217,7 +217,7 @@ import { mapGetters } from 'vuex'
         padding: 10rpx 0;
     }
     .font14{
-        font-size: 26rpx;
+        font-size: 24rpx;
         color: #A3A3A3;
         span{
             width: 24rpx;
@@ -233,7 +233,7 @@ import { mapGetters } from 'vuex'
 }
 .iconleft{
     position: relative;
-    top: 4rpx;
+    top: 2rpx;
 }
 .noOrder{
     display: flex;
@@ -270,7 +270,7 @@ import { mapGetters } from 'vuex'
     }
 }
 .bottB{
-    border-top: 1px solid #ECECEC;
+    border-top: 1rpx solid rgba(236, 236, 236, 0.6);
 }
 .noBuyBut{
     display: flex;

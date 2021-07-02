@@ -84,6 +84,9 @@
             <i-icon class="icon marginT20" type="right" size="35" color="#FFFFFF"  />
             <text class="goods">添加购物车成功</text>
         </view>
+
+        <!-- 兼容下拉白框 -->
+        <view class="isIosView"></view>
    </view>
 </template>
 
@@ -112,8 +115,6 @@ import { addRecommendOne } from '@/util/api/order.js'
             banner,
             buyCar
         },
-        
-
         data(){
             return{
                 Tab:['产品展示','服务说明'],
@@ -125,7 +126,7 @@ import { addRecommendOne } from '@/util/api/order.js'
                 Id:0,
                 colors:false, // 套系收费
                 delCollId:null, // 记录id
-                showGoos:false
+                showGoos:false,
                }
         },
         onLoad(options) {
@@ -325,6 +326,16 @@ import { addRecommendOne } from '@/util/api/order.js'
 
 .boxDitel{
     background: #F9F9F9;
+    position: relative;
+}
+.isIosView{
+    position: absolute;
+    width: 100%;
+    height: 100rpx;
+    bottom: -80rpx;
+    left: 0;
+    background: #F9F9F9;
+    z-index: -1;
 }
 .borderTop{
     border-top: 1rpx solid #dedede;
@@ -378,6 +389,7 @@ import { addRecommendOne } from '@/util/api/order.js'
         .imgTab_li{
             width: 50%;
             position: relative;
+            bottom: -2rpx;
             // height: 70rpx;
             .borderBottom{
                 border-bottom: 3rpx solid #D3AA72;
@@ -392,6 +404,7 @@ import { addRecommendOne } from '@/util/api/order.js'
             font-weight: bold;
             .border{
                  border-bottom: 4rpx solid #D3AA72;
+                 border-radius: 5rpx;
             }
         }
         .border{

@@ -6,7 +6,7 @@
 		<view class="flex_1">
 			<text class="iconfont iconsousuo" v-show="searchName.length === 0"></text>
 			<input :value="searchName" class="my_input" type="text" placeholder="搜索" confirm-type="search"
-				placeholder-style="text-align: center; color: #B3B3B3;" @input="searchInput" @confirm="searchConfirm"/>
+				placeholder-style="text-align: center; color: #B3B3B3;text-align-last: center;" @input="searchInput" @confirm="searchConfirm"/>
 		</view>
 		<view class="right">
 			
@@ -53,6 +53,7 @@
 </script>
 
 <style lang="less" scoped>
+
 	.search_content{
 		box-sizing: border-box;
 		// margin-top: 50rpx;
@@ -60,6 +61,7 @@
 		display: flex;
 		padding-bottom: 20rpx;
 		border-bottom: 2rpx solid #f5f5f5;
+		input{ line-height:normal }
 		&.searchAssembly{
 			.left{
 				width: 20rpx;
@@ -100,6 +102,7 @@
 			background: #F7F7F7;
 			border-radius: 30rpx;
 			padding-left: 20rpx;
+			text-align: center;
 		}
 	}
 </style>

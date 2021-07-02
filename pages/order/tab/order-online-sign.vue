@@ -1,7 +1,7 @@
 /******************************** 网签 ***************************************/
 <template>
     <view >
-        <view class="box">
+        <view class="box fontSize28">
             <view class="order_box">
                 <view class="order_top">
                     <view class="order_heade">
@@ -155,9 +155,9 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
     background: #F5F8FD;
 }
 .order_box{
-    margin: 40rpx 30rpx;
+    //margin: 40rpx 30rpx;
     box-sizing: content-box;
-    width: 690rpx;
+    //width: 690rpx;
     min-height: 1200rpx;
     .order_top{
         min-height: 394rpx;
@@ -185,7 +185,7 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
             color: #414143
         }
         .num{
-            font-size: 29rpx;
+            font-size: 28rpx;
             color: #999999;
             width: 120rpx;
             text-align: justify;
@@ -226,7 +226,7 @@ import signViw from '@/components/cat-signature/cat-signature.vue'
     margin-top: 20rpx;
     position: relative;  
     box-sizing: border-box;
-    font-size: 29rpx;
+    font-size: 28rpx;
     font-family: PingFangSC-Medium, PingFang SC;
     color: #414143;
     .order_header{
