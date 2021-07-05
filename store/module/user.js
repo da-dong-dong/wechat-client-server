@@ -13,7 +13,8 @@ export default{
 		province:null, // 省
 		city:null, // 市
 		area:null, // 区
-		userId: null,
+		userId: null, // 用户id
+		jobNumber: null,// 员工工号
 	},
 	getters:{
 		get_appId:state => state.appId,
@@ -29,6 +30,7 @@ export default{
 		get_city:state => state.city,
 		get_area:state => state.area,
 		get_userId: state => state.userId,
+		get_jobNumber: state => state.jobNumber,
 	},
 	mutations:{
 		mut_code(state,data){
@@ -50,6 +52,7 @@ export default{
 			state.city = data.city
 			state.area = data.area
 			state.userId = data.id
+			state.jobNumber = data.jobNumber
 		},
 
 		// 设置app 和企业id
@@ -69,6 +72,7 @@ export default{
 			state.city = null
 			state.area = null
 			state.userId = null
+			state.jobNumber = null
 		},
 	},
   actions: {

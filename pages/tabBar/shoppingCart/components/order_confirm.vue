@@ -75,11 +75,17 @@
                                 <i class="iconfont iconleft"></i>
                         </span>
                     </div>
-                    <div class="flex no_border" @click="onChangeShopId(item.id,index)">
+                    <div class="flex" @click="onChangeShopId(item.id,index)">
                         <span class="name">预约门店</span>
                         <span class="flex_1 r_icon">
                                 {{item.shopName?item.shopName:'请选择'}}
                                 <i class="iconfont iconleft"></i>
+                        </span>
+                    </div>
+                    <div class="flex no_border">
+                        <span class="name">专属顾问</span>
+                        <span class="flex_1 r_icon" style="text-align: right;padding-right: 55rpx;">
+                            <input class="uni-input" placeholder-style="color: #e8e8e8;" @click="onClickOneryUser" :value="oneryVal" placeholder="专属顾问" disabled />
                         </span>
                     </div>
                 </view>
@@ -98,10 +104,17 @@
                     <input class="uni-input" placeholder-style="color: #e8e8e8;" :value="introduceName" @input="(e) => { introduceName = e.detail.value }" placeholder="请输入介绍人" />
                 </span>
             </div>
-            <div class="flex no_border">
+            <div class="flex">
                 <span class="name">手机号码</span>
                 <span class="flex_1">
                     <input class="uni-input" placeholder-style="color: #e8e8e8;" @input="changeInput" :value="introduceMobil" placeholder="请输入手机号码" :maxlength="11"/>
+                </span>
+            </div>
+            <div class="flex no_border">
+                <span class="name">老客介绍</span>
+                <span class="flex_1">
+                    <input class="uni-input" v-if="textType == 'ok'" placeholder-style="color: #D3AB75" :placeholder="`已享订单${discountNum * 10 }折`" disabled/>
+                    <input class="uni-input" v-else placeholder-style="color: #e8e8e8" :placeholder="`已享订单${discountNum * 10 }折`" disabled/> 
                 </span>
             </div>
            </template>
@@ -115,9 +128,10 @@
         </view>
 
         <!-- 弹窗信息 -->
-        <uni-popup ref="popup" type="dialog">
+        <modulText v-if="showText" @ok="ok" @cancel="cancel" :textType="textType"/>
+        <!-- <uni-popup ref="popup" type="dialog">
             <uni-popup-dialog mode="base" content="您输入的介绍人的手机号不存在，不能享受优惠" :duration="2000" :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
-        </uni-popup>
+        </uni-popup> -->
 
         <i-message id="message" />
     </view>
@@ -129,9 +143,10 @@ import { listCategory, order } from '@/util/api/goods.js'
 import { get_discount, getCustomerContactByMobile } from '@/util/api/order.js'
 import {  getUserInfo,  } from '@/util/api/user.js'
 import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue'
+import modulText from './modulText';
 const { $Message } = require('@/wxcomponents/base/index');
     export default {
-       components:{ uniPopupDialog},
+       components:{ uniPopupDialog,modulText},
         computed:{
 			...mapGetters('user',[
                 'get_shopId',
@@ -167,8 +182,8 @@ const { $Message } = require('@/wxcomponents/base/index');
             if(!this.get_phone){
                 // 获取用户信息AIP
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                     if(sex==1){
                         this.onlineCustomerContactDtos1.mobile = phone
                         this.onlineCustomerContactDtos1.name = nickName
@@ -261,7 +276,10 @@ const { $Message } = require('@/wxcomponents/base/index');
                 discountNum: 1,
                 introduceName: '',
                 introduceMobil: '',
-                flag: true // 开关
+                flag: true, // 开关
+                showText:false, // 福利弹窗
+                textType:'', // 福利弹窗类型
+                oneryVal:'', // 专属顾问
             }
         },
          methods:{
@@ -289,10 +307,12 @@ const { $Message } = require('@/wxcomponents/base/index');
                 // 禁止支付
                 if(!res.data.data) {
                     // this.flag = false
-                    this.$refs.popup.open()
+                    this.textType = 'no'
                 }else{
                     // this.flag = true
+                    this.textType = 'ok'
                 }
+                this.showText = true
                 this.discountCan = res.data.data
             },
             // 输入手机号
@@ -310,13 +330,12 @@ const { $Message } = require('@/wxcomponents/base/index');
                 }
             },
             // 关闭弹窗
-            close() {
-                this.$refs.popup.close()
+            cancel() {
+                this.showText = false
                 this.introduceMobil = ''
             },
-            confirm() {
-                this.introduceMobil = ''
-                this.$refs.popup.close()
+            ok() {
+                this.showText = false
             },
             // 婚纱
 			bindDateChange (e) {
@@ -353,6 +372,13 @@ const { $Message } = require('@/wxcomponents/base/index');
             onClickServe(){
                 uni.navigateTo({ 
                     url: `/pages/tabBar/my/components/serviceAgreement?type=mack`
+                })
+            },
+
+            // 跳转专属客服
+            onClickOneryUser(){
+                uni.navigateTo({ 
+                    url: `/pages/tabBar/my/components/oneryUser`
                 })
             },
 

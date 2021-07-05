@@ -1,14 +1,14 @@
 /******************************** 登陆 ***************************************/
 <template>
-    <view>
+    <view class="box">
        <view class="login_box">
            <view class="login_header">
-               <image class="img" src="/static/image/login.png"></image>
+               <image class="img" src="/static/image/my/wdl.png"></image>
            </view>
 
            <!-- 文字 -->
            <view class="login_text color333">
-               <view v-if="showUserURl" class="fontWight marginB20"> {{appName}} </view>
+               <view v-if="showUserURl" class="marginB20 font700"> {{appName}} </view>
                 <view v-if="showUserURl" class="fontSize24">申请获取你的微信绑定的手机号</view>
                 <view v-else class="fontSize24">申请获取你的微信号和头像</view>
            </view>
@@ -109,9 +109,9 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
                     data: code
                 })
                 let user = await getUserInfo()
-                let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = user.data.data
+                let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = user.data.data
                 console.log(headimgUrl)
-                this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
 
                 this.setPhoneNoInfo(this.phoneCode)
             },
@@ -154,9 +154,9 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
             // 获取用户信息AIP
             getUserInfoAPI(){
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = res.data.data
                     this.mut_outCode()
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                 })
                 
             },
@@ -202,7 +202,15 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
 </script>
 
 <style lang="scss" scoped>
-
+.box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #F5F5F5;
+    letter-spacing: 5rpx;
+}
 .login_box{
     padding: 0 38rpx;
     text-align: center;
@@ -215,13 +223,15 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
 .login_header{
     margin-top: 168rpx;
     .img{
-        width: 128rpx;
-        height: 128rpx;
+        width: 160rpx;
+        height: 160rpx;
     }
 }
 .login_text{
-    
-    font-size: 48rpx;
+    font-size: 40rpx;
     margin-top: 122rpx;
+}
+.font700{
+    font-weight: 700;
 }
 </style>

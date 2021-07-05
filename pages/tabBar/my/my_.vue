@@ -157,8 +157,8 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
             // 获取用户信息AIP
             getUserInfoAPI(flag){
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                     if(flag){
                         this.onClickUserInfo()
                     }
@@ -226,8 +226,8 @@ import { setUserInfo, getUserInfo, getCode } from '@/util/api/user.js'
                     key: 'code',
                     success: (result) => {
                         clearInterval(getApp().globalData.time)
-                        let headimgUrl,nickName,phone,sex,birthday,province,city,area = null
-                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area})
+                        let headimgUrl,nickName,phone,sex,birthday,province,city,area,jobNumber = null
+                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,jobNumber})
                         this.act_code(null)
                         uni.reLaunch({ 
                             url: '/pages/tabBar/home/home' 

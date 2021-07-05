@@ -54,26 +54,31 @@
             </view>
 
             <view class="footer">
-                <span v-if="item.state" class="float_l orange" @click="onClickDetails(item.id)">
-                    查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i>
-                </span>
-                <view v-else class="noBuy">
+                <view class="noBuy">
                     <!-- 待付款 -->
-                    <view>
+                    <view v-if="!item.state">
                         <span>已付定金：￥{{item.assemblyEarnestMoney}}</span>
                         <span>{{item.assemblyEarnestMoney==item.earnestMoney?"待付定金":"尾款待支付"}}：￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice - item.assemblyEarnestMoney}}</span>
                     </view>
+                    <!-- 通用 -->
+                    <view v-else>
+                        <span>已优惠：￥{{item.discountsPrice?item.discountsPrice:0}}</span>
+                        <span class="font600">实付款: </span>
+                        <span class="orange fontWight" >￥{{item.proceeds==undefined?0:item.proceeds}}</span>
+                    </view>
                 </view>
-                <span class="float_r" v-if="item.state">
-                    <span class="font600">实付款: </span>
-                    <span class="orange fontWight" >￥{{item.proceeds==undefined?0:item.proceeds}}</span>
-                </span>
             </view>
-            <!-- 待付款 -->
-            <view class="footer bottB" v-if="!item.state">
+            <!-- 横线底部 -->
+            <view class="footer bottB">
                 <view class="orange noBuyBut">
                     <view class="text" @click="onClickDetails(item.id,true)">查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i></view>
-                    <view class="btn" @click="onBuy(item.id)">去付款</view>
+                    <!-- 待付款 -->
+                    <view class="btn" v-if="!item.state" @click="onBuy(item.id)">去付款</view>
+                    <!-- 全部 -->
+                    <view v-if="!item.isClose && item.state" class="allBtn">
+                        <view class="btn btn1"  @click="onOrderClose(item.id)">删除订单</view>
+                        <view class="btn"  @click="onBuy(item.id)" v-if="item.proceeds!= item.sumPrice">去付款</view>
+                    </view>
                 </view>
             </view>
         </view>
@@ -83,11 +88,15 @@
                 <span>您暂时还没有订单喔~</span>
             </view>
         </view>
+
+        <!-- 弹窗 -->
+        <modulDel @cancel="cancel" @ok="ok" v-if="showModel"/>
     </view>
 </template>
 
 <script> 
 import outTime from '../components/outTime';
+import modulDel from '../components/modulDel';
 import { mapGetters } from 'vuex'
     export default {
         props:['get_carList'],
@@ -103,7 +112,7 @@ import { mapGetters } from 'vuex'
                 return Number(val.toString().match(/^\d+(?:\.\d{0,2})?/)) 
             }
         },
-        components: { outTime},
+        components: { outTime,modulDel},
         computed:{
             ...mapGetters('map',[
 				'get_shopIdList'
@@ -114,7 +123,8 @@ import { mapGetters } from 'vuex'
         },
         data(){
             return{
-                
+                showModel:false,
+                orderId:null,
             }
         },
         methods:{
@@ -133,23 +143,23 @@ import { mapGetters } from 'vuex'
             onBuy(orderId){
                 // 取消订单接口
                 this.$emit('onBuy',orderId)
-                // uni.navigateToMiniProgram({
-                //     appId: jumpAppId?jumpAppId:'wx62d6b9c1cd4ba50a',
-                //     envVersion: 'trial', // develop（开发版），trial（体验版），release（正式版）
-                //     path: `pages/pay/pay?outTradeNo=${outTradeNo}`,
-                //     extraData: outTradeNo,
-                //     success(res) {
-                //         // 返回成功
-                //         console.log(res)
-                //     }
-                // })
             },
 
             // 取消订单
             onOrderClose(orderId){
-                // 取消订单接口
-                this.$emit('onOrderClose',orderId)
-            }
+                this.showModel = true
+                this.orderId = orderId
+            },
+
+            // 弹窗
+            cancel(){
+				this.showModel = false
+			},
+			ok(){
+				// 取消订单接口
+                this.$emit('onOrderClose',this.orderId)
+                this.showModel = false
+			}
         }
        
     }
@@ -193,7 +203,7 @@ import { mapGetters } from 'vuex'
     }
     .content{
         padding: 20rpx 30rpx;
-        border-bottom: 1rpx solid rgba(236, 236, 236, 0.6);
+        // border-bottom: 1rpx solid rgba(236, 236, 236, 0.6);
         .view{
             padding: 10rpx 0;
         }
@@ -290,6 +300,16 @@ import { mapGetters } from 'vuex'
         text-align: center;
         border-radius: 30rpx;
         color: #fff;
+        margin-left: 15rpx;
+    }
+    .allBtn{
+        display: flex;
+        .btn1{
+            background: none;
+            border: 1px solid rgba(236, 236, 236, 0.8);
+            color: #6D6B6C;
+            box-sizing: border-box;
+        }
     }
 }
 </style>

@@ -60,3 +60,13 @@ export const getAgreementDescription = (params) => {
 export const getReservationServer = (params) => {
 	return get(baseUrl.getReservationServer, params)
 }
+
+// 设置员工号
+export const setJobNumber = (params) => {
+	return postObj(baseUrl.setJobNumber, params)
+}
+
+// 通过员工号获取员工信息
+export const getJobNumber = (params) => {
+	return get(baseUrl.getJobNumber, params)
+}

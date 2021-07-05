@@ -82,7 +82,13 @@
             </view>
         </view>
 
-        
+        <!-- 联系客服 -->
+		<view class="loginInfo" v-if="!get_phone">
+			<button class="btnUser" plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0; line-height: unset;">
+                <img class="usrImg" src="/static/image/userondry.png" alt="">
+                <span>联系专属客服</span>
+            </button>
+		</view>
 
         
     </view>
@@ -211,6 +217,34 @@ import { orderDetails } from '@/util/api/order.js'
     }
 </script>
 <style lang="less" scoped>
+// 联系客服
+.loginInfo{
+	position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100rpx;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2020;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    .btnUser{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 28rpx;
+        letter-spacing: 2rpx;
+    }
+	.usrImg{
+		width: 40rpx;
+        height: 40rpx;
+        padding-right: 20rpx;
+	}
+}
 .detail_content{
     .textColor{
         .name{

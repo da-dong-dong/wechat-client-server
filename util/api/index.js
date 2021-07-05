@@ -25,6 +25,8 @@ let baseUrl = {
 	getAgreementDescription: `${base}/api/template/ma/get_server_description`, // 获取预约协议说明
 	getAgreementDescription: `${base}/api/template/ma/get_server_description`, // 获取预约协议说明
 	getReservationServer: `${base}/api/template/ma/get_server_as_regards`, // 获取关于
+	setJobNumber: `${base}/api/template/ma/setJobNumber`, // 设置员工号
+	getJobNumber: `${base}/api/template/ma/getJobNumber`, // 通过员工号获取员工信息
 
 	// 定位
 	getCityShop: `${base}/api/template/ma/get_city_shop`, // 获取门店信息

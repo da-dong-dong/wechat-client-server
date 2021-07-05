@@ -92,23 +92,23 @@
 			.icon{
 				margin-left: 50%;
 				transform: translateX(-50%);
-				margin-bottom: 5rpx;
+				// margin-bottom: 5rpx;
 			}
 			.icon1{
-				width: 38rpx;
-				height: 38rpx;
+				width: 45rpx;
+				height: 45rpx;
 			}
 			.icon2{
-				width: 38rpx;
-				height: 38rpx;
+				width: 45rpx;
+				height: 45rpx;
 			}
 			.icon4{
-				width:38rpx;
-				height: 38rpx;
+				width:45rpx;
+				height: 45rpx;
 			}
 			.icon5{
-				width: 38rpx;
-				height: 38rpx;
+				width: 45rpx;
+				height: 45rpx;
 			}
 		}
 		.tabBarAction{

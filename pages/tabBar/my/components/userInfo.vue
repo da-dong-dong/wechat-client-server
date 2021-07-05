@@ -154,8 +154,8 @@ import { getUserInfo, updateUserInfo } from '@/util/api/user.js'
                 updateUserInfo(this.userInfo).then(res=>{
                     let code = res.data.code
                     if(code == 200){
-                        let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = this.userInfo
-                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                        let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = this.userInfo
+                        this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                         if(!noBack){
                             uni.navigateBack()
                         }

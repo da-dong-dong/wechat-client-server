@@ -29,8 +29,9 @@
                     <div class="newImgFlex" @click="onClikcPage('/pages/order/detail/order-my')">
                         <image class="newImg" src="/static/image/my/new2.png"></image>
                         <span>我的相册</span>
-                    </div>
-                    <button class="newImgFlex" plain show-message-card session-from send-message-path send-message-title open-type='contact' style="border: 0; padding: 0;">
+                    </div> 
+                    <!-- plain show-message-card session-from send-message-path send-message-title open-type='contact' -->
+                    <button class="newImgFlex" @click="onClikcPage('/pages/tabBar/my/components/oneryUser')" style="border: 0; padding: 0;">
                         <image class="newImg " src="/static/image/my/new3.png"></image>
                         <span>专属顾问</span>
                     </button>
@@ -210,8 +211,8 @@ import modulUser from './components/modulUser';
             // 获取用户信息AIP
             getUserInfoAPI(flag){
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                     if(flag){
                         this.onClickUserInfo()
                     }

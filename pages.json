@@ -109,6 +109,12 @@
 			}
 		},
 		{
+			"path": "pages/tabBar/my/components/oneryUser",
+			"style": {
+				"navigationBarTitleText": "专属顾问"
+			}
+		},
+		{
 			"path": "pages/tabBar/my/components/changePassword",
 			"style": {
 				"navigationBarTitleText": "修改密码"

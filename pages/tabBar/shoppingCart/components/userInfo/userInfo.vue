@@ -152,8 +152,8 @@ import { getUserInfo } from '@/util/api/user.js'
             // 获取用户信息AIP
             getUserInfoAPI(){
                 getUserInfo().then(res=>{
-                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id} = res.data.data
-                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id})
+                    let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = res.data.data
+                    this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                     // 初始数据
                     this.onlineCustomerContactDtos.name = nickName
                     this.onlineCustomerContactDtos.sex = sex
