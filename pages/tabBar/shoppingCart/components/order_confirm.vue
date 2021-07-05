@@ -85,7 +85,7 @@
                     <div class="flex no_border">
                         <span class="name">专属顾问</span>
                         <span class="flex_1 r_icon" style="text-align: right;padding-right: 55rpx;">
-                            <input class="uni-input" placeholder-style="color: #e8e8e8;" @click="onClickOneryUser" :value="oneryVal" placeholder="专属顾问" disabled />
+                            <input class="uni-input" placeholder-style="color: #e8e8e8;" @click="onClickOneryUser" :value="get_jobNumber" placeholder="专属顾问" disabled />
                         </span>
                     </div>
                 </view>
@@ -154,7 +154,8 @@ const { $Message } = require('@/wxcomponents/base/index');
                 'get_nickName',
                 'get_appId',
                 'get_sex',
-                'get_enterpriseId'
+                'get_enterpriseId',
+                'get_jobNumber'
             ]),
             ...mapGetters('carList',[
 				'get_quickList'
@@ -279,7 +280,6 @@ const { $Message } = require('@/wxcomponents/base/index');
                 flag: true, // 开关
                 showText:false, // 福利弹窗
                 textType:'', // 福利弹窗类型
-                oneryVal:'', // 专属顾问
             }
         },
          methods:{
@@ -432,7 +432,8 @@ const { $Message } = require('@/wxcomponents/base/index');
                     orderDtos:[], // 	订单商品信息
                     discount: this.discountBool && this.discountCan ? this.discountNum : 1,
                     weddingDay: this.typeTime,
-                    orderShopId: this.get_shopId.shopId // 开单门店ID
+                    orderShopId: this.get_shopId.shopId, // 开单门店ID
+                    jobNumber:this.get_jobNumber //  员工工号
                 }
                 // 组装 客户
                 // param.customerGroupDto.onlineCustomerBabyDtos = refBabaData

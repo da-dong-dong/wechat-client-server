@@ -31,7 +31,7 @@
                         <span>我的相册</span>
                     </div> 
                     <!-- plain show-message-card session-from send-message-path send-message-title open-type='contact' -->
-                    <button class="newImgFlex" @click="onClikcPage('/pages/tabBar/my/components/oneryUser')" style="border: 0; padding: 0;">
+                    <button class="newImgFlex" @click="onClikOnery()" style="border: 0; padding: 0;">
                         <image class="newImg " src="/static/image/my/new3.png"></image>
                         <span>专属顾问</span>
                     </button>
@@ -113,7 +113,8 @@ import modulUser from './components/modulUser';
                 'get_headimgUrl',
                 'get_appId',
                 'get_enterpriseId',
-                'get_code'
+                'get_code',
+                'get_userId'
 			]),
         },
         onLoad(options) {
@@ -214,7 +215,12 @@ import modulUser from './components/modulUser';
                     let {headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber} = res.data.data
                     this.act_nickName({headimgUrl,nickName,phone,sex,birthday,province,city,area,id,jobNumber})
                     if(flag){
-                        this.onClickUserInfo()
+                        if(flag == '1'){
+                            this.onClickUserInfo()
+                        }
+                        if(flag == '2'){
+                            this.onClikOnery()
+                        }
                     }
                 })
             },
@@ -225,6 +231,16 @@ import modulUser from './components/modulUser';
             onClikcPage (url) {
                 uni.navigateTo({ 
                     url
+                })
+            },
+            // 跳转专属客服
+            onClikOnery(){
+                if(!this.get_userId){
+                    this.getUserInfoAPI('2')
+                    return
+                }
+                uni.navigateTo({ 
+                    url: '/pages/tabBar/my/components/oneryUser'
                 })
             },
             // 修改个人资料

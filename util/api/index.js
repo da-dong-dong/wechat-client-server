@@ -1,5 +1,6 @@
 
-//let base = 'http://192.168.5.28:8000' // 开发
+//let base = 'http://192.168.5.28:8000' // 开发 粤
+//let base = 'http://192.168.5.27:8000' // 开发 淼
 
 //let base = 'https://erp-wxapi.27yn.cn' // 测试
 

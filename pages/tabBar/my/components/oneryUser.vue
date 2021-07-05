@@ -31,7 +31,7 @@
 
 <script>
     import { setJobNumber,getJobNumber } from '@/util/api/user.js'
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapMutations } from 'vuex'
     export default {
         data() {
             return {
@@ -51,12 +51,13 @@
             this.introduceMobil = this.get_jobNumber
         },
         methods:{
+            ...mapMutations('user',[
+                'mut_jobNumber'
+            ]),
             // 拨打电话
             onClickCallPhone(){
                 this.getJobNumber()
-                uni.makePhoneCall({
-                    phoneNumber:this.phoneNumber
-                })
+                
             },
 
             // 输入手机号弹窗
@@ -74,7 +75,11 @@
                     userId:this.get_userId
                 }
                 getJobNumber(params).then(res=>{
-                    console.log(res)
+                    if(res.data.code == 200){
+                        uni.makePhoneCall({
+                            phoneNumber:res.data.data.mobile
+                        })
+                    }
                 })
             },
 
@@ -91,6 +96,9 @@
                         setTimeout(()=>{
                             this.showGoos = false
                         },2000)
+                    }
+                    if(res.data.code == 200){
+                        this.mut_jobNumber(this.introduceMobil)
                     }
                     console.log(res)
                 })

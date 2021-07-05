@@ -60,6 +60,11 @@ export default{
 			state.appId = data.appId
 			state.enterpriseId = data.enterpriseId
 		},
+
+		// 设置员工工号
+		mut_jobNumber(state,data){
+			state.jobNumber = data
+		},
 		
 		// 退出登陆
 		mut_outCode(state,data){
