@@ -437,7 +437,7 @@ const { $Message } = require('@/wxcomponents/base/index');
     }
     .h110{
         width: 100%;
-        height: 415rpx;
+        height: 405rpx;
         border-radius: 10rpx;
     }
     .desc{
@@ -446,7 +446,7 @@ const { $Message } = require('@/wxcomponents/base/index');
         line-height: 30rpx;
     }
     .tow_title{
-        padding: 20rpx 10rpx 10rpx;
+        padding: 5rpx 10rpx 10rpx;
         color: #b2b2b2;
         font-size: 26rpx;
     }

@@ -72,7 +72,7 @@
 				text-align: center;
 				height: 100rpx;
 				line-height: 100rpx;
-				border-top: 1rpx solid #f9f9f9;
+				border-top: 1px solid #dedede;
 				font-size: 30rpx;
 				justify-content: center;
 				.cancel{

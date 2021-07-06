@@ -94,8 +94,8 @@
 
         <view class="msg_div">
 			<!-- {{ discountNum * 10 }}折优惠 -->
-           <div class="title border" :style="{ borderBottom: discountBool?'1px solid #ECECEC':'none' }"> 邀请福利
-               <span class="float_r circle" :class="{ current: discountBool }" @click="() => { discountBool = !discountBool }"></span>
+           <div class="title border classflex" :style="{ borderBottom: discountBool?'1px solid #ECECEC':'none' }"> 邀请福利
+               <span style="transform: scale(0.8);" class="float_r circle" :class="{ current: discountBool }" @click="() => { discountBool = !discountBool }"></span>
            </div>
            <template v-if="discountBool">
             <div class="flex">
@@ -120,18 +120,18 @@
            </template>
         </view>
 
-        <view class="footer">
-            <div class="footer_l">
-                预定金: <span class="orange fontWight fontFamilyST">￥{{sumPayment}}</span>
+        <view class="footer" id="discoun">
+            <div class="footer_l " :class="textType == 'ok'?'footer_dis':''">
+                <view>
+                    预定金: <span class="orange fontWight fontFamilyST">￥{{sumPayment}}</span>
+                </view>
+                <view v-if="textType == 'ok'" class="orange fontSize20">共优惠￥{{discountPrice}}</view>
             </div>
             <span class="footer_r" @click="onQuick">立即支付</span>
         </view>
 
         <!-- 弹窗信息 -->
         <modulText v-if="showText" @ok="ok" @cancel="cancel" :textType="textType"/>
-        <!-- <uni-popup ref="popup" type="dialog">
-            <uni-popup-dialog mode="base" content="您输入的介绍人的手机号不存在，不能享受优惠" :duration="2000" :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
-        </uni-popup> -->
 
         <i-message id="message" />
     </view>
@@ -166,6 +166,14 @@ const { $Message } = require('@/wxcomponents/base/index');
                     sum += _.assemblyDeposit ? _.assemblyDeposit : 0
                 })
                 return sum
+            },
+            discountPrice () {
+                let sum = 0
+                this.get_quickList.forEach(_ => {
+                    sum += (_.price - _.price*this.discountNum)
+                })
+                
+                return Number(sum.toString().match(/^\d+(?:\.\d{0,2})?/)) 
             }
         },
         mounted(){
@@ -496,6 +504,13 @@ const { $Message } = require('@/wxcomponents/base/index');
 </script>
 
 <style lang="less" scoped>
+#discoun{
+    .footer_dis{
+        justify-content: center;
+        flex-direction: column;
+        align-items: normal;
+    }
+}
 .order_confirm_detail{
     height: 100vh;
     padding: 20rpx;
@@ -553,6 +568,11 @@ const { $Message } = require('@/wxcomponents/base/index');
         font-weight: 700;
         padding: 20rpx;
     }
+    .classflex{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     .float_r{
         float: right;
     }
@@ -560,7 +580,7 @@ const { $Message } = require('@/wxcomponents/base/index');
         padding: 20rpx;
         border-bottom: 1rpx solid #ECECEC;
         .name{
-            width: 140rpx;
+            width: 120rpx;
             margin-right: 80rpx;
             text-align: justify;
             text-align-last: justify;

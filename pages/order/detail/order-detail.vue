@@ -294,7 +294,7 @@ import { orderDetails } from '@/util/api/order.js'
             border-bottom: 1px solid #ECECEC;
             color: #414143;
             .name{
-                width: 140rpx;
+                width: 120rpx;
                 margin-right: 80rpx;
                 text-align: justify;
                 text-align-last: justify;

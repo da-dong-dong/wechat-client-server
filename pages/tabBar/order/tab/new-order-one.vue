@@ -48,7 +48,7 @@
                         </view>
                     </view>
                 </view>
-                <view class="view fontWight">
+                <view class="view">
                     订单时间: {{item.orderTime | times}}
                 </view>
             </view>
@@ -71,13 +71,13 @@
             <!-- 横线底部 -->
             <view class="footer bottB">
                 <view class="orange noBuyBut">
-                    <view class="text" @click="onClickDetails(item.id,true)">查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i></view>
-                    <!-- 待付款 -->
-                    <view class="btn" v-if="!item.state" @click="onBuy(item.id)">去付款</view>
+                    <view class="text" :class="item.isClose?'visbli':''" @click="onClickDetails(item.id,true)">查看更多 <i class="iconfont iconleft"></i><i style="left:-20rpx" class="iconfont iconleft"></i></view>
+                    
                     <!-- 全部 -->
-                    <view v-if="!item.isClose && item.state" class="allBtn">
-                        <view class="btn btn1"  @click="onOrderClose(item.id)">删除订单</view>
-                        <view class="btn"  @click="onBuy(item.id)" v-if="item.proceeds!= item.sumPrice">去付款</view>
+                    <view class="allBtn" v-if="item.isType == 'ye'">
+                        <view class="btn btn1"  v-if="!item.state && !item.assemblyEarnestMoney" @click="onOrderClose(item.id)">取消订单</view>
+                        <view class="btn" @click="onBuy(item.id)" v-if="item.proceeds!= item.sumPrice && !item.isClose">去付款</view>
+                        <view class="btn" @click="onDelOrder(item.id)" v-else>删除订单</view>
                     </view>
                 </view>
             </view>
@@ -90,7 +90,7 @@
         </view>
 
         <!-- 弹窗 -->
-        <modulDel @cancel="cancel" @ok="ok" v-if="showModel"/>
+        <modulDel @cancel="cancel" @ok="ok" v-if="showModel" :text="text"/>
     </view>
 </template>
 
@@ -124,6 +124,7 @@ import { mapGetters } from 'vuex'
         data(){
             return{
                 showModel:false,
+                text:'',
                 orderId:null,
             }
         },
@@ -149,6 +150,14 @@ import { mapGetters } from 'vuex'
             onOrderClose(orderId){
                 this.showModel = true
                 this.orderId = orderId
+                this.text = '取消'
+            },
+
+            // 删除订单
+            onDelOrder(orderId){
+                this.showModel = true
+                this.orderId = orderId
+                this.text = '删除'
             },
 
             // 弹窗
@@ -156,8 +165,14 @@ import { mapGetters } from 'vuex'
 				this.showModel = false
 			},
 			ok(){
-				// 取消订单接口
-                this.$emit('onOrderClose',this.orderId)
+                if(this.text === '取消'){
+                    // 取消订单接口
+                    this.$emit('onOrderClose',this.orderId)
+                }else{
+                    // 删除订单
+                    //this.$emit('onDelOrder',this.orderId)
+                    console.log('删除')
+                }
                 this.showModel = false
 			}
         }
@@ -166,6 +181,9 @@ import { mapGetters } from 'vuex'
 </script>
 
 <style lang="less">
+.visbli{
+    visibility: hidden;
+}
 .order_list{
     padding-bottom: 120rpx;
     box-sizing: border-box;

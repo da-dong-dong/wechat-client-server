@@ -211,6 +211,7 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
     background: #F5F5F5;
     letter-spacing: 5rpx;
 }
+button::after{ border: none;}
 .login_box{
     padding: 0 38rpx;
     text-align: center;
@@ -218,6 +219,9 @@ import { getCode, setPhoneNoInfo, setUserInfo, getUserInfo } from '@/util/api/us
         width: 546rpx;
         margin-top: 60rpx;
         margin-bottom: 30rpx;
+        &::before{
+            border: none;
+        }
     }
 }
 .login_header{

@@ -9,7 +9,7 @@
                 <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder" ></wuc-tab>
             </view>
             <view class="order_box_content">
-                <orederOne  v-for="(item,index) in tabList" :key="index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose"/>
+                <orederOne  v-for="(item,index) in tabList" :key="index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose" @onDelOrder="onDelOrder"/>
             </view>
         </s-pull-scroll>
         
@@ -128,6 +128,12 @@ import { mapGetters } from 'vuex'
                 })
             },
 
+            // 删除订单
+            onDelOrder(orderId){
+               // 删除订单接口
+                
+            },
+
             // 跳转支付
             navigateToMiniProgram(data){
                 let {jumpAppId,outTradeNo,payJumpMa,paySign,prepayId,nonceStr,timestamp} = data
@@ -177,26 +183,34 @@ import { mapGetters } from 'vuex'
                         // 全部
                          setList= this.list.filter(item=>item)
                          setList.map(item=>{
-                            if(!item.isPhotoAccomplish && !item.isClose){
+                            if(item.sumPrice - item.incomePrice > 0 && !item.isClose){
+                                item.state = null
+                            }else if(!item.isPhotoAccomplish && !item.isClose){
                                 item.state = '待拍摄'
-                            }
-                            if(item.isClose){
+                            }else{
                                 item.state = '已关闭'
                             }
+                            item.isType = 'ye'
                         })
                         this.get_carList = setList
                         break;
                     case 1:
                         // 未付款
                         setList = this.list.filter(item=>item.sumPrice - item.incomePrice > 0 && !item.isClose )
-                        setList.map(item=>item.state = null)
+                        setList.map(item=>{
+                            item.state = null;
+                            item.isType = 'ye'
+                        })
                         this.get_carList = setList
                         break;
                     case 2:
                         // 待拍摄
                         setList = this.list.filter(item=>!item.isPhotoAccomplish && !item.isClose)
                         
-                        setList.map(item=>item.state = '待拍摄')
+                        setList.map(item=>{
+                            item.state = '待拍摄'
+                            item.isType = 'no'
+                        })
                         this.get_carList = setList
 
                         break;
@@ -211,6 +225,7 @@ import { mapGetters } from 'vuex'
                             if(item.sumPrice - item.incomePrice > 0  && !item.isClose){
                                 item.state = null
                             }
+                            item.isType = 'no'
                         })
                         this.get_carList = setList
                         break;

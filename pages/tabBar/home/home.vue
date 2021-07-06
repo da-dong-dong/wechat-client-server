@@ -359,14 +359,14 @@ const entriData = uni.getExtConfigSync()
 	min-width: 140rpx;
     border: 1px solid #D6D6D6;
     border-radius: 50rpx;
-    height: 52rpx;
+    height: 56rpx;
     left: 60rpx;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-left: 15rpx;
 	padding-right: 15rpx;
-	line-height: 52rpx;
+	line-height: 56rpx;
 	// margin-bottom: 6rpx;
 	// position: absolute;
 	// z-index: 5000;

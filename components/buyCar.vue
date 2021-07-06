@@ -5,7 +5,7 @@
         <view class="buyCar fixed flex paddingRL40" :style="{'bottom':`${top?'140rpx':'0'}`}">
             <!-- 详情 -->
             <view class="car" v-if="type == 'details'" @click="goCar">
-                <image class="icon icon4" src="/static/tabBar/shoppingCartSl.png" mode=""></image>
+                <image class="icon icon4" src="/static/tabBar/shoppingCartSl1.png" mode=""></image>
                 <view class="fontSize24">购物车</view>
                 <text class="num" v-if="get_carList.length>0">{{get_carList.length}}</text>
             </view>

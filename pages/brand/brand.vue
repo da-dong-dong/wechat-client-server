@@ -17,7 +17,7 @@
             <view class="brandList fontSize32 fontWight marginB30" v-for="(item,index) in get_barmd" :key="index" @click="setBrand(item.useShopId)" :style="{ 'background-image': `url(${item.images})`}">
                 <view class="brandListText">
                     <view class="fontWight fontSize40 brean_name">{{item.name}}</view>
-                    <text class="font20">{{item.remarks?item.remarks:''}}</text>
+                    <text class="font20 paddingT10">{{item.remarks?item.remarks:''}}</text>
                 </view>
             </view>
         </div>
@@ -169,7 +169,7 @@ import {mapGetters, mapMutations, mapActions } from 'vuex'
        display: inline-block; 
     }
     .brandListText{
-        padding-top: 230rpx;
+        padding-top: 220rpx;
         color: #fff;
         text-align: center;
     }

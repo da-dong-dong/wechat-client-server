@@ -1,9 +1,9 @@
-/******************************** 删除提示 ***************************************/
+/******************************** 取消提示 ***************************************/
 <template>
 	<view class="bigBox">
 		<view class="box">
 			<view class="text">提示</view>
-			<view class="textC">是否确认删除？</view>
+			<view class="textC">是否确认{{text}}？</view>
 			<view class="but">
 				<view class="cancel" @click="cancel">取消</view>
 				<view class="ok" @click="ok">确定</view>
@@ -14,6 +14,7 @@
 
 <script>
 	export default {
+		props:['text'],
 		data() {
 			return {
 				
