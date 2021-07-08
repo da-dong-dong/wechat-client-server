@@ -1,5 +1,5 @@
 import baseUrl from './index.js'
-import { get, post, put, remove, postObj, } from './methos.js'
+import { get, post, put, remove, postObj,del } from './methos.js'
 
 // 订单详情
 export const orderDetails = (params) => {
@@ -24,6 +24,11 @@ export const orderPay = (params) => {
 // 关闭订单
 export const orderClose = (params) => {
 	return get(baseUrl.orderClose, params)
+}
+
+// 关闭订单
+export const orderDelete = (params) => {
+	return del(baseUrl.orderDelete, params)
 }
 
 // 获取公众号图文列表

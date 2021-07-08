@@ -3,8 +3,8 @@
         <view class="order_One fontSize28"  v-for="(item,index) in get_carList" :key="index">
             <view class="title">
                 订单号: {{item.orderNo}}
-                <span class="float_r colorA3" v-if="item.state">{{item.state ? item.state : ''}}</span>
-                <view v-if="!item.state && !item.assemblyEarnestMoney" class="timeOut">
+                <span class="float_r colorA3" v-if="item.state && item.isOnline">{{item.state ? item.sumPrice - item.proceeds > 0 && item.proceeds ?'':item.state : ''}}</span>
+                <view v-if="!item.state && !item.assemblyEarnestMoney && item.isOnline" class="timeOut">
                     <out-time class="paddingRL10 fontSize28" :endtime="item.orderTime" />
                 </view>
             </view>
@@ -55,16 +55,29 @@
 
             <view class="footer">
                 <view class="noBuy">
-                    <!-- 待付款 -->
-                    <view v-if="!item.state">
-                        <span>已付定金：￥{{item.assemblyEarnestMoney}}</span>
-                        <span>{{item.assemblyEarnestMoney==item.earnestMoney?"待付定金":"尾款待支付"}}：￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice - item.assemblyEarnestMoney}}</span>
+                    <!-- 有倒计时显示定金 -->
+                    <view v-if="item.isOnline && !item.state && !item.assemblyEarnestMoney && !item.isClose">
+                        <span class="font600">定金: </span>
+                        <span class="orange fontWight">￥{{item.earnestMoney}}</span>
+                        <!-- <span>已付定金：￥{{item.assemblyEarnestMoney}}</span>
+                        <span>{{item.assemblyEarnestMoney==item.earnestMoney?"待付定金":"尾款待支付"}}：￥{{item.sumPrice-item.proceeds == 0?item.sumPrice-item.proceeds : item.sumPrice - item.assemblyEarnestMoney}}</span> -->
                     </view>
-                    <!-- 通用 -->
-                    <view v-else>
+                    <!-- 已关闭显示已优惠，实付款 -->
+                    <view v-else-if="item.isOnline && item.isClose">
                         <span>已优惠：￥{{item.discountsPrice?item.discountsPrice:0}}</span>
                         <span class="font600">实付款: </span>
                         <span class="orange fontWight" >￥{{item.proceeds==undefined?0:item.proceeds}}</span>
+                    </view>
+                    <!-- 已付定金，显示定金已支付，尾款待支付 -->
+                    <view v-else-if="item.isOnline && item.assemblyEarnestMoney && !item.isClose">
+                        <span>定金已支付：￥{{item.assemblyEarnestMoney}}</span>
+                        <span>尾款待支付：￥{{item.sumPrice - item.assemblyEarnestMoney | toFile}}</span>
+                   </view>
+                    <!-- 是否线下订单 -->
+                    <view v-else-if="!item.isOnline">
+                        <span>已付:￥{{item.incomePrice}}</span>
+                        <span class="font600">待支付: </span>
+                        <span class="orange fontWight" >￥{{item.assemblyPrice - item.incomePrice}}</span>
                     </view>
                 </view>
             </view>
@@ -75,9 +88,9 @@
                     
                     <!-- 全部 -->
                     <view class="allBtn" v-if="item.isType == 'ye'">
-                        <view class="btn btn1"  v-if="!item.state && !item.assemblyEarnestMoney" @click="onOrderClose(item.id)">取消订单</view>
-                        <view class="btn" @click="onBuy(item.id)" v-if="item.proceeds!= item.sumPrice && !item.isClose">去付款</view>
-                        <view class="btn" @click="onDelOrder(item.id)" v-else>删除订单</view>
+                        <view class="btn btn1"  v-if="!item.state && !item.assemblyEarnestMoney && item.isOnline" @click="onOrderClose(item.id)">取消订单</view>
+                        <view class="btn" @click="onBuy(item.id)" v-if="item.sumPrice - item.proceeds > 0 && !item.isClose">去付款</view>
+                        <view class="btn btn1" @click="onDelOrder(item.id)" v-else-if="item.isOnline && !item.proceeds">删除订单</view>
                     </view>
                 </view>
             </view>
@@ -107,9 +120,9 @@ import { mapGetters } from 'vuex'
                 text =  shopId.filter(item=>item.shopId == val)
                 return text[0].shopName
             },
-            // 保留两位小数点
+            // 保留两位小数点 取整
             toFile(val){
-                return Number(val.toString().match(/^\d+(?:\.\d{0,2})?/)) 
+                return Number((val.toFixed(2)).toString().match(/^\d+(?:\.\d{0,2})?/)) 
             }
         },
         components: { outTime,modulDel},
@@ -170,8 +183,7 @@ import { mapGetters } from 'vuex'
                     this.$emit('onOrderClose',this.orderId)
                 }else{
                     // 删除订单
-                    //this.$emit('onDelOrder',this.orderId)
-                    console.log('删除')
+                    this.$emit('onDelOrder',this.orderId)
                 }
                 this.showModel = false
 			}

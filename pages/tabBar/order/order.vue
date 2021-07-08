@@ -1,7 +1,7 @@
 /******************************** 订单 ***************************************/
 <template>
     <view class="order_box" >
-        <uni-nav-bar id="editor" fixed statusBar title="订单列表"></uni-nav-bar>
+        <uni-nav-bar id="editor" fixed statusBar title="订单列表" :border="false"></uni-nav-bar>
 
         <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData" >
              <view  :style="{height:`${heightNav}px`}"></view>
@@ -30,7 +30,7 @@ import orederNoGoin from './tab/order-no-goins.vue';
 import orederNoBuy from './tab/order-no-buy.vue';
 import orederOne from './tab/new-order-one.vue';
 import sPullScroll from '@/components/s-pull-scroll';
-import { orderList, orderClose, orderPay } from '@/util/api/order.js'
+import { orderList, orderClose, orderPay,orderDelete } from '@/util/api/order.js'
 const { $Message } = require('@/wxcomponents/base/index');
 import { mapGetters } from 'vuex'
     export default {
@@ -39,11 +39,14 @@ import { mapGetters } from 'vuex'
             ...mapGetters('map',[
 				'get_shopIdList'
 			]),
+            ...mapGetters('user',[
+                'get_enterpriseId'
+			]),
         },
         data() {
             return {
                 TabCur: 0,
-                showBorder:false,
+                showBorder:true,
                 tabList: [
                      { name: '全部',path: "all" },
                     { name: '未付款',path: "noBuy" },
@@ -130,8 +133,16 @@ import { mapGetters } from 'vuex'
 
             // 删除订单
             onDelOrder(orderId){
+                let param ={
+                    orderId,
+                    enterpriseId:this.get_enterpriseId
+                }
                // 删除订单接口
-                
+                orderDelete(param).then(res=>{
+                    if(res.data.code == 200){
+                        this.orderList()
+                    }
+                })
             },
 
             // 跳转支付

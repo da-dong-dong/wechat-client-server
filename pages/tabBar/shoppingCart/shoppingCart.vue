@@ -27,7 +27,7 @@
                                         总 价:<span class="orange fontWight">￥{{_.price}}</span>
                                     </view>
                                     <view class="font14 paddingT5">
-                                        尾 款:￥{{_.enableDeposit?_.price - _.assemblyDeposit:_.price}}
+                                        尾 款:￥{{_.enableDeposit?((_.price - _.assemblyDeposit).toFixed(2)).toString().match(/^\d+(?:\.\d{0,2})?/):_.price}}
                                     </view>
                                 </view>
                             </view>

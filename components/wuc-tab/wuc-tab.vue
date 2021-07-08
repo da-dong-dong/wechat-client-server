@@ -113,10 +113,11 @@ swiper {
     margin: 0 10upx;
     padding: 0 20upx;
     font-size: 30rpx;
-    color: #333333;
+    color: #A3A3A3;
 }
 
 .wuc-tab-item.cur {
+    font-weight: 700;        
     .border{
         width: 50rpx;
         height: 100%;
@@ -131,6 +132,7 @@ swiper {
     }
     .borderSelect{
         border-bottom: 4rpx solid #D3AA72;
+        
     }
 }
 

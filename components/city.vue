@@ -51,7 +51,7 @@
             return{
                 phoneShow:false,
                 phone:'',
-                cityLi: ['北京','上海','广州','深圳','惠州']
+                cityLi: []
             }
         },
         methods:{
@@ -100,6 +100,31 @@
             // 切换品牌
             onChageBarmd(){
                 this.$emit('onChageBarmd')
+            }
+        },
+        watch:{
+            showShopIdList(){
+                let json = {}
+                let arr = []
+                this.showShopIdList.map(item=>{
+                    let name = item.city
+                    if(item.city === '市辖区'){
+                        name = item.province
+                    }
+                    if(name[name.length-1] !== '市'){
+                        name = name+'市'
+                    }
+                    json[name] = name
+                }) 
+                for(let item in json){
+                    arr.push(item)
+                }
+                if(arr.length>=5){
+                    this.cityLi = arr.slice(0,5)
+                }else{
+                    this.cityLi = arr
+                }
+                
             }
         }
     }

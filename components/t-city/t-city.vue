@@ -46,7 +46,7 @@
 					</view>
 
 					<!-- 热门城市 -->
-					<view class="area list-item" id="hot">
+					<!-- <view class="area list-item" id="hot">
 						<view class="title-wrapp">
 							<view class="title">
 								<text class="l">热门城市</text>
@@ -55,7 +55,7 @@
 						<view class="ul" v-if="hotcites.length">
 							<view class="li" hover-class="hover" v-for="item in hotcites" :key="item.cityId" @click="selectCity(item)">{{ item.cityName }}</view>
 						</view>
-					</view>
+					</view> -->
 				</view>
 				<!-- 城市列表  -->
 				<view class="city-list">
@@ -72,7 +72,8 @@
 			<view class="alphabet" @touchstart="touchStart" @touchend="touchEnd" @touchmove.stop="touchMove">
 				<view v-for="(item, index) in alphabet" :key="index" @touchstart="getLetter" @touchend="setLetter" :id="item">
 					<view class="item" :class="{ active: currentLetter == item }">
-						{{ item == "area" ? "当前" : item == "hot" ? "热门" : item }}
+						<!-- {{ item == "area" ? "当前" : item == "hot" ? "热门" : item }} -->
+						{{ item == "area" ? "当前" : item == "hot" ? "" : item }}
 					</view>
 				</view>
 			</view>
@@ -83,7 +84,7 @@
 <script>
 	import City from './city.json'
 	export default {
-		props:['city'],
+		props:['city','shopArrList'],
 		data() {
 			return {
 				isIPX: null,
@@ -152,6 +153,21 @@
 		created() {
 			//真实数据请求...
 			this.areaName = this.city
+			// 过滤已有门店
+			let json = {}
+			for(let item in this.cities){
+				for(let j=0;j<this.cities[item].length;j++){
+					if(this.shopArrList.includes(this.cities[item][j].city)){
+						console.log(this.cities[item][j])
+						if(json[item] instanceof Array){
+							json[item].push(this.cities[item][j])
+						}else{
+							json[item]= [this.cities[item][j]]
+						}
+                    }
+				}
+			}
+			this.cities = json 
 		},
 		methods: {
 			//列表滚动，和右边字母表对应

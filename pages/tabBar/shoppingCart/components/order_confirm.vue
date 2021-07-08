@@ -52,7 +52,7 @@
                                 预付金: <span class="orange fontWight">￥{{item.assemblyDeposit ? item.assemblyDeposit : 0 }}</span> 
                             </view>
                             <view class="font14 fontFamilyST " style="padding:2rpx 0 0">
-                                尾<span class="block"></span>款:<span class="fontWight">￥{{ item.assemblyDeposit ? item.price - item.assemblyDeposit : item.price }}</span>
+                                尾<span class="block"></span>款:<span class="fontWight">￥{{ item.assemblyDeposit ? ((item.price - item.assemblyDeposit).toFixed(2)).toString().match(/^\d+(?:\.\d{0,2})?/) : item.price}}</span>
                             </view>
                         </view>
                     </view>
@@ -174,6 +174,10 @@ const { $Message } = require('@/wxcomponents/base/index');
                 })
                 
                 return Number(sum.toString().match(/^\d+(?:\.\d{0,2})?/)) 
+            },
+            // 保留两位小数点
+            toFile(val){
+                return Number(val.toString().match(/^\d+(?:\.\d{0,2})?/)) 
             }
         },
         mounted(){

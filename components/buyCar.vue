@@ -124,8 +124,8 @@
     width: 100%;
 }
 .icon4{
-    width: 45rpx;
-    height: 45rpx;
+    width: 50rpx;
+    height: 50rpx;
     margin-left: 10rpx;
 }
 .buyCar{
@@ -148,12 +148,12 @@
             right: 10rpx;
             background: #D6A972;
             border-radius: 50%;
-            width: 25rpx;
-            height: 25rpx;
+            width: 20rpx;
+            height: 20rpx;
             font-size: 18rpx;
             color: #fff;
             text-align: center;
-            line-height: 25rpx;
+            line-height: 20rpx;
             padding: 5rpx;
         }
     }

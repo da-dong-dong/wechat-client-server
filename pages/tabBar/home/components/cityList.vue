@@ -1,7 +1,7 @@
 /******************************** 城市页面 ***************************************/
 <template>
     <view>
-        <t-city @bindCity="bindCity" :city="get_city"/>
+        <t-city @bindCity="bindCity" :city="get_city" :shopArrList="shopArrList"/>
     </view>
 </template>
 
@@ -14,9 +14,29 @@
         },
         computed: {
 			...mapGetters('map',[
-				'get_city'
+				'get_city',
+                'get_shopIdList'
 			]),
 		},
+        data(){
+            return{
+              shopArrList:[]  
+            }
+        },
+        created(){
+            let arr = []
+           this.get_shopIdList.map(item=>{
+               let name = item.city
+               if(item.city === '市辖区'){
+                   name = item.province
+               }
+               if(name[name.length-1] !== '市'){
+                   name = name+'市'
+               }
+               arr.push(name)
+           }) 
+           this.shopArrList = arr
+        },
         
         methods:{
             ...mapMutations('map',[

@@ -29,7 +29,7 @@
                     <text class="marginR30 fontSize30">定金</text>
                     <view>
                          预定金: <text class="colorH marginR25 fontWight">￥{{listDetai.assemblyDeposit}}</text>
-                         尾款: <text class="fontWight">￥{{listDetai.assemblyPrice-listDetai.assemblyDeposit}}</text>
+                         尾款: <text class="fontWight">￥{{((listDetai.assemblyPrice-listDetai.assemblyDeposit).toFixed(2)).toString().match(/^\d+(?:\.\d{0,2})?/)}}</text>
                     </view>
                 </view>
             </view>

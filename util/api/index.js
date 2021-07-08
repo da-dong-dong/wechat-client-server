@@ -57,6 +57,7 @@ let baseUrl = {
 	orderList: `${base}/api/template/ma/auth/order_list`, // 获取订单列表
 	orderPay: `${base}/api/template/ma/auth/order_pay`, // 订单支付
 	orderClose: `${base}/api/template/ma/auth/order_close`, // 关闭订单
+	orderDelete: `${base}/api/template/ma/delete/order`, // 删除订单
 
 	getPtdetail: `${base}/api/template/ma/get_assembly_online_detail_type`, // 获取线上图文套系详情
 	getPropelDetail: `${base}/api/template/ma/getAssemblyOnlineDetailByPropel`, // 根据推荐套系获取详情
