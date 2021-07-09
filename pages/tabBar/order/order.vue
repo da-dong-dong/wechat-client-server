@@ -1,20 +1,21 @@
 /******************************** 订单 ***************************************/
 <template>
-    <view class="order_box" >
-        <uni-nav-bar id="editor" fixed statusBar title="订单列表" :border="false"></uni-nav-bar>
+    <view class="order_box" @touchmove.stop.prevent="moveHandle">
+        <uni-nav-bar @touchmove.stop.prevent="moveHandle" id="editor" fixed statusBar title="订单列表" :border="false"></uni-nav-bar>
+        
+        <view id="editor1" @touchmove.stop.prevent="moveHandle">
+            <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder" ></wuc-tab>
+        </view>
 
-        <s-pull-scroll class="right_box flex paddingT10" ref="pullScroll" :back-top="true" :pullUp="loadData" >
-             <view  :style="{height:`${heightNav}px`}"></view>
-            <view>
-                <wuc-tab :tab-list="tabList" :tabCur.sync="TabCur" @change="tabChange" :show-border="showBorder" ></wuc-tab>
-            </view>
+        <s-pull-scroll class="right_box flex" ref="pullScroll" :back-top="true" :pullUp="loadData" >
+             <view class="paddingT115"  :style="{height:`${heightNav}rpx`}"></view>
             <view class="order_box_content">
                 <orederOne  v-for="(item,index) in tabList" :key="index" v-if="TabCur == index" :get_carList="get_carList" @onBuy="onBuy" @onOrderClose="onOrderClose" @onDelOrder="onDelOrder"/>
             </view>
         </s-pull-scroll>
         
         <!-- 弹窗 -->
-        <i-message id="message" :style="{marginTop:`${heightNav}px`}"/>
+        <i-message id="message" class="paddingT115" :style="{marginTop:`${heightNav}rpx`}"/>
 
         <!-- 底部导航 -->
 		<tabBar :index="4"></tabBar>
@@ -49,7 +50,7 @@ import { mapGetters } from 'vuex'
                 showBorder:true,
                 tabList: [
                      { name: '全部',path: "all" },
-                    { name: '未付款',path: "noBuy" },
+                    { name: '待付款',path: "noBuy" },
                     { name: '待拍摄',path: "noAppointment" },
                     { name: '进行中',path: "goOn" },
                     { name: '已完成',path: "noGoIn" },
@@ -62,7 +63,7 @@ import { mapGetters } from 'vuex'
                 page:1,
                 total:5, // 总数量
                 list:[], // 总数据
-                heightNav:0
+                heightNav:0,
             }
         },
         onLoad(){
@@ -74,7 +75,7 @@ import { mapGetters } from 'vuex'
             // 获取高度
             const query = uni.createSelectorQuery().in(this);
             query.select('#editor').boundingClientRect(data => {
-                this.heightNav = data.height
+                this.heightNav = data.height*2
             }).exec();
             
         },
@@ -95,6 +96,9 @@ import { mapGetters } from 'vuex'
             })
         },
         methods: {
+            moveHandle(e){
+                //console.log(e)
+            },
             tabChange(index) {
                 this.TabCur = index;
                 this.setData(this.TabCur)
@@ -195,7 +199,11 @@ import { mapGetters } from 'vuex'
                          setList= this.list.filter(item=>item)
                          setList.map(item=>{
                             if(item.sumPrice - item.incomePrice > 0 && !item.isClose){
-                                item.state = null
+                                if(item.isOnline){
+                                    item.state = null;
+                                }else{
+                                    item.state = '未付款';
+                                }
                             }else if(!item.isPhotoAccomplish && !item.isClose){
                                 item.state = '待拍摄'
                             }else{
@@ -209,7 +217,12 @@ import { mapGetters } from 'vuex'
                         // 未付款
                         setList = this.list.filter(item=>item.sumPrice - item.incomePrice > 0 && !item.isClose )
                         setList.map(item=>{
-                            item.state = null;
+                            if(item.isOnline){
+                                item.state = null;
+                            }else{
+                                item.state = '未付款';
+                            }
+                            
                             item.isType = 'ye'
                         })
                         this.get_carList = setList
@@ -228,14 +241,9 @@ import { mapGetters } from 'vuex'
 
                     case 3:
                         // 进行中
-                        setList = this.list.filter(item=> (item.sumPrice - item.incomePrice > 0  && !item.isClose) || (!item.isPhotoAccomplish && !item.isClose))
+                        setList = this.list.filter(item=> (item.incomePrice > 0  && !item.isClose) || (!item.isPhotoAccomplish && !item.isClose) || (item.proceeds>0 && !item.isClose))
                         setList.map(item=>{
-                            if(!item.isPhotoAccomplish){
-                                item.state = '待拍摄'
-                            }
-                            if(item.sumPrice - item.incomePrice > 0  && !item.isClose){
-                                item.state = null
-                            }
+                            item.state = '进行中'
                             item.isType = 'no'
                         })
                         this.get_carList = setList
@@ -292,11 +300,14 @@ import { mapGetters } from 'vuex'
         flex: 1;
     }
     .order_box_content{
-        padding: 20rpx;
+        padding: 0 20rpx 20rpx;
     }
 }
 .swiper{
     height: 100%;
 }
-
+#editor1{
+    position: relative;
+    z-index: 5000;
+}
 </style>

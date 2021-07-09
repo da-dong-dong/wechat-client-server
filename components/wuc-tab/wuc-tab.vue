@@ -89,7 +89,7 @@ export default {
     position: relative;
 }
 .border_box{
-    width: 80rpx;
+    width: 60rpx;
     height: 6rpx;
     position: absolute;
     bottom: -10px;
@@ -131,7 +131,9 @@ swiper {
         }
     }
     .borderSelect{
-        border-bottom: 4rpx solid #D3AA72;
+        //border-bottom: 4rpx solid #D3AA72;
+        background: #D3AA72;
+        border-radius: 20rpx;
         
     }
 }

@@ -26,3 +26,43 @@
 
 ### 开发模板appid：
 #### wxf84f228e76e1d984
+
+## 项目结构
+### ext.json
+配置模板信息
+
+### manifest.json
+配置用户信息
+
+### util
+1，aip配置
+2，全局css
+3，工具类
+
+### wxcomponents
+引入第三方插件globalStyle：{}配置
+
+### store
+1，user.js用户信息
+2，map.js地图类
+3，carList.js购物车
+
+### page
+#### tabBar 底部导航
+1，classify 预定
+2，home 首页
+3，my 我的
+4，order 订单
+5，shoppingCart 购物车
+
+### login 登陆
+
+### order 订单详情
+
+### coollection 收藏
+
+### brand 品牌
+
+
+
+

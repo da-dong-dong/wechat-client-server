@@ -1,0 +1,1187 @@
+卷 PersistentDataDisk 的文件夹 PATH 列表
+卷序列号为 AC69-6837
+D:.
+│  .gitignore
+│  App.vue
+│  ext.json
+│  main.js
+│  manifest.json
+│  pages.json
+│  project.config.json
+│  README.md
+│  uni.scss
+│  xxx.txt
+│  
+├─.hbuilderx
+│      launch.json
+│      
+├─components
+│  │  .DS_Store
+│  │  404.vue
+│  │  banner.vue
+│  │  buyCar.vue
+│  │  city.vue
+│  │  footText.vue
+│  │  modulPhone.vue
+│  │  region.vue
+│  │  search.vue
+│  │  swiper-der.vue
+│  │  tabBar.vue
+│  │  time.vue
+│  │  
+│  ├─cat-signature
+│  │      cat-signature.vue
+│  │      
+│  ├─pick-regions
+│  │      pick-regions.vue
+│  │      regions.json
+│  │      
+│  ├─s-pull-scroll
+│  │      back-top.png
+│  │      index.vue
+│  │      README.md
+│  │      
+│  ├─t-city
+│  │      city.json
+│  │      t-city.vue
+│  │      
+│  ├─uni-nav-bar
+│  │      uni-nav-bar.vue
+│  │      uni-status-bar.vue
+│  │      
+│  ├─uni-popup
+│  │      message.js
+│  │      popup.js
+│  │      uni-popup-dialog.vue
+│  │      uni-popup-message.vue
+│  │      uni-popup-share.vue
+│  │      uni-popup.vue
+│  │      
+│  ├─uni-swipe-action
+│  │      uni-swipe-action.vue
+│  │      
+│  ├─uni-swipe-action-item
+│  │      bindingx.js
+│  │      index.wxs
+│  │      isPC.js
+│  │      mpalipay.js
+│  │      mpother.js
+│  │      mpwxs.js
+│  │      uni-swipe-action-item.vue
+│  │      
+│  ├─uni-transition
+│  │      uni-transition.vue
+│  │      
+│  ├─vcode-input
+│  │      vcode-input.vue
+│  │      
+│  └─wuc-tab
+│          wuc-tab.vue
+│          
+├─pages
+│  ├─brand
+│  │      brand.vue
+│  │      
+│  ├─collection
+│  │      index.vue
+│  │      
+│  ├─index
+│  │      index.vue
+│  │      
+│  ├─login
+│  │  │  index.vue
+│  │  │  wecatCheck.vue
+│  │  │  wecatLogin.vue
+│  │  │  
+│  │  └─components
+│  ├─order
+│  │  │  index.vue
+│  │  │  sign_view.vue
+│  │  │  
+│  │  ├─detail
+│  │  │      downPhoto.vue
+│  │  │      order-detail.vue
+│  │  │      order-my-list.vue
+│  │  │      order-my.vue
+│  │  │      order-progress.vue
+│  │  │      order-signture.vue
+│  │  │      seeGuest.vue
+│  │  │      signature.vue
+│  │  │      
+│  │  └─tab
+│  │          order-details.vue
+│  │          order-evaluate.vue
+│  │          order-online-sign.vue
+│  │          order-photo-down.vue
+│  │          order-photo.vue
+│  │          order-progress.vue
+│  │          
+│  ├─tabBar
+│  │  ├─classify
+│  │  │  │  classify.vue
+│  │  │  │  feedBack.vue
+│  │  │  │  myFeedBack.vue
+│  │  │  │  newDetail.vue
+│  │  │  │  secondary.vue
+│  │  │  │  secondClassify.vue
+│  │  │  │  
+│  │  │  └─components
+│  │  │          classify_result.vue
+│  │  │          classify_search.vue
+│  │  │          details.vue
+│  │  │          
+│  │  ├─home
+│  │  │  │  home.vue
+│  │  │  │  icon.css
+│  │  │  │  search.vue
+│  │  │  │  web_view.vue
+│  │  │  │  
+│  │  │  └─components
+│  │  │          cityList.vue
+│  │  │          
+│  │  ├─my
+│  │  │  │  my.vue
+│  │  │  │  my_.vue
+│  │  │  │  
+│  │  │  └─components
+│  │  │          about.vue
+│  │  │          changePassword.vue
+│  │  │          modulUser.vue
+│  │  │          oneryUser.vue
+│  │  │          serviceAgreement.vue
+│  │  │          userInfo.vue
+│  │  │          web_view.vue
+│  │  │          
+│  │  ├─order
+│  │  │  │  order.vue
+│  │  │  │  
+│  │  │  ├─components
+│  │  │  │      modulDel.vue
+│  │  │  │      outTime.vue
+│  │  │  │      
+│  │  │  └─tab
+│  │  │          new-order-one.vue
+│  │  │          order-all.vue
+│  │  │          order-go-on.vue
+│  │  │          order-no-appointment.vue
+│  │  │          order-no-buy.vue
+│  │  │          order-no-goins.vue
+│  │  │          tab.scss
+│  │  │          
+│  │  └─shoppingCart
+│  │      │  shoppingCart.vue
+│  │      │  shoppingCart_.vue
+│  │      │  
+│  │      └─components
+│  │          │  buyOrder.vue
+│  │          │  changeRegion.vue
+│  │          │  changeTime.vue
+│  │          │  changeTimes.vue
+│  │          │  modulText.vue
+│  │          │  order_confirm.vue
+│  │          │  time.vue
+│  │          │  userInfo.vue
+│  │          │  
+│  │          └─userInfo
+│  │                  babe.vue
+│  │                  userInfo.vue
+│  │                  
+│  ├─user
+│  │      index.vue
+│  │      
+│  └─zyd_page
+│      └─standard
+│              index.vue
+│              
+├─static
+│  │  logo.png
+│  │  
+│  ├─htz-signature
+│  │      bicuxi.png
+│  │      chehuinormal.png
+│  │      color-plate-fill.png
+│  │      on.png
+│  │      qingkong_1.png
+│  │      
+│  ├─image
+│  │  │  404.png
+│  │  │  checkCall.png
+│  │  │  loacl.png
+│  │  │  login.png
+│  │  │  noShow.png
+│  │  │  oreder_bar.png
+│  │  │  oreder_bars.png
+│  │  │  oreder_user.png
+│  │  │  progress.png
+│  │  │  qhmd.png
+│  │  │  userCall.png
+│  │  │  userondry.png
+│  │  │  user_loc.png
+│  │  │  user_my.png
+│  │  │  user_phone.png
+│  │  │  
+│  │  └─my
+│  │          1.png
+│  │          2.png
+│  │          3.png
+│  │          4.png
+│  │          5.png
+│  │          new1.png
+│  │          new2.png
+│  │          new3.png
+│  │          new4.png
+│  │          new5.png
+│  │          new6.png
+│  │          new7.png
+│  │          new8.png
+│  │          userI.png
+│  │          userImg.png
+│  │          wdl.png
+│  │          
+│  └─tabBar
+│          beiyu.png
+│          classify.png
+│          classifySl.png
+│          home.png
+│          homeSl.png
+│          my.png
+│          mySl.png
+│          order.png
+│          orderSl.png
+│          shoppingCart.png
+│          shoppingCartSl.png
+│          shoppingCartSl1.png
+│          
+├─store
+│  │  index.js
+│  │  
+│  └─module
+│          app.js
+│          carList.js
+│          html.js
+│          map.js
+│          user.js
+│          
+├─unpackage
+│  └─dist
+│      ├─build
+│      │  ├─.automator
+│      │  │  ├─h5
+│      │  │  │      .automator.json
+│      │  │  │      
+│      │  │  └─mp-weixin
+│      │  │          .automator.json
+│      │  │          
+│      │  ├─h5
+│      │  │  │  index.html
+│      │  │  │  
+│      │  │  └─static
+│      │  │      │  index.1e555237.css
+│      │  │      │  logo.png
+│      │  │      │  
+│      │  │      └─js
+│      │  │              chunk-vendors.68f6872c.js
+│      │  │              index.ca317735.js
+│      │  │              pages-index-index.898a1f7a.js
+│      │  │              
+│      │  └─mp-weixin
+│      │      │  app.js
+│      │      │  app.json
+│      │      │  app.wxss
+│      │      │  project.config.json
+│      │      │  sitemap.json
+│      │      │  
+│      │      ├─common
+│      │      │      main.js
+│      │      │      main.wxss
+│      │      │      runtime.js
+│      │      │      vendor.js
+│      │      │      
+│      │      ├─components
+│      │      │  │  404.js
+│      │      │  │  404.json
+│      │      │  │  404.wxml
+│      │      │  │  404.wxss
+│      │      │  │  footText.js
+│      │      │  │  footText.json
+│      │      │  │  footText.wxml
+│      │      │  │  footText.wxss
+│      │      │  │  modulPhone.js
+│      │      │  │  modulPhone.json
+│      │      │  │  modulPhone.wxml
+│      │      │  │  modulPhone.wxss
+│      │      │  │  
+│      │      │  ├─cat-signature
+│      │      │  │      cat-signature.js
+│      │      │  │      cat-signature.json
+│      │      │  │      cat-signature.wxml
+│      │      │  │      cat-signature.wxss
+│      │      │  │      
+│      │      │  └─wuc-tab
+│      │      │          wuc-tab.js
+│      │      │          wuc-tab.json
+│      │      │          wuc-tab.wxml
+│      │      │          wuc-tab.wxss
+│      │      │          
+│      │      ├─pages
+│      │      │  ├─index
+│      │      │  │      index.js
+│      │      │  │      index.json
+│      │      │  │      index.wxml
+│      │      │  │      index.wxss
+│      │      │  │      
+│      │      │  ├─login
+│      │      │  │      index.js
+│      │      │  │      index.json
+│      │      │  │      index.wxml
+│      │      │  │      index.wxss
+│      │      │  │      
+│      │      │  ├─order
+│      │      │  │  │  index.js
+│      │      │  │  │  index.json
+│      │      │  │  │  index.wxml
+│      │      │  │  │  index.wxss
+│      │      │  │  │  
+│      │      │  │  ├─detail
+│      │      │  │  │      signature.js
+│      │      │  │  │      signature.json
+│      │      │  │  │      signature.wxml
+│      │      │  │  │      
+│      │      │  │  └─tab
+│      │      │  │          order-details.js
+│      │      │  │          order-details.json
+│      │      │  │          order-details.wxml
+│      │      │  │          order-details.wxss
+│      │      │  │          order-evaluate.js
+│      │      │  │          order-evaluate.json
+│      │      │  │          order-evaluate.wxml
+│      │      │  │          
+│      │      │  └─user
+│      │      │          index.js
+│      │      │          index.json
+│      │      │          index.wxml
+│      │      │          index.wxss
+│      │      │          
+│      │      ├─static
+│      │      │  │  logo.png
+│      │      │  │  
+│      │      │  ├─htz-signature
+│      │      │  │      bicuxi.png
+│      │      │  │      chehuinormal.png
+│      │      │  │      color-plate-fill.png
+│      │      │  │      on.png
+│      │      │  │      qingkong_1.png
+│      │      │  │      
+│      │      │  └─image
+│      │      │          404.png
+│      │      │          login.png
+│      │      │          oreder_bar.png
+│      │      │          oreder_user.png
+│      │      │          user_loc.png
+│      │      │          user_my.png
+│      │      │          user_phone.png
+│      │      │          
+│      │      └─wxcomponents
+│      │          ├─base
+│      │          │      index.js
+│      │          │      
+│      │          └─message
+│      │                  index.js
+│      │                  index.json
+│      │                  index.wxml
+│      │                  index.wxss
+│      │                  
+│      └─dev
+│          ├─.automator
+│          │  └─mp-weixin
+│          │          .automator.json
+│          │          
+│          ├─.sourcemap
+│          │  └─mp-weixin
+│          │      ├─common
+│          │      │      main.js.map
+│          │      │      runtime.js.map
+│          │      │      vendor.js.map
+│          │      │      
+│          │      ├─components
+│          │      │  │  404.js.map
+│          │      │  │  banner.js.map
+│          │      │  │  buyCar.js.map
+│          │      │  │  city.js.map
+│          │      │  │  footText.js.map
+│          │      │  │  modulPhone.js.map
+│          │      │  │  search.js.map
+│          │      │  │  swiper-der.js.map
+│          │      │  │  tabBar.js.map
+│          │      │  │  time.js.map
+│          │      │  │  
+│          │      │  ├─canvasAutograph
+│          │      │  │      index.js.map
+│          │      │  │      
+│          │      │  ├─cat-signature
+│          │      │  │      cat-signature.js.map
+│          │      │  │      
+│          │      │  ├─htz-signature
+│          │      │  │      htz-signature.js.map
+│          │      │  │      
+│          │      │  ├─nyn-city-list
+│          │      │  │      nyn-city-list.js.map
+│          │      │  │      
+│          │      │  ├─pick-regions
+│          │      │  │      pick-regions.js.map
+│          │      │  │      
+│          │      │  ├─s-pull-scroll
+│          │      │  │      index.js.map
+│          │      │  │      
+│          │      │  ├─SideCategoryList
+│          │      │  │      category-list.js.map
+│          │      │  │      index-anchor.js.map
+│          │      │  │      index-list.js.map
+│          │      │  │      
+│          │      │  ├─t-city
+│          │      │  │      t-city.js.map
+│          │      │  │      
+│          │      │  ├─uni-data-picker
+│          │      │  │      uni-data-picker.js.map
+│          │      │  │      
+│          │      │  ├─uni-data-pickerview
+│          │      │  │      uni-data-pickerview.js.map
+│          │      │  │      
+│          │      │  ├─uni-load-more
+│          │      │  │      uni-load-more.js.map
+│          │      │  │      
+│          │      │  ├─uni-nav-bar
+│          │      │  │      uni-nav-bar.js.map
+│          │      │  │      uni-status-bar.js.map
+│          │      │  │      
+│          │      │  ├─uni-popup
+│          │      │  │      uni-popup-dialog.js.map
+│          │      │  │      uni-popup.js.map
+│          │      │  │      
+│          │      │  ├─uni-swipe-action
+│          │      │  │      uni-swipe-action.js.map
+│          │      │  │      
+│          │      │  ├─uni-swipe-action-item
+│          │      │  │      uni-swipe-action-item.js.map
+│          │      │  │      
+│          │      │  ├─uni-transition
+│          │      │  │      uni-transition.js.map
+│          │      │  │      
+│          │      │  ├─wuc-tab
+│          │      │  │      wuc-tab.js.map
+│          │      │  │      
+│          │      │  └─xiaolu-signature
+│          │      │          index.js.map
+│          │      │          
+│          │      └─pages
+│          │          ├─brand
+│          │          │      brand.js.map
+│          │          │      
+│          │          ├─collection
+│          │          │      index.js.map
+│          │          │      
+│          │          ├─index
+│          │          │      index.js.map
+│          │          │      
+│          │          ├─login
+│          │          │      index.js.map
+│          │          │      login.js.map
+│          │          │      wecatCheck.js.map
+│          │          │      wecatLogin.js.map
+│          │          │      
+│          │          ├─order
+│          │          │  │  index.js.map
+│          │          │  │  sign_view.js.map
+│          │          │  │  
+│          │          │  ├─components
+│          │          │  │      details.js.map
+│          │          │  │      order-details.js.map
+│          │          │  │      order-evaluate.js.map
+│          │          │  │      
+│          │          │  ├─detail
+│          │          │  │      downPhoto.js.map
+│          │          │  │      order-detail.js.map
+│          │          │  │      order-my-list.js.map
+│          │          │  │      order-my.js.map
+│          │          │  │      order-progress.js.map
+│          │          │  │      order-signture.js.map
+│          │          │  │      seeGuest.js.map
+│          │          │  │      signature.js.map
+│          │          │  │      signature.vue.js.map
+│          │          │  │      
+│          │          │  └─tab
+│          │          │          order-details.js.map
+│          │          │          order-evaluate.js.map
+│          │          │          order-online-sign.js.map
+│          │          │          order-photo-down.js.map
+│          │          │          order-photo.js.map
+│          │          │          order-progress.js.map
+│          │          │          
+│          │          ├─tabBar
+│          │          │  ├─classify
+│          │          │  │  │  classify.js.map
+│          │          │  │  │  feedBack.js.map
+│          │          │  │  │  feedBck.js.map
+│          │          │  │  │  myFeedBack.js.map
+│          │          │  │  │  newDetail.js.map
+│          │          │  │  │  secondary.js.map
+│          │          │  │  │  secondClassify.js.map
+│          │          │  │  │  
+│          │          │  │  └─components
+│          │          │  │          classify_result.js.map
+│          │          │  │          classify_search.js.map
+│          │          │  │          details.js.map
+│          │          │  │          
+│          │          │  ├─components
+│          │          │  │      changeRegion.js.map
+│          │          │  │      
+│          │          │  ├─home
+│          │          │  │  │  cityList.js.map
+│          │          │  │  │  home.js.map
+│          │          │  │  │  search.js.map
+│          │          │  │  │  web_view.js.map
+│          │          │  │  │  
+│          │          │  │  └─components
+│          │          │  │          cityList.js.map
+│          │          │  │          
+│          │          │  ├─my
+│          │          │  │  │  my.js.map
+│          │          │  │  │  
+│          │          │  │  ├─component
+│          │          │  │  │      changePassword.js.map
+│          │          │  │  │      serviceAgreement.js.map
+│          │          │  │  │      userInfo.js.map
+│          │          │  │  │      
+│          │          │  │  └─components
+│          │          │  │          about.js.map
+│          │          │  │          changePassword.js.map
+│          │          │  │          modulUser.js.map
+│          │          │  │          oneryUser.js.map
+│          │          │  │          serviceAgreement.js.map
+│          │          │  │          userInfo.js.map
+│          │          │  │          web_view.js.map
+│          │          │  │          
+│          │          │  ├─order
+│          │          │  │  │  order.js.map
+│          │          │  │  │  
+│          │          │  │  ├─components
+│          │          │  │  │      modulDel.js.map
+│          │          │  │  │      outTime.js.map
+│          │          │  │  │      
+│          │          │  │  └─tab
+│          │          │  │          new-order-one.js.map
+│          │          │  │          order-all.js.map
+│          │          │  │          order-details.js.map
+│          │          │  │          order-evaluate.js.map
+│          │          │  │          order-go-on.js.map
+│          │          │  │          order-no-appointment.js.map
+│          │          │  │          order-no-buy.js.map
+│          │          │  │          order-no-close.js.map
+│          │          │  │          order-no-goIn.js.map
+│          │          │  │          order-no-goins.js.map
+│          │          │  │          
+│          │          │  └─shoppingCart
+│          │          │      │  shoppingCart.js.map
+│          │          │      │  
+│          │          │      └─components
+│          │          │          │  buyOrder.js.map
+│          │          │          │  changeRegion.js.map
+│          │          │          │  changeTime.js.map
+│          │          │          │  changeTimes.js.map
+│          │          │          │  modulText.js.map
+│          │          │          │  order_confirm.js.map
+│          │          │          │  time.js.map
+│          │          │          │  userInfo.js.map
+│          │          │          │  
+│          │          │          └─userInfo
+│          │          │                  babe.js.map
+│          │          │                  userInfo.js.map
+│          │          │                  
+│          │          ├─user
+│          │          │      index.js.map
+│          │          │      
+│          │          └─zyd_page
+│          │              └─standard
+│          │                      index.js.map
+│          │                      
+│          └─mp-weixin
+│              │  app.js
+│              │  app.json
+│              │  app.wxss
+│              │  ext.json
+│              │  project.config.json
+│              │  sitemap.json
+│              │  sitemap0.json
+│              │  sitemap12.json
+│              │  sitemap13.json
+│              │  sitemap14.json
+│              │  sitemap15.json
+│              │  sitemap16.json
+│              │  sitemap2.json
+│              │  sitemap20.json
+│              │  sitemap21.json
+│              │  sitemap22.json
+│              │  sitemap23.json
+│              │  sitemap26.json
+│              │  sitemap29.json
+│              │  sitemap3.json
+│              │  sitemap30.json
+│              │  sitemap32.json
+│              │  sitemap34.json
+│              │  sitemap37.json
+│              │  sitemap38.json
+│              │  sitemap4.json
+│              │  sitemap43.json
+│              │  sitemap44.json
+│              │  sitemap45.json
+│              │  sitemap47.json
+│              │  sitemap48.json
+│              │  sitemap50.json
+│              │  sitemap52.json
+│              │  sitemap54.json
+│              │  sitemap55.json
+│              │  sitemap58.json
+│              │  sitemap59.json
+│              │  sitemap60.json
+│              │  sitemap62.json
+│              │  sitemap63.json
+│              │  sitemap64.json
+│              │  sitemap65.json
+│              │  sitemap67.json
+│              │  sitemap7.json
+│              │  sitemap71.json
+│              │  sitemap73.json
+│              │  sitemap74.json
+│              │  sitemap77.json
+│              │  sitemap79.json
+│              │  sitemap8.json
+│              │  sitemap80.json
+│              │  sitemap81.json
+│              │  sitemap84.json
+│              │  sitemap89.json
+│              │  sitemap90.json
+│              │  sitemap91.json
+│              │  sitemap92.json
+│              │  sitemap97.json
+│              │  sitemap99.json
+│              │  
+│              ├─common
+│              │      main.js
+│              │      main.wxss
+│              │      runtime.js
+│              │      vendor.js
+│              │      
+│              ├─components
+│              │  │  404.js
+│              │  │  404.json
+│              │  │  404.wxml
+│              │  │  404.wxss
+│              │  │  banner.js
+│              │  │  banner.json
+│              │  │  banner.wxml
+│              │  │  banner.wxss
+│              │  │  buyCar.js
+│              │  │  buyCar.json
+│              │  │  buyCar.wxml
+│              │  │  buyCar.wxss
+│              │  │  city.js
+│              │  │  city.json
+│              │  │  city.wxml
+│              │  │  city.wxss
+│              │  │  footText.js
+│              │  │  footText.json
+│              │  │  footText.wxml
+│              │  │  footText.wxss
+│              │  │  modulPhone.js
+│              │  │  modulPhone.json
+│              │  │  modulPhone.wxml
+│              │  │  modulPhone.wxss
+│              │  │  search.js
+│              │  │  search.json
+│              │  │  search.wxml
+│              │  │  search.wxss
+│              │  │  swiper-der.js
+│              │  │  swiper-der.json
+│              │  │  swiper-der.wxml
+│              │  │  swiper-der.wxss
+│              │  │  tabBar.js
+│              │  │  tabBar.json
+│              │  │  tabBar.wxml
+│              │  │  tabBar.wxss
+│              │  │  time.js
+│              │  │  time.json
+│              │  │  time.wxml
+│              │  │  time.wxss
+│              │  │  
+│              │  ├─cat-signature
+│              │  │      cat-signature.js
+│              │  │      cat-signature.json
+│              │  │      cat-signature.wxml
+│              │  │      cat-signature.wxss
+│              │  │      
+│              │  ├─pick-regions
+│              │  │      pick-regions.js
+│              │  │      pick-regions.json
+│              │  │      pick-regions.wxml
+│              │  │      
+│              │  ├─s-pull-scroll
+│              │  │      index.js
+│              │  │      index.json
+│              │  │      index.wxml
+│              │  │      index.wxss
+│              │  │      
+│              │  ├─t-city
+│              │  │      t-city.js
+│              │  │      t-city.json
+│              │  │      t-city.wxml
+│              │  │      t-city.wxss
+│              │  │      
+│              │  ├─uni-nav-bar
+│              │  │      uni-nav-bar.js
+│              │  │      uni-nav-bar.json
+│              │  │      uni-nav-bar.wxml
+│              │  │      uni-nav-bar.wxss
+│              │  │      uni-status-bar.js
+│              │  │      uni-status-bar.json
+│              │  │      uni-status-bar.wxml
+│              │  │      uni-status-bar.wxss
+│              │  │      
+│              │  ├─uni-popup
+│              │  │      uni-popup-dialog.js
+│              │  │      uni-popup-dialog.json
+│              │  │      uni-popup-dialog.wxml
+│              │  │      uni-popup-dialog.wxss
+│              │  │      uni-popup.js
+│              │  │      uni-popup.json
+│              │  │      uni-popup.wxml
+│              │  │      uni-popup.wxss
+│              │  │      
+│              │  ├─uni-swipe-action
+│              │  │      uni-swipe-action.js
+│              │  │      uni-swipe-action.json
+│              │  │      uni-swipe-action.wxml
+│              │  │      
+│              │  ├─uni-swipe-action-item
+│              │  │      index.wxs
+│              │  │      uni-swipe-action-item.js
+│              │  │      uni-swipe-action-item.json
+│              │  │      uni-swipe-action-item.wxml
+│              │  │      uni-swipe-action-item.wxss
+│              │  │      
+│              │  ├─uni-transition
+│              │  │      uni-transition.js
+│              │  │      uni-transition.json
+│              │  │      uni-transition.wxml
+│              │  │      uni-transition.wxss
+│              │  │      
+│              │  └─wuc-tab
+│              │          wuc-tab.js
+│              │          wuc-tab.json
+│              │          wuc-tab.wxml
+│              │          wuc-tab.wxss
+│              │          
+│              ├─pages
+│              │  ├─brand
+│              │  │      brand.js
+│              │  │      brand.json
+│              │  │      brand.wxml
+│              │  │      brand.wxss
+│              │  │      
+│              │  ├─collection
+│              │  │      index.js
+│              │  │      index.json
+│              │  │      index.wxml
+│              │  │      index.wxss
+│              │  │      
+│              │  ├─index
+│              │  │      index.js
+│              │  │      index.json
+│              │  │      index.wxml
+│              │  │      index.wxss
+│              │  │      
+│              │  ├─login
+│              │  │      index.js
+│              │  │      index.json
+│              │  │      index.wxml
+│              │  │      index.wxss
+│              │  │      wecatCheck.js
+│              │  │      wecatCheck.json
+│              │  │      wecatCheck.wxml
+│              │  │      
+│              │  ├─order
+│              │  │  │  index.js
+│              │  │  │  index.json
+│              │  │  │  index.wxml
+│              │  │  │  index.wxss
+│              │  │  │  sign_view.js
+│              │  │  │  sign_view.json
+│              │  │  │  sign_view.wxml
+│              │  │  │  sign_view.wxss
+│              │  │  │  
+│              │  │  ├─detail
+│              │  │  │      downPhoto.js
+│              │  │  │      downPhoto.json
+│              │  │  │      downPhoto.wxml
+│              │  │  │      downPhoto.wxss
+│              │  │  │      order-detail.js
+│              │  │  │      order-detail.json
+│              │  │  │      order-detail.wxml
+│              │  │  │      order-detail.wxss
+│              │  │  │      order-my-list.js
+│              │  │  │      order-my-list.json
+│              │  │  │      order-my-list.wxml
+│              │  │  │      order-my-list.wxss
+│              │  │  │      order-my.js
+│              │  │  │      order-my.json
+│              │  │  │      order-my.wxml
+│              │  │  │      order-my.wxss
+│              │  │  │      order-progress.js
+│              │  │  │      order-progress.json
+│              │  │  │      order-progress.wxml
+│              │  │  │      order-progress.wxss
+│              │  │  │      order-signture.js
+│              │  │  │      order-signture.json
+│              │  │  │      order-signture.wxml
+│              │  │  │      order-signture.wxss
+│              │  │  │      seeGuest.js
+│              │  │  │      seeGuest.json
+│              │  │  │      seeGuest.wxml
+│              │  │  │      seeGuest.wxss
+│              │  │  │      signature.js
+│              │  │  │      signature.json
+│              │  │  │      signature.wxml
+│              │  │  │      signature.wxss
+│              │  │  │      
+│              │  │  └─tab
+│              │  │          order-details.js
+│              │  │          order-details.json
+│              │  │          order-details.wxml
+│              │  │          order-details.wxss
+│              │  │          order-evaluate.js
+│              │  │          order-evaluate.json
+│              │  │          order-evaluate.wxml
+│              │  │          order-evaluate.wxss
+│              │  │          order-online-sign.js
+│              │  │          order-online-sign.json
+│              │  │          order-online-sign.wxml
+│              │  │          order-online-sign.wxss
+│              │  │          order-photo-down.js
+│              │  │          order-photo-down.json
+│              │  │          order-photo-down.wxml
+│              │  │          order-photo-down.wxss
+│              │  │          order-photo.js
+│              │  │          order-photo.json
+│              │  │          order-photo.wxml
+│              │  │          order-photo.wxss
+│              │  │          order-progress.js
+│              │  │          order-progress.json
+│              │  │          order-progress.wxml
+│              │  │          order-progress.wxss
+│              │  │          
+│              │  ├─tabBar
+│              │  │  ├─classify
+│              │  │  │  │  classify.js
+│              │  │  │  │  classify.json
+│              │  │  │  │  classify.wxml
+│              │  │  │  │  classify.wxss
+│              │  │  │  │  feedBack.js
+│              │  │  │  │  feedBack.json
+│              │  │  │  │  feedBack.wxml
+│              │  │  │  │  feedBack.wxss
+│              │  │  │  │  myFeedBack.js
+│              │  │  │  │  myFeedBack.json
+│              │  │  │  │  myFeedBack.wxml
+│              │  │  │  │  myFeedBack.wxss
+│              │  │  │  │  newDetail.js
+│              │  │  │  │  newDetail.json
+│              │  │  │  │  newDetail.wxml
+│              │  │  │  │  newDetail.wxss
+│              │  │  │  │  secondary.js
+│              │  │  │  │  secondary.json
+│              │  │  │  │  secondary.wxml
+│              │  │  │  │  secondary.wxss
+│              │  │  │  │  secondClassify.js
+│              │  │  │  │  secondClassify.json
+│              │  │  │  │  secondClassify.wxml
+│              │  │  │  │  secondClassify.wxss
+│              │  │  │  │  
+│              │  │  │  └─components
+│              │  │  │          classify_result.js
+│              │  │  │          classify_result.json
+│              │  │  │          classify_result.wxml
+│              │  │  │          classify_result.wxss
+│              │  │  │          classify_search.js
+│              │  │  │          classify_search.json
+│              │  │  │          classify_search.wxml
+│              │  │  │          classify_search.wxss
+│              │  │  │          details.js
+│              │  │  │          details.json
+│              │  │  │          details.wxml
+│              │  │  │          details.wxss
+│              │  │  │          
+│              │  │  ├─home
+│              │  │  │  │  home.js
+│              │  │  │  │  home.json
+│              │  │  │  │  home.wxml
+│              │  │  │  │  home.wxss
+│              │  │  │  │  search.js
+│              │  │  │  │  search.json
+│              │  │  │  │  search.wxml
+│              │  │  │  │  search.wxss
+│              │  │  │  │  web_view.js
+│              │  │  │  │  web_view.json
+│              │  │  │  │  web_view.wxml
+│              │  │  │  │  
+│              │  │  │  └─components
+│              │  │  │          cityList.js
+│              │  │  │          cityList.json
+│              │  │  │          cityList.wxml
+│              │  │  │          
+│              │  │  ├─my
+│              │  │  │  │  my.js
+│              │  │  │  │  my.json
+│              │  │  │  │  my.wxml
+│              │  │  │  │  my.wxss
+│              │  │  │  │  
+│              │  │  │  └─components
+│              │  │  │          about.js
+│              │  │  │          about.json
+│              │  │  │          about.wxml
+│              │  │  │          about.wxss
+│              │  │  │          changePassword.js
+│              │  │  │          changePassword.json
+│              │  │  │          changePassword.wxml
+│              │  │  │          changePassword.wxss
+│              │  │  │          modulUser.js
+│              │  │  │          modulUser.json
+│              │  │  │          modulUser.wxml
+│              │  │  │          modulUser.wxss
+│              │  │  │          oneryUser.js
+│              │  │  │          oneryUser.json
+│              │  │  │          oneryUser.wxml
+│              │  │  │          oneryUser.wxss
+│              │  │  │          serviceAgreement.js
+│              │  │  │          serviceAgreement.json
+│              │  │  │          serviceAgreement.wxml
+│              │  │  │          userInfo.js
+│              │  │  │          userInfo.json
+│              │  │  │          userInfo.wxml
+│              │  │  │          userInfo.wxss
+│              │  │  │          web_view.js
+│              │  │  │          web_view.json
+│              │  │  │          web_view.wxml
+│              │  │  │          
+│              │  │  ├─order
+│              │  │  │  │  order.js
+│              │  │  │  │  order.json
+│              │  │  │  │  order.wxml
+│              │  │  │  │  order.wxss
+│              │  │  │  │  
+│              │  │  │  ├─components
+│              │  │  │  │      modulDel.js
+│              │  │  │  │      modulDel.json
+│              │  │  │  │      modulDel.wxml
+│              │  │  │  │      modulDel.wxss
+│              │  │  │  │      outTime.js
+│              │  │  │  │      outTime.json
+│              │  │  │  │      outTime.wxml
+│              │  │  │  │      
+│              │  │  │  └─tab
+│              │  │  │          new-order-one.js
+│              │  │  │          new-order-one.json
+│              │  │  │          new-order-one.wxml
+│              │  │  │          new-order-one.wxss
+│              │  │  │          order-all.js
+│              │  │  │          order-all.json
+│              │  │  │          order-all.wxml
+│              │  │  │          order-all.wxss
+│              │  │  │          order-go-on.js
+│              │  │  │          order-go-on.json
+│              │  │  │          order-go-on.wxml
+│              │  │  │          order-go-on.wxss
+│              │  │  │          order-no-appointment.js
+│              │  │  │          order-no-appointment.json
+│              │  │  │          order-no-appointment.wxml
+│              │  │  │          order-no-appointment.wxss
+│              │  │  │          order-no-buy.js
+│              │  │  │          order-no-buy.json
+│              │  │  │          order-no-buy.wxml
+│              │  │  │          order-no-buy.wxss
+│              │  │  │          order-no-goins.js
+│              │  │  │          order-no-goins.json
+│              │  │  │          order-no-goins.wxml
+│              │  │  │          order-no-goins.wxss
+│              │  │  │          
+│              │  │  └─shoppingCart
+│              │  │      │  shoppingCart.js
+│              │  │      │  shoppingCart.json
+│              │  │      │  shoppingCart.wxml
+│              │  │      │  shoppingCart.wxss
+│              │  │      │  
+│              │  │      └─components
+│              │  │          │  buyOrder.js
+│              │  │          │  buyOrder.json
+│              │  │          │  buyOrder.wxml
+│              │  │          │  buyOrder.wxss
+│              │  │          │  changeRegion.js
+│              │  │          │  changeRegion.json
+│              │  │          │  changeRegion.wxml
+│              │  │          │  changeRegion.wxss
+│              │  │          │  changeTime.js
+│              │  │          │  changeTime.json
+│              │  │          │  changeTime.wxml
+│              │  │          │  changeTime.wxss
+│              │  │          │  changeTimes.js
+│              │  │          │  changeTimes.json
+│              │  │          │  changeTimes.wxml
+│              │  │          │  changeTimes.wxss
+│              │  │          │  modulText.js
+│              │  │          │  modulText.json
+│              │  │          │  modulText.wxml
+│              │  │          │  modulText.wxss
+│              │  │          │  order_confirm.js
+│              │  │          │  order_confirm.json
+│              │  │          │  order_confirm.wxml
+│              │  │          │  order_confirm.wxss
+│              │  │          │  time.js
+│              │  │          │  time.json
+│              │  │          │  time.wxml
+│              │  │          │  time.wxss
+│              │  │          │  
+│              │  │          └─userInfo
+│              │  │                  babe.js
+│              │  │                  babe.json
+│              │  │                  babe.wxml
+│              │  │                  babe.wxss
+│              │  │                  userInfo.js
+│              │  │                  userInfo.json
+│              │  │                  userInfo.wxml
+│              │  │                  userInfo.wxss
+│              │  │                  
+│              │  ├─user
+│              │  │      index.js
+│              │  │      index.json
+│              │  │      index.wxml
+│              │  │      index.wxss
+│              │  │      
+│              │  └─zyd_page
+│              │      └─standard
+│              │              index.js
+│              │              index.json
+│              │              index.wxml
+│              │              index.wxss
+│              │              
+│              ├─static
+│              │  │  logo.png
+│              │  │  
+│              │  ├─htz-signature
+│              │  │      bicuxi.png
+│              │  │      chehuinormal.png
+│              │  │      color-plate-fill.png
+│              │  │      on.png
+│              │  │      qingkong_1.png
+│              │  │      
+│              │  ├─image
+│              │  │  │  404.png
+│              │  │  │  checkCall.png
+│              │  │  │  loacl.png
+│              │  │  │  login.png
+│              │  │  │  noShow.png
+│              │  │  │  oreder_bar.png
+│              │  │  │  oreder_bars.png
+│              │  │  │  oreder_user.png
+│              │  │  │  progress.png
+│              │  │  │  qhmd.png
+│              │  │  │  userCall.png
+│              │  │  │  userondry.png
+│              │  │  │  user_loc.png
+│              │  │  │  user_my.png
+│              │  │  │  user_phone.png
+│              │  │  │  
+│              │  │  └─my
+│              │  │          1.png
+│              │  │          2.png
+│              │  │          3.png
+│              │  │          4.png
+│              │  │          5.png
+│              │  │          new1.png
+│              │  │          new2.png
+│              │  │          new3.png
+│              │  │          new4.png
+│              │  │          new5.png
+│              │  │          new6.png
+│              │  │          new7.png
+│              │  │          new8.png
+│              │  │          userI.png
+│              │  │          userImg.png
+│              │  │          wdl.png
+│              │  │          
+│              │  └─tabBar
+│              │          beiyu.png
+│              │          classify.png
+│              │          classifySl.png
+│              │          home.png
+│              │          homeSl.png
+│              │          my.png
+│              │          mySl.png
+│              │          order.png
+│              │          orderSl.png
+│              │          shoppingCart.png
+│              │          shoppingCartSl.png
+│              │          shoppingCartSl1.png
+│              │          
+│              └─wxcomponents
+│                  ├─base
+│                  │      index.js
+│                  │      
+│                  ├─icon
+│                  │      index.js
+│                  │      index.json
+│                  │      index.wxml
+│                  │      index.wxss
+│                  │      
+│                  └─message
+│                          index.js
+│                          index.json
+│                          index.wxml
+│                          index.wxss
+│                          
+├─util
+│  │  time.js
+│  │  
+│  ├─api
+│  │      goods.js
+│  │      home.js
+│  │      index.js
+│  │      map.js
+│  │      methos.js
+│  │      order.js
+│  │      user.js
+│  │      
+│  ├─css
+│  │      comm.scss
+│  │      ddIco.css
+│  │      iconfont.css
+│  │      
+│  └─lib
+│          amap-wx.js
+│          base64.js
+│          
+└─wxcomponents
+    ├─base
+    │      index.js
+    │      
+    ├─icon
+    │      index.js
+    │      index.json
+    │      index.vue
+    │      index.wxml
+    │      index.wxss
+    │      
+    └─message
+            index.js
+            index.json
+            index.vue
+            index.wxml
+            index.wxss
+            
