@@ -5,7 +5,7 @@
                 订单号: {{item.orderNo}}
                 <span class="float_r colorA3" v-if="item.state">{{item.state ? item.state : ''}}</span>
                 <view v-else-if="!item.state && !item.assemblyEarnestMoney && item.isOnline" class="timeOut">
-                    <out-time class="paddingRL10 fontSize28" :endtime="item.orderTime" />{{item.proceeds==0?'未付款':'待付款'}}
+                    <out-time class="paddingRL10 fontSize28" :endtime="item.orderTime" @okOut="okOut"/>{{item.proceeds==0?OKOutText?'已关闭':'未付款':'待付款'}}
                 </view>
                 <view v-else class="float_r colorA3">
                    {{item.incomePrice==0?'未付款':'待付款'}}
@@ -156,6 +156,7 @@ import { mapGetters } from 'vuex'
                 showModel:false,
                 text:'',
                 orderId:null,
+                OKOutText:null, // 倒计时结束回调
             }
         },
         methods:{
@@ -203,7 +204,12 @@ import { mapGetters } from 'vuex'
                     this.$emit('onDelOrder',this.orderId)
                 }
                 this.showModel = false
-			}
+			},
+
+            // 时间返回回调
+            okOut(){
+                this.OKOutText = 'ok'
+            }
         }
        
     }

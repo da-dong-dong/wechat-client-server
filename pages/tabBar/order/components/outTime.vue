@@ -1,8 +1,9 @@
 /******************************** 倒计时组件 ***************************************/
 <template>
-    <text>
-        <i-icon class="icon" type="time" size="18" color="#D3AA72"  /> {{TimeText}}
-    </text>
+    <span class="flex"> 
+        <i-icon class="icon" type="time" size="20" color="#D3AA72"  v-if="TimeText"/>
+        <span>{{TimeText}}</span>
+    </span>
 </template>
 
 <script>
@@ -20,7 +21,7 @@
                 let hour = parseInt(time/1000/3600);
                 let min = parseInt((time/1000 - hour * 3600)/60);
                 let sec = parseInt(time/1000 - hour * 3600 - min * 60)
-                this.TimeText =  hour + ':' + this.numOLING(min) + ':' + this.numOLING(sec) 
+                this.TimeText =   this.numOLING(min) + ':' + this.numOLING(sec) 
             },
             // 加零
             numOLING(val){
@@ -35,6 +36,7 @@
                 if((this.endtime+1000*60*30) - this.now<=0){
                     this.TimeText = ''
                     clearTimeout(this.tiems)
+                    this.$emit('okOut')
                     return
                 }
             }, 1000);
@@ -43,5 +45,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+.icon{
+    margin-right: 6rpx;
+}
+.flex{
+    justify-content: space-between;
+    align-items: center;
+}
 </style>
